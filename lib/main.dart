@@ -8,7 +8,6 @@ import './forum_screen.dart';
 
 void main() => runApp(MyApp());
 
-/// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
   static const String _title = 'Home';
 
@@ -16,20 +15,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: MyStatefulWidget(),
+      home: Main(),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
+class Main extends StatefulWidget {
+  Main({Key key}) : super(key: key);
 
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+  State<StatefulWidget> createState() {
+    return _MainState();
+  }
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
+class _MainState extends State<Main> {
+  var _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   var _widgetOptions = [
     {
       'title': Text('Home'),
@@ -46,35 +54,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     {'title': Text('Forum'), 'widget': ForumScreen()},
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/solon.png'),
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/solon.png'),
                 ),
-              );
-            },
-          ),
-          title: _widgetOptions[_selectedIndex]['title'],
+              ),
+            );
+          },
         ),
-        body: Center(
-          child: _widgetOptions[_selectedIndex]['widget'],
-        ),
-        bottomNavigationBar: NavBar(_selectedIndex, _onItemTapped),
+        title: _widgetOptions[_selectedIndex]['title'],
       ),
+      body: Center(child: _widgetOptions[_selectedIndex]['widget']),
+      bottomNavigationBar: NavBar(_selectedIndex, _onItemTapped),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

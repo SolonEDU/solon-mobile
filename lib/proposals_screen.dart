@@ -8,23 +8,29 @@ class ProposalsScreen extends StatefulWidget {
 }
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
-  List<Widget> proposalsList = [];
+  List<Widget> _proposalsList = [];
+
+  void _addProposal() {
+    setState(() {
+      _proposalsList.add(Proposal());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: proposalsList,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            proposalsList.add(Proposal());
-            print('added ${proposalsList.length}');
-          });
-        },
-      ),
+    return Stack(
+      children: <Widget>[
+        ListView.builder(
+          itemCount: _proposalsList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return _proposalsList[index];
+          },
+        ),
+        FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: _addProposal,
+        )
+      ],
     );
   }
 }
