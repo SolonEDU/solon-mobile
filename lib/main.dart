@@ -60,13 +60,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           leading: Builder(
             builder: (BuildContext context) {
               return DecoratedBox(
-                child: FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      _selectedIndex = 0;
-                    });
-                  }, child: null,
-                ),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/solon.png'),
