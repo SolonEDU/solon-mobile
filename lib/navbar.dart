@@ -29,7 +29,7 @@ class NavBar extends StatelessWidget {
         )
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: Colors.pink[500],
+      selectedItemColor: Colors.pinkAccent[400],
       onTap: onItemTapped,
     );
   }
