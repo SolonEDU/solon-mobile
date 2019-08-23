@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:solon/home_screen.dart';
 
 import './navbar.dart';
+import './proposals_screen.dart';
+import './events_screen.dart';
+import './forum_screen.dart';
 
 void main() => runApp(MyApp());
 
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
-  static const String _title = 'Solon';
+  static const String _title = 'Home';
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +30,20 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Proposals',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Events',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Forum',
-      style: optionStyle,
-    ),
+  var _widgetOptions = [
+    {
+      'title': Text('Home'),
+      'widget': HomeScreen(),
+    },
+    {
+      'title': Text('Proposals'),
+      'widget': ProposalsScreen(),
+    },
+    {
+      'title': Text('Events'),
+      'widget': EventsScreen(),
+    },
+    {'title': Text('Forum'), 'widget': ForumScreen()},
   ];
 
   void _onItemTapped(int index) {
@@ -55,27 +54,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          leading: Builder(
+            builder: (BuildContext context) {
+              return DecoratedBox(
+                child: FlatButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedIndex = 0;
+                    });
+                  }, child: null,
+                ),
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage('images/solon.png'),
-              )),
-            );
-          },
+                    image: AssetImage('images/solon.png'),
+                  ),
+                ),
+              );
+            },
+          ),
+          title: _widgetOptions[_selectedIndex]['title'],
         ),
-        title: const Text('Solon'),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: NavBar(_selectedIndex, _onItemTapped),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {},
+        body: Center(
+          child: _widgetOptions[_selectedIndex]['widget'],
+        ),
+        bottomNavigationBar: NavBar(_selectedIndex, _onItemTapped),
       ),
     );
   }
