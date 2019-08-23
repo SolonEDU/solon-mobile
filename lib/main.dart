@@ -42,7 +42,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       style: optionStyle,
     ),
     Text(
-      'Index 3 Forum',
+      'Index 3: Forum',
       style: optionStyle,
     ),
   ];
