@@ -18,19 +18,17 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        ListView.builder(
-          itemCount: _proposalsList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _proposalsList[index];
-          },
-        ),
-        FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: _addProposal,
-        )
-      ],
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: _proposalsList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _proposalsList[index];
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: _addProposal,
+      ),
     );
   }
 }

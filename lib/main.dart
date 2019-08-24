@@ -51,7 +51,10 @@ class _MainState extends State<Main> {
       'title': Text('Events'),
       'widget': EventsScreen(),
     },
-    {'title': Text('Forum'), 'widget': ForumScreen()},
+    {
+      'title': Text('Forum'),
+      'widget': ForumScreen(),
+    },
   ];
 
   @override
