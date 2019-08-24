@@ -75,7 +75,10 @@ class _MainState extends State<Main> {
         title: _widgetOptions[_selectedIndex]['title'],
       ),
       body: Center(child: _widgetOptions[_selectedIndex]['widget']),
-      bottomNavigationBar: NavBar(_selectedIndex, _onItemTapped),
+      bottomNavigationBar: NavBar(
+        _selectedIndex,
+        _onItemTapped,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
