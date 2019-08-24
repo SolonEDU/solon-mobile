@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './proposal.dart';
+// import './proposal.dart';
 import './add_proposal_modal_screen.dart';
 
 class ProposalsScreen extends StatefulWidget {
@@ -12,11 +12,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   List<Widget> _proposalsList = [];
   AddProposalModalScreen modal = new AddProposalModalScreen();
 
-  void _addProposal() {
-    setState(() {
-      _proposalsList.add(Proposal());
-    });
-  }
+  // void _addProposal() {
+    // setState(() {
+      // _proposalsList.add(Proposal());
+    // });
+  // }
 
   @override
   Widget build(BuildContext context) {

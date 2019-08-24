@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './event.dart';
+// import './event.dart';
 import './createevent.dart';
 
 class EventsScreen extends StatefulWidget {
@@ -11,11 +11,11 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   List<Widget> _eventsList = [];
 
-  void _addEvent() {
+  // void _addEvent() {
     // setState(() {
     //  _eventsList.add(Event());
     // });
-  }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _EventsScreenState extends State<EventsScreen> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context,
-          MaterialPageRoute(builder: (context) => EventPage()));
+          MaterialPageRoute(builder: (context) => CreateEventPage()));
         }
       ),
     );
