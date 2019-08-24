@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './event.dart';
+import './createevent.dart';
 
 class EventsScreen extends StatefulWidget {
   @override
@@ -9,32 +10,11 @@ class EventsScreen extends StatefulWidget {
 
 class _EventsScreenState extends State<EventsScreen> {
   List<Widget> _eventsList = [];
-  String _selectedItem = '';
 
   void _addEvent() {
     // setState(() {
     //  _eventsList.add(Event());
     // });
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.ac_unit),
-                title: Text('Cooling'),
-                onTap: () => _selectItem('Cooling'),
-              )
-            ],
-          );
-        });
-  }
-
-  void _selectItem(String name) {
-    // Navigator.pop(context);
-    setState(() {
-      _selectedItem = name;
-    });
   }
 
   @override
@@ -48,7 +28,10 @@ class _EventsScreenState extends State<EventsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {}//_addEvent,
+        onPressed: () {
+          Navigator.push(context,
+          MaterialPageRoute(builder: (context) => EventPage()));
+        }
       ),
     );
   }
