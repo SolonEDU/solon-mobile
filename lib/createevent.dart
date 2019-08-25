@@ -5,7 +5,7 @@ class EventPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SECOND PAGE'),
+        title: Text('Add Event'),
       ),
       body: Column(
         children: <Widget>[
