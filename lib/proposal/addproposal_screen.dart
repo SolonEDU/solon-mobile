@@ -37,8 +37,40 @@ class AddProposalFormState extends State<AddProposalForm> {
   final Function addProposal;
   final proposalTitleController = TextEditingController();
   final proposalSubtitleController = TextEditingController();
+  DateTime _date = DateTime.now();
+  TimeOfDay _time = TimeOfDay.now();
 
   AddProposalFormState(this.addProposal);
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2019),
+      lastDate: DateTime(2020),
+    );
+
+    if(picked != null && picked != _date) {
+      print('Date selected: ${_date.toString()}');
+      setState(() {
+        _date = picked;
+      });
+    }
+  }
+
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: _time,
+    );
+
+    if(picked != null && picked != _time) {
+      print('Time selected: ${_time.toString()}');
+      setState(() {
+        _time = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +100,20 @@ class AddProposalFormState extends State<AddProposalForm> {
             },
             controller: proposalSubtitleController,
           ),
+          RaisedButton(
+            child: Text('Select Date'),
+            onPressed: () {
+              _selectDate(context);
+            },
+          ),
+          Text('Vote ends on ${_date.toString()}'),
+          RaisedButton(
+            child: Text('Select Time'),
+            onPressed: () {
+              _selectTime(context);
+            },
+          ),
+          Text('Vote ends on ${_time.toString()}'),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
