@@ -5,23 +5,30 @@ import './proposal_screen.dart';
 class Proposal extends StatefulWidget {
   final String proposalTitle;
   final String proposalSubtitle;
+  final DateTime dateTime;
+  final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
 
-  Proposal(this.proposalTitle, this.proposalSubtitle, this.numYea, this.numNay);
+  Proposal(this.proposalTitle, this.proposalSubtitle, this.dateTime,
+      this.timeOfDay, this.numYea, this.numNay);
 
   @override
-  _ProposalState createState() => _ProposalState(proposalTitle, proposalSubtitle, numYea, numNay);
+  _ProposalState createState() => _ProposalState(
+      proposalTitle, proposalSubtitle, dateTime, timeOfDay, numYea, numNay);
 }
 
 class _ProposalState extends State<Proposal> {
   final String proposalTitle;
   final String proposalSubtitle;
+  final DateTime dateTime;
+  final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
   var voteChoiceVisibility = true;
 
-  _ProposalState(this.proposalTitle, this.proposalSubtitle, this.numYea, this.numNay);
+  _ProposalState(this.proposalTitle, this.proposalSubtitle, this.dateTime,
+      this.timeOfDay, this.numYea, this.numNay);
 
   @override
   // Widget build(BuildContext context) {
@@ -39,8 +46,14 @@ class _ProposalState extends State<Proposal> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ProposalScreen(
-                  widget.proposalTitle, widget.proposalSubtitle, widget.numYea, widget.numNay)),
+            builder: (context) => ProposalScreen(
+                widget.proposalTitle,
+                widget.proposalSubtitle,
+                widget.dateTime,
+                widget.timeOfDay,
+                widget.numYea,
+                widget.numNay),
+          ),
         );
       },
       child: Center(
@@ -54,6 +67,9 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
+              Text(DateTime.now().difference(dateTime).inDays < 0
+                  ? 'Cooldown Exceeded'
+                  : '${DateTime.now().difference(dateTime).inDays}'),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),

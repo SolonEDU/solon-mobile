@@ -11,9 +11,9 @@ class ProposalsScreen extends StatefulWidget {
 class _ProposalsScreenState extends State<ProposalsScreen> {
   List<Widget> _proposalsList = [];
 
-  void _addProposal(String proposalTitle, String proposalSubtitle) {
+  void _addProposal(String proposalTitle, String proposalSubtitle, DateTime dateTime, TimeOfDay timeOfDay) {
     setState(() {
-      _proposalsList.add(Proposal(proposalTitle, proposalSubtitle, 0, 0));
+      _proposalsList.add(Proposal(proposalTitle, proposalSubtitle, dateTime, timeOfDay, 0, 0));
     });
   }
 
