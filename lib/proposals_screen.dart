@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './proposal.dart';
-import './add_proposal_modal_screen.dart';
+import './addproposal_screen.dart';
 
 class ProposalsScreen extends StatefulWidget {
   @override
@@ -10,11 +10,10 @@ class ProposalsScreen extends StatefulWidget {
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
   List<Widget> _proposalsList = [];
-  AddProposalModalScreen modal = new AddProposalModalScreen();
 
-  void _addProposal() {
+  void _addProposal(String proposalTitle, String proposalSubtitle) {
     setState(() {
-      _proposalsList.add(Proposal());
+      _proposalsList.add(Proposal(proposalTitle, proposalSubtitle));
     });
   }
 
@@ -29,7 +28,12 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => modal.mainBottomSheet(context),
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProposalScreen(_addProposal)),
+          )
+        },
       ),
     );
   }
