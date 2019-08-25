@@ -3,7 +3,7 @@ import 'package:solon/home_screen.dart';
 
 import './navbar.dart';
 import './proposals_screen.dart';
-import './events_screen.dart';
+import './event/screen.dart';
 import './forum_screen.dart';
 
 void main() => runApp(MyApp());
