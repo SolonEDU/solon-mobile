@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solon/home_screen.dart';
 
 import './navbar.dart';
-import './proposals_screen.dart';
+import './proposal/proposals_screen.dart';
 import './event/screen.dart';
 import './forum_screen.dart';
 
