@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 
-class Proposal extends StatelessWidget {
+import './proposal_screen.dart';
+
+class Proposal extends StatefulWidget {
   final String proposalTitle;
   final String proposalSubtitle;
-  Proposal(this.proposalTitle, this.proposalSubtitle);
+  int numYea;
+  int numNay;
+
+  Proposal(this.proposalTitle, this.proposalSubtitle, this.numYea, this.numNay);
+
+  @override
+  _ProposalState createState() => _ProposalState(proposalTitle, proposalSubtitle, numYea, numNay);
+}
+
+class _ProposalState extends State<Proposal> {
+  final String proposalTitle;
+  final String proposalSubtitle;
+  int numYea;
+  int numNay;
+  var voteChoiceVisibility = true;
+
+  _ProposalState(this.proposalTitle, this.proposalSubtitle, this.numYea, this.numNay);
 
   @override
   // Widget build(BuildContext context) {
@@ -16,31 +34,57 @@ class Proposal extends StatelessWidget {
   // }
 
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile( //used to be const
-              leading: Icon(Icons.account_balance),
-              title: Text(proposalTitle),
-              subtitle: Text(proposalSubtitle),
-            ),
-            ButtonTheme.bar( // make buttons use the appropriate styles for cards
-              child: ButtonBar(
-                children: <Widget>[
-                  FlatButton(
-                    child: const Text('YEA'),
-                    onPressed: () { /* ... */ },
-                  ),
-                  FlatButton(
-                    child: const Text('NAY'),
-                    onPressed: () { /* ... */ },
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProposalScreen(
+                  widget.proposalTitle, widget.proposalSubtitle, widget.numYea, widget.numNay)),
+        );
+      },
+      child: Center(
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                //used to be const
+                leading: Icon(Icons.account_balance),
+                title: Text(widget.proposalTitle),
+                subtitle: Text(widget.proposalSubtitle),
               ),
-            ),
-          ],
+              Visibility(
+                visible: voteChoiceVisibility ? true : false,
+                replacement: Text('You voted already!'),
+                child: ButtonTheme.bar(
+                  // make buttons use the appropriate styles for cards
+                  child: ButtonBar(
+                    children: <Widget>[
+                      FlatButton(
+                        child: const Text('YEA'),
+                        onPressed: () {
+                          widget.numYea++;
+                          setState(() {
+                            voteChoiceVisibility = false;
+                          });
+                        },
+                      ),
+                      FlatButton(
+                        child: const Text('NAY'),
+                        onPressed: () {
+                          widget.numNay++;
+                          setState(() {
+                            voteChoiceVisibility = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

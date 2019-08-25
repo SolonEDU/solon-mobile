@@ -13,7 +13,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
 
   void _addProposal(String proposalTitle, String proposalSubtitle) {
     setState(() {
-      _proposalsList.add(Proposal(proposalTitle, proposalSubtitle));
+      _proposalsList.add(Proposal(proposalTitle, proposalSubtitle, 0, 0));
     });
   }
 
