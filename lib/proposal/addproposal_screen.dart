@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddProposalScreen extends StatelessWidget {
   final Function addProposal;
   AddProposalScreen(this.addProposal);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +51,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       lastDate: DateTime(2020),
     );
 
-    if(picked != null && picked != _date) {
+    if (picked != null && picked != _date) {
       print('Date selected: ${_date.toString()}');
       setState(() {
         _date = picked;
@@ -65,7 +65,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       initialTime: _time,
     );
 
-    if(picked != null && picked != _time) {
+    if (picked != null && picked != _time) {
       print('Time selected: ${_time.toString()}');
       setState(() {
         _time = picked;
@@ -125,7 +125,12 @@ class AddProposalFormState extends State<AddProposalForm> {
                   // If the form is valid, display a Snackbar.
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  addProposal(proposalTitleController.text, proposalSubtitleController.text, _date, _time);
+                  addProposal(
+                    proposalTitleController.text,
+                    proposalSubtitleController.text,
+                    _date,
+                    _time,
+                  );
                   Navigator.pop(context);
                 }
               },
