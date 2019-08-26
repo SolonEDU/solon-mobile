@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
 import './proposal_screen.dart';
 
@@ -9,13 +11,28 @@ class Proposal extends StatefulWidget {
   final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
+  DocumentSnapshot doc;
 
-  Proposal(this.proposalTitle, this.proposalSubtitle, this.dateTime,
-      this.timeOfDay, this.numYea, this.numNay);
+  Proposal(
+    this.proposalTitle,
+    this.proposalSubtitle,
+    this.dateTime,
+    this.timeOfDay,
+    this.numYea,
+    this.numNay,
+    this.doc,
+  );
 
   @override
   _ProposalState createState() => _ProposalState(
-      proposalTitle, proposalSubtitle, dateTime, timeOfDay, numYea, numNay);
+        proposalTitle,
+        proposalSubtitle,
+        dateTime,
+        timeOfDay,
+        numYea,
+        numNay,
+        doc,
+      );
 }
 
 class _ProposalState extends State<Proposal> {
@@ -25,10 +42,19 @@ class _ProposalState extends State<Proposal> {
   final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
+  DocumentSnapshot doc;
   var voteChoiceVisibility = true;
+  final db = Firestore.instance;
 
-  _ProposalState(this.proposalTitle, this.proposalSubtitle, this.dateTime,
-      this.timeOfDay, this.numYea, this.numNay);
+  _ProposalState(
+    this.proposalTitle,
+    this.proposalSubtitle,
+    this.dateTime,
+    this.timeOfDay,
+    this.numYea,
+    this.numNay,
+    this.doc,
+  );
 
   @override
   // Widget build(BuildContext context) {
@@ -41,18 +67,20 @@ class _ProposalState extends State<Proposal> {
   // }
 
   Widget build(BuildContext context) {
+    DateTime cooldownTime;
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ProposalScreen(
-                widget.proposalTitle,
-                widget.proposalSubtitle,
-                widget.dateTime,
-                widget.timeOfDay,
-                widget.numYea,
-                widget.numNay),
+              widget.proposalTitle,
+              widget.proposalSubtitle,
+              widget.dateTime,
+              widget.timeOfDay,
+              widget.numYea,
+              widget.numNay,
+            ),
           ),
         );
       },
@@ -67,9 +95,8 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
-              Text(DateTime.now().difference(dateTime).inDays < 0
-                  ? 'Cooldown Exceeded'
-                  : '${DateTime.now().difference(dateTime).inDays}'),
+              Text(
+                  'Cooldown Date and Time: '),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -93,6 +120,12 @@ class _ProposalState extends State<Proposal> {
                           setState(() {
                             voteChoiceVisibility = false;
                           });
+                        },
+                      ),
+                      FlatButton(
+                        child: const Text('Delete'),
+                        onPressed: () async {
+                          await db.collection('proposals').document(doc.documentID).delete();
                         },
                       ),
                     ],
