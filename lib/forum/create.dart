@@ -150,7 +150,7 @@ class _CreatePostState extends State<CreatePost> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create an Event'),
+        title: Text('Create a Post'),
       ),
       body: Stepper(
         // key: _formKey,

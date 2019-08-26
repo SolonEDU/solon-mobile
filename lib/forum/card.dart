@@ -43,7 +43,7 @@ class _PostCardState extends State<PostCard> {
             ListTile(
               //leading: Icon(Icons.calendar_today),
               title: Text(title),
-              subtitle: Text(time + "\n" + description),
+              subtitle: Text(description + "\n" + time),
               onTap: () {
                 Navigator.push(
                   context,
