@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../main.dart';
+import 'package:solon/auth/sign_in.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => new _LoginPageState();
+  _SignUpPageState createState() => new _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   String _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign in'),
-      ),
+      appBar: AppBar(),
       body: Form(
           key: _formKey,
           child: Column(
@@ -42,28 +40,26 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
               RaisedButton(
-                onPressed: signIn,
-                child: Text('Sign in'),
+                onPressed: signUp,
+                child: Text('Sign Up'),
               )
             ],
           )),
     );
   }
 
-  Future<void> signIn() async {
+  Future<void> signUp() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
       try {
         AuthResult result = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
+            .createUserWithEmailAndPassword(email: _email, password: _password);
         FirebaseUser user = result.user;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Main(),
-          ),
-        );
+        user.sendEmailVerification();
+        Navigator.of(context).pop();
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       } catch (e) {
         print(e.message);
       }
