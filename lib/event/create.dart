@@ -9,15 +9,41 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  final _formKey = GlobalKey<FormState>();
+  List<Step> form = [];
+  // final _formKey = GlobalKey<FormState>();
   final Function addEvent;
+  FocusNode myFocusNode;
 
-  var titleController = TextEditingController();
-  var descriptionController = TextEditingController();
-  var timeController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    myFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    super.dispose();
+  }
+
+  static var titleController = TextEditingController();
+  static var descriptionController = TextEditingController();
+  static var timeController = TextEditingController();
+  static var controllers = [
+    titleController,
+    descriptionController,
+    timeController
+  ];
 
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
+
+  int currentStep = 0;
+  bool complete = false;
+
+  goTo(int step) {
+    setState(() => {currentStep = step});
+  }
 
   _CreateEventState(this.addEvent);
 
@@ -57,57 +83,101 @@ class _CreateEventState extends State<CreateEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Create an Event'),
+    form = [
+      Step(
+        title: const Text('Title'),
+        isActive: currentStep == 0 ? true : false,
+        state: currentStep == 0 ? StepState.editing : StepState.complete,
+        content: TextFormField(
+          autofocus: true,
+          decoration: const InputDecoration(labelText: 'Title'),
+          controller: titleController,
+          autovalidate: true,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter a title';
+            }
+            return null;
+          },
+        ),
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
+      Step(
+        title: const Text('Description'),
+        isActive: currentStep == 1 ? true : false,
+        state: currentStep == 1
+            ? StepState.editing
+            : currentStep < 1 ? StepState.disabled : StepState.complete,
+        content: TextFormField(
+          autofocus: true,
+          focusNode: myFocusNode,
+          decoration: const InputDecoration(labelText: 'Description'),
+          controller: descriptionController,
+          autovalidate: true,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter a description';
+            }
+            return null;
+          },
+        ),
+      ),
+      Step(
+        title: const Text('Date and Time'),
+        isActive: currentStep == 2 ? true : false,
+        state: currentStep == 2
+            ? StepState.editing
+            : currentStep < 2 ? StepState.disabled : StepState.complete,
+        content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: const InputDecoration(labelText: 'Title'),
-              controller: titleController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Descripton'),
-              controller: descriptionController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: timeController,
-              readOnly: true,
+              autofocus: true,
               decoration: const InputDecoration(labelText: 'Date and Time'),
+              controller: timeController,
+              autovalidate: true,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please choose a date and time';
+                }
+                return null;
+              },
             ),
             RaisedButton(
               child: Text('Select Date and Time'),
               onPressed: () => _selectDate(context),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: RaisedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    addEvent(titleController.text, descriptionController.text, timeController.text);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Submit'),
-              ),
-            ),
           ],
         ),
+      )
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create an Event'),
+      ),
+      body: Stepper(
+        // key: _formKey,
+        steps: form,
+        currentStep: currentStep,
+        onStepContinue: () => {
+          currentStep + 1 != form.length &&
+                  controllers[currentStep].text.length > 0
+              ? {
+                  goTo(currentStep + 1),
+                  FocusScope.of(context).requestFocus(myFocusNode)
+                }
+              : {
+                  setState(() => complete = true),
+                  addEvent(titleController.text, descriptionController.text,
+                      timeController.text),
+                  Navigator.pop(context),
+                  titleController.text = null,
+                  descriptionController.text = null,
+                  timeController.text = null,
+                }
+        },
+        onStepCancel: () => {
+          if (currentStep > 0) {goTo(currentStep - 1)}
+        },
+        onStepTapped: (step) => goTo(step),
       ),
     );
   }
