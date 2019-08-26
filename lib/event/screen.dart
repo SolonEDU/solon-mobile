@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './card.dart';
 import './create.dart';
@@ -9,34 +10,63 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  List<Widget> _eventsList = [];
+  // List<Widget> _eventsList = [];
+  final db = Firestore.instance;
 
   void _addEvent(
     title,
     description,
     time,
-  ) {
-    setState(
-      () {
-        _eventsList.add(
-          EventCard(
-            title,
-            description,
-            time,
-          ),
-        );
+  ) async {
+    // setState(
+    //   () {
+    //     _eventsList.add(
+    //       EventCard(
+    //         title,
+    //         description,
+    //         time,
+    //       ),
+    //     );
+    //   },
+    // );
+
+    DocumentReference ref = await db.collection('events').add(
+      {
+        'eventTitle': title,
+        'eventDescription': description,
+        'eventTime': time.toString(),
       },
+    );
+  }
+
+  EventCard buildEventCard(doc) {
+    return EventCard(
+      doc.data['eventTitle'],
+      doc.data['eventDescription'],
+      doc.data['eventTime'],
+      doc
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: _eventsList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _eventsList[index];
-        },
+      body: ListView(
+        padding: EdgeInsets.all(8),
+        children: <Widget>[
+          StreamBuilder<QuerySnapshot>(
+            stream: db.collection('events').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: snapshot.data.documents
+                      .map((doc) => buildEventCard(doc))
+                      .toList(),
+                );
+              }
+            },
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
