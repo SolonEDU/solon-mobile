@@ -90,6 +90,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                       .toList(),
                 );
               }
+              return Container();
             },
           ),
         ],
