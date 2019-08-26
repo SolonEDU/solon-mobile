@@ -18,41 +18,56 @@ class _EventCardState extends State<EventCard> {
   final String time;
   bool attending = false;
 
-  _EventCardState(this.title, this.description, this.time);
+  _EventCardState(
+    this.title,
+    this.description,
+    this.time,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Card(
-            child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.calendar_today),
-          title: Text(title),
-          subtitle: Text(description + '\n' + time),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => EventPage(title, description, time)));
-          },
-        ),
-        ButtonTheme.bar(
-            child: ButtonBar(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Switch.adaptive(
-              value: attending,
-              onChanged: (value) {
-                setState(() => attending = value);
+            ListTile(
+              leading: Icon(Icons.calendar_today),
+              title: Text(title),
+              subtitle: Text(description + '\n' + time),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EventPage(
+                      title,
+                      description,
+                      time,
+                    ),
+                  ),
+                );
               },
-              activeTrackColor: Colors.lightGreenAccent,
-              activeColor: Colors.green,
             ),
-            Text('Attending?')
+            ButtonTheme.bar(
+              child: ButtonBar(
+                children: <Widget>[
+                  Switch.adaptive(
+                    value: attending,
+                    onChanged: (value) {
+                      setState(
+                        () => attending = value,
+                      );
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                  ),
+                  Text('Attending?')
+                ],
+              ),
+            )
           ],
-        ))
-      ],
-    )));
+        ),
+      ),
+    );
   }
 }
