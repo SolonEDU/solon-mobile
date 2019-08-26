@@ -67,7 +67,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       doc.data['proposalTitle'],
       doc.data['proposalSubtitle'],
       DateTime.parse(doc.data['dateTime']),
-      null,
+      TimeOfDay(hour: int.parse(doc.data['timeOfDay'].substring(10,12)), minute: int.parse(doc.data['timeOfDay'].substring(13,15))),
       0,
       0,
       doc,
