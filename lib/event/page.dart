@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class EventPage extends StatelessWidget {
   final String title;
   final String description;
-  final String time;
+  final DateTime date;
+  final TimeOfDay time;
 
   EventPage(
     this.title,
     this.description,
+    this.date,
     this.time,
   );
 
@@ -20,7 +22,7 @@ class EventPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Text(description),
-          Text(time),
+          Text('Event will occur on ' + date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
         ],
       ),
     );

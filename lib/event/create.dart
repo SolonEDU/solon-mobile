@@ -170,7 +170,7 @@ class _CreateEventState extends State<CreateEvent> {
               : {
                   setState(() => complete = true),
                   addEvent(titleController.text, descriptionController.text,
-                      timeController.text),
+                      _date, _time),
                   titleController.text = '',
                   descriptionController.text = '',
                   timeController.text = '',

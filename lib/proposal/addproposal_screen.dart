@@ -82,7 +82,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       lastDate: DateTime(2020),
     );
 
-    if (picked != null && picked != _date) {
+    if (picked != null) {
       print('Date selected: ${_date.toString()}');
       _selectTime(context);
       setState(() {
@@ -97,7 +97,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       initialTime: _time,
     );
 
-    if (picked != null && picked != _time) {
+    if (picked != null) {
       print('Time selected: ${_time.toString()}');
       setState(() {
         _time = picked;
@@ -179,13 +179,26 @@ class AddProposalFormState extends State<AddProposalForm> {
       steps: form,
       currentStep: _currentStep,
       onStepContinue: () => {
-        _currentStep + 1 != form.length &&
-                controllers[_currentStep].text.length > 0
+        _currentStep + 1 != form.length
             ? {
-                goTo(_currentStep + 1),
-                FocusScope.of(context).requestFocus(myFocusNode)
+                if (controllers[_currentStep].text.length > 0)
+                  {
+                    goTo(_currentStep + 1),
+                    FocusScope.of(context).requestFocus(myFocusNode)
+                  }
               }
-            : setState(() => complete = true),
+            : {
+                setState(() => complete = true),
+                addProposal(
+                    proposalTitleController.text,
+                    proposalSubtitleController.text,
+                    _date,
+                    _time),
+                proposalTitleController.text = '',
+                proposalSubtitleController.text = '',
+                proposalTimeController.text = '',
+                Navigator.pop(context),
+              }
       },
       onStepCancel: () => {
         if (_currentStep > 0) {goTo(_currentStep - 1)}
