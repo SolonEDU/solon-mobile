@@ -43,7 +43,7 @@ class _CreateEventState extends State<CreateEvent> {
 
   goTo(int step) {
     setState(() => {currentStep = step});
-    if(step == 2) _selectDate(context);
+    if (step == 2) _selectDate(context);
   }
 
   _CreateEventState(this.addEvent);
@@ -170,10 +170,10 @@ class _CreateEventState extends State<CreateEvent> {
                   setState(() => complete = true),
                   addEvent(titleController.text, descriptionController.text,
                       timeController.text),
+                  titleController.text = '',
+                  descriptionController.text = '',
+                  timeController.text = '',
                   Navigator.pop(context),
-                  titleController.text = null,
-                  descriptionController.text = null,
-                  timeController.text = null,
                 }
         },
         onStepCancel: () => {
