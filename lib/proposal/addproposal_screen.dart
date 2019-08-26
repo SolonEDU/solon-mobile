@@ -39,6 +39,7 @@ class AddProposalFormState extends State<AddProposalForm> {
   final proposalSubtitleController = TextEditingController();
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
+  var _currentStep = 0;
 
   AddProposalFormState(this.addProposal);
 
@@ -77,8 +78,8 @@ class AddProposalFormState extends State<AddProposalForm> {
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text('Proposal'),
           TextFormField(
@@ -124,7 +125,7 @@ class AddProposalFormState extends State<AddProposalForm> {
                   // If the form is valid, display a Snackbar.
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  addProposal(proposalTitleController.text, proposalSubtitleController.text);
+                  addProposal(proposalTitleController.text, proposalSubtitleController.text, _date, _time);
                   Navigator.pop(context);
                 }
               },
