@@ -15,7 +15,6 @@ class ProposalsScreen extends StatefulWidget {
 class _ProposalsScreenState extends State<ProposalsScreen> {
   //List<Widget> _proposalsList = [];
   final db = Firestore.instance;
-  String id;
 
   void _addProposal(
     String proposalTitle,
@@ -56,8 +55,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         'timeOfDay': timeOfDay.toString(),
       },
     );
-
-    setState(() => id = ref.documentID);
   }
 //  List<Widget> makeListWidget(AsyncSnapshot snapshot) {
 //    return snapshot.data.documents.map<Widget>((document) {

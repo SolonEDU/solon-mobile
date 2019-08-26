@@ -8,7 +8,14 @@ class ProposalScreen extends StatelessWidget {
   final int numYea;
   final int numNay;
 
-  ProposalScreen(this.proposalTitle, this.proposalSubtitle, this.dateTime, this.timeOfDay, this.numYea, this.numNay);
+  ProposalScreen(
+    this.proposalTitle,
+    this.proposalSubtitle,
+    this.dateTime,
+    this.timeOfDay,
+    this.numYea,
+    this.numNay,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(

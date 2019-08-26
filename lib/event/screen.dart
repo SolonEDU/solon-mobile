@@ -11,10 +11,22 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   List<Widget> _eventsList = [];
 
-  void _addEvent(title,description,time) {
-    setState(() {
-     _eventsList.add(EventCard(title,description,time));
-    });
+  void _addEvent(
+    title,
+    description,
+    time,
+  ) {
+    setState(
+      () {
+        _eventsList.add(
+          EventCard(
+            title,
+            description,
+            time,
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -29,9 +41,13 @@ class _EventsScreenState extends State<EventsScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(context,
-          MaterialPageRoute(builder: (context) => CreateEvent(_addEvent)));
-        }
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateEvent(_addEvent),
+            ),
+          );
+        },
       ),
     );
   }
