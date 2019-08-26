@@ -3,6 +3,7 @@ import 'package:solon/home_screen.dart';
 import 'package:flutter/services.dart';
 
 import './navbar.dart';
+import './auth/signIn.dart';
 import './proposal/proposals_screen.dart';
 import './event/screen.dart';
 import './forum/screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: _title,
-      home: Main(),
+      home: LoginPage(),
     );
   }
 }
@@ -87,4 +88,3 @@ class _MainState extends State<Main> {
     );
   }
 }
-
