@@ -6,7 +6,7 @@ import './navbar.dart';
 import './auth/signIn.dart';
 import './proposal/proposals_screen.dart';
 import './event/screen.dart';
-import './forum_screen.dart';
+import './forum/screen.dart';
 
 void main() => runApp(MyApp());
 
