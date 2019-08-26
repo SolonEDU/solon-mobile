@@ -11,9 +11,9 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   List<Widget> _eventsList = [];
 
-  void _addEvent(title,description) {
+  void _addEvent(title,description,time) {
     setState(() {
-     _eventsList.add(Event(title,description));
+     _eventsList.add(EventCard(title,description,time));
     });
   }
 
@@ -30,7 +30,7 @@ class _EventsScreenState extends State<EventsScreen> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context,
-          MaterialPageRoute(builder: (context) => CreateEventPage(_addEvent)));
+          MaterialPageRoute(builder: (context) => CreateEvent(_addEvent)));
         }
       ),
     );
