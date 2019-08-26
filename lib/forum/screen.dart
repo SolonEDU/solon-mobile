@@ -13,17 +13,17 @@ class _ForumScreenState extends State<ForumScreen> {
   //final db = Firestore.instance;
 
   void _addPost(title, description) {
-     setState(
-       () {
-         _postList.add(
-           PostCard(
-             title,
-             description,
-             DateTime.now().toString(),
-           ),
-         );
-       },
-     );
+    setState(
+      () {
+        _postList.add(
+          PostCard(
+            title,
+            description,
+            DateTime.now().toString(),
+          ),
+        );
+      },
+    );
 
     //DocumentReference ref = await db.collection('events').add(
     //  {
@@ -45,23 +45,11 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(8),
-        children: _postList
-          // StreamBuilder<QuerySnapshot>(
-          //   stream: db.collection('events').snapshots(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       return Column(
-          //         children: snapshot.data.documents
-          //             .map((doc) => buildEventCard(doc))
-          //             .toList(),
-          //       );
-          //     }
-          //     return Container();
-          //   },
-          // ),
-        ,
+      body: ListView.builder(
+        itemCount: _postList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _postList[index];
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
