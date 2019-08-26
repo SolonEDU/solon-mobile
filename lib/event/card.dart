@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import './page.dart';
@@ -6,10 +7,11 @@ class EventCard extends StatefulWidget {
   final String title;
   final String description;
   final String time;
-  EventCard(this.title, this.description, this.time);
+  DocumentSnapshot doc;
+  EventCard(this.title, this.description, this.time, this.doc);
 
   @override
-  _EventCardState createState() => _EventCardState(title, description, time);
+  _EventCardState createState() => _EventCardState(title, description, time, doc);
 }
 
 class _EventCardState extends State<EventCard> {
@@ -17,11 +19,14 @@ class _EventCardState extends State<EventCard> {
   final String description;
   final String time;
   bool attending = false;
+  DocumentSnapshot doc;
+  final db = Firestore.instance;
 
   _EventCardState(
     this.title,
     this.description,
     this.time,
+    this.doc
   );
 
   @override
@@ -51,6 +56,12 @@ class _EventCardState extends State<EventCard> {
             ButtonTheme.bar(
               child: ButtonBar(
                 children: <Widget>[
+                  FlatButton(
+                    child: Icon(Icons.delete),
+                    onPressed: () async => {
+                      await db.collection('proposals').document(doc.documentID).delete()
+                    },
+                  ),
                   Switch.adaptive(
                     value: attending,
                     onChanged: (value) {
