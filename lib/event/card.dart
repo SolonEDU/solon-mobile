@@ -1,28 +1,59 @@
 import 'package:flutter/material.dart';
 
-class Event extends StatelessWidget {
+import './page.dart';
+
+class EventCard extends StatefulWidget {
   final String title;
   final String description;
+  final String time;
+  EventCard(this.title, this.description, this.time);
 
-  Event(this.title, this.description);
+  @override
+  _EventCardState createState() => _EventCardState(title, description, time);
+}
+
+class _EventCardState extends State<EventCard> {
+  final String title;
+  final String description;
+  final String time;
+  bool attending = false;
+
+  _EventCardState(this.title, this.description, this.time);
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   title: Text(title),
-    //   subtitle: Text(description),
-    // );
     return Center(
-      child: Card(
-        child: ListTile(
-          leading: Icon(Icons.adb),
+        child: Card(
+            child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          leading: Icon(Icons.calendar_today),
           title: Text(title),
           subtitle: Text(description),
           onTap: () {
-            print("i am tapping this");
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EventPage(title, description, time)));
           },
         ),
-      ),
-    );
+        ButtonTheme.bar(
+            child: ButtonBar(
+          children: <Widget>[
+            Text(time),
+            Switch.adaptive(
+              value: attending,
+              onChanged: (value) {
+                setState(() => attending = value);
+              },
+              activeTrackColor: Colors.lightGreenAccent,
+              activeColor: Colors.green,
+            ),
+            Text('Attending?')
+          ],
+        ))
+      ],
+    )));
   }
 }
