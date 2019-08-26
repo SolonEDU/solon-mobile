@@ -77,26 +77,58 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: Center(
-    //     child: ListView(
-    //       padding: EdgeInsets.all(8),
-    //       children: <Widget>[
-    //         StreamBuilder<QuerySnapshot>(
-    //           stream: db.collection('proposals').snapshots(),
-    //           builder: (context, snapshot) {
-    //             // if (snapshot.hasData) {
-    //             if (false) {
-    //               return Column(
-    //                 children: snapshot.data.documents
-    //                     .map((doc) => buildProposal(doc))
-    //                     .toList(),
-    //               );
-    //             }
-                return Container(
-                  alignment: Alignment.center,
-                  child: Loader(),
-                );
+    return StreamBuilder<QuerySnapshot>(
+        stream: db.collection('proposals').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return new Text('Loading...');
+            default:
+              return Scaffold(
+                body: Center(
+                  child: ListView(
+                    padding: EdgeInsets.all(8),
+                    children: <Widget>[
+                      Column(
+                        children: snapshot.data.documents
+                            .map((doc) => buildProposal(doc))
+                            .toList(),
+                      )
+                    ],
+                  ),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AddProposalScreen(_addProposal)),
+                    )
+                  },
+                ),
+              );
+          }
+        });
+
+//     return Scaffold(
+//       body: Center(
+//         child: ListView(
+//           padding: EdgeInsets.all(8),
+//           children: <Widget>[
+//             StreamBuilder<QuerySnapshot>(
+//               stream: db.collection('proposals').snapshots(),
+//               builder: (context, snapshot) {
+//                 if (snapshot.hasData) {
+//                   return Column(
+//                     children: snapshot.data.documents
+//                         .map((doc) => buildProposal(doc))
+//                         .toList(),
+//                   );
+//                 }
+//                 return Column(children: [Loader()],);
 //               },
 //             ),
 //           ],
