@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "277704357615",
+    "firebase_url": "https://solon-142b1.firebaseio.com",
+    "project_id": "solon-142b1",
+    "storage_bucket": "solon-142b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277704357615:android:8790d0ef67150256",
+        "android_client_info": {
+          "package_name": "com.example.solon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277704357615-opq6u6j6gt8msrh9mqt4h6ivf1grn1kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM-T4uOzivuV7eTDLPrlOlaVw0H3C31m0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277704357615-opq6u6j6gt8msrh9mqt4h6ivf1grn1kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
