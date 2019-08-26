@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "277704357615",
-    "firebase_url": "https://solon-142b1.firebaseio.com",
-    "project_id": "solon-142b1",
-    "storage_bucket": "solon-142b1.appspot.com"
+    "project_number": "67592212864",
+    "firebase_url": "https://solon-mobile.firebaseio.com",
+    "project_id": "solon-mobile",
+    "storage_bucket": "solon-mobile.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:277704357615:android:8790d0ef67150256",
+        "mobilesdk_app_id": "1:67592212864:android:8790d0ef67150256",
         "android_client_info": {
           "package_name": "com.example.solon"
         }
       },
       "oauth_client": [
         {
-          "client_id": "277704357615-opq6u6j6gt8msrh9mqt4h6ivf1grn1kn.apps.googleusercontent.com",
+          "client_id": "67592212864-57b5gptt4g3n7gq60umg08i2i1tjvr8d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAM-T4uOzivuV7eTDLPrlOlaVw0H3C31m0"
+          "current_key": "AIzaSyCTTIOpYD23sy6b6Yg6u0KPvu_78Xs60N8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "277704357615-opq6u6j6gt8msrh9mqt4h6ivf1grn1kn.apps.googleusercontent.com",
+              "client_id": "67592212864-57b5gptt4g3n7gq60umg08i2i1tjvr8d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
