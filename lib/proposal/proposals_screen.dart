@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './proposal.dart';
 import './addproposal_screen.dart';
+import './loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
   @override
@@ -76,52 +77,58 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(8),
-        children: <Widget>[
-          StreamBuilder<QuerySnapshot>(
-            stream: db.collection('proposals').snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: snapshot.data.documents
-                      .map((doc) => buildProposal(doc))
-                      .toList(),
+    // return Scaffold(
+    //   body: Center(
+    //     child: ListView(
+    //       padding: EdgeInsets.all(8),
+    //       children: <Widget>[
+    //         StreamBuilder<QuerySnapshot>(
+    //           stream: db.collection('proposals').snapshots(),
+    //           builder: (context, snapshot) {
+    //             // if (snapshot.hasData) {
+    //             if (false) {
+    //               return Column(
+    //                 children: snapshot.data.documents
+    //                     .map((doc) => buildProposal(doc))
+    //                     .toList(),
+    //               );
+    //             }
+                return Container(
+                  alignment: Alignment.center,
+                  child: Loader(),
                 );
-              }
-              return Container();
-            },
-          ),
-        ],
-      ),
-//      body:
-//      Container(
-//        child: StreamBuilder(
-//          stream: Firestore.instance.collection("proposals").snapshots(),
-//          builder: (context, snapshot) {
-//            return ListView(
-//              children: makeListWidget(snapshot),
-//            );
-//          },
-//        ),
-//      ),
-//      ListView.builder(
-//        itemCount: _proposalsList.length,
-//        itemBuilder: (BuildContext context, int index) {
-//          return _proposalsList[index];
-//        },
-//      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddProposalScreen(_addProposal)),
-          )
-        },
-      ),
-    );
+//               },
+//             ),
+//           ],
+//         ),
+//       ),
+// //      body:
+// //      Container(
+// //        child: StreamBuilder(
+// //          stream: Firestore.instance.collection("proposals").snapshots(),
+// //          builder: (context, snapshot) {
+// //            return ListView(
+// //              children: makeListWidget(snapshot),
+// //            );
+// //          },
+// //        ),
+// //      ),
+// //      ListView.builder(
+// //        itemCount: _proposalsList.length,
+// //        itemBuilder: (BuildContext context, int index) {
+// //          return _proposalsList[index];
+// //        },
+// //      ),
+//       floatingActionButton: FloatingActionButton(
+//         child: Icon(Icons.add),
+//         onPressed: () => {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//                 builder: (context) => AddProposalScreen(_addProposal)),
+//           )
+//         },
+//       ),
+//     );
   }
 }
