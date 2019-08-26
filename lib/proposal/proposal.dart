@@ -123,7 +123,7 @@ class _ProposalState extends State<Proposal> {
                         },
                       ),
                       FlatButton(
-                        child: const Text('Delete'),
+                        child: Icon(Icons.delete),
                         onPressed: () async {
                           await db.collection('proposals').document(doc.documentID).delete();
                         },

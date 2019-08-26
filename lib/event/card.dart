@@ -11,7 +11,12 @@ class EventCard extends StatefulWidget {
   EventCard(this.title, this.description, this.time, this.doc);
 
   @override
-  _EventCardState createState() => _EventCardState(title, description, time, doc);
+  _EventCardState createState() => _EventCardState(
+        title,
+        description,
+        time,
+        doc,
+      );
 }
 
 class _EventCardState extends State<EventCard> {
@@ -26,7 +31,7 @@ class _EventCardState extends State<EventCard> {
     this.title,
     this.description,
     this.time,
-    this.doc
+    this.doc,
   );
 
   @override
@@ -59,7 +64,10 @@ class _EventCardState extends State<EventCard> {
                   FlatButton(
                     child: Icon(Icons.delete),
                     onPressed: () async => {
-                      await db.collection('proposals').document(doc.documentID).delete()
+                      await db
+                          .collection('events')
+                          .document(doc.documentID)
+                          .delete()
                     },
                   ),
                   Switch.adaptive(

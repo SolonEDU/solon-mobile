@@ -44,7 +44,7 @@ class _EventsScreenState extends State<EventsScreen> {
       doc.data['eventTitle'],
       doc.data['eventDescription'],
       doc.data['eventTime'],
-      doc
+      doc,
     );
   }
 
@@ -65,7 +65,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 );
               }
             },
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
