@@ -30,7 +30,7 @@ class _EventCardState extends State<EventCard> {
         ListTile(
           leading: Icon(Icons.calendar_today),
           title: Text(title),
-          subtitle: Text(description),
+          subtitle: Text(description + '\n' + time),
           onTap: () {
             Navigator.push(
                 context,
@@ -41,7 +41,6 @@ class _EventCardState extends State<EventCard> {
         ButtonTheme.bar(
             child: ButtonBar(
           children: <Widget>[
-            Text(time),
             Switch.adaptive(
               value: attending,
               onChanged: (value) {
