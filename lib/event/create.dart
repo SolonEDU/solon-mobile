@@ -43,15 +43,17 @@ class _CreateEventState extends State<CreateEvent> {
 
   goTo(int step) {
     setState(() => {currentStep = step});
+    if(step == 2) _selectDate(context);
   }
 
   _CreateEventState(this.addEvent);
 
   Future<Null> _selectDate(BuildContext context) async {
+    DateTime now = DateTime.now();
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: _date,
-      firstDate: DateTime(_date.year, _date.month, _date.day),
+      firstDate: DateTime(now.year, now.month, now.day),
       lastDate: DateTime(2020),
     );
 
