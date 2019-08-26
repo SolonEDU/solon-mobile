@@ -9,13 +9,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String _email, _password;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign in'),
-      ),
+      key: _scaffoldKey,
+      appBar: AppBar(),
       body: Form(
           key: _formKey,
           child: Column(
@@ -31,19 +31,13 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(labelText: 'Email'),
               ),
               TextFormField(
-                validator: (input) {
-                  if (input.length < 6) {
-                    return 'Your password needs to be at least 6 characters';
-                  }
-                  return null;
-                },
                 onSaved: (input) => _password = input,
                 decoration: InputDecoration(labelText: 'Password'),
                 obscureText: true,
               ),
               RaisedButton(
                 onPressed: signIn,
-                child: Text('Sign in'),
+                child: Text('Sign In'),
               )
             ],
           )),
@@ -58,15 +52,27 @@ class _LoginPageState extends State<LoginPage> {
         AuthResult result = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
         FirebaseUser user = result.user;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Main(),
-          ),
-        );
+        if (!user.isEmailVerified) {
+          _showToast('Email is not verified');
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Main(),
+            ),
+          );
+        }
       } catch (e) {
-        print(e.message);
+        _showToast(e.message);
       }
     }
+  }
+
+  void _showToast(String message) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 }
