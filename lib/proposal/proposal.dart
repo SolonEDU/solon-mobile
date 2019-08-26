@@ -95,8 +95,7 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
-              Text(
-                  'Cooldown Date and Time: '),
+              Text('Cooldown Date and Time: '),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -125,7 +124,11 @@ class _ProposalState extends State<Proposal> {
                       FlatButton(
                         child: Icon(Icons.delete),
                         onPressed: () async {
-                          await db.collection('proposals').document(doc.documentID).delete();
+                          await db
+                              .collection('proposals')
+                              .document(doc.documentID)
+                              .delete();
+                          print('deleted ${doc.documentID}');
                         },
                       ),
                     ],
