@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import './navbar.dart';
-import 'package:solon/auth/welcome.dart';
-import 'package:solon/home_screen.dart';
+import 'package:Solon/auth/welcome.dart';
+import 'package:Solon/home_screen.dart';
 import './proposal/proposals_screen.dart';
 import './event/screen.dart';
 import './forum/screen.dart';

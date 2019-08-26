@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solon/auth/sign_in.dart';
-import 'package:solon/auth/sign_up.dart';
+import 'package:Solon/auth/sign_in.dart';
+import 'package:Solon/auth/sign_up.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
