@@ -11,7 +11,7 @@ class Proposal extends StatefulWidget {
   final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
-  DocumentSnapshot doc;
+  final DocumentSnapshot doc;
 
   Proposal(
     this.proposalTitle,

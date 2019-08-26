@@ -6,14 +6,16 @@ import './page.dart';
 class EventCard extends StatefulWidget {
   final String title;
   final String description;
-  final String time;
-  DocumentSnapshot doc;
-  EventCard(this.title, this.description, this.time, this.doc);
+  final DateTime date;
+  final TimeOfDay time;
+  final DocumentSnapshot doc;
+  EventCard(this.title, this.description, this.date, this.time, this.doc);
 
   @override
   _EventCardState createState() => _EventCardState(
         title,
         description,
+        date,
         time,
         doc,
       );
@@ -22,7 +24,8 @@ class EventCard extends StatefulWidget {
 class _EventCardState extends State<EventCard> {
   final String title;
   final String description;
-  final String time;
+  final DateTime date;
+  final TimeOfDay time;
   bool attending = false;
   DocumentSnapshot doc;
   final db = Firestore.instance;
@@ -30,6 +33,7 @@ class _EventCardState extends State<EventCard> {
   _EventCardState(
     this.title,
     this.description,
+    this.date,
     this.time,
     this.doc,
   );
@@ -44,7 +48,7 @@ class _EventCardState extends State<EventCard> {
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text(title),
-              subtitle: Text(description + '\n' + time),
+              subtitle: Text(description + '\n' + 'Event will occur on '  + date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
               onTap: () {
                 Navigator.push(
                   context,
@@ -52,6 +56,7 @@ class _EventCardState extends State<EventCard> {
                     builder: (context) => EventPage(
                       title,
                       description,
+                      date,
                       time,
                     ),
                   ),

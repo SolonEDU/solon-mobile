@@ -16,6 +16,7 @@ class _EventsScreenState extends State<EventsScreen> {
   void _addEvent(
     title,
     description,
+    date,
     time,
   ) async {
     // setState(
@@ -34,6 +35,7 @@ class _EventsScreenState extends State<EventsScreen> {
       {
         'eventTitle': title,
         'eventDescription': description,
+        'eventDate': date.toString(),
         'eventTime': time.toString(),
       },
     );
@@ -43,7 +45,8 @@ class _EventsScreenState extends State<EventsScreen> {
     return EventCard(
       doc.data['eventTitle'],
       doc.data['eventDescription'],
-      doc.data['eventTime'],
+      DateTime.parse(doc.data['eventDate']),
+      TimeOfDay(hour: int.parse(doc.data['eventTime'].substring(10,12)), minute: int.parse(doc.data['eventTime'].substring(13,15))),
       doc,
     );
   }
