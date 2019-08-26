@@ -31,12 +31,6 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(labelText: 'Email'),
               ),
               TextFormField(
-                validator: (input) {
-                  if (input.length < 6) {
-                    return 'Your password needs to be at least 6 characters';
-                  }
-                  return null;
-                },
                 onSaved: (input) => _password = input,
                 decoration: InputDecoration(labelText: 'Password'),
                 obscureText: true,
