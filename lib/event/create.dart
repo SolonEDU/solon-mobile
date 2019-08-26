@@ -57,14 +57,13 @@ class _CreateEventState extends State<CreateEvent> {
       lastDate: DateTime(2020),
     );
 
-    if (picked != null && picked != _date) {
+    if (picked != null) {
       print('Date selected: ${_date.toString()}');
+      _selectTime(context);
       setState(() {
         _date = picked;
       });
     }
-
-    _selectTime(context);
   }
 
   Future<Null> _selectTime(BuildContext context) async {
@@ -73,7 +72,7 @@ class _CreateEventState extends State<CreateEvent> {
       initialTime: _time,
     );
 
-    if (picked != null && picked != _time) {
+    if (picked != null) {
       print('Time selected: ${_time.toString()}');
       setState(() {
         _time = picked;
@@ -160,11 +159,13 @@ class _CreateEventState extends State<CreateEvent> {
         steps: form,
         currentStep: currentStep,
         onStepContinue: () => {
-          currentStep + 1 != form.length &&
-                  controllers[currentStep].text.length > 0
+          currentStep + 1 != form.length
               ? {
-                  goTo(currentStep + 1),
-                  FocusScope.of(context).requestFocus(myFocusNode)
+                  if (controllers[currentStep].text.length > 0)
+                    {
+                      goTo(currentStep + 1),
+                      FocusScope.of(context).requestFocus(myFocusNode)
+                    }
                 }
               : {
                   setState(() => complete = true),
