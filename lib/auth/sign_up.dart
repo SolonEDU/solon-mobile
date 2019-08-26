@@ -59,7 +59,9 @@ class _SignUpPageState extends State<SignUpPage> {
         user.sendEmailVerification();
         Navigator.of(context).pop();
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
       } catch (e) {
         print(e.message);
       }
