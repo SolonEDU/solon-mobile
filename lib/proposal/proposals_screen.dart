@@ -82,34 +82,39 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return new Text('Loading...');
+            //case ConnectionState.waiting:
             default:
               return Scaffold(
                 body: Center(
-                  child: ListView(
-                    padding: EdgeInsets.all(8),
-                    children: <Widget>[
-                      Column(
-                        children: snapshot.data.documents
-                            .map((doc) => buildProposal(doc))
-                            .toList(),
-                      )
-                    ],
-                  ),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  child: Icon(Icons.add),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AddProposalScreen(_addProposal)),
-                    )
-                  },
+                  child: Loader(),
                 ),
               );
+        //     default:
+        //       return Scaffold(
+        //         body: Center(
+        //           child: ListView(
+        //             padding: EdgeInsets.all(8),
+        //             children: <Widget>[
+        //               Column(
+        //                 children: snapshot.data.documents
+        //                     .map((doc) => buildProposal(doc))
+        //                     .toList(),
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //         floatingActionButton: FloatingActionButton(
+        //           child: Icon(Icons.add),
+        //           onPressed: () => {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) =>
+        //                       AddProposalScreen(_addProposal)),
+        //             )
+        //           },
+        //         ),
+              // );
           }
         });
 
