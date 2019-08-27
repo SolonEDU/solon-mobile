@@ -113,12 +113,20 @@ class _PostPageState extends State<PostPage> {
                     case ConnectionState.done:
                       if(snapshot.hasError) 
                         return Text('Error: ${snapshot.error}');
-                      var text = snapshot.data.data['forumComments'].toString().split(',');
-                      var comments = <Widget>[];
-                      for(int i = 0; i < text.length; i++) {
-                        comments.add(Text(text.elementAt(i)));
-                      }
-                      return ListView(children: comments,);
+                      Map<dynamic,dynamic> text = snapshot.data.data['forumComments'];
+                      List<Widget> textComments = [];
+                      var textKey;
+                      text.forEach((key,value) => {
+                        textKey = key,
+                        value.forEach((key, value) => {
+                          textComments.add(Text(textKey.toString() + " " + value.toString()))
+                        })
+                      });
+                      // var comments = <Widget>[];
+                      // for(int i = 0; i < text.length; i++) {
+                      //   comments.add(Text(text.elementAt(i)));
+                      // }
+                      return ListView(children: textComments,);
                   }
                   return null; 
                 },
