@@ -7,14 +7,21 @@ class PostCard extends StatefulWidget {
   final String title;
   final String description;
   final DateTime time;
+  // final comments;  
   final DocumentSnapshot doc;
-  PostCard(this.title, this.description, this.time, this.doc);
+  PostCard(
+    this.title, 
+    this.description, 
+    this.time, 
+    // this.comments, 
+    this.doc);
 
   @override
   _PostCardState createState() => _PostCardState(
         title,
         description,
         time,
+        // comments,
         doc,
       );
 }
@@ -23,6 +30,7 @@ class _PostCardState extends State<PostCard> {
   final String title;
   final String description;
   final DateTime time;
+  // final comments;
   DocumentSnapshot doc;
   final db = Firestore.instance;
 
@@ -30,6 +38,7 @@ class _PostCardState extends State<PostCard> {
     this.title,
     this.description,
     this.time,
+    // this.comments,
     this.doc,
   );
 
@@ -52,6 +61,7 @@ class _PostCardState extends State<PostCard> {
                       title,
                       description,
                       time,
+                      // comments,
                       doc,
                     ),
                   ),

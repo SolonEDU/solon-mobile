@@ -7,13 +7,20 @@ class PostPage extends StatefulWidget {
   final String title;
   final String description;
   final DateTime time;
+  // final comments;
   final DocumentSnapshot doc;
-  PostPage(this.title, this.description, this.time, this.doc);
+  PostPage(
+    this.title, 
+    this.description, 
+    this.time, 
+    // this.comments, 
+    this.doc);
 
   _PostPageState createState() => _PostPageState(
         title,
         description,
         time,
+        // comments,
         doc,
       );
 }
@@ -23,7 +30,7 @@ class _PostPageState extends State<PostPage> {
   final String description;
   final DateTime time;
   final db = Firestore.instance;
-  var document;
+  var document; 
   DocumentSnapshot doc;
   static var commentController = TextEditingController();
 
@@ -31,11 +38,28 @@ class _PostPageState extends State<PostPage> {
     this.title,
     this.description,
     this.time,
+    // this.comments,
     this.doc,
   );
+
+  void _update() {
+    setState(() {
+      document = db.collection('forum').document(doc.documentID);
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _update();
+  }
   // final _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
+    // var comments; 
+    // document.get().then((docu) => {
+    //   comments = docu.data['forumComments'],
+    // });
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -63,10 +87,30 @@ class _PostPageState extends State<PostPage> {
           InkWell(
             child: Icon(Icons.send),
             onTap: () async => {
-              document = db.collection('forum').document(doc.documentID),
-              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text})
+              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
+              _update()
             }
           ),
+          FutureBuilder(
+            future: document.get(),
+            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              switch(snapshot.connectionState) {
+                case ConnectionState.none:
+                  return Text('none');
+                case ConnectionState.active:
+                case ConnectionState.waiting:
+                  return Text('loading');
+                case ConnectionState.done:
+                  if(snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+                  return Text('Result: ${snapshot.data.data['forumComments']}');
+              }
+              return null;
+            },
+          )
+          // Container(
+            // child: Text(comments.toString())
+          // ),
         ],
       ),
     );
