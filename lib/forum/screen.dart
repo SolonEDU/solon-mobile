@@ -28,6 +28,7 @@ class _ForumScreenState extends State<ForumScreen> {
       doc.data['forumTitle'],
       doc.data['forumDescription'],
       DateTime.parse(doc.data['forumTime']),
+      // doc.data['forumComments'],
       doc,
     );
   }
