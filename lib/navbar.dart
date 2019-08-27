@@ -16,7 +16,7 @@ class NavBar extends StatelessWidget {
           title: Text('Home'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
+          icon: Icon(Icons.account_balance),
           title: Text('Proposals'),
         ),
         BottomNavigationBarItem(

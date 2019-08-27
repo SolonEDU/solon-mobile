@@ -7,13 +7,11 @@ class PostCard extends StatefulWidget {
   final String title;
   final String description;
   final DateTime time;
-  // final comments;  
   final DocumentSnapshot doc;
   PostCard(
     this.title, 
     this.description, 
     this.time, 
-    // this.comments, 
     this.doc);
 
   @override
@@ -21,7 +19,6 @@ class PostCard extends StatefulWidget {
         title,
         description,
         time,
-        // comments,
         doc,
       );
 }
@@ -30,7 +27,6 @@ class _PostCardState extends State<PostCard> {
   final String title;
   final String description;
   final DateTime time;
-  // final comments;
   DocumentSnapshot doc;
   final db = Firestore.instance;
 
@@ -38,7 +34,6 @@ class _PostCardState extends State<PostCard> {
     this.title,
     this.description,
     this.time,
-    // this.comments,
     this.doc,
   );
 
@@ -50,7 +45,6 @@ class _PostCardState extends State<PostCard> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              //leading: Icon(Icons.calendar_today),
               title: Text(title),
               subtitle: Text(description + "\n" + time.toString()),
               onTap: () {
@@ -61,39 +55,12 @@ class _PostCardState extends State<PostCard> {
                       title,
                       description,
                       time,
-                      // comments,
                       doc,
                     ),
                   ),
                 );
               },
             ),
-            // ButtonTheme.bar(
-            //   child: ButtonBar(
-            //     children: <Widget>[
-            //       FlatButton(
-            //         child: Icon(Icons.delete),
-            //         onPressed: () async => {
-            //           await db
-            //               .collection('events')
-            //               .document(doc.documentID)
-            //               .delete()
-            //         },
-            //       ),
-            //       Switch.adaptive(
-            //         value: attending,
-            //         onChanged: (value) {
-            //           setState(
-            //             () => attending = value,
-            //           );
-            //         },
-            //         activeTrackColor: Colors.lightGreenAccent,
-            //         activeColor: Colors.green,
-            //       ),
-            //       Text('Attending?')
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),
