@@ -55,9 +55,17 @@ class _PostPageState extends State<PostPage> {
   }
   // final _formKey = GlobalKey<FormState>();
 
-  // List<String> commentParse(String text) {
-  //   return text.split(",");
-  // }
+  Widget commentFormat(String text) {
+    var text2 = text.substring(1,text.length);
+    var comments = text2.split(",");
+    var children = <Widget>[];
+    for (int i = 0; i < comments.length; i++) {
+      var comment = comments.elementAt(i).substring(28,comments.elementAt(i).length - 1);
+      //var comment = comments.elementAt(i);
+      children.add(Text(comment));
+    }
+    return Column(children: children);
+  }
 
   Widget build(BuildContext context) {
     // var comments; 
@@ -91,7 +99,7 @@ class _PostPageState extends State<PostPage> {
           InkWell(
             child: Icon(Icons.send),
             onTap: () async => {
-              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text + '\n'}),
+              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
               _update()
             }
           ),
@@ -107,13 +115,8 @@ class _PostPageState extends State<PostPage> {
                 case ConnectionState.done:
                   if(snapshot.hasError)
                     return Text('Error: ${snapshot.error}');
-                  var text = snapshot.data.data['forumComments'].toString().split(",");
-                  var comments = <Widget>[];
-                  for (int i = 0; i < text.length; i++) {
-                    //print(text.elementAt(i));
-                    comments.add(Text(text.elementAt(i)));
-                  }
-                  return Column(children: comments);                  
+                  var text = snapshot.data.data['forumComments'].toString();
+                  return commentFormat(text);                  
               }
               return null;
             },
