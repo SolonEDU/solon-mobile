@@ -63,9 +63,8 @@ class _PostPageState extends State<PostPage> {
           InkWell(
             child: Icon(Icons.send),
             onTap: () async => {
-              // document = db.collection('forum').document(doc.documentID),
-              // document.update('forumComments')
-              //THIS IS WHERE YOU SHOULD WRITE EVERYTHING I THINK
+              document = db.collection('forum').document(doc.documentID),
+              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text})
             }
           ),
         ],
