@@ -55,6 +55,10 @@ class _PostPageState extends State<PostPage> {
   }
   // final _formKey = GlobalKey<FormState>();
 
+  // List<String> commentParse(String text) {
+  //   return text.split(",");
+  // }
+
   Widget build(BuildContext context) {
     var comments;
     document.get().then((docu) => {
@@ -68,7 +72,6 @@ class _PostPageState extends State<PostPage> {
         child: Column(
           children: <Widget>[
             Container(
-              // color: Colors.red,
               child: Column(
                 children: <Widget>[
                   Text(description),
@@ -76,9 +79,8 @@ class _PostPageState extends State<PostPage> {
                 ],
               ),
             ),
-            Expanded(
+            Container(
               child: Container(
-                // color: Colors.blue,
                 child: TextFormField(
                   style: TextStyle(
                     height: 0.5,
@@ -92,62 +94,160 @@ class _PostPageState extends State<PostPage> {
                     suffixIcon: IconButton(
                       icon: Icon(Icons.send),
                       onPressed: () async {
-                        document.updateData({'forumComments.' + DateTime.now().toString() : commentController.text});
+                        document.updateData({'forumComments.'+ DateTime.now().toString(): commentController.text});
+                        _update();
                       },
-                    )
+                    ),
                   ),
                 ),
               ),
             ),
+            Expanded(
+              child: FutureBuilder(
+                future: document.get(),
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  switch(snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.active:
+                    case ConnectionState.waiting:
+                    case ConnectionState.done:
+                      if(snapshot.hasError) 
+                        return Text('Error: ${snapshot.error}');
+                      var text = snapshot.data.data['forumComments'].toString().split(',');
+                      var comments = <Widget>[];
+                      for(int i = 0; i < text.length; i++) {
+                        comments.add(Text(text.elementAt(i)));
+                      }
+                      return ListView(children: comments,);
+                  }
+                  return null; 
+                },
+              )
+            )
           ],
         ),
-      ),
+      )
     );
-    // body: Column(
-    //   children: <Widget>[
-    //     Text(description),
-    //     Text(time.toString()),
-    //     Container(
-    //       width: MediaQuery.of(context).size.width * 0.85,
-    //       child: TextField(
-    //         style: TextStyle(
-    //           height: 0.7,
-    //         ),
-    //         decoration: InputDecoration(
-    //           border: OutlineInputBorder(
-    //             borderRadius: BorderRadius.circular(8),
-    //           ),
-    //           labelText: 'Enter a comment',
-    //         ),
-    //         controller: commentController,
-    //         maxLengthEnforced: false,
-    //       ),
-    //     ),
-    //     InkWell(
-    //       child: Icon(Icons.send),
-    //       onTap: () async => {
-    //         document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
-    //         _update()
-    //       }
-    //     ),
-    //     FutureBuilder(
-    //       future: document.get(),
-    //       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-    //         switch(snapshot.connectionState) {
-    //           case ConnectionState.none:
-    //             return Text('none');
-    //           case ConnectionState.active:
-    //           case ConnectionState.waiting:
-    //             return Text('loading');
-    //           case ConnectionState.done:
-    //             if(snapshot.hasError)
-    //               return Text('Error: ${snapshot.error}');
-    //             return Text('Result: ${snapshot.data.data['forumComments']}');
-    //         }
-    //         return null;
-    //       },
-    //     )
-    //   ],
-    // ),
   }
 }
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text(title),
+    //   ),
+    //   body: Center(
+    //     child: Column(
+    //       children: <Widget>[
+    //         Container(
+    //           // color: Colors.red,
+    //           child: Column(
+    //             children: <Widget>[
+    //               Text(description),
+    //               Text(time.toString()),
+    //             ],
+    //           ),
+    //         ),
+    //         Expanded(
+    //           child: Container(
+    //             // color: Colors.blue,
+    //             child: TextFormField(
+    //               style: TextStyle(
+    //                 height: 0.5,
+    //               ),
+    //               controller: commentController,
+    //               decoration: InputDecoration(
+    //                 border: OutlineInputBorder(
+    //                   borderRadius: BorderRadius.circular(64),
+    //                 ),
+    //                 hintText: 'Enter a comment',
+    //                 suffixIcon: IconButton(
+    //                   icon: Icon(Icons.send),
+    //                   onPressed: () async {
+    //                     document.updateData({'forumComments.' + DateTime.now().toString() : commentController.text});
+    //                   },
+    //                 )
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //       ),
+    //   ),
+    // );
+//     return Scaffold(
+//       appBar: AppBar(title: Text(title)),
+//       body: Column(
+//         children: <Widget>[
+//           Text(description),
+//           Text(time.toString()),
+//           Container(
+//             width: MediaQuery.of(context).size.width * 0.85,
+//             child: TextField(
+//               style: TextStyle(
+//                 height: 0.7,
+//               ),
+//               decoration: InputDecoration(
+//                 border: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(8),
+//                 ),
+//                 labelText: 'Enter a comment',
+//               ),
+//               controller: commentController,
+//               maxLengthEnforced: false,
+//             ),
+//           ),
+//         InkWell(
+//           child: Icon(Icons.send)
+//         ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//     return Scaffold(
+//     body: Column(
+//       children: <Widget>[
+//         Text(description),
+//         Text(time.toString()),
+//         Container(
+//           width: MediaQuery.of(context).size.width * 0.85,
+//           child: TextField(
+//             style: TextStyle(
+//               height: 0.7,
+//             ),
+//             decoration: InputDecoration(
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(8),
+//               ),
+//               labelText: 'Enter a comment',
+//             ),
+//             controller: commentController,
+//             maxLengthEnforced: false,
+//           ),
+//         ),
+//         InkWell(
+//           child: Icon(Icons.send),
+//           onTap: () async => {
+//             document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
+//             _update()
+//           }
+//         ),
+//         FutureBuilder(
+//           future: document.get(),
+//           builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+//             switch(snapshot.connectionState) {
+//               case ConnectionState.none:
+//                 return Text('none');
+//               case ConnectionState.active:
+//               case ConnectionState.waiting:
+//                 return Text('loading');
+//               case ConnectionState.done:
+//                 if(snapshot.hasError)
+//                   return Text('Error: ${snapshot.error}');
+//                 return Text('Result: ${snapshot.data.data['forumComments']}');
+//             }
+//             return null;
+//           },
+//         )
+//     )
+// }
