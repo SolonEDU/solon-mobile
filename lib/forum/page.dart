@@ -56,6 +56,10 @@ class _PostPageState extends State<PostPage> {
   // final _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
+    var comments;
+    document.get().then((docu) => {
+          comments = docu.data['forumComments'],
+        });
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -64,74 +68,86 @@ class _PostPageState extends State<PostPage> {
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.red,
+              // color: Colors.red,
               child: Column(
                 children: <Widget>[
                   Text(description),
-                  Text(time.toString())
+                  Text(time.toString()),
                 ],
               ),
             ),
             Expanded(
               child: Container(
-                color: Colors.blue,
-                width: 100,
+                // color: Colors.blue,
+                child: TextFormField(
+                  style: TextStyle(
+                    height: 0.5,
+                  ),
+                  controller: commentController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(64),
+                    ),
+                    hintText: 'Enter a comment',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () async {
+                        document.updateData({'forumComments.' + DateTime.now().toString() : commentController.text});
+                      },
+                    )
+                  ),
+                ),
               ),
             ),
           ],
         ),
       ),
     );
-    // var comments;
-    // document.get().then((docu) => {
-    //   comments = docu.data['forumComments'],
-    // });
-      // body: Column(
-      //   children: <Widget>[
-      //     Text(description),
-      //     Text(time.toString()),
-      //     Container(
-      //       width: MediaQuery.of(context).size.width * 0.85,
-      //       child: TextField(
-      //         style: TextStyle(
-      //           height: 0.7,
-      //         ),
-      //         decoration: InputDecoration(
-      //           border: OutlineInputBorder(
-      //             borderRadius: BorderRadius.circular(8),
-      //           ),
-      //           labelText: 'Enter a comment',
-      //         ),
-      //         controller: commentController,
-      //         maxLengthEnforced: false,
-      //       ),
-      //     ),
-      //     InkWell(
-      //       child: Icon(Icons.send),
-      //       onTap: () async => {
-      //         document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
-      //         _update()
-      //       }
-      //     ),
-      //     FutureBuilder(
-      //       future: document.get(),
-      //       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-      //         switch(snapshot.connectionState) {
-      //           case ConnectionState.none:
-      //             return Text('none');
-      //           case ConnectionState.active:
-      //           case ConnectionState.waiting:
-      //             return Text('loading');
-      //           case ConnectionState.done:
-      //             if(snapshot.hasError)
-      //               return Text('Error: ${snapshot.error}');
-      //             return Text('Result: ${snapshot.data.data['forumComments']}');
-      //         }
-      //         return null;
-      //       },
-      //     )
-      //   ],
-      // ),
-
+    // body: Column(
+    //   children: <Widget>[
+    //     Text(description),
+    //     Text(time.toString()),
+    //     Container(
+    //       width: MediaQuery.of(context).size.width * 0.85,
+    //       child: TextField(
+    //         style: TextStyle(
+    //           height: 0.7,
+    //         ),
+    //         decoration: InputDecoration(
+    //           border: OutlineInputBorder(
+    //             borderRadius: BorderRadius.circular(8),
+    //           ),
+    //           labelText: 'Enter a comment',
+    //         ),
+    //         controller: commentController,
+    //         maxLengthEnforced: false,
+    //       ),
+    //     ),
+    //     InkWell(
+    //       child: Icon(Icons.send),
+    //       onTap: () async => {
+    //         document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
+    //         _update()
+    //       }
+    //     ),
+    //     FutureBuilder(
+    //       future: document.get(),
+    //       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+    //         switch(snapshot.connectionState) {
+    //           case ConnectionState.none:
+    //             return Text('none');
+    //           case ConnectionState.active:
+    //           case ConnectionState.waiting:
+    //             return Text('loading');
+    //           case ConnectionState.done:
+    //             if(snapshot.hasError)
+    //               return Text('Error: ${snapshot.error}');
+    //             return Text('Result: ${snapshot.data.data['forumComments']}');
+    //         }
+    //         return null;
+    //       },
+    //     )
+    //   ],
+    // ),
   }
 }
