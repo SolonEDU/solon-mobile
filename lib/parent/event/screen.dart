@@ -18,20 +18,8 @@ class _EventsScreenState extends State<EventsScreen> {
     description,
     date,
     time,
-  ) async {
-    // setState(
-    //   () {
-    //     _eventsList.add(
-    //       EventCard(
-    //         title,
-    //         description,
-    //         time,
-    //       ),
-    //     );
-    //   },
-    // );
-
-    DocumentReference ref = await db.collection('events').add(
+  ) {
+    db.collection('events').add(
       {
         'eventTitle': title,
         'eventDescription': description,
