@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Solon/auth/sign_in.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -8,7 +9,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _email, _password;
+  String _name, _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,17 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
-                    return 'Please type an email';
+                    return 'Please enter your full name';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _name = input,
+                decoration: InputDecoration(labelText: 'Full Name'),
+              ),
+              TextFormField(
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your email address';
                   }
                   return null;
                 },
@@ -57,6 +68,14 @@ class _SignUpPageState extends State<SignUpPage> {
             .createUserWithEmailAndPassword(email: _email, password: _password);
         FirebaseUser user = result.user;
         user.sendEmailVerification();
+        // add user to firestore as a parent
+        Firestore.instance.collection('users').document(user.uid).setData(
+          {
+            'email': user.email,
+            'name': _name,
+            'role': 'parent',
+          },
+        );
         Navigator.of(context).pop();
         Navigator.pushReplacement(
           context,

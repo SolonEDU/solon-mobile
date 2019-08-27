@@ -1,40 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import './navbar.dart';
-import 'package:Solon/auth/welcome.dart';
-import 'package:Solon/parent/home_screen.dart';
-import './parent/proposal/proposals_screen.dart';
-import './parent/event/screen.dart';
-import './parent/forum/screen.dart';
+import '../navbar.dart';
+import 'package:Solon/admin/home_screen.dart';
+import './proposal/proposals_screen.dart';
+import './event/screen.dart';
+import './forum/screen.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  static const String _title = 'Home';
-
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      //DeviceOrientation.portraitUp,
-    ]);
-    return MaterialApp(
-      title: _title,
-      home: WelcomePage(),
-    );
-  }
-}
-
-class Main extends StatefulWidget {
-  Main({Key key}) : super(key: key);
+class Admin extends StatefulWidget {
+  Admin({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _MainState();
+    return _AdminState();
   }
 }
 
-class _MainState extends State<Main> {
+class _AdminState extends State<Admin> {
   var _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -46,7 +27,7 @@ class _MainState extends State<Main> {
   var _widgetOptions = [
     {
       'title': Text('Home'),
-      'widget': HomeScreen(),
+      'widget': AdminHomeScreen(),
     },
     {
       'title': Text('Proposals'),
