@@ -55,6 +55,10 @@ class _PostPageState extends State<PostPage> {
   }
   // final _formKey = GlobalKey<FormState>();
 
+  // List<String> commentParse(String text) {
+  //   return text.split(",");
+  // }
+
   Widget build(BuildContext context) {
     // var comments; 
     // document.get().then((docu) => {
@@ -87,7 +91,7 @@ class _PostPageState extends State<PostPage> {
           InkWell(
             child: Icon(Icons.send),
             onTap: () async => {
-              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text}),
+              document.updateData({'forumComments.' + DateTime.now().toString(): commentController.text + '\n'}),
               _update()
             }
           ),
@@ -103,7 +107,13 @@ class _PostPageState extends State<PostPage> {
                 case ConnectionState.done:
                   if(snapshot.hasError)
                     return Text('Error: ${snapshot.error}');
-                  return Text('Result: ${snapshot.data.data['forumComments']}');
+                  var text = snapshot.data.data['forumComments'].toString().split(",");
+                  var comments = <Widget>[];
+                  for (int i = 0; i < text.length; i++) {
+                    //print(text.elementAt(i));
+                    comments.add(Text(text.elementAt(i)));
+                  }
+                  return Column(children: comments);                  
               }
               return null;
             },
