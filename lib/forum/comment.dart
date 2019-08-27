@@ -4,30 +4,32 @@ import 'package:flutter/material.dart';
 import './page.dart';
 
 class CommentCard extends StatefulWidget {
-  final String description;
-  final String time;
+  final String comment;
+  final DateTime time;
   //DocumentSnapshot doc;
-  CommentCard(this.description, this.time);
+  CommentCard(this.comment, this.time);
 
   @override
-  _CommentCardState createState() => _CommentCardState(description, time,);
+  _CommentCardState createState() => _CommentCardState(comment, time,);
 }
 
 class _CommentCardState extends State<CommentCard> {
-  final String description;
-  final String time;
+  final String comment;
+  final DateTime time;
   //bool attending = false;
   //DocumentSnapshot doc;
   //final db = Firestore.instance;
 
   _CommentCardState(
-    this.description,
+    this.comment,
     this.time,
     //this.doc,
   );
 
   Widget build(BuildContext context) {
-    return Card();
+    return Card(
+      child: Text(comment),
+    );
   }
 
 }
