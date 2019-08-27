@@ -82,39 +82,38 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
-            //case ConnectionState.waiting:
-            default:
+            case ConnectionState.waiting:
               return Scaffold(
                 body: Center(
                   child: Loader(),
                 ),
               );
-        //     default:
-        //       return Scaffold(
-        //         body: Center(
-        //           child: ListView(
-        //             padding: EdgeInsets.all(8),
-        //             children: <Widget>[
-        //               Column(
-        //                 children: snapshot.data.documents
-        //                     .map((doc) => buildProposal(doc))
-        //                     .toList(),
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //         floatingActionButton: FloatingActionButton(
-        //           child: Icon(Icons.add),
-        //           onPressed: () => {
-        //             Navigator.push(
-        //               context,
-        //               MaterialPageRoute(
-        //                   builder: (context) =>
-        //                       AddProposalScreen(_addProposal)),
-        //             )
-        //           },
-        //         ),
-              // );
+            default:
+              return Scaffold(
+                body: Center(
+                  child: ListView(
+                    padding: EdgeInsets.all(8),
+                    children: <Widget>[
+                      Column(
+                        children: snapshot.data.documents
+                            .map((doc) => buildProposal(doc))
+                            .toList(),
+                      )
+                    ],
+                  ),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AddProposalScreen(_addProposal)),
+                    )
+                  },
+                ),
+              );
           }
         });
 
