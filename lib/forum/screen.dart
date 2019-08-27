@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './card.dart';
 import './create.dart';
@@ -9,47 +10,48 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> {
-  List<Widget> _postList = [];
-  //final db = Firestore.instance;
+  final db = Firestore.instance;
 
-  void _addPost(title, description) {
-    setState(
-      () {
-        _postList.add(
-          PostCard(
-            title,
-            description,
-            DateTime.now().toString(),
-          ),
-        );
+  void _addPost(title, description) async {
+    DocumentReference ref = await db.collection('forum').add(
+      {
+        'forumTitle': title,
+        'forumDescription': description,
+        'forumTime': DateTime.now().toString(),
+        'forumComments': {},
       },
     );
-
-    //DocumentReference ref = await db.collection('events').add(
-    //  {
-    //    'eventTitle': title,
-    //    'eventDescription': description,
-    //    'eventTime': time.toString(),
-    //  },
-    //);
   }
 
-  // PostCard buildPostCard(doc) {
-  //   return PostCard(
-  //     doc.data['eventTitle'],
-  //     doc.data['eventDescription'],
-  //     doc,
-  //   );
-  // }
+  PostCard buildPostCard(doc) {
+    return PostCard(
+      doc.data['forumTitle'],
+      doc.data['forumDescription'],
+      DateTime.parse(doc.data['forumTime']),
+      doc,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: _postList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _postList[index];
-        },
+      body: ListView(
+        padding: EdgeInsets.all(8),
+        children: <Widget>[
+          StreamBuilder<QuerySnapshot>(
+            stream: db.collection('forum').snapshots(),
+            builder: (context, snapshot) {
+              if(snapshot.hasData) {
+                return Column(
+                  children: snapshot.data.documents
+                      .map((doc) => buildPostCard(doc))
+                      .toList(),
+                );
+              }
+              return Container();
+            },
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
