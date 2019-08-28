@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import './page.dart';
+import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
   final String title;
@@ -46,7 +47,7 @@ class _PostCardState extends State<PostCard> {
           children: <Widget>[
             ListTile(
               title: Text(title),
-              subtitle: Text(description + "\n" + time.toString()),
+              subtitle: Text(description + "\n" + new DateFormat.yMMMMd("en_US").add_jm().format(time)),
               onTap: () {
                 Navigator.push(
                   context,
