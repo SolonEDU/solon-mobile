@@ -39,7 +39,7 @@ class _ForumScreenState extends State<ForumScreen> {
         padding: EdgeInsets.all(8),
         children: <Widget>[
           StreamBuilder<QuerySnapshot>(
-            stream: db.collection('forum').snapshots(),
+            stream: db.collection('forum').orderBy('forumTime', descending: true).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(

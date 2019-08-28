@@ -46,7 +46,7 @@ class _EventsScreenState extends State<EventsScreen> {
         padding: EdgeInsets.all(8),
         children: <Widget>[
           StreamBuilder<QuerySnapshot>(
-            stream: db.collection('events').snapshots(),
+            stream: db.collection('events').orderBy('eventDate', descending: false).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(
