@@ -104,7 +104,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       });
     }
     proposalTimeController.text =
-        "Event occurs on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
+        "Proposal ends on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
   }
 
   @override
@@ -205,70 +205,5 @@ class AddProposalFormState extends State<AddProposalForm> {
       },
       onStepTapped: (step) => goTo(step),
     );
-    // Build a Form widget using the _formKey created above.
-    // return Form(
-    //   key: _formKey,
-    //   child: ListView(
-    //     //crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: <Widget>[
-    //       Text('Proposal'),
-    //       TextFormField(
-    //         validator: (value) {
-    //           if (value.isEmpty) {
-    //             return 'Please enter some text';
-    //           }
-    //           return null;
-    //         },
-    //         controller: proposalTitleController,
-    //       ),
-    //       Text('Description'),
-    //       TextFormField(
-    //         validator: (value) {
-    //           if (value.isEmpty) {
-    //             return 'Please enter some text';
-    //           }
-    //           return null;
-    //         },
-    //         controller: proposalSubtitleController,
-    //       ),
-    //       RaisedButton(
-    //         child: Text('Select Date'),
-    //         onPressed: () {
-    //           _selectDate(context);
-    //         },
-    //       ),
-    //       Text('Vote ends on ${_date.toString()}'),
-    //       RaisedButton(
-    //         child: Text('Select Time'),
-    //         onPressed: () {
-    //           _selectTime(context);
-    //         },
-    //       ),
-    //       Text('Vote ends on ${_time.toString()}'),
-    //       Padding(
-    //         padding: const EdgeInsets.symmetric(vertical: 16.0),
-    //         child: RaisedButton(
-    //           onPressed: () {
-    //             // Validate returns true if the form is valid, or false
-    //             // otherwise.
-    //             if (_formKey.currentState.validate()) {
-    //               // If the form is valid, display a Snackbar.
-    //               Scaffold.of(context)
-    //                   .showSnackBar(SnackBar(content: Text('Processing Data')));
-    //               addProposal(
-    //                 proposalTitleController.text,
-    //                 proposalSubtitleController.text,
-    //                 _date,
-    //                 _time,
-    //               );
-    //               Navigator.pop(context);
-    //             }
-    //           },
-    //           child: Text('Submit'),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

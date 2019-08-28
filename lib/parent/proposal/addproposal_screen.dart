@@ -104,7 +104,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       });
     }
     proposalTimeController.text =
-        "Event occurs on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
+        "Proposal ends on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
   }
 
   @override
