@@ -22,33 +22,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     String proposalSubtitle,
     DateTime dateTime,
     TimeOfDay timeOfDay,
-  ) async {
-    // Firestore.instance.collection('proposals').add({
-    //   'title': proposalTitle,
-    //   'subtitle': proposalSubtitle,
-    //   'dateTime': dateTime.toString(),
-    //   'timeOfDay': timeOfDay.toString(),
-    // });
-    // setState(() {
-    //   _proposalsList.add(
-    //     Proposal(
-    //       proposalTitle,
-    //       proposalSubtitle,
-    //       dateTime,
-    //       timeOfDay,
-    //       DateTime(
-    //         dateTime.year,
-    //         dateTime.month,
-    //         dateTime.day,
-    //         timeOfDay.hour,
-    //         timeOfDay.minute,
-    //       ),
-    //       0,
-    //       0,
-    //     ),
-    //   );
-    // });
-    DocumentReference ref = await db.collection('proposals').add(
+  ) {
+    db.collection('proposals').add(
       {
         'proposalTitle': proposalTitle,
         'proposalSubtitle': proposalSubtitle,
@@ -57,11 +32,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       },
     );
   }
-//  List<Widget> makeListWidget(AsyncSnapshot snapshot) {
-//    return snapshot.data.documents.map<Widget>((document) {
-//      return Text("DATA");
-//    }).toList();
-//  }
 
   Proposal buildProposal(doc) {
     return Proposal(
@@ -78,7 +48,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: db.collection('proposals').snapshots(),
+        stream: db.collection('proposals').orderBy('dateTime', descending: false).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
@@ -116,55 +86,5 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
               );
           }
         });
-
-//     return Scaffold(
-//       body: Center(
-//         child: ListView(
-//           padding: EdgeInsets.all(8),
-//           children: <Widget>[
-//             StreamBuilder<QuerySnapshot>(
-//               stream: db.collection('proposals').snapshots(),
-//               builder: (context, snapshot) {
-//                 if (snapshot.hasData) {
-//                   return Column(
-//                     children: snapshot.data.documents
-//                         .map((doc) => buildProposal(doc))
-//                         .toList(),
-//                   );
-//                 }
-//                 return Column(children: [Loader()],);
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-// //      body:
-// //      Container(
-// //        child: StreamBuilder(
-// //          stream: Firestore.instance.collection("proposals").snapshots(),
-// //          builder: (context, snapshot) {
-// //            return ListView(
-// //              children: makeListWidget(snapshot),
-// //            );
-// //          },
-// //        ),
-// //      ),
-// //      ListView.builder(
-// //        itemCount: _proposalsList.length,
-// //        itemBuilder: (BuildContext context, int index) {
-// //          return _proposalsList[index];
-// //        },
-// //      ),
-//       floatingActionButton: FloatingActionButton(
-//         child: Icon(Icons.add),
-//         onPressed: () => {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//                 builder: (context) => AddProposalScreen(_addProposal)),
-//           )
-//         },
-//       ),
-//     );
   }
 }
