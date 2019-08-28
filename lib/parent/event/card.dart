@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import './page.dart';
+import 'package:intl/intl.dart';
 
 class EventCard extends StatefulWidget {
   final String title;
@@ -48,7 +49,7 @@ class _EventCardState extends State<EventCard> {
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text(title),
-              subtitle: Text(description + '\n' + 'Event will occur on '  + date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
+              subtitle: Text(description + '\n' + 'Event Time: '  + new DateFormat.yMMMMd("en_US").add_jm().format(date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
               onTap: () {
                 Navigator.push(
                   context,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProposalScreen extends StatelessWidget {
   final String proposalTitle;
@@ -33,8 +34,9 @@ class ProposalScreen extends StatelessWidget {
               Text('Votes for...'),
               Text('Yea: $numYea'),
               Text('Nay: $numNay'),
-              Text('Deadline Date: ${dateTime.toString().substring(0, 10)}'),
-              Text('Deadline Time: ${timeOfDay.toString().substring(10,15)}'),
+              Text('Deadline Time: ' + new DateFormat.yMMMMd("en_US").add_jm().format(dateTime)),
+              //Text('Deadline Date: ${dateTime.toString().substring(0, 10)}'),
+              //Text('Deadline Time: ${timeOfDay.toString().substring(10,15)}'),
             ],
           ),
         ),

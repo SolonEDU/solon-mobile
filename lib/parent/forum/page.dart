@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:collection';
 
+import 'package:intl/intl.dart';
+
 // import '../../loader.dart';
 import './comment.dart';
 
@@ -78,7 +80,7 @@ class _PostPageState extends State<PostPage> {
                       child: ListTile(
                         leading: Icon(Icons.account_box),
                         title: Text(description),
-                        subtitle: Text(time.toString()),
+                        subtitle: Text(new DateFormat.yMMMMd("en_US").add_jm().format(time)),
                       ),
                     ),
                     Text('Comment Section'),
@@ -127,7 +129,7 @@ class _PostPageState extends State<PostPage> {
     text.forEach((key, value) => {
           textKey = key,
           value.forEach((key, value) =>
-              {textComments.add(Comment(textKey.toString(), value.toString()))})
+              {textComments.add(Comment(DateTime.parse(textKey), value.toString()))})
         });
     return ListView(
       children: textComments,
