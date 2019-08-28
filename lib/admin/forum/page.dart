@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:collection';
 
+import '../../loader.dart';
 import './comment.dart';
 
 class PostPage extends StatefulWidget {
@@ -53,83 +54,86 @@ class _PostPageState extends State<PostPage> {
     document.get().then((docu) => {
           comments = docu.data['forumComments'],
         });
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: ListTile(
-                leading: Icon(Icons.account_box),
-                title: Text(description),
-                subtitle: Text(time.toString()),
+    return FutureBuilder(
+      future: document.get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Scaffold(
+                body: Center(
+              child: Loader(),
+            ));
+          default:
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(title),
               ),
-            ),
-            Text('Comment Section'),
-            Expanded(
-              child: FutureBuilder(
-                future: document.get(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.active:
-                    case ConnectionState.waiting:
-                    case ConnectionState.done:
-                      if (snapshot.hasError)
-                        return Text('Error: ${snapshot.error}');
-                      Map<dynamic, dynamic> text =
-                          snapshot.data.data['forumComments'];
-                      text = SplayTreeMap.from(text);
-                      List<Widget> textComments = [];
-                      var textKey;
-                      text.forEach((key, value) => {
-                            textKey = key,
-                            value.forEach((key, value) => {
-                                  textComments.add(Comment(
-                                      textKey.toString(), value.toString()))
-                                })
-                          });
-                      return ListView(
-                        children: textComments,
-                      );
-                  }
-                  return null;
-                },
-              ),
-            ),
-            TextFormField(
-              style: TextStyle(
-                height: 1,
-              ),
-              controller: commentController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(64),
-                ),
-                hintText: 'Enter a comment',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () async {
-                    if (commentController.text.length > 0) {
-                      document.updateData(
-                        {
-                          'forumComments.' + DateTime.now().toString():
-                              commentController.text
-                        },
-                      );
-                      _update();
-                      commentController.text = '';
-                    }
-                  },
+              body: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: ListTile(
+                        leading: Icon(Icons.account_box),
+                        title: Text(description),
+                        subtitle: Text(time.toString()),
+                      ),
+                    ),
+                    Text('Comment Section'),
+                    Expanded(child: getComments(snapshot)),
+                    TextFormField(
+                      style: TextStyle(
+                        height: 1,
+                      ),
+                      controller: commentController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(64),
+                        ),
+                        hintText: 'Enter a comment',
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send),
+                          onPressed: () async {
+                            if (commentController.text.length > 0) {
+                              document.updateData(
+                                {
+                                  'forumComments.' + DateTime.now().toString():
+                                      commentController.text
+                                },
+                              );
+                              _update();
+                              commentController.text = '';
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            );
+        }
+      },
+    );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text(title),
+    //   ),
+  }
+
+  ListView getComments(snapshot) {
+    Map<dynamic, dynamic> text = snapshot.data.data['forumComments'];
+    text = SplayTreeMap.from(text);
+    List<Widget> textComments = [];
+    var textKey;
+    text.forEach((key, value) => {
+          textKey = key,
+          value.forEach((key, value) =>
+              {textComments.add(Comment(textKey.toString(), value.toString()))})
+        });
+    return ListView(
+      children: textComments,
     );
   }
 }

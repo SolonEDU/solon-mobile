@@ -44,6 +44,7 @@ class _ProposalState extends State<Proposal> {
   int numNay;
   DocumentSnapshot doc;
   var voteChoiceVisibility = true;
+  var collection;
   final db = Firestore.instance;
 
   _ProposalState(
@@ -56,17 +57,15 @@ class _ProposalState extends State<Proposal> {
     this.doc,
   );
 
-  @override
-  // Widget build(BuildContext context) {
-  //   return Container(
-  //     child: ListTile(
-  //       title: Text(proposalTitle),
-  //       subtitle: Text(proposalSubtitle),
-  //     ),
-  //   );
-  // }
+  void getCollection() {
+    setState(() {
+      collection = db.collection('proposals');
+    });
+  }
 
+  @override
   Widget build(BuildContext context) {
+    getCollection();
     DateTime cooldownTime;
     return GestureDetector(
       onTap: () {
@@ -95,7 +94,7 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
-              Text('Cooldown Date and Time: '),
+              Text(doc.documentID),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -129,6 +128,7 @@ class _ProposalState extends State<Proposal> {
                               .document(doc.documentID)
                               .delete();
                           print('deleted ${doc.documentID}');
+                          getCollection();
                         },
                       ),
                     ],

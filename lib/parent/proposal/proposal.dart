@@ -11,7 +11,7 @@ class Proposal extends StatefulWidget {
   final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
-  final DocumentSnapshot doc;
+  final doc;
 
   Proposal(
     this.proposalTitle,
@@ -42,8 +42,9 @@ class _ProposalState extends State<Proposal> {
   final TimeOfDay timeOfDay;
   int numYea;
   int numNay;
-  DocumentSnapshot doc;
+  var doc;
   var voteChoiceVisibility = true;
+  var collection;
   final db = Firestore.instance;
 
   _ProposalState(
@@ -56,16 +57,13 @@ class _ProposalState extends State<Proposal> {
     this.doc,
   );
 
-  @override
-  // Widget build(BuildContext context) {
-  //   return Container(
-  //     child: ListTile(
-  //       title: Text(proposalTitle),
-  //       subtitle: Text(proposalSubtitle),
-  //     ),
-  //   );
-  // }
+  void getCollection() {
+    setState(() {
+      collection = db.collection('proposals');
+    });
+  }
 
+  @override
   Widget build(BuildContext context) {
     DateTime cooldownTime;
     return GestureDetector(
@@ -95,7 +93,9 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
-              Text('Cooldown Date and Time: '),
+              // Text(doc.documentID),
+              // Text(doc),
+              // Text('Cooldown Date and Time: '),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -123,12 +123,18 @@ class _ProposalState extends State<Proposal> {
                       ),
                       FlatButton(
                         child: Icon(Icons.delete),
-                        onPressed: () async {
-                          await db
+                        onPressed: () {
+                          db
                               .collection('proposals')
-                              .document(doc.documentID)
-                              .delete();
-                          print('deleted ${doc.documentID}');
+                              .document(
+                                // doc.documentID
+                                doc
+                                )
+                              .delete()
+                              .then((v) {
+                            // print('deleted ${doc.documentID}');
+                            getCollection();
+                          });
                         },
                       ),
                     ],
