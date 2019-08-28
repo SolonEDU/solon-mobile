@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './card.dart';
 import './create.dart';
+import '../../loader.dart';
 
 class EventsScreen extends StatefulWidget {
   @override
@@ -33,43 +34,56 @@ class _EventsScreenState extends State<EventsScreen> {
       doc.data['eventTitle'],
       doc.data['eventDescription'],
       DateTime.parse(doc.data['eventDate']),
-      TimeOfDay(hour: int.parse(doc.data['eventTime'].substring(10,12)), minute: int.parse(doc.data['eventTime'].substring(13,15))),
+      TimeOfDay(
+          hour: int.parse(doc.data['eventTime'].substring(10, 12)),
+          minute: int.parse(doc.data['eventTime'].substring(13, 15))),
       doc,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(8),
-        children: <Widget>[
-          StreamBuilder<QuerySnapshot>(
-            stream: db.collection('events').orderBy('eventDate', descending: false).snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: snapshot.data.documents
-                      .map((doc) => buildEventCard(doc))
-                      .toList(),
-                );
-              }
-              return Container();
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreateEvent(_addEvent),
-            ),
-          );
-        },
-      ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: db
+          .collection('events')
+          .orderBy('eventDate', descending: false)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Scaffold(
+              body: Center(
+                child: Loader(),
+              ),
+            );
+          default:
+            return Scaffold(
+              body: Center(
+                child: ListView(
+                  padding: EdgeInsets.all(8),
+                  children: <Widget>[
+                    Column(
+                      children: snapshot.data.documents
+                          .map((doc) => buildEventCard(doc))
+                          .toList(),
+                    ),
+                  ],
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateEvent(_addEvent)),
+                  )
+                },
+              ),
+            );
+        }
+      },
     );
   }
 }
