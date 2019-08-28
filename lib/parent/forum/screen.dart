@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './card.dart';
 import './create.dart';
+import '../../loader.dart';
 
 class ForumScreen extends StatefulWidget {
   @override
@@ -34,36 +35,47 @@ class _ForumScreenState extends State<ForumScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.all(8),
-        children: <Widget>[
-          StreamBuilder<QuerySnapshot>(
-            stream: db.collection('forum').orderBy('forumTime', descending: true).snapshots(),
-            builder: (context, snapshot) {
-              if(snapshot.hasData) {
-                return Column(
-                  children: snapshot.data.documents
-                      .map((doc) => buildPostCard(doc))
-                      .toList(),
-                );
-              }
-              return Container();
-            },
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreatePost(_addPost),
-            ),
-          );
-        },
-      ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: db
+          .collection('forum')
+          .orderBy('forumTime', descending: true)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Scaffold(
+              body: Center(
+                child: Loader(),
+              ),
+            );
+          default:
+            return Scaffold(
+              body: Center(
+                child: ListView(
+                  padding: EdgeInsets.all(8),
+                  children: <Widget>[
+                    Column(
+                      children: snapshot.data.documents
+                          .map((doc) => buildPostCard(doc))
+                          .toList(),
+                    ),
+                  ],
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreatePost(_addPost)),
+                  ),
+                },
+              ),
+            );
+        }
+      },
     );
   }
 }
