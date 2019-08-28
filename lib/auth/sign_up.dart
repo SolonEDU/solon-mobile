@@ -10,6 +10,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   String _name, _email, _password;
+  String _nativeLanguage = 'English';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,33 @@ class _SignUpPageState extends State<SignUpPage> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
+              DropdownButtonFormField(
+                value: _nativeLanguage,
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your native language';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _nativeLanguage = input,
+                onChanged: (input) {
+                  setState(() {
+                    _nativeLanguage = input;
+                  });
+                },
+                decoration: InputDecoration(labelText: 'Language'),
+                items: <String>[
+                  'English',
+                  'Chinese (Simplified)',
+                  'Chinese (Traditional)',
+                  'Bengali'
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
               TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -74,6 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
             'email': user.email,
             'name': _name,
             'role': 'parent',
+            'nativeLanguage': _nativeLanguage,
           },
         );
         Navigator.of(context).pop();
