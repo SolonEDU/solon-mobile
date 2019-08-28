@@ -61,6 +61,7 @@ class _EventsScreenState extends State<EventsScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'unq2',
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(

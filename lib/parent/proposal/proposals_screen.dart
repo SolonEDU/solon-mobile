@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 //import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:translator/translator.dart';
 
 import './proposal.dart';
 import './addproposal_screen.dart';
@@ -16,6 +17,8 @@ class ProposalsScreen extends StatefulWidget {
 class _ProposalsScreenState extends State<ProposalsScreen> {
   //List<Widget> _proposalsList = [];
   final db = Firestore.instance;
+  final translator = GoogleTranslator();
+  String _languageCode;
 
   void _addProposal(
     String proposalTitle,
@@ -27,21 +30,36 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       {
         'proposalTitle': proposalTitle,
         'proposalSubtitle': proposalSubtitle,
-        'dateTime': dateTime.toString(),
         'timeOfDay': timeOfDay.toString(),
+        'dateTime': dateTime.toString(),
       },
     );
   }
 
-  Proposal buildProposal(doc) {
-    return Proposal(
-      doc.data['proposalTitle'],
-      doc.data['proposalSubtitle'],
-      DateTime.parse(doc.data['dateTime']),
-      TimeOfDay(hour: int.parse(doc.data['timeOfDay'].substring(10,12)), minute: int.parse(doc.data['timeOfDay'].substring(13,15))),
-      0,
-      0,
-      doc,
+  Future<String> translateProposalTitleToNativeLanguage(DocumentSnapshot doc) async {
+    print('hey1');
+    Future proposalTitle = translator.translate(doc.data['proposalTitle'], to: _languageCode);
+    print('hey2');
+    return proposalTitle;
+  }
+
+  Widget buildProposal(doc) {
+    return FutureBuilder(
+      future: translateProposalTitleToNativeLanguage(doc),
+      builder: (BuildContext context, AsyncSnapshot<String> proposalTitle) {
+        print(proposalTitle.data);
+        return Proposal(
+          proposalTitle.hasData ? proposalTitle.data : '',
+          doc.data['proposalSubtitle'],
+          DateTime.parse(doc.data['dateTime']),
+          TimeOfDay(
+            hour: int.parse(doc.data['timeOfDay'].substring(10, 12)),
+            minute: int.parse(doc.data['timeOfDay'].substring(13, 15))),
+          0,
+          0,
+          doc,
+        );
+      },
     );
   }
 
@@ -73,6 +91,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                   ),
                 ),
                 floatingActionButton: FloatingActionButton(
+                  heroTag: 'unq1',
                   child: Icon(Icons.add),
                   onPressed: () => {
                     Navigator.push(
