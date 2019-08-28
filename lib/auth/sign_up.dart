@@ -17,7 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(),
       body: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: <Widget>[
               TextFormField(
                 validator: (input) {
