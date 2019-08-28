@@ -82,6 +82,7 @@ class _PostPageState extends State<PostPage> {
                         return Text('Error: ${snapshot.error}');
                       Map<dynamic, dynamic> text =
                           snapshot.data.data['forumComments'];
+                      text = SplayTreeMap.from(text);
                       List<Widget> textComments = [];
                       var textKey;
                       text.forEach((key, value) => {

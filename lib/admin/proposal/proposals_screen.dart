@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './proposal.dart';
 import './addproposal_screen.dart';
-import './loader.dart';
+import '../../loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
   @override
