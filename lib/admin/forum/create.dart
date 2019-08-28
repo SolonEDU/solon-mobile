@@ -10,7 +10,6 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   List<Step> form = [];
-  // final _formKey = GlobalKey<FormState>();
   final Function addPost;
   FocusNode myFocusNode;
 
@@ -33,9 +32,6 @@ class _CreatePostState extends State<CreatePost> {
     descriptionController,
   ];
 
-  //DateTime _date = DateTime.now();
-  //TimeOfDay _time = TimeOfDay.now();
-
   int currentStep = 0;
   bool complete = false;
 
@@ -44,41 +40,6 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   _CreatePostState(this.addPost);
-
-  // Future<Null> _selectDate(BuildContext context) async {
-  //   DateTime now = DateTime.now();
-  //   final DateTime picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: _date,
-  //     firstDate: DateTime(now.year, now.month, now.day),
-  //     lastDate: DateTime(2020),
-  //   );
-
-  //   if (picked != null && picked != _date) {
-  //     print('Date selected: ${_date.toString()}');
-  //     setState(() {
-  //       _date = picked;
-  //     });
-  //   }
-
-  //   _selectTime(context);
-  // }
-
-  // Future<Null> _selectTime(BuildContext context) async {
-  //   final TimeOfDay picked = await showTimePicker(
-  //     context: context,
-  //     initialTime: _time,
-  //   );
-
-  //   if (picked != null && picked != _time) {
-  //     print('Time selected: ${_time.toString()}');
-  //     setState(() {
-  //       _time = picked;
-  //     });
-  //   }
-  //   timeController.text =
-  //       "Event occurs on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +53,6 @@ class _CreatePostState extends State<CreatePost> {
           decoration: const InputDecoration(labelText: 'Title'),
           controller: titleController,
           autovalidate: true,
-          // validator: (value) {
-          //   if (value.isEmpty) {
-          //     return 'Please enter a title';
-          //   }
-          //   return null;
-          // },
         ),
       ),
       Step(
@@ -120,40 +75,12 @@ class _CreatePostState extends State<CreatePost> {
           },
         ),
       ),
-      // Step(
-      //   title: const Text('Date and Time'),
-      //   isActive: currentStep == 2 ? true : false,
-      //   state: currentStep == 2
-      //       ? StepState.editing
-      //       : currentStep < 2 ? StepState.disabled : StepState.complete,
-      //   content: Column(
-      //     children: <Widget>[
-      //       TextFormField(
-      //         autofocus: true,
-      //         decoration: const InputDecoration(labelText: 'Date and Time'),
-      //         controller: timeController,
-      //         autovalidate: true,
-      //         validator: (value) {
-      //           if (value.isEmpty) {
-      //             return 'Please choose a date and time';
-      //           }
-      //           return null;
-      //         },
-      //       ),
-      //       RaisedButton(
-      //         child: Text('Select Date and Time'),
-      //         onPressed: () => _selectDate(context),
-      //       ),
-      //     ],
-      //   ),
-      // )
     ];
     return Scaffold(
       appBar: AppBar(
         title: Text('Create a Post'),
       ),
       body: Stepper(
-        // key: _formKey,
         steps: form,
         currentStep: currentStep,
         onStepContinue: () => {
@@ -168,7 +95,6 @@ class _CreatePostState extends State<CreatePost> {
                   addPost(titleController.text, descriptionController.text),
                   titleController.text = '',
                   descriptionController.text = '',
-                  //timeController.text = '',
                   Navigator.pop(context),
                 }
         },

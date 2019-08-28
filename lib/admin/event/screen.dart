@@ -10,7 +10,6 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  // List<Widget> _eventsList = [];
   final db = Firestore.instance;
 
   void _addEvent(
@@ -18,20 +17,8 @@ class _EventsScreenState extends State<EventsScreen> {
     description,
     date,
     time,
-  ) async {
-    // setState(
-    //   () {
-    //     _eventsList.add(
-    //       EventCard(
-    //         title,
-    //         description,
-    //         time,
-    //       ),
-    //     );
-    //   },
-    // );
-
-    DocumentReference ref = await db.collection('events').add(
+  ) {
+    db.collection('events').add(
       {
         'eventTitle': title,
         'eventDescription': description,
@@ -58,7 +45,7 @@ class _EventsScreenState extends State<EventsScreen> {
         padding: EdgeInsets.all(8),
         children: <Widget>[
           StreamBuilder<QuerySnapshot>(
-            stream: db.collection('events').snapshots(),
+            stream: db.collection('events').orderBy('eventDate', descending: false).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(

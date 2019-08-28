@@ -12,8 +12,8 @@ class ForumScreen extends StatefulWidget {
 class _ForumScreenState extends State<ForumScreen> {
   final db = Firestore.instance;
 
-  void _addPost(title, description) async {
-    DocumentReference ref = await db.collection('forum').add(
+  void _addPost(title, description) {
+    db.collection('forum').add(
       {
         'forumTitle': title,
         'forumDescription': description,
@@ -28,7 +28,6 @@ class _ForumScreenState extends State<ForumScreen> {
       doc.data['forumTitle'],
       doc.data['forumDescription'],
       DateTime.parse(doc.data['forumTime']),
-      // doc.data['forumComments'],
       doc,
     );
   }
@@ -40,9 +39,9 @@ class _ForumScreenState extends State<ForumScreen> {
         padding: EdgeInsets.all(8),
         children: <Widget>[
           StreamBuilder<QuerySnapshot>(
-            stream: db.collection('forum').snapshots(),
+            stream: db.collection('forum').orderBy('forumTime', descending: true).snapshots(),
             builder: (context, snapshot) {
-              if(snapshot.hasData) {
+              if (snapshot.hasData) {
                 return Column(
                   children: snapshot.data.documents
                       .map((doc) => buildPostCard(doc))
