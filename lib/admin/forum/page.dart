@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'dart:collection';
+
 import './comment.dart';
 
 class PostPage extends StatefulWidget {
@@ -99,7 +101,7 @@ class _PostPageState extends State<PostPage> {
             ),
             TextFormField(
               style: TextStyle(
-                height: 0.5,
+                height: 1,
               ),
               controller: commentController,
               decoration: InputDecoration(
@@ -118,6 +120,7 @@ class _PostPageState extends State<PostPage> {
                         },
                       );
                       _update();
+                      commentController.text = '';
                     }
                   },
                 ),
