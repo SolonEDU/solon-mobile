@@ -7,6 +7,7 @@ import 'package:Solon/parent/home_screen.dart';
 import './parent/proposal/proposals_screen.dart';
 import './parent/event/screen.dart';
 import './parent/forum/screen.dart';
+import './account_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -78,6 +79,21 @@ class _MainState extends State<Main> {
           },
         ),
         title: _widgetOptions[_selectedIndex]['title'],
+        actions: <Widget>[
+          FloatingActionButton(
+              heroTag: 'unq0',
+              elevation: 0.0,
+              child: Icon(Icons.account_circle),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccountScreen(),
+                  ),
+                );
+              },
+            ),
+        ],
       ),
       body: Center(child: _widgetOptions[_selectedIndex]['widget']),
       bottomNavigationBar: NavBar(

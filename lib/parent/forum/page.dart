@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:collection';
 
-import '../../loader.dart';
+// import '../../loader.dart';
 import './comment.dart';
 
 class PostPage extends StatefulWidget {
@@ -39,7 +39,7 @@ class _PostPageState extends State<PostPage> {
 
   void _update() {
     setState(() {
-      document = db.collection('forum').document(doc.documentID);
+    document = db.collection('forum').document(doc.documentID);
     });
   }
 
@@ -61,10 +61,11 @@ class _PostPageState extends State<PostPage> {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Scaffold(
-                body: Center(
-              child: Loader(),
-            ));
+            // return Container();
+            // return Container();
+            // return Center(
+              // child: Loader(),
+            // );
           default:
             return Scaffold(
               appBar: AppBar(
@@ -82,7 +83,7 @@ class _PostPageState extends State<PostPage> {
                     ),
                     Text('Comment Section'),
                     Expanded(child: getComments(snapshot)),
-                    TextFormField(
+                    TextField(
                       style: TextStyle(
                         height: 1,
                       ),
@@ -94,7 +95,7 @@ class _PostPageState extends State<PostPage> {
                         hintText: 'Enter a comment',
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
-                          onPressed: () async {
+                          onPressed: () {
                             if (commentController.text.length > 0) {
                               document.updateData(
                                 {

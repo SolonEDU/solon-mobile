@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
+// import 'dart:async';
 
 import './proposal_screen.dart';
 
@@ -66,7 +66,7 @@ class _ProposalState extends State<Proposal> {
   @override
   Widget build(BuildContext context) {
     getCollection();
-    DateTime cooldownTime;
+    // DateTime cooldownTime;
     return GestureDetector(
       onTap: () {
         Navigator.push(
