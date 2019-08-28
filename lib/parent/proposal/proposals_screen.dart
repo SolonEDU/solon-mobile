@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './proposal.dart';
 import './addproposal_screen.dart';
@@ -36,9 +37,24 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     );
   }
 
-  Future<String> translateProposalTitleToNativeLanguage(DocumentSnapshot doc) async {
+  Future<String> translateProposalTitleToNativeLanguage(
+      DocumentSnapshot doc) async {
+    final Map<String, String> languageCodes = {
+      'English': 'en',
+      'Chinese (Simplified)': 'zh-cn',
+      'Chinese (Traditional)': 'zh-tw',
+      'Bengali': 'bn',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Japanese': 'ja',
+    };
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    DocumentSnapshot userData =
+        await db.collection('users').document(user.uid).get();
+    String nativeLanguage = userData.data['nativeLanguage'];
     print('hey1');
-    Future proposalTitle = translator.translate(doc.data['proposalTitle'], to: _languageCode);
+    Future proposalTitle =
+        translator.translate(doc.data['proposalTitle'], to: languageCodes[nativeLanguage]);
     print('hey2');
     return proposalTitle;
   }
@@ -53,8 +69,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
           doc.data['proposalSubtitle'],
           DateTime.parse(doc.data['dateTime']),
           TimeOfDay(
-            hour: int.parse(doc.data['timeOfDay'].substring(10, 12)),
-            minute: int.parse(doc.data['timeOfDay'].substring(13, 15))),
+              hour: int.parse(doc.data['timeOfDay'].substring(10, 12)),
+              minute: int.parse(doc.data['timeOfDay'].substring(13, 15))),
           0,
           0,
           doc,
@@ -66,7 +82,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: db.collection('proposals').orderBy('dateTime', descending: false).snapshots(),
+        stream: db
+            .collection('proposals')
+            .orderBy('dateTime', descending: false)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {

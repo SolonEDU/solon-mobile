@@ -1,6 +1,7 @@
 import 'package:Solon/admin/proposal/proposal.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './parent/proposal/proposals_screen.dart';
 
@@ -15,7 +16,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   final Map<String, String> languageCodes = {
     'English': 'en',
-    'Chinese (Simplified)': 'zh-Hans',
+    'Chinese (Simplified)': 'zh-cn',
     'Chinese (Traditional)': 'zh-Hant',
     'Bengali': 'bn',
   };
@@ -29,8 +30,12 @@ class _AccountScreenState extends State<AccountScreen> {
       body: Center(
         child: DropdownButton<String>(
           value: _languageCodeValue,
-          onChanged: (String newValue) {
-            ProposalsScreen();
+          onChanged: (String newValue) async {
+            FirebaseUser user = await FirebaseAuth.instance.currentUser();
+            db
+                .collection('users')
+                .document(user.uid)
+                .updateData({'nativeLanguage': newValue});
             setState(() {
               _languageCodeValue = newValue;
             });
@@ -39,7 +44,10 @@ class _AccountScreenState extends State<AccountScreen> {
             'English',
             'Chinese (Simplified)',
             'Chinese (Traditional)',
-            'Bengali'
+            'Bengali',
+            'Korean',
+            'Russian',
+            'Japanese',
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
