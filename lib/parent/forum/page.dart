@@ -93,10 +93,10 @@ class _PostPageState extends State<PostPage> {
                       ),
                       margin: EdgeInsets.only(bottom: 8.0)
                     ),
-                    // Container(
-                    //   child: Text('Comment Section'),
-                    //   margin: EdgeInsets.only(top: 8.0, bottom: 4.0)
-                    // ),
+                    Container(
+                      child: Text('Comment Section'),
+                      margin: EdgeInsets.only(top: 4.0, bottom: 8.0)
+                    ),
                     Expanded(child: getComments(snapshot)),
                     Container(
                       child: TextField(
