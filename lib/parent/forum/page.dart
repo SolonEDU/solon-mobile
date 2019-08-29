@@ -77,22 +77,36 @@ class _PostPageState extends State<PostPage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child: ListTile(
-                        leading: Icon(Icons.account_box),
-                        title: Text(description),
-                        subtitle: Text(new DateFormat.yMMMMd("en_US").add_jm().format(time)),
+                      child: Card(
+                        child: ListTile(
+                          leading: Icon(Icons.account_box),
+                          title: Container(
+                            child: Text(description),
+                            margin: EdgeInsets.only(top: 8.0, bottom: 4.0)
+                          ),
+                          subtitle: Container(
+                            child: Text(new DateFormat.yMMMMd("en_US").add_jm().format(time)),
+                            margin: EdgeInsets.only(bottom: 4.0)
+                          ),
+                        ),
+                        margin: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0)
                       ),
+                      margin: EdgeInsets.only(bottom: 8.0)
                     ),
-                    Text('Comment Section'),
+                    // Container(
+                    //   child: Text('Comment Section'),
+                    //   margin: EdgeInsets.only(top: 8.0, bottom: 4.0)
+                    // ),
                     Expanded(child: getComments(snapshot)),
-                    TextField(
-                      style: TextStyle(
-                        height: 1,
-                      ),
-                      controller: commentController,
-                      decoration: InputDecoration(
+                    Container(
+                      child: TextField(
+                       style: TextStyle(
+                        height: .4
+                       ),
+                       controller: commentController,
+                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(64),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         hintText: 'Enter a comment',
                         suffixIcon: IconButton(
@@ -108,10 +122,12 @@ class _PostPageState extends State<PostPage> {
                               _update();
                               commentController.text = '';
                             }
-                          },
+                           },
+                          ),
                         ),
                       ),
-                    ),
+                      margin: EdgeInsets.all(12.0),
+                    ),                 
                   ],
                 ),
               ),
