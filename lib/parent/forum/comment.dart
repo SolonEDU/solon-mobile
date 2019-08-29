@@ -10,11 +10,20 @@ class Comment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(Icons.account_circle),
-      title: Text(comment),
-      subtitle: Text(new DateFormat.yMMMMd("en_US").add_jm().format(date)),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 32),
+    return Card(
+      child: ListTile(
+       leading: Icon(Icons.account_circle),
+       title: Container(
+          child: Text(comment),
+          margin: EdgeInsets.only(top: 8.0, bottom: 4.0)
+         ),
+       subtitle: Container(
+          child: Text(new DateFormat.yMMMMd("en_US").add_jm().format(date)),
+          margin: EdgeInsets.only(bottom: 8.0)
+         ),
+       contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+      ),
+      margin: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0)
     );
   }
 }
