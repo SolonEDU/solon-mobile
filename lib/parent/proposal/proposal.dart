@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 // import 'dart:async';
 
 import './proposal_screen.dart';
@@ -7,8 +8,8 @@ import './proposal_screen.dart';
 class Proposal extends StatefulWidget {
   final String proposalTitle;
   final String proposalSubtitle;
-  final DateTime dateTime;
-  final TimeOfDay timeOfDay;
+  final double daysLeft;
+  final DateTime endDate;
   int numYea;
   int numNay;
   final doc;
@@ -16,8 +17,8 @@ class Proposal extends StatefulWidget {
   Proposal(
     this.proposalTitle,
     this.proposalSubtitle,
-    this.dateTime,
-    this.timeOfDay,
+    this.daysLeft,
+    this.endDate,
     this.numYea,
     this.numNay,
     this.doc,
@@ -27,8 +28,8 @@ class Proposal extends StatefulWidget {
   _ProposalState createState() => _ProposalState(
         proposalTitle,
         proposalSubtitle,
-        dateTime,
-        timeOfDay,
+        daysLeft,
+        endDate,
         numYea,
         numNay,
         doc,
@@ -38,8 +39,8 @@ class Proposal extends StatefulWidget {
 class _ProposalState extends State<Proposal> {
   final String proposalTitle;
   final String proposalSubtitle;
-  final DateTime dateTime;
-  final TimeOfDay timeOfDay;
+  final double daysLeft;
+  final DateTime endDate;
   int numYea;
   int numNay;
   var doc;
@@ -50,8 +51,8 @@ class _ProposalState extends State<Proposal> {
   _ProposalState(
     this.proposalTitle,
     this.proposalSubtitle,
-    this.dateTime,
-    this.timeOfDay,
+    this.daysLeft,
+    this.endDate,
     this.numYea,
     this.numNay,
     this.doc,
@@ -74,8 +75,8 @@ class _ProposalState extends State<Proposal> {
             builder: (context) => ProposalScreen(
               widget.proposalTitle,
               widget.proposalSubtitle,
-              widget.dateTime,
-              widget.timeOfDay,
+              widget.daysLeft,
+              widget.endDate,
               widget.numYea,
               widget.numNay,
             ),
@@ -93,9 +94,8 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
-              // Text(doc.documentID),
-              // Text(doc),
-              // Text('Cooldown Date and Time: '),
+              Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
+              Text('Days left: ' + daysLeft.toInt().toString()),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
