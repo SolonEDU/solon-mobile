@@ -89,11 +89,10 @@ class _MainState extends State<Main> {
               child: Icon(Icons.account_circle),
               onPressed: () async {
                 FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                String uid = user.uid;
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AccountScreen(uid: uid),
+                    builder: (context) => AccountScreen(user: user),
                   ),
                 );
               },
