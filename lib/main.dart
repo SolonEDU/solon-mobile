@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,6 +38,7 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
+  final db = Firestore.instance;
   var _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -84,11 +87,13 @@ class _MainState extends State<Main> {
               heroTag: 'unq0',
               elevation: 0.0,
               child: Icon(Icons.account_circle),
-              onPressed: () {
+              onPressed: () async {
+                FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                String uid = user.uid;
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AccountScreen(),
+                    builder: (context) => AccountScreen(uid: uid),
                   ),
                 );
               },
