@@ -52,10 +52,10 @@ class _PostPageState extends State<PostPage> {
   }
 
   Widget build(BuildContext context) {
-    var comments;
-    document.get().then((docu) => {
-          comments = docu.data['forumComments'],
-        });
+    // var comments;
+    // document.get().then((docu) => {
+    //       comments = docu.data['forumComments'],
+    //     });
     return FutureBuilder(
       future: document.get(),
       builder:

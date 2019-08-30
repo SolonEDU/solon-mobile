@@ -96,6 +96,7 @@ class _ProposalState extends State<Proposal> {
               ),
               Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
+              Text(doc.documentID),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -127,8 +128,8 @@ class _ProposalState extends State<Proposal> {
                           db
                               .collection('proposals')
                               .document(
-                                // doc.documentID
-                                doc
+                                doc.documentID
+                                // doc
                                 )
                               .delete()
                               .then((v) {
