@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CreateEvent extends StatefulWidget {
   final Function _addEvent;
@@ -79,7 +80,7 @@ class _CreateEventState extends State<CreateEvent> {
       });
     }
     timeController.text =
-        "Event occurs on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
+        "Event occurs on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
   }
 
   @override
