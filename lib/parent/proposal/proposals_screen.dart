@@ -35,8 +35,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   void _addProposal(
     String proposalTitle,
     String proposalSubtitle,
-    DateTime dateTime,
-    TimeOfDay timeOfDay,
+    double daysLeft,
+    DateTime endDate,
   ) async {
     Map<String, String> translatedProposalTitlesMap = {
       'English': await translator.translate(proposalTitle, to: 'en'),
@@ -78,8 +78,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       {
         'proposalTitle': translatedProposalTitlesMap,
         'proposalSubtitle': translatedProposalDescriptionsMap,
-        'timeOfDay': timeOfDay.toString(),
-        'dateTime': dateTime.toString(),
+        'daysLeft': daysLeft,
+        'endDate': endDate.toString(),
       },
     );
   }
@@ -108,10 +108,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         return Proposal(
           translatedProposal.hasData ? translatedProposal.data[0] : '',
           translatedProposal.hasData ? translatedProposal.data[1] : '',
-          DateTime.parse(doc.data['dateTime']),
-          TimeOfDay(
-              hour: int.parse(doc.data['timeOfDay'].substring(10, 12)),
-              minute: int.parse(doc.data['timeOfDay'].substring(13, 15))),
+          doc.data['daysLeft'],
+          DateTime.parse(doc.data['endDate']),
           0,
           0,
           doc.documentID,
@@ -124,7 +122,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     setState(() {
       snapshots = db
           .collection('proposals')
-          .orderBy('dateTime', descending: false)
+          .orderBy('daysLeft', descending: false)
           .snapshots();
     });
   }

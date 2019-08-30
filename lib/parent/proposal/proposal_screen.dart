@@ -4,16 +4,16 @@ import 'package:intl/intl.dart';
 class ProposalScreen extends StatelessWidget {
   final String proposalTitle;
   final String proposalSubtitle;
-  final DateTime dateTime;
-  final TimeOfDay timeOfDay;
+  final double daysLeft;
+  final DateTime endDate;
   final int numYea;
   final int numNay;
 
   ProposalScreen(
     this.proposalTitle,
     this.proposalSubtitle,
-    this.dateTime,
-    this.timeOfDay,
+    this.daysLeft,
+    this.endDate,
     this.numYea,
     this.numNay,
   );
@@ -34,7 +34,9 @@ class ProposalScreen extends StatelessWidget {
               Text('Votes for...'),
               Text('Yea: $numYea'),
               Text('Nay: $numNay'),
-              Text('Deadline Time: ' + new DateFormat.yMMMMd("en_US").add_jm().format(dateTime)),
+              Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
+              Text('Days left: ' + daysLeft.toInt().toString()),
+              //Text('Deadline Time: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               //Text('Deadline Date: ${dateTime.toString().substring(0, 10)}'),
               //Text('Deadline Time: ${timeOfDay.toString().substring(10,15)}'),
             ],

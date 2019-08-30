@@ -48,6 +48,9 @@ class AddProposalFormState extends State<AddProposalForm> {
     proposalTimeController
   ];
 
+  // This is the starting value of the slider.
+  double _sliderValue = 7.0;
+
   FocusNode myFocusNode;
 
   @override
@@ -63,7 +66,7 @@ class AddProposalFormState extends State<AddProposalForm> {
   }
 
   DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
+  // TimeOfDay _time = TimeOfDay.now();
   var _currentStep = 0;
   List<Step> form = [];
 
@@ -71,42 +74,42 @@ class AddProposalFormState extends State<AddProposalForm> {
 
   void goTo(int step) {
     setState(() => _currentStep = step);
-    if (step == 2) _selectDate(context);
+    // if (step == 2) _selectDate(context);
   }
 
-  Future<Null> _selectDate(BuildContext context) async {
-    var now = DateTime.now();
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(now.year, now.month, now.day),
-      lastDate: DateTime(2020),
-    );
+  // Future<Null> _selectDate(BuildContext context) async {
+  //   var now = DateTime.now();
+  //   final DateTime picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: _date,
+  //     firstDate: DateTime(now.year, now.month, now.day),
+  //     lastDate: DateTime(2020),
+  //   );
 
-    if (picked != null) {
-      print('Date selected: ${_date.toString()}');
-      _selectTime(context);
-      setState(() {
-        _date = picked;
-      });
-    }
-  }
+  //   if (picked != null) {
+  //     print('Date selected: ${_date.toString()}');
+  //     _selectTime(context);
+  //     setState(() {
+  //       _date = picked;
+  //     });
+  //   }
+  // }
 
-  Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime: _time,
-    );
+  // Future<Null> _selectTime(BuildContext context) async {
+  //   final TimeOfDay picked = await showTimePicker(
+  //     context: context,
+  //     initialTime: _time,
+  //   );
 
-    if (picked != null) {
-      print('Time selected: ${_time.toString()}');
-      setState(() {
-        _time = picked;
-      });
-    }
-    proposalTimeController.text =
-      "Proposal ends on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
-  }
+  //   if (picked != null) {
+  //     print('Time selected: ${_time.toString()}');
+  //     setState(() {
+  //       _time = picked;
+  //     });
+  //   }
+  //   proposalTimeController.text =
+  //       "Proposal ends on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -147,30 +150,86 @@ class AddProposalFormState extends State<AddProposalForm> {
               return null;
             },
           )),
+      // Step(
+      //   title: Text('End Date and Time'),
+      //   isActive: _currentStep == 2 ? true : false,
+      //   state: _currentStep == 2
+      //       ? StepState.editing
+      //       : _currentStep < 2 ? StepState.disabled : StepState.complete,
+      //   content: Column(
+      //     children: <Widget>[
+      //       TextFormField(
+      //         autofocus: true,
+      //         decoration: const InputDecoration(labelText: 'Date and Time'),
+      //         controller: proposalTimeController,
+      //         autovalidate: true,
+      //         validator: (value) {
+      //           if (value.isEmpty) {
+      //             return 'Please choose a date and time';
+      //           }
+      //           return null;
+      //         },
+      //       ),
+      //       RaisedButton(
+      //         child: Text('Select Date and Time'),
+      //         onPressed: () => _selectDate(context),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       Step(
-        title: Text('Date and Time'),
+        title: Text('Days Until Voting on Proposal Ends'),
         isActive: _currentStep == 2 ? true : false,
         state: _currentStep == 2
             ? StepState.editing
             : _currentStep < 2 ? StepState.disabled : StepState.complete,
         content: Column(
           children: <Widget>[
-            TextFormField(
-              autofocus: true,
-              decoration: const InputDecoration(labelText: 'Date and Time'),
-              controller: proposalTimeController,
-              autovalidate: true,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please choose a date and time';
-                }
-                return null;
-              },
+            Container(
+              margin: const EdgeInsets.only(top: 45.0),
+              child: Slider(
+                activeColor: Colors.blue,
+                divisions: 13,
+                label: _sliderValue == 1.0
+                    ? '${_sliderValue.round()} Day'
+                    : '${_sliderValue.round()} Days',
+                min: 1.0,
+                max: 14.0,
+                onChanged: (newRating) {
+                  setState(() => _sliderValue = newRating);
+                },
+                value: _sliderValue,
+              ),
             ),
-            RaisedButton(
-              child: Text('Select Date and Time'),
-              onPressed: () => _selectDate(context),
+            Container(
+              margin: const EdgeInsets.only(bottom: 45.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Text(
+                    "1 Day",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "14 Days",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
+
+            // Align(
+            //   alignment: Alignment.centerLeft,
+            //   child: Text(
+            //     '1 Day'),
+            // ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Text('14 Days'),
+            // ),
           ],
         ),
       ),
@@ -191,7 +250,7 @@ class AddProposalFormState extends State<AddProposalForm> {
             : {
                 setState(() => complete = true),
                 addProposal(proposalTitleController.text,
-                    proposalSubtitleController.text, _date, _time),
+                    proposalSubtitleController.text, _sliderValue, _date.add(new Duration(days: _sliderValue.toInt()))),
                 proposalTitleController.text = '',
                 proposalSubtitleController.text = '',
                 proposalTimeController.text = '',
