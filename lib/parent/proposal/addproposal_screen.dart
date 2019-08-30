@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddProposalScreen extends StatelessWidget {
   final Function addProposal;
@@ -104,7 +105,7 @@ class AddProposalFormState extends State<AddProposalForm> {
       });
     }
     proposalTimeController.text =
-        "Proposal ends on ${_date.toString().substring(0, 10)} at ${_time.toString().substring(10, 15)}";
+      "Proposal ends on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
   }
 
   @override
@@ -189,11 +190,8 @@ class AddProposalFormState extends State<AddProposalForm> {
               }
             : {
                 setState(() => complete = true),
-                addProposal(
-                    proposalTitleController.text,
-                    proposalSubtitleController.text,
-                    _date,
-                    _time),
+                addProposal(proposalTitleController.text,
+                    proposalSubtitleController.text, _date, _time),
                 proposalTitleController.text = '',
                 proposalSubtitleController.text = '',
                 proposalTimeController.text = '',
