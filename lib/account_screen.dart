@@ -32,6 +32,12 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
+  void _setLanguage(newValue) {
+    setState(() {
+      _languageCodeValue = newValue;
+    });
+  }
+
   @override
   initState() {
     super.initState();
@@ -63,15 +69,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     Text(snapshot.data.data['name']),
                     Text(snapshot.data.data['email']),
                     DropdownButton<String>(
-                      value: _languageCodeValue,
+                      value: snapshot.data.data['nativeLanguage'],
                       onChanged: (String newValue) async {
                         db
                             .collection('users')
                             .document(user.uid)
                             .updateData({'nativeLanguage': newValue});
-                        setState(() {
-                          _languageCodeValue = newValue;
-                        });
+                            _setLanguage(newValue);
                       },
                       items: <String>[
                         'English',

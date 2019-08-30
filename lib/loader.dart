@@ -65,6 +65,12 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
     controller.repeat();
   }
 
+  @override 
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     //return Text("Loading...");
