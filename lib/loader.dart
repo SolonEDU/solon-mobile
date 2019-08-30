@@ -16,6 +16,11 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
   double radius = 0.0;
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   void initState() {
     super.initState();
 

@@ -1,5 +1,7 @@
 // import 'dart:convert';
 
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
@@ -19,6 +21,15 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   final db = Firestore.instance;
   var snapshots;
   final translator = GoogleTranslator();
+  final Map<String, String> languageCodes = {
+    'English': 'en',
+    'Chinese (Simplified)': 'zh-cn',
+    'Chinese (Traditional)': 'zh-tw',
+    'Bengali': 'bn',
+    'Korean': 'ko',
+    'Russian': 'ru',
+    'Japanese': 'ja',
+  };
   // String _languageCode;
 
   void _addProposal(
@@ -26,47 +37,77 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     String proposalSubtitle,
     DateTime dateTime,
     TimeOfDay timeOfDay,
-  ) {
+  ) async {
+    Map<String, String> translatedProposalTitlesMap = {
+      'English': await translator.translate(proposalTitle, to: 'en'),
+      'Chinese (Simplified)': await translator.translate(proposalTitle, to: 'zh-cn'),
+      'Chinese (Traditional)': await translator.translate(proposalTitle, to: 'zh-tw'),
+      'Bengali': await translator.translate(proposalTitle, to: 'bn'),
+      'Korean': await translator.translate(proposalTitle, to: 'ko'),
+      'Russian': await translator.translate(proposalTitle, to: 'ru'),
+      'Japanese': await translator.translate(proposalTitle, to: 'ja'),
+    };
+    Map<String, String> translatedProposalDescriptionsMap = {
+      'English': await translator.translate(proposalSubtitle, to: 'en'),
+      'Chinese (Simplified)': await translator.translate(proposalSubtitle, to: 'zh-cn'),
+      'Chinese (Traditional)': await translator.translate(proposalSubtitle, to: 'zh-tw'),
+      'Bengali': await translator.translate(proposalSubtitle, to: 'bn'),
+      'Korean': await translator.translate(proposalSubtitle, to: 'ko'),
+      'Russian': await translator.translate(proposalSubtitle, to: 'ru'),
+      'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
+    };
+
+    // for(int i = 0; i < languageCodes.keys.length; i++) {
+    //   String translatedProposalTitleText = await translator.translate(proposalTitle, to: languageCodes);
+    //   String translatedProposalDescriptionText = await translator.translate(proposalSubtitle, to: languageCodes[i]);
+    //   translatedProposalTitlesMap[key] = translatedProposalTitleText;
+    // }
+
+    // languageCodes.forEach(
+    //   (key, value) async {
+    //     String translatedProposalTitleText = await translator.translate(proposalTitle, to: value);
+    //     String translatedProposalDescriptionText = await translator.translate(proposalSubtitle, to: value);
+    //     translatedProposalTitlesMap[key] = translatedProposalTitleText;
+    //     translatedProposalDescriptionsMap[key] = translatedProposalDescriptionText;
+    //     print('${translatedProposalTitleText} ${value}');
+    //   },
+    // );
+    //String translatedText = await translator.translate(proposalTitle, to: 'zh-cn');
+    print('Length: ${translatedProposalTitlesMap.length}');
     db.collection('proposals').add(
       {
-        'proposalTitle': proposalTitle,
-        'proposalSubtitle': proposalSubtitle,
+        'proposalTitle': translatedProposalTitlesMap,
+        'proposalSubtitle': translatedProposalDescriptionsMap,
         'timeOfDay': timeOfDay.toString(),
         'dateTime': dateTime.toString(),
       },
     );
   }
 
-  Future<String> translateProposalTitleToNativeLanguage(
+  Future<List> translateProposalTitleToNativeLanguage(
       DocumentSnapshot doc) async {
-    final Map<String, String> languageCodes = {
-      'English': 'en',
-      'Chinese (Simplified)': 'zh-cn',
-      'Chinese (Traditional)': 'zh-tw',
-      'Bengali': 'bn',
-      'Korean': 'ko',
-      'Russian': 'ru',
-      'Japanese': 'ja',
-    };
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
     // print('hey1');
-    Future proposalTitle = translator.translate(doc.data['proposalTitle'],
-        to: languageCodes[nativeLanguage]);
+    // Future proposalTitle = translator.translate(doc.data['proposalTitle'],
+    //     to: languageCodes[nativeLanguage]);
     // print('hey2');
-    return proposalTitle;
+    List translatedProposal = List();
+    translatedProposal.add(doc.data['proposalTitle'][nativeLanguage]);
+    translatedProposal.add(doc.data['proposalSubtitle'][nativeLanguage]);
+    return translatedProposal;
   }
 
   Widget buildProposal(doc) {
     return FutureBuilder(
       future: translateProposalTitleToNativeLanguage(doc),
-      builder: (BuildContext context, AsyncSnapshot<String> proposalTitle) {
+      builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
         // print(proposalTitle.data);
         return Proposal(
-          proposalTitle.hasData ? proposalTitle.data : '',
-          doc.data['proposalSubtitle'],
+          translatedProposal.hasData ? translatedProposal.data[0] : '',
+          translatedProposal.hasData ? translatedProposal.data[1] : '',
           DateTime.parse(doc.data['dateTime']),
           TimeOfDay(
               hour: int.parse(doc.data['timeOfDay'].substring(10, 12)),
