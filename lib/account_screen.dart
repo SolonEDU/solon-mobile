@@ -2,20 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import './loader.dart';
 // import './parent/proposal/proposals_screen.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({this.user});
   final FirebaseUser user;
+  const AccountScreen({this.user});
   @override
   _AccountScreenState createState() => _AccountScreenState(user: user);
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  _AccountScreenState({this.user});
   final FirebaseUser user;
+  _AccountScreenState({this.user});
   final db = Firestore.instance;
+  var document;
   String _languageCodeValue = 'English';
 
   final Map<String, String> languageCodes = {
@@ -25,44 +26,78 @@ class _AccountScreenState extends State<AccountScreen> {
     'Bengali': 'bn',
   };
 
+  void _update() {
+    setState(() {
+      document = db.collection('users').document(user.uid);
+    });
+  }
+
+  void _setLanguage(newValue) {
+    setState(() {
+      _languageCodeValue = newValue;
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _update();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Account'),
-        ),
-        body: Center(
-          child: Column(children: <Widget>[
-            Text('Name'),
-            Text('Email'),
-            Text('Current Language'),
-            DropdownButton<String>(
-              value: _languageCodeValue,
-              onChanged: (String newValue) async {
-                db
-                    .collection('users')
-                    .document(user.uid)
-                    .updateData({'nativeLanguage': newValue});
-                setState(() {
-                  _languageCodeValue = newValue;
-                });
-              },
-              items: <String>[
-                'English',
-                'Chinese (Simplified)',
-                'Chinese (Traditional)',
-                'Bengali',
-                'Korean',
-                'Russian',
-                'Japanese',
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ]),
-        ));
+    return FutureBuilder(
+      future: document.get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Scaffold(
+              body: Center(
+                child: Loader(),
+              ),
+            );
+          default:
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Account'),
+              ),
+              body: Center(
+                child: Column(
+                  children: <Widget>[
+                    Text(snapshot.data.data['name']),
+                    Text(snapshot.data.data['email']),
+                    DropdownButton<String>(
+                      value: snapshot.data.data['nativeLanguage'],
+                      onChanged: (String newValue) async {
+                        db
+                            .collection('users')
+                            .document(user.uid)
+                            .updateData({'nativeLanguage': newValue});
+                            _setLanguage(newValue);
+                      },
+                      items: <String>[
+                        'English',
+                        'Chinese (Simplified)',
+                        'Chinese (Traditional)',
+                        'Bengali',
+                        'Korean',
+                        'Russian',
+                        'Japanese',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    )
+                  ],
+                ),
+              ),
+            );
+        }
+      },
+    );
   }
 }

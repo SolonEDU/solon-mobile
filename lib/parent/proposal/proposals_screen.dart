@@ -46,6 +46,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       'Korean': await translator.translate(proposalTitle, to: 'ko'),
       'Russian': await translator.translate(proposalTitle, to: 'ru'),
       'Japanese': await translator.translate(proposalTitle, to: 'ja'),
+      'Ukrainian': await translator.translate(proposalTitle, to: 'uk'),
     };
     Map<String, String> translatedProposalDescriptionsMap = {
       'English': await translator.translate(proposalSubtitle, to: 'en'),
@@ -55,6 +56,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       'Korean': await translator.translate(proposalSubtitle, to: 'ko'),
       'Russian': await translator.translate(proposalSubtitle, to: 'ru'),
       'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
+      'Ukrainian': await translator.translate(proposalSubtitle, to: 'uk'),
     };
 
     // for(int i = 0; i < languageCodes.keys.length; i++) {
