@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-// import 'dart:async';
+import 'package:Solon/app_localizations.dart';
 
 import './proposal_screen.dart';
 
@@ -96,6 +96,7 @@ class _ProposalState extends State<Proposal> {
               ),
               Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
+              Text(doc.documentID),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -104,7 +105,7 @@ class _ProposalState extends State<Proposal> {
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: const Text('YEA'),
+                        child: Text(AppLocalizations.of(context).translate('yea')),
                         onPressed: () {
                           widget.numYea++;
                           setState(() {
@@ -113,7 +114,7 @@ class _ProposalState extends State<Proposal> {
                         },
                       ),
                       FlatButton(
-                        child: const Text('NAY'),
+                        child: Text(AppLocalizations.of(context).translate('home')),
                         onPressed: () {
                           widget.numNay++;
                           setState(() {
@@ -127,8 +128,8 @@ class _ProposalState extends State<Proposal> {
                           db
                               .collection('proposals')
                               .document(
-                                // doc.documentID
-                                doc
+                                doc.documentID
+                                // doc
                                 )
                               .delete()
                               .then((v) {

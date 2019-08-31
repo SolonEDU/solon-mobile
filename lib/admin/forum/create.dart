@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 class CreatePost extends StatefulWidget {
   final Function _addPost;
@@ -78,7 +79,7 @@ class _CreatePostState extends State<CreatePost> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a Post'),
+        title: Text(AppLocalizations.of(context).translate('createAPost')),
       ),
       body: Stepper(
         steps: form,

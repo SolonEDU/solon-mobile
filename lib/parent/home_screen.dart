@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -6,7 +7,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('Parent Home Screen'),
+      body: Text(AppLocalizations.of(context).translate('parentHomeScreen')),
     );
   }
 }

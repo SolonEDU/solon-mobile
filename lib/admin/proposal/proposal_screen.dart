@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 class ProposalScreen extends StatelessWidget {
   final String proposalTitle;
@@ -30,11 +31,11 @@ class ProposalScreen extends StatelessWidget {
             children: <Widget>[
               Text(proposalSubtitle),
               Icon(Icons.comment),
-              Text('Votes for...'),
-              Text('Yea: $numYea'),
-              Text('Nay: $numNay'),
+              Text(AppLocalizations.of(context).translate('votesFor')),
+              Text('${AppLocalizations.of(context).translate('yea')}: $numYea'),
+              Text('${AppLocalizations.of(context).translate('nay')}: $numNay'),
               Text('Deadline Date: ${dateTime.toString().substring(0, 10)}'),
-              Text('Deadline Time: ${timeOfDay.toString().substring(10,15)}'),
+              Text('${AppLocalizations.of(context).translate('deadlineTime')}: ${timeOfDay.toString().substring(10,15)}'),
             ],
           ),
         ),

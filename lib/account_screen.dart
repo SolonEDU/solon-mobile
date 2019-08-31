@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'app_localizations.dart';
+
 import './loader.dart';
 // import './parent/proposal/proposals_screen.dart';
 
@@ -17,7 +19,7 @@ class _AccountScreenState extends State<AccountScreen> {
   _AccountScreenState({this.user});
   final db = Firestore.instance;
   var document;
-  String _languageCodeValue = 'English';
+  var _language; 
 
   final Map<String, String> languageCodes = {
     'English': 'en',
@@ -34,7 +36,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void _setLanguage(newValue) {
     setState(() {
-      _languageCodeValue = newValue;
+      _language = newValue;
     });
   }
 
@@ -61,7 +63,7 @@ class _AccountScreenState extends State<AccountScreen> {
           default:
             return Scaffold(
               appBar: AppBar(
-                title: Text('Account'),
+                title: Text(AppLocalizations.of(context).translate('account')),
               ),
               body: Center(
                 child: Column(
@@ -70,12 +72,12 @@ class _AccountScreenState extends State<AccountScreen> {
                     Text(snapshot.data.data['email']),
                     DropdownButton<String>(
                       value: snapshot.data.data['nativeLanguage'],
-                      onChanged: (String newValue) async {
+                      onChanged: (String newValue) {
                         db
                             .collection('users')
                             .document(user.uid)
                             .updateData({'nativeLanguage': newValue});
-                            _setLanguage(newValue);
+                        _setLanguage(newValue);
                       },
                       items: <String>[
                         'English',

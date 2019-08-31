@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 import '../navbar.dart';
 import 'package:Solon/admin/home_screen.dart';
@@ -26,19 +27,19 @@ class _AdminState extends State<Admin> {
 
   var _widgetOptions = [
     {
-      'title': Text('Home'),
+      'title': 'home',
       'widget': AdminHomeScreen(),
     },
     {
-      'title': Text('Proposals'),
+      'title': 'proposals',
       'widget': ProposalsScreen(),
     },
     {
-      'title': Text('Events'),
+      'title': 'events',
       'widget': EventsScreen(),
     },
     {
-      'title': Text('Forum'),
+      'title': 'forum',
       'widget': ForumScreen(),
     },
   ];
@@ -58,7 +59,7 @@ class _AdminState extends State<Admin> {
             );
           },
         ),
-        title: _widgetOptions[_selectedIndex]['title'],
+        title: Text(AppLocalizations.of(context).translate(_widgetOptions[_selectedIndex]['title'])),
       ),
       body: Center(child: _widgetOptions[_selectedIndex]['widget']),
       bottomNavigationBar: NavBar(

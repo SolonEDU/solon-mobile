@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Solon/app_localizations.dart';
 
 import 'dart:collection';
 
@@ -50,10 +51,10 @@ class _PostPageState extends State<PostPage> {
   }
 
   Widget build(BuildContext context) {
-    var comments;
-    document.get().then((docu) => {
-          comments = docu.data['forumComments'],
-        });
+    // var comments;
+    // document.get().then((docu) => {
+    //       comments = docu.data['forumComments'],
+    //     });
     return FutureBuilder(
       future: document.get(),
       builder:
@@ -80,7 +81,7 @@ class _PostPageState extends State<PostPage> {
                         subtitle: Text(time.toString()),
                       ),
                     ),
-                    Text('Comment Section'),
+                    Text(AppLocalizations.of(context).translate('commentSection')),
                     Expanded(child: getComments(snapshot)),
                     TextFormField(
                       style: TextStyle(
@@ -91,7 +92,7 @@ class _PostPageState extends State<PostPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(64),
                         ),
-                        hintText: 'Enter a comment',
+                        hintText: AppLocalizations.of(context).translate('enterAComment'),
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () async {

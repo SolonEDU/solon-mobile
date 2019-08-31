@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 import './page.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,7 @@ class EventCard extends StatefulWidget {
   final String description;
   final DateTime date;
   final TimeOfDay time;
-  final DocumentSnapshot doc;
+  final doc;
   EventCard(this.title, this.description, this.date, this.time, this.doc);
 
   @override
@@ -28,7 +29,7 @@ class _EventCardState extends State<EventCard> {
   final DateTime date;
   final TimeOfDay time;
   bool attending = false;
-  DocumentSnapshot doc;
+  var doc;
   final db = Firestore.instance;
 
   _EventCardState(
@@ -48,8 +49,8 @@ class _EventCardState extends State<EventCard> {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.calendar_today),
-              title: Text(title),
-              subtitle: Text(description + '\n' + 'Event Time: '  + new DateFormat.yMMMMd("en_US").add_jm().format(date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
+              title: Text(widget.title),
+              subtitle: Text(widget.description + '\n' + 'Event Time: '  + DateFormat.yMMMMd("en_US").add_jm().format(date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
               onTap: () {
                 Navigator.push(
                   context,
@@ -86,7 +87,7 @@ class _EventCardState extends State<EventCard> {
                     activeTrackColor: Colors.lightGreenAccent,
                     activeColor: Colors.green,
                   ),
-                  Text('Attending?')
+                  Text(AppLocalizations.of(context).translate('attending'))
                 ],
               ),
             )
