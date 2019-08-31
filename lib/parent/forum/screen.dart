@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:translator/translator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './card.dart';
 import './create.dart';
@@ -12,12 +14,35 @@ class ForumScreen extends StatefulWidget {
 
 class _ForumScreenState extends State<ForumScreen> {
   final db = Firestore.instance;
+  final translator = GoogleTranslator();
 
-  void _addPost(title, description) {
+  void _addPost(title, description) async {
+    Map<String, String> translatedForumTitlesMap = {
+      'English': await translator.translate(title, to: 'en'),
+      'Chinese (Simplified)': await translator.translate(title, to: 'zh-cn'),
+      'Chinese (Traditional)': await translator.translate(title, to: 'zh-tw'),
+      'Bengali': await translator.translate(title, to: 'bn'),
+      'Korean': await translator.translate(title, to: 'ko'),
+      'Russian': await translator.translate(title, to: 'ru'),
+      'Japanese': await translator.translate(title, to: 'ja'),
+      'Ukrainian': await translator.translate(title, to: 'uk'),
+    };
+
+    Map<String, String> translatedForumDescriptionsMap = {
+      'English': await translator.translate(description, to: 'en'),
+      'Chinese (Simplified)': await translator.translate(description, to: 'zh-cn'),
+      'Chinese (Traditional)': await translator.translate(description, to: 'zh-tw'),
+      'Bengali': await translator.translate(description, to: 'bn'),
+      'Korean': await translator.translate(description, to: 'ko'),
+      'Russian': await translator.translate(description, to: 'ru'),
+      'Japanese': await translator.translate(description, to: 'ja'),
+      'Ukrainian': await translator.translate(description, to: 'uk'),
+    };
+
     db.collection('forum').add(
       {
-        'forumTitle': title,
-        'forumDescription': description,
+        'forumTitle': translatedForumTitlesMap,
+        'forumDescription': translatedForumDescriptionsMap,
         'forumTime': DateTime.now().toString(),
         'forumComments': {},
       },
@@ -64,6 +89,7 @@ class _ForumScreenState extends State<ForumScreen> {
                 ),
               ),
               floatingActionButton: FloatingActionButton(
+                heroTag: 'unq3',
                 child: Icon(Icons.add),
                 onPressed: () => {
                   Navigator.push(

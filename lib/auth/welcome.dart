@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
+import 'package:Solon/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -31,11 +32,11 @@ class _WelcomePageState extends State<WelcomePage> {
         children: <Widget>[
           RaisedButton(
             onPressed: navigateToSignIn,
-            child: Text('Sign In'),
+            child: Text(AppLocalizations.of(context).translate('signin')),
           ),
           RaisedButton(
             onPressed: navigateToSignUp,
-            child: Text('Sign Up'),
+            child: Text(AppLocalizations.of(context).translate('signup')),
           ),
         ],
       ),

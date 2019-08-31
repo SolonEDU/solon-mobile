@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 class CreateEvent extends StatefulWidget {
   final Function _addEvent;
@@ -87,24 +88,24 @@ class _CreateEventState extends State<CreateEvent> {
   Widget build(BuildContext context) {
     form = [
       Step(
-        title: const Text('Title'),
+        title: Text(AppLocalizations.of(context).translate('title')),
         isActive: currentStep == 0 ? true : false,
         state: currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          decoration: const InputDecoration(labelText: 'Title'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
           controller: titleController,
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a title';
+              return AppLocalizations.of(context).translate('pleaseEnterATitle');
             }
             return null;
           },
         ),
       ),
       Step(
-        title: const Text('Description'),
+        title: Text(AppLocalizations.of(context).translate('description')),
         isActive: currentStep == 1 ? true : false,
         state: currentStep == 1
             ? StepState.editing
@@ -112,19 +113,19 @@ class _CreateEventState extends State<CreateEvent> {
         content: TextFormField(
           autofocus: true,
           focusNode: myFocusNode,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
           controller: descriptionController,
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a description';
+              return AppLocalizations.of(context).translate('pleaseEnterADescription');
             }
             return null;
           },
         ),
       ),
       Step(
-        title: const Text('Date and Time'),
+        title: Text(AppLocalizations.of(context).translate('dateAndTime')),
         isActive: currentStep == 2 ? true : false,
         state: currentStep == 2
             ? StepState.editing
@@ -133,18 +134,18 @@ class _CreateEventState extends State<CreateEvent> {
           children: <Widget>[
             TextFormField(
               autofocus: true,
-              decoration: const InputDecoration(labelText: 'Date and Time'),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('dateAndTime')),
               controller: timeController,
               autovalidate: true,
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Please choose a date and time';
+                  return AppLocalizations.of(context).translate('pleaseChooseADateAndTime');
                 }
                 return null;
               },
             ),
             RaisedButton(
-              child: Text('Select Date and Time'),
+              child: Text(AppLocalizations.of(context).translate('selectDateAndTime')),
               onPressed: () => _selectDate(context),
             ),
           ],
@@ -153,7 +154,7 @@ class _CreateEventState extends State<CreateEvent> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create an Event'),
+        title: Text(AppLocalizations.of(context).translate('createAnEvent')),
       ),
       body: Stepper(
         // key: _formKey,
