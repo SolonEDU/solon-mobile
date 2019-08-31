@@ -1,7 +1,3 @@
-// import 'dart:convert';
-
-// import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
@@ -20,15 +16,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   final db = Firestore.instance;
   var snapshots;
   final translator = GoogleTranslator();
-  final Map<String, String> languageCodes = {
-    'English': 'en',
-    'Chinese (Simplified)': 'zh-cn',
-    'Chinese (Traditional)': 'zh-tw',
-    'Bengali': 'bn',
-    'Korean': 'ko',
-    'Russian': 'ru',
-    'Japanese': 'ja',
-  };
 
   void _addProposal(
     String proposalTitle,
@@ -60,24 +47,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
       'Ukrainian': await translator.translate(proposalSubtitle, to: 'uk'),
     };
-
-    // for(int i = 0; i < languageCodes.keys.length; i++) {
-    //   String translatedProposalTitleText = await translator.translate(proposalTitle, to: languageCodes);
-    //   String translatedProposalDescriptionText = await translator.translate(proposalSubtitle, to: languageCodes[i]);
-    //   translatedProposalTitlesMap[key] = translatedProposalTitleText;
-    // }
-
-    // languageCodes.forEach(
-    //   (key, value) async {
-    //     String translatedProposalTitleText = await translator.translate(proposalTitle, to: value);
-    //     String translatedProposalDescriptionText = await translator.translate(proposalSubtitle, to: value);
-    //     translatedProposalTitlesMap[key] = translatedProposalTitleText;
-    //     translatedProposalDescriptionsMap[key] = translatedProposalDescriptionText;
-    //     print('${translatedProposalTitleText} ${value}');
-    //   },
-    // );
-    //String translatedText = await translator.translate(proposalTitle, to: 'zh-cn');
-    // print('Length: ${translatedProposalTitlesMap.length}');
     db.collection('proposals').add(
       {
         'proposalTitle': translatedProposalTitlesMap,
@@ -94,8 +63,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    // Future proposalTitle = translator.translate(doc.data['proposalTitle'],
-    //     to: languageCodes[nativeLanguage]);
     List translatedProposal = List();
     translatedProposal.add(doc.data['proposalTitle'][nativeLanguage]);
     translatedProposal.add(doc.data['proposalSubtitle'][nativeLanguage]);
