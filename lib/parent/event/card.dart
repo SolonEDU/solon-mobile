@@ -55,10 +55,10 @@ class _EventCardState extends State<EventCard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => EventPage(
-                      title,
-                      description,
-                      date,
-                      time,
+                      widget.title,
+                      widget.description,
+                      widget.date,
+                      widget.time,
                     ),
                   ),
                 );
