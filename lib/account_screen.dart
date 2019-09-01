@@ -17,7 +17,7 @@ class _AccountScreenState extends State<AccountScreen> {
   _AccountScreenState({this.user});
   final db = Firestore.instance;
   var document;
-  String _languageCodeValue = 'English';
+  var _language; 
 
   final Map<String, String> languageCodes = {
     'English': 'en',
@@ -34,7 +34,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void _setLanguage(newValue) {
     setState(() {
-      _languageCodeValue = newValue;
+      _language = newValue;
     });
   }
 
@@ -70,12 +70,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     Text(snapshot.data.data['email']),
                     DropdownButton<String>(
                       value: snapshot.data.data['nativeLanguage'],
-                      onChanged: (String newValue) async {
+                      onChanged: (String newValue) {
                         db
                             .collection('users')
                             .document(user.uid)
                             .updateData({'nativeLanguage': newValue});
-                            _setLanguage(newValue);
+                        _setLanguage(newValue);
+                        print(_language); //printing language to prevent blue error from popping up 
                       },
                       items: <String>[
                         'English',

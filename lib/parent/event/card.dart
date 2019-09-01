@@ -9,8 +9,10 @@ class EventCard extends StatefulWidget {
   final String description;
   final DateTime date;
   final TimeOfDay time;
-  final DocumentSnapshot doc;
-  EventCard(this.title, this.description, this.date, this.time, this.doc);
+  final doc;
+  EventCard(
+      {Key key, this.title, this.description, this.date, this.time, this.doc})
+      : super(key: key);
 
   @override
   _EventCardState createState() => _EventCardState(
@@ -28,7 +30,7 @@ class _EventCardState extends State<EventCard> {
   final DateTime date;
   final TimeOfDay time;
   bool attending = false;
-  DocumentSnapshot doc;
+  var doc;
   final db = Firestore.instance;
 
   _EventCardState(
@@ -48,8 +50,12 @@ class _EventCardState extends State<EventCard> {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.calendar_today),
-              title: Text(title),
-              subtitle: Text(description + '\n' + 'Event Time: '  + new DateFormat.yMMMMd("en_US").add_jm().format(date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
+              title: Text(widget.title),
+              subtitle: Text(widget.description +
+                  '\n' +
+                  'Event Time: ' +
+                  DateFormat.yMMMMd("en_US").add_jm().format(
+                      date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
               onTap: () {
                 Navigator.push(
                   context,
