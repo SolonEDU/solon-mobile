@@ -15,7 +15,18 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   final db = Firestore.instance;
   var snapshots;
+  var user;
   final translator = GoogleTranslator();
+
+  void _getUser() async {
+    user = await FirebaseAuth.instance.currentUser();
+  }
+
+  @override
+  void initState() {
+    _getUser();
+    super.initState();
+  }
 
   void _addEvent(
     String title,
@@ -51,6 +62,7 @@ class _EventsScreenState extends State<EventsScreen> {
         'eventDescription': translatedEventDescriptionsMap,
         'eventDate': date.toString(),
         'eventTime': time.toString(),
+        'creator': user.uid
       },
     );
   }

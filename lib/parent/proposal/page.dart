@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ProposalScreen extends StatelessWidget {
+  final String creator;
   final String proposalTitle;
   final String proposalSubtitle;
   final double daysLeft;
@@ -10,6 +11,7 @@ class ProposalScreen extends StatelessWidget {
   final int numNay;
 
   ProposalScreen(
+    this.creator,
     this.proposalTitle,
     this.proposalSubtitle,
     this.daysLeft,
@@ -29,6 +31,7 @@ class ProposalScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
+              Text('Created by ' + creator),
               Text(proposalSubtitle),
               Icon(Icons.comment),
               Text('Votes for...'),
