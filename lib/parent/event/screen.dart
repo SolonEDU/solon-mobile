@@ -13,13 +13,13 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  // List<Widget> _eventsList = [];
   final db = Firestore.instance;
+  var snapshots;
   final translator = GoogleTranslator();
 
   void _addEvent(
-    title,
-    description,
+    String title,
+    String description,
     date,
     time,
   ) async {
@@ -33,7 +33,6 @@ class _EventsScreenState extends State<EventsScreen> {
       'Japanese': await translator.translate(title, to: 'ja'),
       'Ukrainian': await translator.translate(title, to: 'uk'),
     };
-
     Map<String, String> translatedEventDescriptionsMap = {
       'English': await translator.translate(description, to: 'en'),
       'Chinese (Simplified)':
@@ -46,7 +45,6 @@ class _EventsScreenState extends State<EventsScreen> {
       'Japanese': await translator.translate(description, to: 'ja'),
       'Ukrainian': await translator.translate(description, to: 'uk'),
     };
-
     db.collection('events').add(
       {
         'eventTitle': translatedEventTitlesMap,
@@ -62,14 +60,9 @@ class _EventsScreenState extends State<EventsScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    // print('hey1');
-    // Future proposalTitle = translator.translate(doc.data['proposalTitle'],
-    //     to: languageCodes[nativeLanguage]);
-    // print('hey2');
     List translatedEvent = List();
     translatedEvent.add(doc.data['eventTitle'][nativeLanguage]);
     translatedEvent.add(doc.data['eventDescription'][nativeLanguage]);
-    print(translatedEvent[0]);
     return translatedEvent;
   }
 
@@ -77,27 +70,34 @@ class _EventsScreenState extends State<EventsScreen> {
     return FutureBuilder(
       future: translateEventToNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
-        //print('${translatedEvent.data[0]} ${translatedEvent.data[1]}');
         return EventCard(
-          translatedEvent.hasData ? translatedEvent.data[0] : '',
-          translatedEvent.hasData ? translatedEvent.data[1] : '',
-          DateTime.parse(doc.data['eventDate']),
-          TimeOfDay(
+          key: UniqueKey(),
+          title: translatedEvent.hasData ? translatedEvent.data[0] : '',
+          description: translatedEvent.hasData ? translatedEvent.data[1] : '',
+          date: DateTime.parse(doc.data['eventDate']),
+          time: TimeOfDay(
               hour: int.parse(doc.data['eventTime'].substring(10, 12)),
               minute: int.parse(doc.data['eventTime'].substring(13, 15))),
-          doc,
+          doc: doc,
         );
       },
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: db
+  void getSnapshots() {
+    setState(() {
+      snapshots = db
           .collection('events')
           .orderBy('eventDate', descending: false)
-          .snapshots(),
+          .snapshots();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getSnapshots();
+    return StreamBuilder<QuerySnapshot>(
+      stream: snapshots,
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
@@ -122,7 +122,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 ),
               ),
               floatingActionButton: FloatingActionButton(
-                heroTag: 'unq2',
+                heroTag: 'unq1',
                 child: Icon(Icons.add),
                 onPressed: () => {
                   Navigator.push(

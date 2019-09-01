@@ -1,7 +1,3 @@
-// import 'dart:convert';
-
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
@@ -17,20 +13,9 @@ class ProposalsScreen extends StatefulWidget {
 }
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
-  //List<Widget> _proposalsList = [];
   final db = Firestore.instance;
   var snapshots;
   final translator = GoogleTranslator();
-  final Map<String, String> languageCodes = {
-    'English': 'en',
-    'Chinese (Simplified)': 'zh-cn',
-    'Chinese (Traditional)': 'zh-tw',
-    'Bengali': 'bn',
-    'Korean': 'ko',
-    'Russian': 'ru',
-    'Japanese': 'ja',
-  };
-  // String _languageCode;
 
   void _addProposal(
     String proposalTitle,
@@ -40,8 +25,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   ) async {
     Map<String, String> translatedProposalTitlesMap = {
       'English': await translator.translate(proposalTitle, to: 'en'),
-      'Chinese (Simplified)': await translator.translate(proposalTitle, to: 'zh-cn'),
-      'Chinese (Traditional)': await translator.translate(proposalTitle, to: 'zh-tw'),
+      'Chinese (Simplified)':
+          await translator.translate(proposalTitle, to: 'zh-cn'),
+      'Chinese (Traditional)':
+          await translator.translate(proposalTitle, to: 'zh-tw'),
       'Bengali': await translator.translate(proposalTitle, to: 'bn'),
       'Korean': await translator.translate(proposalTitle, to: 'ko'),
       'Russian': await translator.translate(proposalTitle, to: 'ru'),
@@ -50,32 +37,16 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     };
     Map<String, String> translatedProposalDescriptionsMap = {
       'English': await translator.translate(proposalSubtitle, to: 'en'),
-      'Chinese (Simplified)': await translator.translate(proposalSubtitle, to: 'zh-cn'),
-      'Chinese (Traditional)': await translator.translate(proposalSubtitle, to: 'zh-tw'),
+      'Chinese (Simplified)':
+          await translator.translate(proposalSubtitle, to: 'zh-cn'),
+      'Chinese (Traditional)':
+          await translator.translate(proposalSubtitle, to: 'zh-tw'),
       'Bengali': await translator.translate(proposalSubtitle, to: 'bn'),
       'Korean': await translator.translate(proposalSubtitle, to: 'ko'),
       'Russian': await translator.translate(proposalSubtitle, to: 'ru'),
       'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
       'Ukrainian': await translator.translate(proposalSubtitle, to: 'uk'),
     };
-
-    // for(int i = 0; i < languageCodes.keys.length; i++) {
-    //   String translatedProposalTitleText = await translator.translate(proposalTitle, to: languageCodes);
-    //   String translatedProposalDescriptionText = await translator.translate(proposalSubtitle, to: languageCodes[i]);
-    //   translatedProposalTitlesMap[key] = translatedProposalTitleText;
-    // }
-
-    // languageCodes.forEach(
-    //   (key, value) async {
-    //     String translatedProposalTitleText = await translator.translate(proposalTitle, to: value);
-    //     String translatedProposalDescriptionText = await translator.translate(proposalSubtitle, to: value);
-    //     translatedProposalTitlesMap[key] = translatedProposalTitleText;
-    //     translatedProposalDescriptionsMap[key] = translatedProposalDescriptionText;
-    //     print('${translatedProposalTitleText} ${value}');
-    //   },
-    // );
-    //String translatedText = await translator.translate(proposalTitle, to: 'zh-cn');
-    print('Length: ${translatedProposalTitlesMap.length}');
     db.collection('proposals').add(
       {
         'proposalTitle': translatedProposalTitlesMap,
@@ -92,10 +63,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    // print('hey1');
-    // Future proposalTitle = translator.translate(doc.data['proposalTitle'],
-    //     to: languageCodes[nativeLanguage]);
-    // print('hey2');
     List translatedProposal = List();
     translatedProposal.add(doc.data['proposalTitle'][nativeLanguage]);
     translatedProposal.add(doc.data['proposalSubtitle'][nativeLanguage]);
@@ -106,15 +73,17 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return FutureBuilder(
       future: translateProposalTitleToNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
-        // print(proposalTitle.data);
         return Proposal(
-          translatedProposal.hasData ? translatedProposal.data[0] : '',
-          translatedProposal.hasData ? translatedProposal.data[1] : '',
-          doc.data['daysLeft'],
-          DateTime.parse(doc.data['endDate']),
-          0,
-          0,
-          doc.documentID,
+          key: UniqueKey(),
+          proposalTitle:
+              translatedProposal.hasData ? translatedProposal.data[0] : '',
+          proposalSubtitle:
+              translatedProposal.hasData ? translatedProposal.data[1] : '',
+          daysLeft: doc.data['daysLeft'],
+          endDate: DateTime.parse(doc.data['endDate']),
+          numYea: 0,
+          numNay: 0,
+          doc: doc,
         );
       },
     );
@@ -164,7 +133,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AddProposalScreen(_addProposal)),
+                      builder: (context) => AddProposalScreen(_addProposal),
+                    ),
                   )
                 },
               ),
