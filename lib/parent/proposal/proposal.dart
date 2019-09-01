@@ -13,7 +13,8 @@ class Proposal extends StatefulWidget {
   int numNay;
   final doc;
 
-  Proposal(
+  Proposal({
+    Key key,
     this.proposalTitle,
     this.proposalSubtitle,
     this.daysLeft,
@@ -21,7 +22,7 @@ class Proposal extends StatefulWidget {
     this.numYea,
     this.numNay,
     this.doc,
-  );
+  }) : super(key: key);
 
   @override
   _ProposalState createState() => _ProposalState(
@@ -66,6 +67,7 @@ class _ProposalState extends State<Proposal> {
   @override
   Widget build(BuildContext context) {
     // DateTime cooldownTime;
+    getCollection();
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -93,7 +95,8 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.proposalTitle),
                 subtitle: Text(widget.proposalSubtitle),
               ),
-              Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
+              Text('Voting on proposal ends on: ' +
+                  new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
               Text(doc.documentID),
               Visibility(
@@ -124,16 +127,13 @@ class _ProposalState extends State<Proposal> {
                       FlatButton(
                         child: Icon(Icons.delete),
                         onPressed: () {
-                          db
-                              .collection('proposals')
-                              .document(
-                                doc.documentID
-                                // doc
-                                )
+                          collection
+                              .document(doc.documentID
+                                  // doc
+                                  )
                               .delete()
                               .then((v) {
-                            // print('deleted ${doc.documentID}');
-                            getCollection();
+                            print('deleted ${doc.documentID}');
                           });
                         },
                       ),

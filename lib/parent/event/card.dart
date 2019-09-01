@@ -10,7 +10,9 @@ class EventCard extends StatefulWidget {
   final DateTime date;
   final TimeOfDay time;
   final doc;
-  EventCard(this.title, this.description, this.date, this.time, this.doc);
+  EventCard(
+      {Key key, this.title, this.description, this.date, this.time, this.doc})
+      : super(key: key);
 
   @override
   _EventCardState createState() => _EventCardState(
@@ -49,7 +51,11 @@ class _EventCardState extends State<EventCard> {
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text(widget.title),
-              subtitle: Text(widget.description + '\n' + 'Event Time: '  + DateFormat.yMMMMd("en_US").add_jm().format(date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
+              subtitle: Text(widget.description +
+                  '\n' +
+                  'Event Time: ' +
+                  DateFormat.yMMMMd("en_US").add_jm().format(
+                      date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
               onTap: () {
                 Navigator.push(
                   context,
