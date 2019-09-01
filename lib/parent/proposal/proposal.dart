@@ -114,7 +114,7 @@ class _ProposalState extends State<Proposal> {
                         },
                       ),
                       FlatButton(
-                        child: Text(AppLocalizations.of(context).translate('home')),
+                        child: Text(AppLocalizations.of(context).translate('nay')),
                         onPressed: () {
                           widget.numNay++;
                           setState(() {
