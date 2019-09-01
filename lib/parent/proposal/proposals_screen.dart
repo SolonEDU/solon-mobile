@@ -47,12 +47,16 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
       'Ukrainian': await translator.translate(proposalSubtitle, to: 'uk'),
     };
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    DocumentSnapshot userData =
+        await db.collection('users').document(user.uid).get();
     db.collection('proposals').add(
       {
         'proposalTitle': translatedProposalTitlesMap,
         'proposalSubtitle': translatedProposalDescriptionsMap,
         'daysLeft': daysLeft,
         'endDate': endDate.toString(),
+        'creator': userData['name'],
       },
     );
   }
@@ -84,6 +88,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
           numYea: 0,
           numNay: 0,
           doc: doc,
+          creatorName: doc.data['creator'],
         );
       },
     );

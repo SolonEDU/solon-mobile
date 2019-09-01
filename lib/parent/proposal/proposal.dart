@@ -12,6 +12,7 @@ class Proposal extends StatefulWidget {
   int numYea;
   int numNay;
   final doc;
+  final creatorName;
 
   Proposal({
     Key key,
@@ -22,6 +23,7 @@ class Proposal extends StatefulWidget {
     this.numYea,
     this.numNay,
     this.doc,
+    this.creatorName,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class Proposal extends StatefulWidget {
         numYea,
         numNay,
         doc,
+        creatorName
       );
 }
 
@@ -47,6 +50,7 @@ class _ProposalState extends State<Proposal> {
   var voteChoiceVisibility = true;
   var collection;
   final db = Firestore.instance;
+  String creatorName;
 
   _ProposalState(
     this.proposalTitle,
@@ -56,6 +60,7 @@ class _ProposalState extends State<Proposal> {
     this.numYea,
     this.numNay,
     this.doc,
+    this.creatorName,
   );
 
   void getCollection() {
@@ -99,6 +104,7 @@ class _ProposalState extends State<Proposal> {
                   new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
               Text(doc.documentID),
+              Text('Created by: ${creatorName}'),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
