@@ -6,18 +6,16 @@ import './loader.dart';
 // import './parent/proposal/proposals_screen.dart';
 
 class AccountScreen extends StatefulWidget {
-  final FirebaseUser user;
-  const AccountScreen({this.user});
   @override
-  _AccountScreenState createState() => _AccountScreenState(user: user);
+  _AccountScreenState createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final FirebaseUser user;
-  _AccountScreenState({this.user});
+  FirebaseUser user;
+  _AccountScreenState();
   final db = Firestore.instance;
   var document;
-  var _language; 
+  var _language;
 
   final Map<String, String> languageCodes = {
     'English': 'en',
@@ -32,6 +30,13 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
+  void _getUser() {
+    FirebaseAuth.instance.currentUser().then((future) {
+      user = future;
+      _update();
+    });
+  }
+
   void _setLanguage(newValue) {
     setState(() {
       _language = newValue;
@@ -40,8 +45,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   initState() {
+    _getUser();
     super.initState();
-    _update();
   }
 
   @override
@@ -76,7 +81,8 @@ class _AccountScreenState extends State<AccountScreen> {
                             .document(user.uid)
                             .updateData({'nativeLanguage': newValue});
                         _setLanguage(newValue);
-                        print(_language); //printing language to prevent blue error from popping up 
+                        print(
+                            _language); //printing language to prevent blue error from popping up
                       },
                       items: <String>[
                         'English',

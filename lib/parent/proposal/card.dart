@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-import './proposal_screen.dart';
+import './page.dart';
 
 class Proposal extends StatefulWidget {
   final String proposalTitle;
   final String proposalSubtitle;
   final double daysLeft;
   final DateTime endDate;
+  final String creator;
   int numYea;
   int numNay;
   final doc;
 
   Proposal({
     Key key,
+    this.creator,
     this.proposalTitle,
     this.proposalSubtitle,
     this.daysLeft,
@@ -26,6 +28,7 @@ class Proposal extends StatefulWidget {
 
   @override
   _ProposalState createState() => _ProposalState(
+        creator,
         proposalTitle,
         proposalSubtitle,
         daysLeft,
@@ -41,6 +44,7 @@ class _ProposalState extends State<Proposal> {
   final String proposalSubtitle;
   final double daysLeft;
   final DateTime endDate;
+  final String creator;
   int numYea;
   int numNay;
   var doc;
@@ -49,6 +53,7 @@ class _ProposalState extends State<Proposal> {
   final db = Firestore.instance;
 
   _ProposalState(
+    this.creator,
     this.proposalTitle,
     this.proposalSubtitle,
     this.daysLeft,
@@ -74,6 +79,7 @@ class _ProposalState extends State<Proposal> {
           context,
           MaterialPageRoute(
             builder: (context) => ProposalScreen(
+              widget.creator,
               widget.proposalTitle,
               widget.proposalSubtitle,
               widget.daysLeft,
