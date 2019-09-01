@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import './card.dart';
-import './create.dart';
+import './proposal.dart';
+import './addproposal_screen.dart';
 import '../../loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
@@ -14,19 +14,8 @@ class ProposalsScreen extends StatefulWidget {
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
   final db = Firestore.instance;
-  var user;
   var snapshots;
   final translator = GoogleTranslator();
-
-  @override
-  void initState() {
-    _getUser();
-    super.initState();
-  }
-
-  void _getUser() async {
-    user = await FirebaseAuth.instance.currentUser();
-  }
 
   void _addProposal(
     String proposalTitle,
@@ -64,7 +53,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         'proposalSubtitle': translatedProposalDescriptionsMap,
         'daysLeft': daysLeft,
         'endDate': endDate.toString(),
-        'creator': user.uid
       },
     );
   }
@@ -75,9 +63,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    DocumentSnapshot creator = await db.collection('users').document(doc.data['creator']).get();
     List translatedProposal = List();
-    translatedProposal.add(creator.data['name']);
     translatedProposal.add(doc.data['proposalTitle'][nativeLanguage]);
     translatedProposal.add(doc.data['proposalSubtitle'][nativeLanguage]);
     return translatedProposal;
@@ -89,11 +75,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
         return Proposal(
           key: UniqueKey(),
-          creator: translatedProposal.hasData ? translatedProposal.data[0] : '',
           proposalTitle:
-              translatedProposal.hasData ? translatedProposal.data[1] : '',
+              translatedProposal.hasData ? translatedProposal.data[0] : '',
           proposalSubtitle:
-              translatedProposal.hasData ? translatedProposal.data[2] : '',
+              translatedProposal.hasData ? translatedProposal.data[1] : '',
           daysLeft: doc.data['daysLeft'],
           endDate: DateTime.parse(doc.data['endDate']),
           numYea: 0,
