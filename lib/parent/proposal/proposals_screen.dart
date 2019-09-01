@@ -74,13 +74,16 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       future: translateProposalTitleToNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
         return Proposal(
-          translatedProposal.hasData ? translatedProposal.data[0] : '',
-          translatedProposal.hasData ? translatedProposal.data[1] : '',
-          doc.data['daysLeft'],
-          DateTime.parse(doc.data['endDate']),
-          0,
-          0,
-          doc,
+          key: UniqueKey(),
+          proposalTitle:
+              translatedProposal.hasData ? translatedProposal.data[0] : '',
+          proposalSubtitle:
+              translatedProposal.hasData ? translatedProposal.data[1] : '',
+          daysLeft: doc.data['daysLeft'],
+          endDate: DateTime.parse(doc.data['endDate']),
+          numYea: 0,
+          numNay: 0,
+          doc: doc,
         );
       },
     );
@@ -132,7 +135,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                     MaterialPageRoute(
                       builder: (context) => AddProposalScreen(_addProposal),
                     ),
-                  ).then((val) => val? print('call'): null),
+                  )
                 },
               ),
             );
