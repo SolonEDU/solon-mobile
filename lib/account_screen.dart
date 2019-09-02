@@ -9,19 +9,18 @@ class AccountScreen extends StatefulWidget {
   final FirebaseUser user;
   const AccountScreen({this.user});
   @override
-  _AccountScreenState createState() => _AccountScreenState(user: user);
+  _AccountScreenState createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final FirebaseUser user;
-  _AccountScreenState({this.user});
+  _AccountScreenState();
   final db = Firestore.instance;
   var document;
   var _language; 
 
   void _update() {
     setState(() {
-      document = db.collection('users').document(user.uid);
+      document = db.collection('users').document(widget.user.uid);
     });
   }
 
@@ -66,7 +65,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       onChanged: (String newValue) {
                         db
                             .collection('users')
-                            .document(user.uid)
+                            .document(widget.user.uid)
                             .updateData({'nativeLanguage': newValue});
                         _setLanguage(newValue);
                         print(_language); //printing language to prevent blue error from popping up 
