@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
             return supportedLocale;
           }
         }
-        print('${locale.languageCode} ${locale.countryCode} printed from main');
+        print('${locale.languageCode} printed from main ${locale.countryCode}');
 
         return supportedLocales.first;
       },
