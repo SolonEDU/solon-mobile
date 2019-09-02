@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 class AddProposalScreen extends StatelessWidget {
   final Function addProposal;
@@ -76,24 +77,24 @@ class AddProposalFormState extends State<AddProposalForm> {
   Widget build(BuildContext context) {
     form = [
       Step(
-        title: Text('Title'),
+        title: Text(AppLocalizations.of(context).translate('title')),
         isActive: _currentStep == 0 ? true : false,
         state: _currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          decoration: const InputDecoration(labelText: 'Title'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
           controller: proposalTitleController,
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a title';
+              return AppLocalizations.of(context).translate('pleaseEnterATitle');
             }
             return null;
           },
         ),
       ),
       Step(
-        title: Text('Description'),
+        title: Text(AppLocalizations.of(context).translate('description')),
         isActive: _currentStep == 1 ? true : false,
         state: _currentStep == 1
             ? StepState.editing
@@ -101,12 +102,12 @@ class AddProposalFormState extends State<AddProposalForm> {
         content: TextFormField(
           autofocus: true,
           focusNode: myFocusNode,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
           controller: proposalSubtitleController,
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a description';
+              return AppLocalizations.of(context).translate('pleaseEnterADescription');
             }
             return null;
           },

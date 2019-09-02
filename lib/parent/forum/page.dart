@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Solon/app_localizations.dart';
 
 import 'dart:collection';
 
@@ -94,7 +95,7 @@ class _PostPageState extends State<PostPage> {
                       margin: EdgeInsets.only(bottom: 8.0)
                     ),
                     Container(
-                      child: Text('Comment Section'),
+                      child: Text(AppLocalizations.of(context).translate('commentSection')),
                       margin: EdgeInsets.only(top: 4.0, bottom: 8.0)
                     ),
                     Expanded(child: getComments(snapshot)),
@@ -108,7 +109,7 @@ class _PostPageState extends State<PostPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        hintText: 'Enter a comment',
+                        hintText: AppLocalizations.of(context).translate('enterAComment'),
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {

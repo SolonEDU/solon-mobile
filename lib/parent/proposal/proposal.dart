@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 import './proposal_screen.dart';
 
@@ -12,6 +13,7 @@ class Proposal extends StatefulWidget {
   int numYea;
   int numNay;
   final doc;
+  final creatorName;
 
   Proposal({
     Key key,
@@ -22,6 +24,7 @@ class Proposal extends StatefulWidget {
     this.numYea,
     this.numNay,
     this.doc,
+    this.creatorName,
   }) : super(key: key);
 
   @override
@@ -33,6 +36,7 @@ class Proposal extends StatefulWidget {
         numYea,
         numNay,
         doc,
+        creatorName
       );
 }
 
@@ -47,6 +51,7 @@ class _ProposalState extends State<Proposal> {
   var voteChoiceVisibility = true;
   var collection;
   final db = Firestore.instance;
+  String creatorName;
 
   _ProposalState(
     this.proposalTitle,
@@ -56,6 +61,7 @@ class _ProposalState extends State<Proposal> {
     this.numYea,
     this.numNay,
     this.doc,
+    this.creatorName,
   );
 
   void getCollection() {
@@ -99,6 +105,7 @@ class _ProposalState extends State<Proposal> {
                   new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
               Text(doc.documentID),
+              Text('Created by: ${creatorName}'),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -107,7 +114,7 @@ class _ProposalState extends State<Proposal> {
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: const Text('YEA'),
+                        child: Text(AppLocalizations.of(context).translate('yea')),
                         onPressed: () {
                           widget.numYea++;
                           setState(() {
@@ -116,7 +123,7 @@ class _ProposalState extends State<Proposal> {
                         },
                       ),
                       FlatButton(
-                        child: const Text('NAY'),
+                        child: Text(AppLocalizations.of(context).translate('nay')),
                         onPressed: () {
                           widget.numNay++;
                           setState(() {

@@ -1,3 +1,4 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,16 +31,16 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 onSaved: (input) => _email = input,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('email')),
               ),
               TextFormField(
                 onSaved: (input) => _password = input,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
                 obscureText: true,
               ),
               RaisedButton(
                 onPressed: signIn,
-                child: Text('Sign In'),
+                child: Text(AppLocalizations.of(context).translate('signin')),
               )
             ],
           )),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_localizations.dart';
 
 class NavBar extends StatelessWidget {
   final int selectedIndex;
@@ -10,22 +11,22 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text('Home'),
+          title: Text(AppLocalizations.of(context).translate('home')),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_balance),
-          title: Text('Proposals'),
+          title: Text(AppLocalizations.of(context).translate('proposals')),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.event),
-          title: Text('Events'),
+          title: Text(AppLocalizations.of(context).translate('events')),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.forum),
-          title: Text('Forum'),
+          title: Text(AppLocalizations.of(context).translate('forum')),
         )
       ],
       currentIndex: selectedIndex,

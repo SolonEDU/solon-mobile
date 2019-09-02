@@ -46,8 +46,8 @@ class _PostCardState extends State<PostCard> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              title: Text(title),
-              subtitle: Text(description + "\n" + new DateFormat.yMMMMd("en_US").add_jm().format(time)),
+              title: Text(widget.title),
+              subtitle: Text(widget.description + "\n" + new DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
               onTap: () {
                 Navigator.push(
                   context,
