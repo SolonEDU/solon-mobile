@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import './navbar.dart';
 import 'package:Solon/auth/welcome.dart';
 import 'package:Solon/parent/home_screen.dart';
-import './parent/proposal/proposals_screen.dart';
+import './parent/proposal/screen.dart';
 import './parent/event/screen.dart';
 import './parent/forum/screen.dart';
 import './account_screen.dart';

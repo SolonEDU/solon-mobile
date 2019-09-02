@@ -6,26 +6,14 @@ class CreateEvent extends StatefulWidget {
   CreateEvent(this._addEvent);
 
   @override
-  _CreateEventState createState() => _CreateEventState(_addEvent);
+  _CreateEventState createState() => _CreateEventState();
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  List<Step> form = [];
-  // final _formKey = GlobalKey<FormState>();
-  final Function addEvent;
-  FocusNode myFocusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    myFocusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    myFocusNode.dispose();
-    super.dispose();
-  }
+  DateTime _date = DateTime.now();
+  TimeOfDay _time = TimeOfDay.now();
+  int _currentStep = 0;
+  FocusNode _focusNode;
 
   static var titleController = TextEditingController();
   static var descriptionController = TextEditingController();
@@ -36,18 +24,22 @@ class _CreateEventState extends State<CreateEvent> {
     timeController
   ];
 
-  DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
-
-  int currentStep = 0;
-  bool complete = false;
-
-  goTo(int step) {
-    setState(() => {currentStep = step});
-    if (step == 2) _selectDate(context);
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
   }
 
-  _CreateEventState(this.addEvent);
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  goTo(int step) {
+    setState(() => {_currentStep = step});
+    if (step == 2) _selectDate(context);
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime now = DateTime.now();
@@ -85,11 +77,11 @@ class _CreateEventState extends State<CreateEvent> {
 
   @override
   Widget build(BuildContext context) {
-    form = [
+    List<Step> form = [
       Step(
         title: const Text('Title'),
-        isActive: currentStep == 0 ? true : false,
-        state: currentStep == 0 ? StepState.editing : StepState.complete,
+        isActive: _currentStep == 0 ? true : false,
+        state: _currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
           decoration: const InputDecoration(labelText: 'Title'),
@@ -105,13 +97,13 @@ class _CreateEventState extends State<CreateEvent> {
       ),
       Step(
         title: const Text('Description'),
-        isActive: currentStep == 1 ? true : false,
-        state: currentStep == 1
+        isActive: _currentStep == 1 ? true : false,
+        state: _currentStep == 1
             ? StepState.editing
-            : currentStep < 1 ? StepState.disabled : StepState.complete,
+            : _currentStep < 1 ? StepState.disabled : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          focusNode: myFocusNode,
+          focusNode: _focusNode,
           decoration: const InputDecoration(labelText: 'Description'),
           controller: descriptionController,
           autovalidate: true,
@@ -125,10 +117,10 @@ class _CreateEventState extends State<CreateEvent> {
       ),
       Step(
         title: const Text('Date and Time'),
-        isActive: currentStep == 2 ? true : false,
-        state: currentStep == 2
+        isActive: _currentStep == 2 ? true : false,
+        state: _currentStep == 2
             ? StepState.editing
-            : currentStep < 2 ? StepState.disabled : StepState.complete,
+            : _currentStep < 2 ? StepState.disabled : StepState.complete,
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -156,22 +148,20 @@ class _CreateEventState extends State<CreateEvent> {
         title: Text('Create an Event'),
       ),
       body: Stepper(
-        // key: _formKey,
         steps: form,
-        currentStep: currentStep,
+        currentStep: _currentStep,
         onStepContinue: () => {
-          currentStep + 1 != form.length
+          _currentStep + 1 != form.length
               ? {
-                  if (controllers[currentStep].text.length > 0)
+                  if (controllers[_currentStep].text.length > 0)
                     {
-                      goTo(currentStep + 1),
-                      FocusScope.of(context).requestFocus(myFocusNode)
+                      goTo(_currentStep + 1),
+                      FocusScope.of(context).requestFocus(_focusNode)
                     }
                 }
               : {
-                  setState(() => complete = true),
-                  addEvent(titleController.text, descriptionController.text,
-                      _date, _time),
+                  widget._addEvent(titleController.text,
+                      descriptionController.text, _date, _time),
                   titleController.text = '',
                   descriptionController.text = '',
                   timeController.text = '',
@@ -179,7 +169,7 @@ class _CreateEventState extends State<CreateEvent> {
                 }
         },
         onStepCancel: () => {
-          if (currentStep > 0) {goTo(currentStep - 1)}
+          if (_currentStep > 0) {goTo(_currentStep - 1)}
         },
         onStepTapped: (step) => goTo(step),
       ),

@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import './proposal.dart';
-import './addproposal_screen.dart';
+import './card.dart';
+import './create.dart';
 import '../../loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
@@ -75,9 +75,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
         return Proposal(
           key: UniqueKey(),
-          proposalTitle:
+          title:
               translatedProposal.hasData ? translatedProposal.data[0] : '',
-          proposalSubtitle:
+          subtitle:
               translatedProposal.hasData ? translatedProposal.data[1] : '',
           daysLeft: doc.data['daysLeft'],
           endDate: DateTime.parse(doc.data['endDate']),
@@ -133,7 +133,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddProposalScreen(_addProposal),
+                      builder: (context) => CreateProposal(_addProposal),
                     ),
                   )
                 },

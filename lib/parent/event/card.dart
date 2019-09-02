@@ -10,39 +10,30 @@ class EventCard extends StatefulWidget {
   final DateTime date;
   final TimeOfDay time;
   final doc;
+
   EventCard(
       {Key key, this.title, this.description, this.date, this.time, this.doc})
       : super(key: key);
 
   @override
-  _EventCardState createState() => _EventCardState(
-        title,
-        description,
-        date,
-        time,
-        doc,
-      );
+  _EventCardState createState() => _EventCardState();
 }
 
 class _EventCardState extends State<EventCard> {
-  final String title;
-  final String description;
-  final DateTime date;
-  final TimeOfDay time;
   bool attending = false;
-  var doc;
+  var collection;
   final db = Firestore.instance;
 
-  _EventCardState(
-    this.title,
-    this.description,
-    this.date,
-    this.time,
-    this.doc,
-  );
+  void getCollection() {
+    setState(() {
+      collection = db.collection('proposals');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    getCollection();
+
     return Center(
       child: Card(
         child: Column(
@@ -54,8 +45,7 @@ class _EventCardState extends State<EventCard> {
               subtitle: Text(widget.description +
                   '\n' +
                   'Event Time: ' +
-                  DateFormat.yMMMMd("en_US").add_jm().format(
-                      date)), //date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
+                  DateFormat.yMMMMd("en_US").add_jm().format(widget.date)),
               onTap: () {
                 Navigator.push(
                   context,
@@ -75,12 +65,8 @@ class _EventCardState extends State<EventCard> {
                 children: <Widget>[
                   FlatButton(
                     child: Icon(Icons.delete),
-                    onPressed: () async => {
-                      await db
-                          .collection('events')
-                          .document(doc.documentID)
-                          .delete()
-                    },
+                    onPressed: () =>
+                        {collection.document(widget.doc.documentID).delete()},
                   ),
                   Switch.adaptive(
                     value: attending,

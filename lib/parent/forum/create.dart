@@ -5,25 +5,12 @@ class CreatePost extends StatefulWidget {
   CreatePost(this._addPost);
 
   @override
-  _CreatePostState createState() => _CreatePostState(_addPost);
+  _CreatePostState createState() => _CreatePostState();
 }
 
 class _CreatePostState extends State<CreatePost> {
   List<Step> form = [];
-  final Function addPost;
-  FocusNode myFocusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    myFocusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    myFocusNode.dispose();
-    super.dispose();
-  }
+  FocusNode _focusNode;
 
   static var titleController = TextEditingController();
   static var descriptionController = TextEditingController();
@@ -32,14 +19,24 @@ class _CreatePostState extends State<CreatePost> {
     descriptionController,
   ];
 
-  int currentStep = 0;
-  bool complete = false;
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+  }
 
-  goTo(int step) {
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void goTo(int step) {
     setState(() => {currentStep = step});
   }
 
-  _CreatePostState(this.addPost);
+  int currentStep = 0;
+  bool complete = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +60,7 @@ class _CreatePostState extends State<CreatePost> {
             : currentStep < 1 ? StepState.disabled : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          focusNode: myFocusNode,
+          focusNode: _focusNode,
           decoration: const InputDecoration(labelText: 'Description'),
           controller: descriptionController,
           autovalidate: true,
@@ -88,11 +85,11 @@ class _CreatePostState extends State<CreatePost> {
                   controllers[currentStep].text.length > 0
               ? {
                   goTo(currentStep + 1),
-                  FocusScope.of(context).requestFocus(myFocusNode)
+                  FocusScope.of(context).requestFocus(_focusNode)
                 }
               : {
                   setState(() => complete = true),
-                  addPost(titleController.text, descriptionController.text),
+                  widget._addPost(titleController.text, descriptionController.text),
                   titleController.text = '',
                   descriptionController.text = '',
                   Navigator.pop(context),
