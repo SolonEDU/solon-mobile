@@ -14,14 +14,9 @@ class _CreateEventState extends State<CreateEvent> {
   int _currentStep = 0;
   FocusNode _focusNode;
 
-  static var titleController = TextEditingController();
-  static var descriptionController = TextEditingController();
-  static var timeController = TextEditingController();
-  static var controllers = [
-    titleController,
-    descriptionController,
-    timeController
-  ];
+  List<TextEditingController> controllers =
+      List.generate(3, (int index) => TextEditingController());
+
 
   @override
   void initState() {
@@ -68,7 +63,7 @@ class _CreateEventState extends State<CreateEvent> {
         _date = new DateTime(_date.year, _date.month ,_date.day, picked.hour, picked.minute);
       });
     }
-    timeController.text =
+    controllers[2].text =
         "Event occurs on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
   }
 
@@ -82,7 +77,7 @@ class _CreateEventState extends State<CreateEvent> {
         content: TextFormField(
           autofocus: true,
           decoration: const InputDecoration(labelText: 'Title'),
-          controller: titleController,
+          controller: controllers[0],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -102,7 +97,7 @@ class _CreateEventState extends State<CreateEvent> {
           autofocus: true,
           focusNode: _focusNode,
           decoration: const InputDecoration(labelText: 'Description'),
-          controller: descriptionController,
+          controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -123,7 +118,7 @@ class _CreateEventState extends State<CreateEvent> {
             TextFormField(
               autofocus: true,
               decoration: const InputDecoration(labelText: 'Date and Time'),
-              controller: timeController,
+              controller: controllers[2],
               autovalidate: true,
               validator: (value) {
                 if (value.isEmpty) {
@@ -157,11 +152,9 @@ class _CreateEventState extends State<CreateEvent> {
                     }
                 }
               : {
-                  widget._addEvent(titleController.text,
-                      descriptionController.text, _date),
-                  titleController.text = '',
-                  descriptionController.text = '',
-                  timeController.text = '',
+                  widget._addEvent(controllers[0].text,
+                      controllers[2].text, _date),
+                  controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
                 }
         },

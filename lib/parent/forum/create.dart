@@ -12,12 +12,8 @@ class _CreatePostState extends State<CreatePost> {
   List<Step> form = [];
   FocusNode _focusNode;
 
-  static var titleController = TextEditingController();
-  static var descriptionController = TextEditingController();
-  static var controllers = [
-    titleController,
-    descriptionController,
-  ];
+  List<TextEditingController> controllers =
+      List.generate(2, (int index) => TextEditingController());
 
   @override
   void initState() {
@@ -48,7 +44,7 @@ class _CreatePostState extends State<CreatePost> {
         content: TextFormField(
           autofocus: true,
           decoration: const InputDecoration(labelText: 'Title'),
-          controller: titleController,
+          controller: controllers[0],
           autovalidate: true,
         ),
       ),
@@ -62,7 +58,7 @@ class _CreatePostState extends State<CreatePost> {
           autofocus: true,
           focusNode: _focusNode,
           decoration: const InputDecoration(labelText: 'Description'),
-          controller: descriptionController,
+          controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -89,9 +85,8 @@ class _CreatePostState extends State<CreatePost> {
                 }
               : {
                   setState(() => complete = true),
-                  widget._addPost(titleController.text, descriptionController.text),
-                  titleController.text = '',
-                  descriptionController.text = '',
+                  widget._addPost(controllers[0].text, controllers[1].text),
+                  controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
                 }
         },
