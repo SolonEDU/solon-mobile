@@ -47,10 +47,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
       'Ukrainian': await translator.translate(proposalSubtitle, to: 'uk'),
     };
-<<<<<<< HEAD
-=======
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
->>>>>>> master
     db.collection('proposals').add(
       {
         'proposalTitle': translatedProposalTitlesMap,
@@ -79,15 +76,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       future: translateProposalTitleToNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
         return Proposal(
-<<<<<<< HEAD
-          translatedProposal.hasData ? translatedProposal.data[0] : '',
-          translatedProposal.hasData ? translatedProposal.data[1] : '',
-          doc.data['daysLeft'],
-          DateTime.parse(doc.data['endDate']),
-          0,
-          0,
-          doc,
-=======
           key: UniqueKey(),
           proposalTitle:
               translatedProposal.hasData ? translatedProposal.data[0] : '',
@@ -99,7 +87,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
           numNay: 0,
           doc: doc,
           creatorName: doc.data['creator'],
->>>>>>> master
         );
       },
     );
@@ -151,11 +138,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                     MaterialPageRoute(
                       builder: (context) => AddProposalScreen(_addProposal),
                     ),
-<<<<<<< HEAD
-                  ).then((val) => val? print('call'): null),
-=======
                   )
->>>>>>> master
                 },
               ),
             );

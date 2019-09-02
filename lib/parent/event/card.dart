@@ -11,13 +11,9 @@ class EventCard extends StatefulWidget {
   final DateTime date;
   final TimeOfDay time;
   final doc;
-<<<<<<< HEAD
-  EventCard(this.title, this.description, this.date, this.time, this.doc);
-=======
   EventCard(
       {Key key, this.title, this.description, this.date, this.time, this.doc})
       : super(key: key);
->>>>>>> master
 
   @override
   _EventCardState createState() => _EventCardState(
