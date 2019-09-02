@@ -36,7 +36,7 @@ class _PostPageState extends State<PostPage> {
   }
 
   ListView getComments(snapshot) {
-    Map<dynamic, dynamic> text = snapshot.data.data['forumComments'];
+    Map<dynamic, dynamic> text = snapshot.data.data['comments'];
     text = SplayTreeMap.from(text);
     List<Widget> textComments = [];
     var textKey;
@@ -108,8 +108,7 @@ class _PostPageState extends State<PostPage> {
                               if (commentController.text.length > 0) {
                                 document.updateData(
                                   {
-                                    'forumComments.' +
-                                            DateTime.now().toString():
+                                    'comments.' + DateTime.now().toString():
                                         commentController.text
                                   },
                                 );
