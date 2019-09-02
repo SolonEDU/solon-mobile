@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 import './page.dart';
 
@@ -34,6 +35,7 @@ class _ProposalState extends State<Proposal> {
   var voteChoiceVisibility = true;
   var collection;
   final db = Firestore.instance;
+  // String creatorName;
 
   void getCollection() {
     setState(() {
@@ -88,7 +90,8 @@ class _ProposalState extends State<Proposal> {
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: const Text('YEA'),
+                        child:
+                            Text(AppLocalizations.of(context).translate('yea')),
                         onPressed: () {
                           widget.numYea++;
                           setState(() {
@@ -97,7 +100,8 @@ class _ProposalState extends State<Proposal> {
                         },
                       ),
                       FlatButton(
-                        child: const Text('NAY'),
+                        child:
+                            Text(AppLocalizations.of(context).translate('nay')),
                         onPressed: () {
                           widget.numNay++;
                           setState(() {

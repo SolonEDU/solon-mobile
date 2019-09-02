@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'app_localizations.dart';
+
 import './loader.dart';
 // import './parent/proposal/proposals_screen.dart';
 
@@ -53,7 +55,7 @@ class _AccountScreenState extends State<AccountScreen> {
           default:
             return Scaffold(
               appBar: AppBar(
-                title: Text('Account'),
+                title: Text(AppLocalizations.of(context).translate('account')),
               ),
               body: Center(
                 child: Column(
@@ -78,6 +80,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         'Korean',
                         'Russian',
                         'Japanese',
+                        'Ukrainian'
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
