@@ -14,10 +14,8 @@ class _CreateProposalState extends State<CreateProposal> {
   FocusNode _focusNode;
   double _sliderValue = 7.0;
 
-  static var titleController = TextEditingController();
-  static var descriptionController = TextEditingController();
-  static var timeController = TextEditingController();
-  final controllers = [titleController, descriptionController, timeController];
+  List<TextEditingController> controllers =
+      List.generate(2, (int index) => TextEditingController());
 
   @override
   void initState() {
@@ -45,7 +43,7 @@ class _CreateProposalState extends State<CreateProposal> {
         content: TextFormField(
           autofocus: true,
           decoration: const InputDecoration(labelText: 'Title'),
-          controller: titleController,
+          controller: controllers[0],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -65,7 +63,7 @@ class _CreateProposalState extends State<CreateProposal> {
           autofocus: true,
           focusNode: _focusNode,
           decoration: const InputDecoration(labelText: 'Description'),
-          controller: descriptionController,
+          controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -139,13 +137,11 @@ class _CreateProposalState extends State<CreateProposal> {
                 }
               : {
                   widget._addProposal(
-                      titleController.text,
-                      descriptionController.text,
+                      controllers[0].text,
+                      controllers[1].text,
                       _sliderValue,
                       _date.add(new Duration(days: _sliderValue.toInt()))),
-                  titleController.clear(),
-                  descriptionController.clear(),
-                  timeController.clear(),
+                  controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context, true),
                 }
         },
