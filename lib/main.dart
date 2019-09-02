@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         Locale('et'),
         Locale('tl'),
         Locale('fi'),
-        Locale('fr'),
+        Locale('fr', 'FR'),
         Locale('gl'),
         Locale('ka'),
         Locale('de'),
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
         Locale('sr'),
         Locale('sk'),
         Locale('sl'),
-        Locale('es'),
+        Locale('es', 'MX'),
         Locale('sw'),
         Locale('sv'),
         Locale('ta'),
@@ -109,6 +109,7 @@ class MyApp extends StatelessWidget {
             return supportedLocale;
           }
         }
+        print('${locale.languageCode} ${locale.countryCode} printed from main');
 
         return supportedLocales.first;
       },
