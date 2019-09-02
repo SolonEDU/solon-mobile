@@ -33,8 +33,7 @@ class _EventsScreenState extends State<EventsScreen> {
   void _addEvent(
     String title,
     String description,
-    date,
-    time,
+    DateTime time,
   ) async {
     Map<String, String> languages = {
       'English': 'en',
@@ -54,8 +53,7 @@ class _EventsScreenState extends State<EventsScreen> {
       {
         'title': translated[0],
         'description': translated[1],
-        'date': date.toString(),
-        'time': time.toString(),
+        'date': time.toString(),
       },
     );
   }
@@ -79,10 +77,10 @@ class _EventsScreenState extends State<EventsScreen> {
           key: UniqueKey(),
           title: translatedEvent.hasData ? translatedEvent.data[0] : '',
           description: translatedEvent.hasData ? translatedEvent.data[1] : '',
-          date: DateTime.parse(doc.data['date']),
-          time: TimeOfDay(
-              hour: int.parse(doc.data['time'].substring(10, 12)),
-              minute: int.parse(doc.data['time'].substring(13, 15))),
+          time: DateTime.parse(doc.data['date']),
+          // time: TimeOfDay(
+          //     hour: int.parse(doc.data['time'].substring(10, 12)),
+          //     minute: int.parse(doc.data['time'].substring(13, 15))),
           doc: doc,
         );
       },

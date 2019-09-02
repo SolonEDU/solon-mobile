@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class ProposalPage extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String description;
   final double daysLeft;
   final DateTime endDate;
   final int numYea;
@@ -11,7 +11,7 @@ class ProposalPage extends StatelessWidget {
 
   ProposalPage(
     this.title,
-    this.subtitle,
+    this.description,
     this.daysLeft,
     this.endDate,
     this.numYea,
@@ -30,7 +30,7 @@ class ProposalPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Text(subtitle),
+              Text(description),
               Icon(Icons.comment),
               Text('Votes for...'),
               Text('Yea: $numYea'),

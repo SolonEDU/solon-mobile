@@ -11,7 +11,6 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
   int _currentStep = 0;
   FocusNode _focusNode;
 
@@ -51,25 +50,23 @@ class _CreateEventState extends State<CreateEvent> {
     );
 
     if (picked != null) {
-      _selectTime(context);
       setState(() {
         _date = picked;
       });
-      print('Date selected: ${_date.toString()}');
+      _selectTime(context);
     }
   }
 
   Future<Null> _selectTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(
       context: context,
-      initialTime: _time,
+      initialTime: TimeOfDay.now(),
     );
 
     if (picked != null) {
       setState(() {
-        _time = picked;
+        _date = new DateTime(_date.year, _date.month ,_date.day, picked.hour, picked.minute);
       });
-      print('Time selected: ${_time.toString()}');
     }
     timeController.text =
         "Event occurs on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
@@ -161,7 +158,7 @@ class _CreateEventState extends State<CreateEvent> {
                 }
               : {
                   widget._addEvent(titleController.text,
-                      descriptionController.text, _date, _time),
+                      descriptionController.text, _date),
                   titleController.text = '',
                   descriptionController.text = '',
                   timeController.text = '',

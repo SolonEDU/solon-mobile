@@ -7,12 +7,11 @@ import 'package:intl/intl.dart';
 class EventCard extends StatefulWidget {
   final String title;
   final String description;
-  final DateTime date;
-  final TimeOfDay time;
+  final DateTime time;
   final doc;
 
   EventCard(
-      {Key key, this.title, this.description, this.date, this.time, this.doc})
+      {Key key, this.title, this.description, this.time, this.doc})
       : super(key: key);
 
   @override
@@ -45,7 +44,7 @@ class _EventCardState extends State<EventCard> {
               subtitle: Text(widget.description +
                   '\n' +
                   'Event Time: ' +
-                  DateFormat.yMMMMd("en_US").add_jm().format(widget.date)),
+                  DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
               onTap: () {
                 Navigator.push(
                   context,
@@ -53,7 +52,6 @@ class _EventCardState extends State<EventCard> {
                     builder: (context) => EventPage(
                       widget.title,
                       widget.description,
-                      widget.date,
                       widget.time,
                     ),
                   ),
