@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-import './proposal_screen.dart';
+import './page.dart';
 
 class Proposal extends StatefulWidget {
-  final String proposalTitle;
-  final String proposalSubtitle;
+  final String title;
+  final String subtitle;
   final double daysLeft;
   final DateTime endDate;
+  final DocumentSnapshot doc;
   int numYea;
   int numNay;
-  final doc;
 
   Proposal({
     Key key,
-    this.proposalTitle,
-    this.proposalSubtitle,
+    this.title,
+    this.subtitle,
     this.daysLeft,
     this.endDate,
     this.numYea,
@@ -25,38 +25,13 @@ class Proposal extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ProposalState createState() => _ProposalState(
-        proposalTitle,
-        proposalSubtitle,
-        daysLeft,
-        endDate,
-        numYea,
-        numNay,
-        doc,
-      );
+  _ProposalState createState() => _ProposalState();
 }
 
 class _ProposalState extends State<Proposal> {
-  final String proposalTitle;
-  final String proposalSubtitle;
-  final double daysLeft;
-  final DateTime endDate;
-  int numYea;
-  int numNay;
-  var doc;
   var voteChoiceVisibility = true;
   var collection;
   final db = Firestore.instance;
-
-  _ProposalState(
-    this.proposalTitle,
-    this.proposalSubtitle,
-    this.daysLeft,
-    this.endDate,
-    this.numYea,
-    this.numNay,
-    this.doc,
-  );
 
   void getCollection() {
     setState(() {
@@ -66,16 +41,15 @@ class _ProposalState extends State<Proposal> {
 
   @override
   Widget build(BuildContext context) {
-    // DateTime cooldownTime;
     getCollection();
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProposalScreen(
-              widget.proposalTitle,
-              widget.proposalSubtitle,
+            builder: (context) => ProposalPage(
+              widget.title,
+              widget.subtitle,
               widget.daysLeft,
               widget.endDate,
               widget.numYea,
@@ -92,13 +66,15 @@ class _ProposalState extends State<Proposal> {
               ListTile(
                 //used to be const
                 leading: Icon(Icons.account_balance),
-                title: Text(widget.proposalTitle),
-                subtitle: Text(widget.proposalSubtitle),
+                title: Text(widget.title),
+                subtitle: Text(widget.subtitle),
               ),
               Text('Voting on proposal ends on: ' +
-                  new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
-              Text('Days left: ' + daysLeft.toInt().toString()),
-              Text(doc.documentID),
+                  new DateFormat.yMMMMd("en_US")
+                      .add_jm()
+                      .format(widget.endDate)),
+              Text('Days left: ' + widget.daysLeft.toInt().toString()),
+              Text(widget.doc.documentID),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -127,14 +103,7 @@ class _ProposalState extends State<Proposal> {
                       FlatButton(
                         child: Icon(Icons.delete),
                         onPressed: () {
-                          collection
-                              .document(doc.documentID
-                                  // doc
-                                  )
-                              .delete()
-                              .then((v) {
-                            print('deleted ${doc.documentID}');
-                          });
+                          collection.document(widget.doc.documentID).delete();
                         },
                       ),
                     ],
