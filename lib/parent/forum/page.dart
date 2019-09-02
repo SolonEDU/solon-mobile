@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 
 import 'dart:collection';
 
-import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 // import '../../loader.dart';
 import './comment.dart';
@@ -99,19 +100,20 @@ class _PostPageState extends State<PostPage> {
                                 top: 8.0, left: 8.0, right: 8.0)),
                         margin: EdgeInsets.only(bottom: 8.0)),
                     Container(
-                        child: Text('Comment Section'),
+                        child: Text(AppLocalizations.of(context)
+                            .translate('commentSection')),
                         margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
                     Expanded(child: getComments(snapshot)),
                     Container(
                       child: TextField(
-                        focusNode: _focusNode,
                         style: TextStyle(height: .4),
                         controller: commentController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          hintText: 'Enter a comment',
+                          hintText: AppLocalizations.of(context)
+                              .translate('enterAComment'),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.send),
                             onPressed: () {

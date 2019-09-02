@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 class CreateProposal extends StatefulWidget {
   final Function _addProposal;
@@ -37,24 +39,24 @@ class _CreateProposalState extends State<CreateProposal> {
   Widget build(BuildContext context) {
     List<Step> form = [
       Step(
-        title: Text('Title'),
+        title: Text(AppLocalizations.of(context).translate('title')),
         isActive: _currentStep == 0 ? true : false,
         state: _currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          decoration: const InputDecoration(labelText: 'Title'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
           controller: controllers[0],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a title';
+              return AppLocalizations.of(context).translate('pleaseEnterATitle');
             }
             return null;
           },
         ),
       ),
       Step(
-        title: Text('Description'),
+        title: Text(AppLocalizations.of(context).translate('description')),
         isActive: _currentStep == 1 ? true : false,
         state: _currentStep == 1
             ? StepState.editing
@@ -62,12 +64,12 @@ class _CreateProposalState extends State<CreateProposal> {
         content: TextFormField(
           autofocus: true,
           focusNode: _focusNode,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
           controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a description';
+              return AppLocalizations.of(context).translate('pleaseEnterADescription');
             }
             return null;
           },

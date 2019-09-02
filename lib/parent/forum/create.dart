@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 class CreatePost extends StatefulWidget {
   final Function _addPost;
@@ -38,18 +39,18 @@ class _CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     form = [
       Step(
-        title: const Text('Title'),
+        title: Text(AppLocalizations.of(context).translate('title')),
         isActive: currentStep == 0 ? true : false,
         state: currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          decoration: const InputDecoration(labelText: 'Title'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
           controller: controllers[0],
           autovalidate: true,
         ),
       ),
       Step(
-        title: const Text('Description'),
+        title: Text(AppLocalizations.of(context).translate('description')),
         isActive: currentStep == 1 ? true : false,
         state: currentStep == 1
             ? StepState.editing
@@ -57,7 +58,7 @@ class _CreatePostState extends State<CreatePost> {
         content: TextFormField(
           autofocus: true,
           focusNode: _focusNode,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
           controller: controllers[1],
           autovalidate: true,
           validator: (value) {
@@ -71,7 +72,7 @@ class _CreatePostState extends State<CreatePost> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create a Post'),
+        title: Text(AppLocalizations.of(context).translate('createAPost')),
       ),
       body: Stepper(
         steps: form,

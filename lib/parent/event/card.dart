@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 import './page.dart';
 import 'package:intl/intl.dart';
@@ -76,7 +77,7 @@ class _EventCardState extends State<EventCard> {
                     activeTrackColor: Colors.lightGreenAccent,
                     activeColor: Colors.green,
                   ),
-                  Text('Attending?')
+                  Text(AppLocalizations.of(context).translate('attending'))
                 ],
               ),
             )
