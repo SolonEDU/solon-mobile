@@ -15,9 +15,9 @@ class _CreateProposalState extends State<CreateProposal> {
   double _sliderValue = 7.0;
 
   static var titleController = TextEditingController();
-  static var subtitleController = TextEditingController();
+  static var descriptionController = TextEditingController();
   static var timeController = TextEditingController();
-  final controllers = [titleController, subtitleController, timeController];
+  final controllers = [titleController, descriptionController, timeController];
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _CreateProposalState extends State<CreateProposal> {
           autofocus: true,
           focusNode: _focusNode,
           decoration: const InputDecoration(labelText: 'Description'),
-          controller: subtitleController,
+          controller: descriptionController,
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -129,7 +129,7 @@ class _CreateProposalState extends State<CreateProposal> {
         onStepContinue: () => {
           _currentStep + 1 != form.length
               ? {
-                  if (controllers[_currentStep].text.length > 0)
+                  if (controllers[_currentStep].text.isNotEmpty)
                     {
                       goTo(_currentStep + 1),
                       _currentStep == 2
@@ -140,12 +140,12 @@ class _CreateProposalState extends State<CreateProposal> {
               : {
                   widget._addProposal(
                       titleController.text,
-                      subtitleController.text,
+                      descriptionController.text,
                       _sliderValue,
                       _date.add(new Duration(days: _sliderValue.toInt()))),
-                  titleController.text = '',
-                  subtitleController.text = '',
-                  timeController.text = '',
+                  titleController.clear(),
+                  descriptionController.clear(),
+                  timeController.clear(),
                   Navigator.pop(context, true),
                 }
         },

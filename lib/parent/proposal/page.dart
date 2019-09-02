@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,6 +9,7 @@ class ProposalPage extends StatelessWidget {
   final DateTime endDate;
   final int numYea;
   final int numNay;
+  // final Future<DocumentSnapshot> creator;
 
   ProposalPage(
     this.title,
@@ -16,6 +18,7 @@ class ProposalPage extends StatelessWidget {
     this.endDate,
     this.numYea,
     this.numNay,
+    // this.creator,
   );
   
   @override
@@ -30,6 +33,12 @@ class ProposalPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
+              // FutureBuilder(
+              //   future: creator,
+              //   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              //     return Text(snapshot.data['name']);
+              //   },
+              // ),
               Text(description),
               Icon(Icons.comment),
               Text('Votes for...'),

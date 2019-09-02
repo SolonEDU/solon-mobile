@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'dart:collection';
 
@@ -20,6 +21,7 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   final db = Firestore.instance;
+  FocusNode _focusNode;
   var document;
   static var commentController = TextEditingController();
 
@@ -33,6 +35,13 @@ class _PostPageState extends State<PostPage> {
   initState() {
     super.initState();
     _update();
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   ListView getComments(snapshot) {
@@ -95,6 +104,7 @@ class _PostPageState extends State<PostPage> {
                     Expanded(child: getComments(snapshot)),
                     Container(
                       child: TextField(
+                        focusNode: _focusNode,
                         style: TextStyle(height: .4),
                         controller: commentController,
                         decoration: InputDecoration(
@@ -105,15 +115,19 @@ class _PostPageState extends State<PostPage> {
                           suffixIcon: IconButton(
                             icon: Icon(Icons.send),
                             onPressed: () {
-                              if (commentController.text.length > 0) {
+                              if (commentController.text.isNotEmpty) {
                                 document.updateData(
                                   {
                                     'comments.' + DateTime.now().toString():
                                         commentController.text
                                   },
                                 );
-                                _update();
-                                commentController.text = '';
+                                SchedulerBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  FocusScope.of(context).unfocus();
+                                  commentController.clear();
+                                  _update();
+                                });
                               }
                             },
                           ),
