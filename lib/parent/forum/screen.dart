@@ -14,84 +14,82 @@ class ForumScreen extends StatefulWidget {
 
 class _ForumScreenState extends State<ForumScreen> {
   final db = Firestore.instance;
-  Stream<QuerySnapshot> snapshots;
   final translator = GoogleTranslator();
+
+  Future<String> translateText(text, code) async {
+    String translatedText = await translator.translate(text, to: code);
+    return translatedText;
+  }
+
+  Future<List<Map>> translateAll(String title, String description,
+      List<Map> maps, Map<String, String> languages) async {
+    for (var language in languages.keys) {
+      maps[0][language] = await translateText(title, languages[language]);
+      maps[1][language] = await translateText(description, languages[language]);
+    }
+    return maps;
+  }
 
   void _addPost(
     String title,
     String description,
   ) async {
-    Map<String, String> translatedForumTitlesMap = {
-      'English': await translator.translate(title, to: 'en'),
-      'Chinese (Simplified)': await translator.translate(title, to: 'zh-cn'),
-      'Chinese (Traditional)': await translator.translate(title, to: 'zh-tw'),
-      'Bengali': await translator.translate(title, to: 'bn'),
-      'Korean': await translator.translate(title, to: 'ko'),
-      'Russian': await translator.translate(title, to: 'ru'),
-      'Japanese': await translator.translate(title, to: 'ja'),
-      'Ukrainian': await translator.translate(title, to: 'uk'),
+    Map<String, String> languages = {
+      'English': 'en',
+      'Chinese (Simplified)': 'zh-cn',
+      'Chinese (Traditional)': 'zh-tw',
+      'Bengali': 'bn',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Japanese': 'ja',
+      'Ukrainian': 'uk'
     };
-    Map<String, String> translatedForumDescriptionsMap = {
-      'English': await translator.translate(description, to: 'en'),
-      'Chinese (Simplified)':
-          await translator.translate(description, to: 'zh-cn'),
-      'Chinese (Traditional)':
-          await translator.translate(description, to: 'zh-tw'),
-      'Bengali': await translator.translate(description, to: 'bn'),
-      'Korean': await translator.translate(description, to: 'ko'),
-      'Russian': await translator.translate(description, to: 'ru'),
-      'Japanese': await translator.translate(description, to: 'ja'),
-      'Ukrainian': await translator.translate(description, to: 'uk'),
-    };
+    Map<String, String> translatedTitles = {};
+    Map<String, String> translatedDescriptions = {};
+    List<Map> translated = [translatedTitles, translatedDescriptions];
+    translated = await translateAll(title, description, translated, languages);
     db.collection('forum').add(
       {
-        'forumTitle': translatedForumTitlesMap,
-        'forumDescription': translatedForumDescriptionsMap,
-        'forumTime': DateTime.now().toString(),
-        'forumComments': {}
+        'title': translatedTitles,
+        'description': translatedDescriptions,
+        'time': DateTime.now().toString(),
+        'comments': {}
       },
     );
   }
 
-  Future<List> translateForumToNativeLanguage(DocumentSnapshot doc) async {
+  Future<List> toNativeLanguage(DocumentSnapshot doc) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
     List translatedForum = List();
-    translatedForum.add(doc.data['forumTitle'][nativeLanguage]);
-    translatedForum.add(doc.data['forumDescription'][nativeLanguage]);
+    translatedForum.add(doc.data['title'][nativeLanguage]);
+    translatedForum.add(doc.data['description'][nativeLanguage]);
     return translatedForum;
   }
 
   Widget buildPostCard(doc) {
     return FutureBuilder(
-      future: translateForumToNativeLanguage(doc),
+      future: toNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedForum) {
         return PostCard(
           translatedForum.hasData ? translatedForum.data[0] : '',
           translatedForum.hasData ? translatedForum.data[1] : '',
-          DateTime.parse(doc.data['forumTime']),
+          DateTime.parse(doc.data['time']),
           doc,
         );
       },
     );
   }
 
-  void getSnapshots() {
-    setState(() {
-      snapshots = db
-          .collection('forum')
-          // .orderBy('eventDate', descending: false)
-          .snapshots();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getSnapshots();
     return StreamBuilder<QuerySnapshot>(
-      stream: snapshots,
+      stream: db
+          .collection('forum')
+          // .orderBy('eventDate', descending: false)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
@@ -132,4 +130,3 @@ class _ForumScreenState extends State<ForumScreen> {
     );
   }
 }
-
