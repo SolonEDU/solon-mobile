@@ -71,13 +71,14 @@ class _EventsScreenState extends State<EventsScreen> {
       future: translateEventToNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
         return EventCard(
-          translatedEvent.hasData ? translatedEvent.data[0] : '',
-          translatedEvent.hasData ? translatedEvent.data[1] : '',
-          DateTime.parse(doc.data['eventDate']),
-          TimeOfDay(
+          key: UniqueKey(),
+          title: translatedEvent.hasData ? translatedEvent.data[0] : '',
+          description: translatedEvent.hasData ? translatedEvent.data[1] : '',
+          date: DateTime.parse(doc.data['eventDate']),
+          time: TimeOfDay(
               hour: int.parse(doc.data['eventTime'].substring(10, 12)),
               minute: int.parse(doc.data['eventTime'].substring(13, 15))),
-          doc,
+          doc: doc,
         );
       },
     );

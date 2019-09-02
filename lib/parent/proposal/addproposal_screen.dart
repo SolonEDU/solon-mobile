@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
+<<<<<<< HEAD
 import 'package:Solon/app_localizations.dart';
+=======
+>>>>>>> master
 
 class AddProposalScreen extends StatelessWidget {
   final Function addProposal;
@@ -94,7 +97,11 @@ class AddProposalFormState extends State<AddProposalForm> {
         ),
       ),
       Step(
+<<<<<<< HEAD
         title: Text(AppLocalizations.of(context).translate('description')),
+=======
+        title: Text('Description'),
+>>>>>>> master
         isActive: _currentStep == 1 ? true : false,
         state: _currentStep == 1
             ? StepState.editing
@@ -102,12 +109,20 @@ class AddProposalFormState extends State<AddProposalForm> {
         content: TextFormField(
           autofocus: true,
           focusNode: myFocusNode,
+<<<<<<< HEAD
           decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
+=======
+          decoration: const InputDecoration(labelText: 'Description'),
+>>>>>>> master
           controller: proposalSubtitleController,
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
+<<<<<<< HEAD
               return AppLocalizations.of(context).translate('pleaseEnterADescription');
+=======
+              return 'Please enter a description';
+>>>>>>> master
             }
             return null;
           },
