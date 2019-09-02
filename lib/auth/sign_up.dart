@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Solon/auth/sign_in.dart';
+import 'package:Solon/app_localizations.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     _nativeLanguage = input;
                   });
                 },
-                decoration: InputDecoration(labelText: 'Language'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('language')),
                 items: <String>[
                   'English',
                   'Chinese (Simplified)',
@@ -55,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _name = input,
-                decoration: InputDecoration(labelText: 'Full Name'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('fullName')),
               ),
               TextFormField(
                 validator: (input) {
@@ -65,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _email = input,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('email')),
               ),
               TextFormField(
                 validator: (input) {
@@ -75,12 +76,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _password = input,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
                 obscureText: true,
               ),
               RaisedButton(
                 onPressed: signUp,
-                child: Text('Sign Up'),
+                child: Text(AppLocalizations.of(context).translate('signUp')),
               )
             ],
           )),

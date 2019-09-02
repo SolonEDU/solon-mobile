@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
 
 class CreateEvent extends StatefulWidget {
   final Function _addEvent;
@@ -96,7 +97,7 @@ class _CreateEventState extends State<CreateEvent> {
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return 'Please enter a title';
+              return AppLocalizations.of(context).translate('pleaseEnterATitle');
             }
             return null;
           },
@@ -152,7 +153,7 @@ class _CreateEventState extends State<CreateEvent> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create an Event'),
+        title: Text(AppLocalizations.of(context).translate('createAnEvent')),
       ),
       body: Stepper(
         // key: _formKey,
