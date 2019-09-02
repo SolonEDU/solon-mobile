@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
 import 'package:Solon/app_localizations.dart';
-=======
->>>>>>> master
 
 import './proposal_screen.dart';
 
@@ -108,10 +105,7 @@ class _ProposalState extends State<Proposal> {
                   new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
               Text(doc.documentID),
-<<<<<<< HEAD
-=======
               Text('Created by: ${creatorName}'),
->>>>>>> master
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -140,19 +134,10 @@ class _ProposalState extends State<Proposal> {
                       FlatButton(
                         child: Icon(Icons.delete),
                         onPressed: () {
-<<<<<<< HEAD
-                          db
-                              .collection('proposals')
-                              .document(
-                                doc.documentID
-                                // doc
-                                )
-=======
                           collection
                               .document(doc.documentID
                                   // doc
                                   )
->>>>>>> master
                               .delete()
                               .then((v) {
                             print('deleted ${doc.documentID}');

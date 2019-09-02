@@ -78,10 +78,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             .document(user.uid)
                             .updateData({'nativeLanguage': newValue});
                         _setLanguage(newValue);
-<<<<<<< HEAD
-=======
                         print(_language); //printing language to prevent blue error from popping up 
->>>>>>> master
                       },
                       items: <String>[
                         'English',
