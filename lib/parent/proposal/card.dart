@@ -12,6 +12,7 @@ class Proposal extends StatefulWidget {
   final DocumentSnapshot doc;
   int numYea;
   int numNay;
+  // final String creator;
 
   Proposal({
     Key key,
@@ -22,6 +23,7 @@ class Proposal extends StatefulWidget {
     this.numYea,
     this.numNay,
     this.doc,
+    // this.creator,
   }) : super(key: key);
 
   @override
@@ -39,6 +41,10 @@ class _ProposalState extends State<Proposal> {
     });
   }
 
+  // Future<DocumentSnapshot> getCreator() async {
+  //   return await db.collection('users').document(widget.creator).get();
+  // }
+
   @override
   Widget build(BuildContext context) {
     getCollection();
@@ -54,6 +60,7 @@ class _ProposalState extends State<Proposal> {
               widget.endDate,
               widget.numYea,
               widget.numNay,
+              // getCreator(),
             ),
           ),
         );
@@ -64,7 +71,6 @@ class _ProposalState extends State<Proposal> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                //used to be const
                 leading: Icon(Icons.account_balance),
                 title: Text(widget.title),
                 subtitle: Text(widget.subtitle),
@@ -74,7 +80,6 @@ class _ProposalState extends State<Proposal> {
                       .add_jm()
                       .format(widget.endDate)),
               Text('Days left: ' + widget.daysLeft.toInt().toString()),
-              Text(widget.doc.documentID),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),

@@ -14,7 +14,6 @@ class EventsScreen extends StatefulWidget {
 
 class _EventsScreenState extends State<EventsScreen> {
   final db = Firestore.instance;
-  var snapshots;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -22,12 +21,13 @@ class _EventsScreenState extends State<EventsScreen> {
     return translatedText;
   }
 
-  Future<List<Map>> translateAll(String title, String description, List<Map> maps, Map<String,String> languages) async {
-    for(var language in languages.keys) {
+  Future<List<Map>> translateAll(String title, String description,
+      List<Map> maps, Map<String, String> languages) async {
+    for (var language in languages.keys) {
       maps[0][language] = await translateText(title, languages[language]);
       maps[1][language] = await translateText(description, languages[language]);
     }
-    return maps; 
+    return maps;
   }
 
   void _addEvent(
@@ -78,29 +78,19 @@ class _EventsScreenState extends State<EventsScreen> {
           title: translatedEvent.hasData ? translatedEvent.data[0] : '',
           description: translatedEvent.hasData ? translatedEvent.data[1] : '',
           time: DateTime.parse(doc.data['date']),
-          // time: TimeOfDay(
-          //     hour: int.parse(doc.data['time'].substring(10, 12)),
-          //     minute: int.parse(doc.data['time'].substring(13, 15))),
           doc: doc,
         );
       },
     );
   }
 
-  void getSnapshots() {
-    setState(() {
-      snapshots = db
-          .collection('events')
-          .orderBy('date', descending: false)
-          .snapshots();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getSnapshots();
     return StreamBuilder<QuerySnapshot>(
-      stream: snapshots,
+      stream: db
+          .collection('events')
+          .orderBy('date', descending: false)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {

@@ -14,7 +14,6 @@ class ProposalsScreen extends StatefulWidget {
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
   final db = Firestore.instance;
-  var snapshots;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -31,12 +30,13 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return maps;
   }
 
-    void _addProposal(
+  void _addProposal(
     String title,
     String description,
     double daysLeft,
     DateTime endDate,
   ) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
     Map<String, String> languages = {
       'English': 'en',
       'Chinese (Simplified)': 'zh-cn',
@@ -57,12 +57,12 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         'description': translated[1],
         'daysLeft': daysLeft,
         'endDate': endDate.toString(),
+        'creator': user.uid,
       },
     );
   }
 
-  Future<List> toNativeLanguage(
-      DocumentSnapshot doc) async {
+  Future<List> toNativeLanguage(DocumentSnapshot doc) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
@@ -87,25 +87,19 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
           numYea: 0,
           numNay: 0,
           doc: doc,
+          // creator: doc.data['creator']
         );
       },
     );
   }
 
-  void getSnapshots() {
-    setState(() {
-      snapshots = db
-          .collection('proposals')
-          .orderBy('daysLeft', descending: false)
-          .snapshots();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getSnapshots();
     return StreamBuilder<QuerySnapshot>(
-      stream: snapshots,
+      stream: db
+          .collection('proposals')
+          .orderBy('daysLeft', descending: false)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
