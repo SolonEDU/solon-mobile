@@ -33,7 +33,6 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   int currentStep = 0;
-  bool complete = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,6 @@ class _CreatePostState extends State<CreatePost> {
                   FocusScope.of(context).requestFocus(_focusNode)
                 }
               : {
-                  setState(() => complete = true),
                   widget._addPost(controllers[0].text, controllers[1].text),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),

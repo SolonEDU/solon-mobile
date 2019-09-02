@@ -154,7 +154,7 @@ class _CreateEventState extends State<CreateEvent> {
                 }
               : {
                   widget._addEvent(controllers[0].text,
-                      controllers[2].text, _date),
+                      controllers[1].text, _date),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
                 }

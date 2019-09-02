@@ -26,14 +26,13 @@ class _EventCardState extends State<EventCard> {
 
   void getCollection() {
     setState(() {
-      collection = db.collection('proposals');
+      collection = db.collection('events');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     getCollection();
-
     return Center(
       child: Card(
         child: Column(
