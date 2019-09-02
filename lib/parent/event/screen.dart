@@ -17,8 +17,17 @@ class _EventsScreenState extends State<EventsScreen> {
   var snapshots;
   final translator = GoogleTranslator();
 
-  void translateText(text, map, language, abbreviation) async {
-    map[language] = await translator.translate(text, to: abbreviation);
+  Future<String> translateText(text, code) async {
+    String translatedText = await translator.translate(text, to: code);
+    return translatedText;
+  }
+
+  Future<List<Map>> translateAll(String title, String description, List<Map> maps, Map<String,String> languages) async {
+    for(var language in languages.keys) {
+      maps[0][language] = await translateText(title, languages[language]);
+      maps[1][language] = await translateText(description, languages[language]);
+    }
+    return maps; 
   }
 
   void _addEvent(
@@ -39,65 +48,41 @@ class _EventsScreenState extends State<EventsScreen> {
     };
     Map<String, String> translatedTitles = {};
     Map<String, String> translatedDescriptions = {};
-    languages.forEach((k,v) {
-      translateText(title, translatedTitles, k, v);
-      translateText(description, translatedDescriptions, k, v);
-    });
-    // Map<String, String> translatedEventTitlesMap = {
-    //   'English': await translator.translate(title, to: 'en'),
-    //   'Chinese (Simplified)': await translator.translate(title, to: 'zh-cn'),
-    //   'Chinese (Traditional)': await translator.translate(title, to: 'zh-tw'),
-    //   'Bengali': await translator.translate(title, to: 'bn'),
-    //   'Korean': await translator.translate(title, to: 'ko'),
-    //   'Russian': await translator.translate(title, to: 'ru'),
-    //   'Japanese': await translator.translate(title, to: 'ja'),
-    //   'Ukrainian': await translator.translate(title, to: 'uk'),
-    // };
-    // Map<String, String> translatedEventDescriptionsMap = {
-    //   'English': await translator.translate(description, to: 'en'),
-    //   'Chinese (Simplified)':
-    //       await translator.translate(description, to: 'zh-cn'),
-    //   'Chinese (Traditional)':
-    //       await translator.translate(description, to: 'zh-tw'),
-    //   'Bengali': await translator.translate(description, to: 'bn'),
-    //   'Korean': await translator.translate(description, to: 'ko'),
-    //   'Russian': await translator.translate(description, to: 'ru'),
-    //   'Japanese': await translator.translate(description, to: 'ja'),
-    //   'Ukrainian': await translator.translate(description, to: 'uk'),
-    // };
+    List<Map> translated = [translatedTitles, translatedDescriptions];
+    translated = await translateAll(title, description, translated, languages);
     db.collection('events').add(
       {
-        'eventTitle': translatedTitles,
-        'eventDescription': translatedDescriptions,
-        'eventDate': date.toString(),
-        'eventTime': time.toString(),
+        'title': translated[0],
+        'description': translated[1],
+        'date': date.toString(),
+        'time': time.toString(),
       },
     );
   }
 
-  Future<List> translateEventToNativeLanguage(DocumentSnapshot doc) async {
+  Future<List> toNativeLanguage(DocumentSnapshot doc) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
     List translatedEvent = List();
-    translatedEvent.add(doc.data['eventTitle'][nativeLanguage]);
-    translatedEvent.add(doc.data['eventDescription'][nativeLanguage]);
+    translatedEvent.add(doc.data['title'][nativeLanguage]);
+    translatedEvent.add(doc.data['description'][nativeLanguage]);
     return translatedEvent;
   }
 
   Widget buildEventCard(doc) {
     return FutureBuilder(
-      future: translateEventToNativeLanguage(doc),
+      future: toNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
         return EventCard(
           key: UniqueKey(),
           title: translatedEvent.hasData ? translatedEvent.data[0] : '',
           description: translatedEvent.hasData ? translatedEvent.data[1] : '',
-          date: DateTime.parse(doc.data['eventDate']),
+          date: DateTime.parse(doc.data['date']),
           time: TimeOfDay(
-              hour: int.parse(doc.data['eventTime'].substring(10, 12)),
-              minute: int.parse(doc.data['eventTime'].substring(13, 15))),
+              hour: int.parse(doc.data['time'].substring(10, 12)),
+              minute: int.parse(doc.data['time'].substring(13, 15))),
           doc: doc,
         );
       },
@@ -108,7 +93,7 @@ class _EventsScreenState extends State<EventsScreen> {
     setState(() {
       snapshots = db
           .collection('events')
-          .orderBy('eventDate', descending: false)
+          .orderBy('date', descending: false)
           .snapshots();
     });
   }

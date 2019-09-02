@@ -17,66 +17,69 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   var snapshots;
   final translator = GoogleTranslator();
 
-  void _addProposal(
-    String proposalTitle,
-    String proposalSubtitle,
+  Future<String> translateText(text, code) async {
+    String translatedText = await translator.translate(text, to: code);
+    return translatedText;
+  }
+
+  Future<List<Map>> translateAll(String title, String description,
+      List<Map> maps, Map<String, String> languages) async {
+    for (var language in languages.keys) {
+      maps[0][language] = await translateText(title, languages[language]);
+      maps[1][language] = await translateText(description, languages[language]);
+    }
+    return maps;
+  }
+
+    void _addProposal(
+    String title,
+    String description,
     double daysLeft,
     DateTime endDate,
   ) async {
-    Map<String, String> translatedProposalTitlesMap = {
-      'English': await translator.translate(proposalTitle, to: 'en'),
-      'Chinese (Simplified)':
-          await translator.translate(proposalTitle, to: 'zh-cn'),
-      'Chinese (Traditional)':
-          await translator.translate(proposalTitle, to: 'zh-tw'),
-      'Bengali': await translator.translate(proposalTitle, to: 'bn'),
-      'Korean': await translator.translate(proposalTitle, to: 'ko'),
-      'Russian': await translator.translate(proposalTitle, to: 'ru'),
-      'Japanese': await translator.translate(proposalTitle, to: 'ja'),
-      'Ukrainian': await translator.translate(proposalTitle, to: 'uk'),
+    Map<String, String> languages = {
+      'English': 'en',
+      'Chinese (Simplified)': 'zh-cn',
+      'Chinese (Traditional)': 'zh-tw',
+      'Bengali': 'bn',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Japanese': 'ja',
+      'Ukrainian': 'uk'
     };
-    Map<String, String> translatedProposalDescriptionsMap = {
-      'English': await translator.translate(proposalSubtitle, to: 'en'),
-      'Chinese (Simplified)':
-          await translator.translate(proposalSubtitle, to: 'zh-cn'),
-      'Chinese (Traditional)':
-          await translator.translate(proposalSubtitle, to: 'zh-tw'),
-      'Bengali': await translator.translate(proposalSubtitle, to: 'bn'),
-      'Korean': await translator.translate(proposalSubtitle, to: 'ko'),
-      'Russian': await translator.translate(proposalSubtitle, to: 'ru'),
-      'Japanese': await translator.translate(proposalSubtitle, to: 'ja'),
-      'Ukrainian': await translator.translate(proposalSubtitle, to: 'uk'),
-    };
+    Map<String, String> translatedTitles = {};
+    Map<String, String> translatedDescriptions = {};
+    List<Map> translated = [translatedTitles, translatedDescriptions];
+    translated = await translateAll(title, description, translated, languages);
     db.collection('proposals').add(
       {
-        'proposalTitle': translatedProposalTitlesMap,
-        'proposalSubtitle': translatedProposalDescriptionsMap,
+        'title': translated[0],
+        'description': translated[1],
         'daysLeft': daysLeft,
         'endDate': endDate.toString(),
       },
     );
   }
 
-  Future<List> translateProposalTitleToNativeLanguage(
+  Future<List> toNativeLanguage(
       DocumentSnapshot doc) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
     List translatedProposal = List();
-    translatedProposal.add(doc.data['proposalTitle'][nativeLanguage]);
-    translatedProposal.add(doc.data['proposalSubtitle'][nativeLanguage]);
+    translatedProposal.add(doc.data['title'][nativeLanguage]);
+    translatedProposal.add(doc.data['description'][nativeLanguage]);
     return translatedProposal;
   }
 
   Widget buildProposal(doc) {
     return FutureBuilder(
-      future: translateProposalTitleToNativeLanguage(doc),
+      future: toNativeLanguage(doc),
       builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
         return Proposal(
           key: UniqueKey(),
-          title:
-              translatedProposal.hasData ? translatedProposal.data[0] : '',
+          title: translatedProposal.hasData ? translatedProposal.data[0] : '',
           subtitle:
               translatedProposal.hasData ? translatedProposal.data[1] : '',
           daysLeft: doc.data['daysLeft'],

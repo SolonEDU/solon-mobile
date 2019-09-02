@@ -19,13 +19,6 @@ class _AccountScreenState extends State<AccountScreen> {
   var document;
   var _language; 
 
-  final Map<String, String> languageCodes = {
-    'English': 'en',
-    'Chinese (Simplified)': 'zh-cn',
-    'Chinese (Traditional)': 'zh-Hant',
-    'Bengali': 'bn',
-  };
-
   void _update() {
     setState(() {
       document = db.collection('users').document(user.uid);

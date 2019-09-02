@@ -16,19 +16,19 @@ class _ForumScreenState extends State<ForumScreen> {
   void _addPost(title, description) {
     db.collection('forum').add(
       {
-        'forumTitle': title,
-        'forumDescription': description,
-        'forumTime': DateTime.now().toString(),
-        'forumComments': {},
+        'title': title,
+        'description': description,
+        'time': DateTime.now().toString(),
+        'comments': {},
       },
     );
   }
 
   PostCard buildPostCard(doc) {
     return PostCard(
-      doc.data['forumTitle'],
-      doc.data['forumDescription'],
-      DateTime.parse(doc.data['forumTime']),
+      doc.data['title'],
+      doc.data['description'],
+      DateTime.parse(doc.data['time']),
       doc,
     );
   }
@@ -38,7 +38,7 @@ class _ForumScreenState extends State<ForumScreen> {
     return StreamBuilder<QuerySnapshot>(
       stream: db
           .collection('forum')
-          .orderBy('forumTime', descending: true)
+          .orderBy('time', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
