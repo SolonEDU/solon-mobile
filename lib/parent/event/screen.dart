@@ -17,38 +17,58 @@ class _EventsScreenState extends State<EventsScreen> {
   var snapshots;
   final translator = GoogleTranslator();
 
+  void translateText(text, map, language, abbreviation) async {
+    map[language] = await translator.translate(text, to: abbreviation);
+  }
+
   void _addEvent(
     String title,
     String description,
     date,
     time,
   ) async {
-    Map<String, String> translatedEventTitlesMap = {
-      'English': await translator.translate(title, to: 'en'),
-      'Chinese (Simplified)': await translator.translate(title, to: 'zh-cn'),
-      'Chinese (Traditional)': await translator.translate(title, to: 'zh-tw'),
-      'Bengali': await translator.translate(title, to: 'bn'),
-      'Korean': await translator.translate(title, to: 'ko'),
-      'Russian': await translator.translate(title, to: 'ru'),
-      'Japanese': await translator.translate(title, to: 'ja'),
-      'Ukrainian': await translator.translate(title, to: 'uk'),
+    Map<String, String> languages = {
+      'English': 'en',
+      'Chinese (Simplified)': 'zh-cn',
+      'Chinese (Traditional)': 'zh-tw',
+      'Bengali': 'bn',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Japanese': 'ja',
+      'Ukrainian': 'uk'
     };
-    Map<String, String> translatedEventDescriptionsMap = {
-      'English': await translator.translate(description, to: 'en'),
-      'Chinese (Simplified)':
-          await translator.translate(description, to: 'zh-cn'),
-      'Chinese (Traditional)':
-          await translator.translate(description, to: 'zh-tw'),
-      'Bengali': await translator.translate(description, to: 'bn'),
-      'Korean': await translator.translate(description, to: 'ko'),
-      'Russian': await translator.translate(description, to: 'ru'),
-      'Japanese': await translator.translate(description, to: 'ja'),
-      'Ukrainian': await translator.translate(description, to: 'uk'),
-    };
+    Map<String, String> translatedTitles = {};
+    Map<String, String> translatedDescriptions = {};
+    languages.forEach((k,v) {
+      translateText(title, translatedTitles, k, v);
+      translateText(description, translatedDescriptions, k, v);
+    });
+    // Map<String, String> translatedEventTitlesMap = {
+    //   'English': await translator.translate(title, to: 'en'),
+    //   'Chinese (Simplified)': await translator.translate(title, to: 'zh-cn'),
+    //   'Chinese (Traditional)': await translator.translate(title, to: 'zh-tw'),
+    //   'Bengali': await translator.translate(title, to: 'bn'),
+    //   'Korean': await translator.translate(title, to: 'ko'),
+    //   'Russian': await translator.translate(title, to: 'ru'),
+    //   'Japanese': await translator.translate(title, to: 'ja'),
+    //   'Ukrainian': await translator.translate(title, to: 'uk'),
+    // };
+    // Map<String, String> translatedEventDescriptionsMap = {
+    //   'English': await translator.translate(description, to: 'en'),
+    //   'Chinese (Simplified)':
+    //       await translator.translate(description, to: 'zh-cn'),
+    //   'Chinese (Traditional)':
+    //       await translator.translate(description, to: 'zh-tw'),
+    //   'Bengali': await translator.translate(description, to: 'bn'),
+    //   'Korean': await translator.translate(description, to: 'ko'),
+    //   'Russian': await translator.translate(description, to: 'ru'),
+    //   'Japanese': await translator.translate(description, to: 'ja'),
+    //   'Ukrainian': await translator.translate(description, to: 'uk'),
+    // };
     db.collection('events').add(
       {
-        'eventTitle': translatedEventTitlesMap,
-        'eventDescription': translatedEventDescriptionsMap,
+        'eventTitle': translatedTitles,
+        'eventDescription': translatedDescriptions,
         'eventDate': date.toString(),
         'eventTime': time.toString(),
       },

@@ -51,11 +51,11 @@ class _CreateEventState extends State<CreateEvent> {
     );
 
     if (picked != null) {
-      print('Date selected: ${_date.toString()}');
       _selectTime(context);
       setState(() {
         _date = picked;
       });
+      print('Date selected: ${_date.toString()}');
     }
   }
 
@@ -66,10 +66,10 @@ class _CreateEventState extends State<CreateEvent> {
     );
 
     if (picked != null) {
-      print('Time selected: ${_time.toString()}');
       setState(() {
         _time = picked;
       });
+      print('Time selected: ${_time.toString()}');
     }
     timeController.text =
         "Event occurs on ${new DateFormat.yMMMMd("en_US").add_jm().format(_date)}";
