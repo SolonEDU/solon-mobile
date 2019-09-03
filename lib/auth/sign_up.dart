@@ -81,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               RaisedButton(
                 onPressed: signUp,
-                child: Text(AppLocalizations.of(context).translate('signUp')),
+                child: Text(AppLocalizations.of(context).translate('signup')),
               )
             ],
           )),
