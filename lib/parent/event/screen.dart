@@ -17,8 +17,8 @@ class _EventsScreenState extends State<EventsScreen> {
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
-    String translatedText = await translator.translate(text, to: code);
-    return translatedText;
+    return await translator.translate(text, to: code);
+    
   }
 
   Future<List<Map>> translateAll(String title, String description,

@@ -13,17 +13,11 @@ class CreateProposal extends StatefulWidget {
 class _CreateProposalState extends State<CreateProposal> {
   DateTime _date = DateTime.now();
   int _currentStep = 0;
-  FocusNode _focusNode;
+  FocusNode _focusNode = FocusNode();
   double _sliderValue = 7.0;
 
   List<TextEditingController> controllers =
       List.generate(2, (int index) => TextEditingController());
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-  }
 
   @override
   void dispose() {

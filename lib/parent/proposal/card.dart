@@ -7,7 +7,7 @@ import './page.dart';
 
 class Proposal extends StatefulWidget {
   final String title;
-  final String subtitle;
+  final String descripton;
   final double daysLeft;
   final DateTime endDate;
   final DocumentSnapshot doc;
@@ -18,7 +18,7 @@ class Proposal extends StatefulWidget {
   Proposal({
     Key key,
     this.title,
-    this.subtitle,
+    this.descripton,
     this.daysLeft,
     this.endDate,
     this.numYea,
@@ -57,7 +57,7 @@ class _ProposalState extends State<Proposal> {
           MaterialPageRoute(
             builder: (context) => ProposalPage(
               widget.title,
-              widget.subtitle,
+              widget.descripton,
               widget.daysLeft,
               widget.endDate,
               widget.numYea,
@@ -75,7 +75,7 @@ class _ProposalState extends State<Proposal> {
               ListTile(
                 leading: Icon(Icons.account_balance),
                 title: Text(widget.title),
-                subtitle: Text(widget.subtitle),
+                subtitle: Text(widget.descripton),
               ),
               Text('Voting on proposal ends on: ' +
                   new DateFormat.yMMMMd("en_US")

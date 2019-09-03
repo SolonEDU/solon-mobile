@@ -22,7 +22,7 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   final db = Firestore.instance;
-  FocusNode _focusNode;
+  FocusNode _focusNode = FocusNode();
   var document;
   static var commentController = TextEditingController();
 
@@ -36,7 +36,6 @@ class _PostPageState extends State<PostPage> {
   initState() {
     super.initState();
     _update();
-    _focusNode = FocusNode();
   }
 
   @override
