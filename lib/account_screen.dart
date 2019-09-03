@@ -1,10 +1,12 @@
 // import 'package:Solon/admin/proposal/proposal.dart';
+import 'package:Solon/auth/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'app_localizations.dart';
 
 import './loader.dart';
+import 'main.dart';
 // import './parent/proposal/proposals_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -15,6 +17,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final db = Firestore.instance;
   var document;
   var _language; 
@@ -53,14 +56,15 @@ class _AccountScreenState extends State<AccountScreen> {
             );
           default:
             return Scaffold(
+              key: _scaffoldKey,
               appBar: AppBar(
                 title: Text(AppLocalizations.of(context).translate('account')),
               ),
               body: Center(
                 child: Column(
                   children: <Widget>[
-                    Text(snapshot.data.data['name']),
-                    Text(snapshot.data.data['email']),
+                    Text("Name: " + snapshot.data.data['name']),
+                    Text("Email: " + snapshot.data.data['email']),
                     DropdownButton<String>(
                       value: snapshot.data.data['nativeLanguage'],
                       onChanged: (String newValue) {
@@ -86,13 +90,35 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Text(value),
                         );
                       }).toList(),
-                    )
+                    ),
+                    RaisedButton(
+                      onPressed: () async {
+                        _showToast("Instructions to change your password were sent to your email address");
+                        return FirebaseAuth.instance.sendPasswordResetEmail(email: snapshot.data.data['email']);
+                      },
+                      child: Text("Change Password"),
+                    ),
+                    RaisedButton(
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new MyApp()));
+                      },
+                      child: Text("Log Out"),
+                    ),
                   ],
                 ),
               ),
             );
         }
       },
+    );
+  }
+
+  void _showToast(String message) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
     );
   }
 }
