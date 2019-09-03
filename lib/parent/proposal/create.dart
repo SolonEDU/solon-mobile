@@ -2,72 +2,28 @@ import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
 
-class AddProposalScreen extends StatelessWidget {
-  final Function addProposal;
-  AddProposalScreen(this.addProposal);
+class CreateProposal extends StatefulWidget {
+  final Function _addProposal;
+  CreateProposal(this._addProposal);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Proposal'),
-      ),
-      body: AddProposalForm(addProposal),
-    );
-  }
+  _CreateProposalState createState() => _CreateProposalState();
 }
 
-// Create a Form widget.
-class AddProposalForm extends StatefulWidget {
-  final Function addProposal;
-  AddProposalForm(this.addProposal);
-  @override
-  AddProposalFormState createState() {
-    return AddProposalFormState(addProposal);
-  }
-}
-
-// Create a corresponding State class.
-// This class holds data related to the form.
-class AddProposalFormState extends State<AddProposalForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
-  // final _formKey = GlobalKey<FormState>();
-  final Function addProposal;
+class _CreateProposalState extends State<CreateProposal> {
   DateTime _date = DateTime.now();
-  var _currentStep = 0;
-  List<Step> form = [];
-
-  static var proposalTitleController = TextEditingController();
-  static var proposalSubtitleController = TextEditingController();
-  static var proposalTimeController = TextEditingController();
-  final controllers = [
-    proposalTitleController,
-    proposalSubtitleController,
-    proposalTimeController
-  ];
-
-  // This is the starting value of the slider.
+  int _currentStep = 0;
+  FocusNode _focusNode = FocusNode();
   double _sliderValue = 7.0;
 
-  FocusNode myFocusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    myFocusNode = FocusNode();
-  }
+  List<TextEditingController> controllers =
+      List.generate(2, (int index) => TextEditingController());
 
   @override
   void dispose() {
-    myFocusNode.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
-
-  AddProposalFormState(this.addProposal);
 
   void goTo(int step) {
     setState(() => _currentStep = step);
@@ -75,7 +31,7 @@ class AddProposalFormState extends State<AddProposalForm> {
 
   @override
   Widget build(BuildContext context) {
-    form = [
+    List<Step> form = [
       Step(
         title: Text(AppLocalizations.of(context).translate('title')),
         isActive: _currentStep == 0 ? true : false,
@@ -83,7 +39,7 @@ class AddProposalFormState extends State<AddProposalForm> {
         content: TextFormField(
           autofocus: true,
           decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
-          controller: proposalTitleController,
+          controller: controllers[0],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -101,9 +57,9 @@ class AddProposalFormState extends State<AddProposalForm> {
             : _currentStep < 1 ? StepState.disabled : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          focusNode: myFocusNode,
+          focusNode: _focusNode,
           decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
-          controller: proposalSubtitleController,
+          controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -159,37 +115,37 @@ class AddProposalFormState extends State<AddProposalForm> {
         ),
       ),
     ];
-
-    return Stepper(
-      steps: form,
-      currentStep: _currentStep,
-      onStepContinue: () => {
-        _currentStep + 1 != form.length
-            ? {
-                if (controllers[_currentStep].text.length > 0)
-                  {
-                    goTo(_currentStep + 1),
-                    _currentStep == 2 
-                    ? myFocusNode.unfocus()
-                    : FocusScope.of(context).requestFocus(myFocusNode)
-                  }
-              }
-            : {
-                addProposal(
-                    proposalTitleController.text,
-                    proposalSubtitleController.text,
-                    _sliderValue,
-                    _date.add(new Duration(days: _sliderValue.toInt()))),
-                proposalTitleController.text = '',
-                proposalSubtitleController.text = '',
-                proposalTimeController.text = '',
-                Navigator.pop(context,true),
-              }
-      },
-      onStepCancel: () => {
-        if (_currentStep > 0) {goTo(_currentStep - 1)}
-      },
-      onStepTapped: (step) => goTo(step),
+    return Scaffold(
+      appBar: AppBar(title: Text('Add Proposal')),
+      body: Stepper(
+        steps: form,
+        currentStep: _currentStep,
+        onStepContinue: () => {
+          _currentStep + 1 != form.length
+              ? {
+                  if (controllers[_currentStep].text.isNotEmpty)
+                    {
+                      goTo(_currentStep + 1),
+                      _currentStep == 2
+                          ? _focusNode.unfocus()
+                          : FocusScope.of(context).requestFocus(_focusNode)
+                    }
+                }
+              : {
+                  widget._addProposal(
+                      controllers[0].text,
+                      controllers[1].text,
+                      _sliderValue,
+                      _date.add(new Duration(days: _sliderValue.toInt()))),
+                  controllers.forEach((controller) => {controller.clear()}),
+                  Navigator.pop(context, true),
+                }
+        },
+        onStepCancel: () => {
+          if (_currentStep > 0) {goTo(_currentStep - 1)}
+        },
+        onStepTapped: (step) => goTo(step),
+      ),
     );
   }
 }

@@ -1,28 +1,32 @@
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
 
-class ProposalScreen extends StatelessWidget {
-  final String proposalTitle;
-  final String proposalSubtitle;
+class ProposalPage extends StatelessWidget {
+  final String title;
+  final String description;
   final double daysLeft;
   final DateTime endDate;
   final int numYea;
   final int numNay;
+  // final Future<DocumentSnapshot> creator;
 
-  ProposalScreen(
-    this.proposalTitle,
-    this.proposalSubtitle,
+  ProposalPage(
+    this.title,
+    this.description,
     this.daysLeft,
     this.endDate,
     this.numYea,
     this.numNay,
+    // this.creator,
   );
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(proposalTitle),
+        title: Text(title),
       ),
       body: Container(
         width: double.infinity,
@@ -30,16 +34,19 @@ class ProposalScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Text(proposalSubtitle),
+              // FutureBuilder(
+              //   future: creator,
+              //   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              //     return Text(snapshot.data['name']);
+              //   },
+              // ),
+              Text(description),
               Icon(Icons.comment),
               Text(AppLocalizations.of(context).translate('votesFor')),
               Text('${AppLocalizations.of(context).translate('yea')}: $numYea'),
               Text('${AppLocalizations.of(context).translate('nay')}: $numNay'),
               Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
               Text('Days left: ' + daysLeft.toInt().toString()),
-              //Text('Deadline Time: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
-              //Text('Deadline Date: ${dateTime.toString().substring(0, 10)}'),
-              //Text('Deadline Time: ${timeOfDay.toString().substring(10,15)}'),
             ],
           ),
         ),

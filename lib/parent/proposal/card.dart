@@ -3,66 +3,39 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
 
-import './proposal_screen.dart';
+import './page.dart';
 
 class Proposal extends StatefulWidget {
-  final String proposalTitle;
-  final String proposalSubtitle;
+  final String title;
+  final String descripton;
   final double daysLeft;
   final DateTime endDate;
+  final DocumentSnapshot doc;
   int numYea;
   int numNay;
-  final doc;
-  final creatorName;
+  // final String creator;
 
   Proposal({
     Key key,
-    this.proposalTitle,
-    this.proposalSubtitle,
+    this.title,
+    this.descripton,
     this.daysLeft,
     this.endDate,
     this.numYea,
     this.numNay,
     this.doc,
-    this.creatorName,
+    // this.creator,
   }) : super(key: key);
 
   @override
-  _ProposalState createState() => _ProposalState(
-        proposalTitle,
-        proposalSubtitle,
-        daysLeft,
-        endDate,
-        numYea,
-        numNay,
-        doc,
-        creatorName
-      );
+  _ProposalState createState() => _ProposalState();
 }
 
 class _ProposalState extends State<Proposal> {
-  final String proposalTitle;
-  final String proposalSubtitle;
-  final double daysLeft;
-  final DateTime endDate;
-  int numYea;
-  int numNay;
-  var doc;
   var voteChoiceVisibility = true;
   var collection;
   final db = Firestore.instance;
-  String creatorName;
-
-  _ProposalState(
-    this.proposalTitle,
-    this.proposalSubtitle,
-    this.daysLeft,
-    this.endDate,
-    this.numYea,
-    this.numNay,
-    this.doc,
-    this.creatorName,
-  );
+  // String creatorName;
 
   void getCollection() {
     setState(() {
@@ -70,22 +43,26 @@ class _ProposalState extends State<Proposal> {
     });
   }
 
+  // Future<DocumentSnapshot> getCreator() async {
+  //   return await db.collection('users').document(widget.creator).get();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    // DateTime cooldownTime;
     getCollection();
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProposalScreen(
-              widget.proposalTitle,
-              widget.proposalSubtitle,
+            builder: (context) => ProposalPage(
+              widget.title,
+              widget.descripton,
               widget.daysLeft,
               widget.endDate,
               widget.numYea,
               widget.numNay,
+              // getCreator(),
             ),
           ),
         );
@@ -96,16 +73,15 @@ class _ProposalState extends State<Proposal> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                //used to be const
                 leading: Icon(Icons.account_balance),
-                title: Text(widget.proposalTitle),
-                subtitle: Text(widget.proposalSubtitle),
+                title: Text(widget.title),
+                subtitle: Text(widget.descripton),
               ),
               Text('Voting on proposal ends on: ' +
-                  new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
-              Text('Days left: ' + daysLeft.toInt().toString()),
-              Text(doc.documentID),
-              Text('Created by: ${creatorName}'),
+                  new DateFormat.yMMMMd("en_US")
+                      .add_jm()
+                      .format(widget.endDate)),
+              Text('Days left: ' + widget.daysLeft.toInt().toString()),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -114,7 +90,8 @@ class _ProposalState extends State<Proposal> {
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: Text(AppLocalizations.of(context).translate('yea')),
+                        child:
+                            Text(AppLocalizations.of(context).translate('yea')),
                         onPressed: () {
                           widget.numYea++;
                           setState(() {
@@ -123,7 +100,8 @@ class _ProposalState extends State<Proposal> {
                         },
                       ),
                       FlatButton(
-                        child: Text(AppLocalizations.of(context).translate('nay')),
+                        child:
+                            Text(AppLocalizations.of(context).translate('nay')),
                         onPressed: () {
                           widget.numNay++;
                           setState(() {
@@ -134,14 +112,7 @@ class _ProposalState extends State<Proposal> {
                       FlatButton(
                         child: Icon(Icons.delete),
                         onPressed: () {
-                          collection
-                              .document(doc.documentID
-                                  // doc
-                                  )
-                              .delete()
-                              .then((v) {
-                            print('deleted ${doc.documentID}');
-                          });
+                          collection.document(widget.doc.documentID).delete();
                         },
                       ),
                     ],

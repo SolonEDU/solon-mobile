@@ -9,6 +9,7 @@ class PostCard extends StatefulWidget {
   final String description;
   final DateTime time;
   final DocumentSnapshot doc;
+
   PostCard(
     this.title, 
     this.description, 
@@ -16,27 +17,11 @@ class PostCard extends StatefulWidget {
     this.doc);
 
   @override
-  _PostCardState createState() => _PostCardState(
-        title,
-        description,
-        time,
-        doc,
-      );
+  _PostCardState createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
-  final String title;
-  final String description;
-  final DateTime time;
-  DocumentSnapshot doc;
   final db = Firestore.instance;
-
-  _PostCardState(
-    this.title,
-    this.description,
-    this.time,
-    this.doc,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +38,10 @@ class _PostCardState extends State<PostCard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => PostPage(
-                      title,
-                      description,
-                      time,
-                      doc,
+                      widget.title,
+                      widget.description,
+                      widget.time,
+                      widget.doc,
                     ),
                   ),
                 );
