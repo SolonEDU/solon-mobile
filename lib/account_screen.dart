@@ -15,7 +15,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  _AccountScreenState();
   final db = Firestore.instance;
   var document;
   var _language; 

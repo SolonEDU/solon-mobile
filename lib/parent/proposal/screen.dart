@@ -17,8 +17,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
-    String translatedText = await translator.translate(text, to: code);
-    return translatedText;
+    return await translator.translate(text, to: code);
   }
 
   Future<List<Map>> translateAll(String title, String description,
@@ -80,7 +79,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         return Proposal(
           key: UniqueKey(),
           title: translatedProposal.hasData ? translatedProposal.data[0] : '',
-          subtitle:
+          descripton:
               translatedProposal.hasData ? translatedProposal.data[1] : '',
           daysLeft: doc.data['daysLeft'],
           endDate: DateTime.parse(doc.data['endDate']),

@@ -13,17 +13,10 @@ class CreateEvent extends StatefulWidget {
 class _CreateEventState extends State<CreateEvent> {
   DateTime _date = DateTime.now();
   int _currentStep = 0;
-  FocusNode _focusNode;
+  FocusNode _focusNode = FocusNode();
 
   List<TextEditingController> controllers =
       List.generate(3, (int index) => TextEditingController());
-
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-  }
 
   @override
   void dispose() {

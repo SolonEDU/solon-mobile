@@ -11,8 +11,7 @@ class EventCard extends StatefulWidget {
   final DateTime time;
   final doc;
 
-  EventCard(
-      {Key key, this.title, this.description, this.time, this.doc})
+  EventCard({Key key, this.title, this.description, this.time, this.doc})
       : super(key: key);
 
   @override
@@ -21,18 +20,10 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   bool attending = false;
-  var collection;
   final db = Firestore.instance;
-
-  void getCollection() {
-    setState(() {
-      collection = db.collection('events');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    getCollection();
     return Center(
       child: Card(
         child: Column(
@@ -63,8 +54,12 @@ class _EventCardState extends State<EventCard> {
                 children: <Widget>[
                   FlatButton(
                     child: Icon(Icons.delete),
-                    onPressed: () =>
-                        {collection.document(widget.doc.documentID).delete()},
+                    onPressed: () => {
+                      db
+                          .collection('events')
+                          .document(widget.doc.documentID)
+                          .delete()
+                    },
                   ),
                   Switch.adaptive(
                     value: attending,

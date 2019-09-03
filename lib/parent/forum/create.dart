@@ -11,16 +11,10 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   List<Step> form = [];
-  FocusNode _focusNode;
+  FocusNode _focusNode = FocusNode();
 
   List<TextEditingController> controllers =
       List.generate(2, (int index) => TextEditingController());
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-  }
 
   @override
   void dispose() {
