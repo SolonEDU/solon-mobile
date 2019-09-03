@@ -6,41 +6,27 @@ class CreatePost extends StatefulWidget {
   CreatePost(this._addPost);
 
   @override
-  _CreatePostState createState() => _CreatePostState(_addPost);
+  _CreatePostState createState() => _CreatePostState();
 }
 
 class _CreatePostState extends State<CreatePost> {
   List<Step> form = [];
-  final Function addPost;
-  FocusNode myFocusNode;
+  FocusNode _focusNode = FocusNode();
 
-  @override
-  void initState() {
-    super.initState();
-    myFocusNode = FocusNode();
-  }
+  List<TextEditingController> controllers =
+      List.generate(2, (int index) => TextEditingController());
 
   @override
   void dispose() {
-    myFocusNode.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
-  static var titleController = TextEditingController();
-  static var descriptionController = TextEditingController();
-  static var controllers = [
-    titleController,
-    descriptionController,
-  ];
-
-  int currentStep = 0;
-  bool complete = false;
-
-  goTo(int step) {
+  void goTo(int step) {
     setState(() => {currentStep = step});
   }
 
-  _CreatePostState(this.addPost);
+  int currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +38,7 @@ class _CreatePostState extends State<CreatePost> {
         content: TextFormField(
           autofocus: true,
           decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
-          controller: titleController,
+          controller: controllers[0],
           autovalidate: true,
         ),
       ),
@@ -64,9 +50,9 @@ class _CreatePostState extends State<CreatePost> {
             : currentStep < 1 ? StepState.disabled : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          focusNode: myFocusNode,
+          focusNode: _focusNode,
           decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
-          controller: descriptionController,
+          controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
@@ -89,13 +75,11 @@ class _CreatePostState extends State<CreatePost> {
                   controllers[currentStep].text.length > 0
               ? {
                   goTo(currentStep + 1),
-                  FocusScope.of(context).requestFocus(myFocusNode)
+                  FocusScope.of(context).requestFocus(_focusNode)
                 }
               : {
-                  setState(() => complete = true),
-                  addPost(titleController.text, descriptionController.text),
-                  titleController.text = '',
-                  descriptionController.text = '',
+                  widget._addPost(controllers[0].text, controllers[1].text),
+                  controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
                 }
         },

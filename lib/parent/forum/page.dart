@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Solon/app_localizations.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 
 import 'dart:collection';
 
-import 'package:intl/intl.dart';
+import 'package:Solon/app_localizations.dart';
 
 // import '../../loader.dart';
 import './comment.dart';
@@ -16,33 +17,18 @@ class PostPage extends StatefulWidget {
   final DocumentSnapshot doc;
   PostPage(this.title, this.description, this.time, this.doc);
 
-  _PostPageState createState() => _PostPageState(
-        title,
-        description,
-        time,
-        doc,
-      );
+  _PostPageState createState() => _PostPageState();
 }
 
 class _PostPageState extends State<PostPage> {
-  final String title;
-  final String description;
-  final DateTime time;
   final db = Firestore.instance;
+  FocusNode _focusNode = FocusNode();
   var document;
-  DocumentSnapshot doc;
   static var commentController = TextEditingController();
-
-  _PostPageState(
-    this.title,
-    this.description,
-    this.time,
-    this.doc,
-  );
 
   void _update() {
     setState(() {
-    document = db.collection('forum').document(doc.documentID);
+      document = db.collection('forum').document(widget.doc.documentID);
     });
   }
 
@@ -52,11 +38,30 @@ class _PostPageState extends State<PostPage> {
     _update();
   }
 
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  ListView getComments(snapshot) {
+    Map<dynamic, dynamic> text = snapshot.data.data['comments'];
+    text = SplayTreeMap.from(text);
+    List<Widget> textComments = [];
+    var textKey;
+    text.forEach((key, value) => {
+          textKey = key,
+          value.forEach((key, value) => {
+                textComments
+                    .add(Comment(DateTime.parse(textKey), value.toString()))
+              })
+        });
+    return ListView(
+      children: textComments,
+    );
+  }
+
   Widget build(BuildContext context) {
-    // var comments;
-    // document.get().then((docu) => {
-    //       comments = docu.data['forumComments'],
-    //     });
     return FutureBuilder(
       future: document.get(),
       builder:
@@ -64,92 +69,79 @@ class _PostPageState extends State<PostPage> {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            // return Container();
-            // return Container();
-            // return Center(
-              // child: Loader(),
-            // );
+          // return Container();
+          // return Center(
+          // child: Loader(),
+          // );
           default:
             return Scaffold(
               appBar: AppBar(
-                title: Text(title),
+                title: Text(widget.title),
               ),
               body: Center(
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child: Card(
-                        child: ListTile(
-                          leading: Icon(Icons.account_box),
-                          title: Container(
-                            child: Text(description),
-                            margin: EdgeInsets.only(top: 8.0, bottom: 4.0)
-                          ),
-                          subtitle: Container(
-                            child: Text(new DateFormat.yMMMMd("en_US").add_jm().format(time)),
-                            margin: EdgeInsets.only(bottom: 4.0)
-                          ),
-                        ),
-                        margin: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0)
-                      ),
-                      margin: EdgeInsets.only(bottom: 8.0)
-                    ),
+                        child: Card(
+                            child: ListTile(
+                              leading: Icon(Icons.account_box),
+                              title: Container(
+                                  child: Text(widget.description),
+                                  margin:
+                                      EdgeInsets.only(top: 8.0, bottom: 4.0)),
+                              subtitle: Container(
+                                  child: Text(new DateFormat.yMMMMd("en_US")
+                                      .add_jm()
+                                      .format(widget.time)),
+                                  margin: EdgeInsets.only(bottom: 4.0)),
+                            ),
+                            margin: EdgeInsets.only(
+                                top: 8.0, left: 8.0, right: 8.0)),
+                        margin: EdgeInsets.only(bottom: 8.0)),
                     Container(
-                      child: Text(AppLocalizations.of(context).translate('commentSection')),
-                      margin: EdgeInsets.only(top: 4.0, bottom: 8.0)
-                    ),
+                        child: Text(AppLocalizations.of(context)
+                            .translate('commentSection')),
+                        margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
                     Expanded(child: getComments(snapshot)),
                     Container(
                       child: TextField(
-                       style: TextStyle(
-                        height: .4
-                       ),
-                       controller: commentController,
-                       decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        hintText: AppLocalizations.of(context).translate('enterAComment'),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: () {
-                            if (commentController.text.length > 0) {
-                              document.updateData(
-                                {
-                                  'forumComments.' + DateTime.now().toString():
-                                      commentController.text
-                                },
-                              );
-                              _update();
-                              commentController.text = '';
-                            }
-                           },
+                        style: TextStyle(height: .4),
+                        controller: commentController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          hintText: AppLocalizations.of(context)
+                              .translate('enterAComment'),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.send),
+                            onPressed: () {
+                              if (commentController.text.isNotEmpty) {
+                                document.updateData(
+                                  {
+                                    'comments.' + DateTime.now().toString():
+                                        commentController.text
+                                  },
+                                );
+                                SchedulerBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  FocusScope.of(context).unfocus();
+                                  commentController.clear();
+                                  _update();
+                                });
+                              }
+                            },
                           ),
                         ),
                       ),
                       margin: EdgeInsets.all(12.0),
-                    ),                 
+                    ),
                   ],
                 ),
               ),
             );
         }
       },
-    );
-  }
-
-  ListView getComments(snapshot) {
-    Map<dynamic, dynamic> text = snapshot.data.data['forumComments'];
-    text = SplayTreeMap.from(text);
-    List<Widget> textComments = [];
-    var textKey;
-    text.forEach((key, value) => {
-          textKey = key,
-          value.forEach((key, value) =>
-              {textComments.add(Comment(DateTime.parse(textKey), value.toString()))})
-        });
-    return ListView(
-      children: textComments,
     );
   }
 }
