@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:translator/translator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'dart:collection';
 
@@ -22,6 +24,7 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   final db = Firestore.instance;
+  final translator = GoogleTranslator();
   FocusNode _focusNode = FocusNode();
   var document;
   static var commentController = TextEditingController();
@@ -44,21 +47,54 @@ class _PostPageState extends State<PostPage> {
     super.dispose();
   }
 
-  ListView getComments(snapshot) {
+  Future<ListView> getComments(snapshot) async {
     Map<dynamic, dynamic> text = snapshot.data.data['comments'];
     text = SplayTreeMap.from(text);
     List<Widget> textComments = [];
     var textKey;
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    DocumentSnapshot userData =
+        await db.collection('users').document(user.uid).get();
+    String nativeLanguage = userData.data['nativeLanguage'];
     text.forEach((key, value) => {
           textKey = key,
           value.forEach((key, value) => {
-                textComments
-                    .add(Comment(DateTime.parse(textKey), value.toString()))
+                textComments.add(Comment(
+                    DateTime.parse(textKey), value[nativeLanguage].toString()))
               })
         });
     return ListView(
       children: textComments,
     );
+  }
+
+  Future<String> translateText(text, code) async {
+    return await translator.translate(text, to: code);
+  }
+
+  Future<List<Map>> translateAll(
+      String comment, List<Map> maps, Map<String, String> languages) async {
+    for (var language in languages.keys) {
+      maps[0][language] = await translateText(comment, languages[language]);
+    }
+    return maps;
+  }
+
+  Future<Map<String, String>> _addComment(String comment) async {
+    Map<String, String> languages = {
+      'English': 'en',
+      'Chinese (Simplified)': 'zh-cn',
+      'Chinese (Traditional)': 'zh-tw',
+      'Bengali': 'bn',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Japanese': 'ja',
+      'Ukrainian': 'uk'
+    };
+    Map<String, String> translatedComments = {};
+    List<Map> translated = [translatedComments];
+    translated = await translateAll(comment, translated, languages);
+    return translatedComments;
   }
 
   Widget build(BuildContext context) {
@@ -102,7 +138,17 @@ class _PostPageState extends State<PostPage> {
                         child: Text(AppLocalizations.of(context)
                             .translate('commentSection')),
                         margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
-                    Expanded(child: getComments(snapshot)),
+                    FutureBuilder(
+                      future: getComments(snapshot),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<ListView> translatedComments) {
+                        return Expanded(
+                          child: translatedComments.hasData
+                              ? translatedComments.data
+                              : Text(''),
+                        );
+                      },
+                    ),
                     Container(
                       child: TextField(
                         style: TextStyle(height: .4),
@@ -115,20 +161,21 @@ class _PostPageState extends State<PostPage> {
                               .translate('enterAComment'),
                           suffixIcon: IconButton(
                             icon: Icon(Icons.send),
-                            onPressed: () {
+                            onPressed: () async {
                               if (commentController.text.isNotEmpty) {
-                                document.updateData(
-                                  {
-                                    'comments.' + DateTime.now().toString():
-                                        commentController.text
-                                  },
-                                );
+                                var commentText = commentController.text;
                                 SchedulerBinding.instance
                                     .addPostFrameCallback((_) {
                                   FocusScope.of(context).unfocus();
                                   commentController.clear();
-                                  _update();
                                 });
+                                document.updateData(
+                                  {
+                                    'comments.' + DateTime.now().toString():
+                                        await _addComment(commentText)
+                                  },
+                                );
+                                _update();
                               }
                             },
                           ),
