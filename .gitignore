@@ -30,6 +30,8 @@ files_from_tutorial/
 .pub/
 /build/
 
+/android/app/google-services.json
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
