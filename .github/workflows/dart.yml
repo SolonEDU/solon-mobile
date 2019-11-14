@@ -1,4 +1,4 @@
-name: Dart CI
+name: Flutter CI
 
 on: push
 jobs:
@@ -20,5 +20,13 @@ jobs:
 
     - name: build apk
       uses: steebchen/flutter@v1.0.0
+      env:
+        project_number: ${{ secrets.PROJECT_NUMBER }}
+        firebase_url: ${{ secrets.FIREBASE_URL }}
+        project_id: ${{ secrets.PROJECT_ID }}
+        storage_bucket: ${{ secrets.STORAGE_BUCKET }}
+        mobilesdk_app_id: ${{ secrets.MOBILESDK_APP_ID }}
+        client_id: ${{ secrets.CLIENT_ID }}
+        current_key: ${{ secrets.CURRENT_KEY }}
       with:
-        args: build apk --release
+        args: build apk --release 
