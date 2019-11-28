@@ -16,10 +16,10 @@ jobs:
       with:
         args: pub get
 
-    - name: run tests
-      uses: steebchen/flutter@v1.0.0
-      with:
-        args: test
+    # - name: run tests
+    #   uses: steebchen/flutter@v1.0.0
+    #   with:
+    #     args: test
 
     - name: build apk
       uses: steebchen/flutter@v1.0.0
