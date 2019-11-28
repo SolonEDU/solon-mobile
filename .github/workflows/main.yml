@@ -9,7 +9,7 @@ jobs:
     - name: decrypt secret 
       run: ./.github/scripts/decrypt_secret.sh
       env:
-        PASSPHRASE: $
+        PASSPHRASE: ${{ secrets.PASSPHRASE }}
 
     - name: install dependencies
       uses: steebchen/flutter@v1.0.0
