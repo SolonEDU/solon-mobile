@@ -1,5 +1,5 @@
 on: push
-name: build and test app
+name: Flutter CI
 jobs:
   build:
     name: install dependencies
