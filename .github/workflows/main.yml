@@ -1,27 +1,27 @@
-on: push
-name: Flutter CI
+on: push ## everytime someone pushes to the repo, run the following actions 
+name: Flutter CI ## this is the name of the workflow
 jobs:
-  build:
-    name: install dependencies
-    runs-on: ubuntu-latest
+  build: ## this workflow has one job which is labelled build (i don't think this name matters but don't quote me)
+    name: install dependencies 
+    runs-on: ubuntu-latest ## this workflow is run on a ubuntu machine located at some github office 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v1 ## this is a github action used to have access to, and traverse our repo's directories 
     - name: decrypt secret 
-      run: ./.github/scripts/decrypt_secret.sh
+      run: ./.github/scripts/decrypt_secret.sh ## runs the script which decrypts the encrypted google services json
       env:
-        PASSPHRASE: ${{ secrets.PASSPHRASE }}
+        PASSPHRASE: ${{ secrets.PASSPHRASE }} ## this passes the github secret passphrase to the script file 
 
     - name: install dependencies
-      uses: steebchen/flutter@v1.0.0
+      uses: steebchen/flutter@v1.0.0 ## this is a github action used to actually install all of the flutter prerequisites needed to build the app
       with:
-        args: pub get
+        args: pub get ## run 'flutter pub get'
 
     # - name: run tests
     #   uses: steebchen/flutter@v1.0.0
     #   with:
-    #     args: test
+    #     args: test ## runs 'flutter test' (this is where we would run the files in test directory)
 
-    - name: build apk
+    - name: build apk 
       uses: steebchen/flutter@v1.0.0
       with:
-        args: build apk --release
+        args: build apk --release ## runs 'flutter build apk --release'
