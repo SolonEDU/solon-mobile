@@ -1,16 +1,22 @@
-# solon
+# solon-mobile
 
-A new Flutter project.
+## About
+A mobile app with the purpose of faciliating school activities and interaction between parents and administration. 
 
-## Getting Started
+The idea was conceptualized over the course of the [BlockchainsForSchools](https://blockchainsforschools.org/) Summer Immersion Program Hackathon at the [Bushwick Generator](https://www.thebushwickgenerator.com/) during July 2019. 
 
-This project is a starting point for a Flutter application.
+Evolved out of using blockchain when development continued during Stuyvesant High School's Summer Innovation Program during August 2019.
 
-A few resources to get you started if this is your first Flutter project:
+Currently continuing development under the guidance of mentors from the Google Mentorship Program in collaboration with Stuyvesant High School. 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Contributors 
+- [Eric Lau](https://github.com/ericlau00)
+- [Raymond Lee](https://github.com/raymondlee00)
+- [Kazi Jamal](https://github.com/kazijamal)
+- [Michael Robertson](https://github.com/MichaelRobertson479)
+- [Matthew Chan](https://github.com/MattChann)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Special Thanks
+- Emerick Patterson for allowing us access to the Bushwick Generator.
+- Scott Thomas for allowing us access to the Irwin Zahn Innovation Lab.
+- Raunak Chowdhury for bringing together an awesome team.
