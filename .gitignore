@@ -21,6 +21,9 @@ files_from_tutorial/
 # is commented out by default.
 #.vscode/
 
+# Workspace related
+solon-mobile.code-workspace
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

@@ -1,4 +1,8 @@
-on: push ## everytime someone pushes to the repo, run the following actions 
+on: 
+  push:
+    paths-ignore: # do not execute actions when there are only changes to README and .gitignore
+      - 'README.md'
+      - '.gitignore'
 name: Flutter CI ## this is the name of the workflow
 jobs:
   build: ## this workflow has one job which is labelled build (i don't think this name matters but don't quote me)
