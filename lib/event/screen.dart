@@ -5,19 +5,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './card.dart';
 import './create.dart';
-import '../../loader.dart';
+import './../loader.dart';
 
-class ProposalsScreen extends StatefulWidget {
+class EventsScreen extends StatefulWidget {
   @override
-  _ProposalsScreenState createState() => _ProposalsScreenState();
+  _EventsScreenState createState() => _EventsScreenState();
 }
 
-class _ProposalsScreenState extends State<ProposalsScreen> {
+class _EventsScreenState extends State<EventsScreen> {
   final db = Firestore.instance;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
     return await translator.translate(text, to: code);
+
   }
 
   Future<List<Map>> translateAll(String title, String description,
@@ -29,13 +30,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return maps;
   }
 
-  void _addProposal(
+  void _addEvent(
     String title,
     String description,
-    double daysLeft,
-    DateTime endDate,
+    DateTime time,
   ) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
     Map<String, String> languages = {
       'English': 'en',
       'Chinese (Simplified)': 'zh-cn',
@@ -50,13 +49,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     Map<String, String> translatedDescriptions = {};
     List<Map> translated = [translatedTitles, translatedDescriptions];
     translated = await translateAll(title, description, translated, languages);
-    db.collection('proposals').add(
+    db.collection('events').add(
       {
         'title': translated[0],
         'description': translated[1],
-        'daysLeft': daysLeft,
-        'endDate': endDate.toString(),
-        'creator': user.uid,
+        'date': time.toString(),
       },
     );
   }
@@ -66,27 +63,22 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    List translatedProposal = List();
-    translatedProposal.add(doc.data['title'][nativeLanguage]);
-    translatedProposal.add(doc.data['description'][nativeLanguage]);
-    return translatedProposal;
+    List translatedEvent = List();
+    translatedEvent.add(doc.data['title'][nativeLanguage]);
+    translatedEvent.add(doc.data['description'][nativeLanguage]);
+    return translatedEvent;
   }
 
-  Widget buildProposal(doc) {
+  Widget buildEventCard(doc) {
     return FutureBuilder(
       future: toNativeLanguage(doc),
-      builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
-        return Proposal(
+      builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
+        return EventCard(
           key: UniqueKey(),
-          title: translatedProposal.hasData ? translatedProposal.data[0] : '',
-          descripton:
-              translatedProposal.hasData ? translatedProposal.data[1] : '',
-          daysLeft: doc.data['daysLeft'],
-          endDate: DateTime.parse(doc.data['endDate']),
-          numYea: 0,
-          numNay: 0,
+          title: translatedEvent.hasData ? translatedEvent.data[0] : '',
+          description: translatedEvent.hasData ? translatedEvent.data[1] : '',
+          time: DateTime.parse(doc.data['date']),
           doc: doc,
-          // creator: doc.data['creator']
         );
       },
     );
@@ -96,8 +88,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: db
-          .collection('proposals')
-          .orderBy('daysLeft', descending: false)
+          .collection('events')
+          .orderBy('date', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
@@ -116,7 +108,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                   children: <Widget>[
                     Column(
                       children: snapshot.data.documents
-                          .map((doc) => buildProposal(doc))
+                          .map((doc) => buildEventCard(doc))
                           .toList(),
                     )
                   ],
@@ -129,8 +121,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CreateProposal(_addProposal),
-                    ),
+                        builder: (context) => CreateEvent(_addEvent)),
                   )
                 },
               ),

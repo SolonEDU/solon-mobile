@@ -1,5 +1,5 @@
 // import 'package:Solon/admin/proposal/proposal.dart';
-import 'package:Solon/auth/welcome.dart';
+// import 'package:Solon/auth/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final db = Firestore.instance;
   var document;
-  var _language; 
+  var _language;
 
   void _update() {
     setState(() {
@@ -73,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             .document(widget.user.uid)
                             .updateData({'nativeLanguage': newValue});
                         _setLanguage(newValue);
-                        print(_language); //printing language to prevent blue error from popping up 
+                        print(_language); //printing language to prevent blue error from popping up
                       },
                       items: <String>[
                         'English',

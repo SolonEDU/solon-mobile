@@ -7,10 +7,10 @@ import 'app_localizations.dart';
 
 import './navbar.dart';
 import 'package:Solon/auth/welcome.dart';
-import 'package:Solon/parent/home_screen.dart';
-import './parent/proposal/screen.dart';
-import './parent/event/screen.dart';
-import './parent/forum/screen.dart';
+import 'package:Solon/home_screen.dart';
+import './proposal/screen.dart';
+import './event/screen.dart';
+import './forum/screen.dart';
 import './account_screen.dart';
 
 

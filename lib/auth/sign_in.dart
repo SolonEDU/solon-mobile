@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart';
-import '../admin/admin.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -63,21 +62,12 @@ class _LoginPageState extends State<LoginPage> {
               .document(user.uid)
               .get()
               .then((DocumentSnapshot ds) {
-            if (ds.data['role'] == 'parent') {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Main(),
                 ),
               );
-            } else if (ds.data['role'] == 'admin') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Admin(),
-                ),
-              );
-            }
           });
         }
       } catch (e) {

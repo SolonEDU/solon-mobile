@@ -5,14 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './card.dart';
 import './create.dart';
-import '../../loader.dart';
+import './../loader.dart';
 
-class ForumScreen extends StatefulWidget {
+class ProposalsScreen extends StatefulWidget {
   @override
-  _ForumScreenState createState() => _ForumScreenState();
+  _ProposalsScreenState createState() => _ProposalsScreenState();
 }
 
-class _ForumScreenState extends State<ForumScreen> {
+class _ProposalsScreenState extends State<ProposalsScreen> {
   final db = Firestore.instance;
   final translator = GoogleTranslator();
 
@@ -29,10 +29,13 @@ class _ForumScreenState extends State<ForumScreen> {
     return maps;
   }
 
-  void _addPost(
+  void _addProposal(
     String title,
     String description,
+    double daysLeft,
+    DateTime endDate,
   ) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
     Map<String, String> languages = {
       'English': 'en',
       'Chinese (Simplified)': 'zh-cn',
@@ -47,12 +50,13 @@ class _ForumScreenState extends State<ForumScreen> {
     Map<String, String> translatedDescriptions = {};
     List<Map> translated = [translatedTitles, translatedDescriptions];
     translated = await translateAll(title, description, translated, languages);
-    db.collection('forum').add(
+    db.collection('proposals').add(
       {
-        'title': translatedTitles,
-        'description': translatedDescriptions,
-        'time': DateTime.now().toString(),
-        'comments': {}
+        'title': translated[0],
+        'description': translated[1],
+        'daysLeft': daysLeft,
+        'endDate': endDate.toString(),
+        'creator': user.uid,
       },
     );
   }
@@ -62,21 +66,27 @@ class _ForumScreenState extends State<ForumScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    List translatedForum = List();
-    translatedForum.add(doc.data['title'][nativeLanguage]);
-    translatedForum.add(doc.data['description'][nativeLanguage]);
-    return translatedForum;
+    List translatedProposal = List();
+    translatedProposal.add(doc.data['title'][nativeLanguage]);
+    translatedProposal.add(doc.data['description'][nativeLanguage]);
+    return translatedProposal;
   }
 
-  Widget buildPostCard(doc) {
+  Widget buildProposal(doc) {
     return FutureBuilder(
       future: toNativeLanguage(doc),
-      builder: (BuildContext context, AsyncSnapshot<List> translatedForum) {
-        return PostCard(
-          translatedForum.hasData ? translatedForum.data[0] : '',
-          translatedForum.hasData ? translatedForum.data[1] : '',
-          DateTime.parse(doc.data['time']),
-          doc,
+      builder: (BuildContext context, AsyncSnapshot<List> translatedProposal) {
+        return Proposal(
+          key: UniqueKey(),
+          title: translatedProposal.hasData ? translatedProposal.data[0] : '',
+          descripton:
+              translatedProposal.hasData ? translatedProposal.data[1] : '',
+          daysLeft: doc.data['daysLeft'],
+          endDate: DateTime.parse(doc.data['endDate']),
+          numYea: 0,
+          numNay: 0,
+          doc: doc,
+          // creator: doc.data['creator']
         );
       },
     );
@@ -86,8 +96,8 @@ class _ForumScreenState extends State<ForumScreen> {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: db
-          .collection('forum')
-          // .orderBy('eventDate', descending: false)
+          .collection('proposals')
+          .orderBy('daysLeft', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
@@ -106,7 +116,7 @@ class _ForumScreenState extends State<ForumScreen> {
                   children: <Widget>[
                     Column(
                       children: snapshot.data.documents
-                          .map((doc) => buildPostCard(doc))
+                          .map((doc) => buildProposal(doc))
                           .toList(),
                     )
                   ],
@@ -119,7 +129,8 @@ class _ForumScreenState extends State<ForumScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreatePost(_addPost)),
+                      builder: (context) => CreateProposal(_addProposal),
+                    ),
                   )
                 },
               ),

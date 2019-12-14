@@ -5,20 +5,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './card.dart';
 import './create.dart';
-import '../../loader.dart';
+import '../loader.dart';
 
-class EventsScreen extends StatefulWidget {
+class ForumScreen extends StatefulWidget {
   @override
-  _EventsScreenState createState() => _EventsScreenState();
+  _ForumScreenState createState() => _ForumScreenState();
 }
 
-class _EventsScreenState extends State<EventsScreen> {
+class _ForumScreenState extends State<ForumScreen> {
   final db = Firestore.instance;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
     return await translator.translate(text, to: code);
-    
   }
 
   Future<List<Map>> translateAll(String title, String description,
@@ -30,10 +29,9 @@ class _EventsScreenState extends State<EventsScreen> {
     return maps;
   }
 
-  void _addEvent(
+  void _addPost(
     String title,
     String description,
-    DateTime time,
   ) async {
     Map<String, String> languages = {
       'English': 'en',
@@ -49,11 +47,12 @@ class _EventsScreenState extends State<EventsScreen> {
     Map<String, String> translatedDescriptions = {};
     List<Map> translated = [translatedTitles, translatedDescriptions];
     translated = await translateAll(title, description, translated, languages);
-    db.collection('events').add(
+    db.collection('forum').add(
       {
-        'title': translated[0],
-        'description': translated[1],
-        'date': time.toString(),
+        'title': translatedTitles,
+        'description': translatedDescriptions,
+        'time': DateTime.now().toString(),
+        'comments': {}
       },
     );
   }
@@ -63,22 +62,21 @@ class _EventsScreenState extends State<EventsScreen> {
     DocumentSnapshot userData =
         await db.collection('users').document(user.uid).get();
     String nativeLanguage = userData.data['nativeLanguage'];
-    List translatedEvent = List();
-    translatedEvent.add(doc.data['title'][nativeLanguage]);
-    translatedEvent.add(doc.data['description'][nativeLanguage]);
-    return translatedEvent;
+    List translatedForum = List();
+    translatedForum.add(doc.data['title'][nativeLanguage]);
+    translatedForum.add(doc.data['description'][nativeLanguage]);
+    return translatedForum;
   }
 
-  Widget buildEventCard(doc) {
+  Widget buildPostCard(doc) {
     return FutureBuilder(
       future: toNativeLanguage(doc),
-      builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
-        return EventCard(
-          key: UniqueKey(),
-          title: translatedEvent.hasData ? translatedEvent.data[0] : '',
-          description: translatedEvent.hasData ? translatedEvent.data[1] : '',
-          time: DateTime.parse(doc.data['date']),
-          doc: doc,
+      builder: (BuildContext context, AsyncSnapshot<List> translatedForum) {
+        return PostCard(
+          translatedForum.hasData ? translatedForum.data[0] : '',
+          translatedForum.hasData ? translatedForum.data[1] : '',
+          DateTime.parse(doc.data['time']),
+          doc,
         );
       },
     );
@@ -88,8 +86,8 @@ class _EventsScreenState extends State<EventsScreen> {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: db
-          .collection('events')
-          .orderBy('date', descending: false)
+          .collection('forum')
+          // .orderBy('eventDate', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
@@ -108,7 +106,7 @@ class _EventsScreenState extends State<EventsScreen> {
                   children: <Widget>[
                     Column(
                       children: snapshot.data.documents
-                          .map((doc) => buildEventCard(doc))
+                          .map((doc) => buildPostCard(doc))
                           .toList(),
                     )
                   ],
@@ -121,7 +119,7 @@ class _EventsScreenState extends State<EventsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateEvent(_addEvent)),
+                        builder: (context) => CreatePost(_addPost)),
                   )
                 },
               ),
