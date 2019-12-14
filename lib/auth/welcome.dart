@@ -11,34 +11,47 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
+    var logoAsset = new AssetImage('images/solon.png');
+    var logo = new Image(
+      image: logoAsset,
+      fit: BoxFit.fitHeight,
+    );
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/solon.png'),
+      // backgroundColor: Color(0xFFECE2D0),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: logo,
+              height: 200,
+              margin: const EdgeInsets.only(bottom: 40),
+            ),
+            ButtonTheme(
+              minWidth: 125,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20),
                 ),
+                onPressed: navigateToSignIn,
+                color: Color(0xFF98D2EB),
+                child: Text("Sign in"),
               ),
-            );
-          },
+            ),
+            ButtonTheme(
+              minWidth: 125,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20),
+                ),
+                onPressed: navigateToSignUp,
+                color: Color(0xFF98D2EB),
+                child: Text("Sign up"),
+              ),
+            ),
+          ],
         ),
-        title: Text('Solon'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RaisedButton(
-            onPressed: navigateToSignIn,
-            child: Text(AppLocalizations.of(context).translate('signin')),
-          ),
-          RaisedButton(
-            onPressed: navigateToSignUp,
-            child: Text(AppLocalizations.of(context).translate('signup')),
-          ),
-        ],
       ),
     );
   }
