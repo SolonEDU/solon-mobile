@@ -5,6 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'app_localizations.dart';
 import 'dart:convert'; // for jsonDecode
+import 'package:Solon/API/api_connect.dart';
+import 'package:Solon/info.dart';
+import 'package:Solon/users.dart';
 
 
 import './loader.dart';
@@ -44,7 +47,23 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return FutureBuilder<List<Users>>(
+          future: api_connect.connectUsers(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<Widget> users = [];
+              for(var i = 0; i < snapshot.data.length; i++) {
+                users.add(Text("uid: ${snapshot.data[i].uid}, first name: ${snapshot.data[i].firstName}, last name: ${snapshot.data[i].lastName}, email: ${snapshot.data[i].email}"));
+              }
+              return Scaffold(
+                body: ListView(
+                  children: users,
+                ),
+              );
+            }
+            return Loader();
+          }
+        );
     // return FutureBuilder(
     //   future: document.get(),
     //   builder:

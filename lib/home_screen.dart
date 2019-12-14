@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder<Info>(
-          future: api_connect.connect(),
+          future: api_connect.connectRoot(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Text("${snapshot.data.info}");
