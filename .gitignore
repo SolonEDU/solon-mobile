@@ -9,6 +9,7 @@
 .history
 .svn/
 files_from_tutorial/
+pubspec.lock
 
 # IntelliJ related
 *.iml
