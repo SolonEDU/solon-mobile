@@ -85,38 +85,36 @@ class _ProposalState extends State<Proposal> {
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
-                child: ButtonTheme.bar(
-                  // make buttons use the appropriate styles for cards
-                  child: ButtonBar(
-                    children: <Widget>[
-                      FlatButton(
-                        child:
-                            Text(AppLocalizations.of(context).translate('yea')),
-                        onPressed: () {
-                          widget.numYea++;
-                          setState(() {
-                            voteChoiceVisibility = false;
-                          });
-                        },
-                      ),
-                      FlatButton(
-                        child:
-                            Text(AppLocalizations.of(context).translate('nay')),
-                        onPressed: () {
-                          widget.numNay++;
-                          setState(() {
-                            voteChoiceVisibility = false;
-                          });
-                        },
-                      ),
-                      FlatButton(
-                        child: Icon(Icons.delete),
-                        onPressed: () {
-                          collection.document(widget.doc.documentID).delete();
-                        },
-                      ),
-                    ],
-                  ),
+                // make buttons use the appropriate styles for cards
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child:
+                          Text(AppLocalizations.of(context).translate('yea')),
+                      onPressed: () {
+                        widget.numYea++;
+                        setState(() {
+                          voteChoiceVisibility = false;
+                        });
+                      },
+                    ),
+                    FlatButton(
+                      child:
+                          Text(AppLocalizations.of(context).translate('nay')),
+                      onPressed: () {
+                        widget.numNay++;
+                        setState(() {
+                          voteChoiceVisibility = false;
+                        });
+                      },
+                    ),
+                    FlatButton(
+                      child: Icon(Icons.delete),
+                      onPressed: () {
+                        collection.document(widget.doc.documentID).delete();
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],

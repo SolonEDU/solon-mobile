@@ -48,7 +48,12 @@ class _EventCardState extends State<EventCard> {
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text(title),
-              subtitle: Text(description + '\n' + 'Event will occur on '  + date.toString().substring(0,10) + ' at ' + time.toString().substring(10,15)),
+              subtitle: Text(description +
+                  '\n' +
+                  'Event will occur on ' +
+                  date.toString().substring(0, 10) +
+                  ' at ' +
+                  time.toString().substring(10, 15)),
               onTap: () {
                 Navigator.push(
                   context,
@@ -63,32 +68,30 @@ class _EventCardState extends State<EventCard> {
                 );
               },
             ),
-            ButtonTheme.bar(
-              child: ButtonBar(
-                children: <Widget>[
-                  FlatButton(
-                    child: Icon(Icons.delete),
-                    onPressed: () async => {
-                      await db
-                          .collection('events')
-                          .document(doc.documentID)
-                          .delete()
-                    },
-                  ),
-                  Switch.adaptive(
-                    value: attending,
-                    onChanged: (value) {
-                      setState(
-                        () => attending = value,
-                      );
-                    },
-                    activeTrackColor: Colors.lightGreenAccent,
-                    activeColor: Colors.green,
-                  ),
-                  Text('Attending?')
-                ],
-              ),
-            )
+            ButtonBar(
+              children: <Widget>[
+                FlatButton(
+                  child: Icon(Icons.delete),
+                  onPressed: () async => {
+                    await db
+                        .collection('events')
+                        .document(doc.documentID)
+                        .delete()
+                  },
+                ),
+                Switch.adaptive(
+                  value: attending,
+                  onChanged: (value) {
+                    setState(
+                      () => attending = value,
+                    );
+                  },
+                  activeTrackColor: Colors.lightGreenAccent,
+                  activeColor: Colors.green,
+                ),
+                Text('Attending?')
+              ],
+            ),
           ],
         ),
       ),

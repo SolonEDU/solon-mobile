@@ -98,41 +98,39 @@ class _ProposalState extends State<Proposal> {
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
-                child: ButtonTheme.bar(
-                  // make buttons use the appropriate styles for cards
-                  child: ButtonBar(
-                    children: <Widget>[
-                      FlatButton(
-                        child: const Text('YEA'),
-                        onPressed: () {
-                          widget.numYea++;
-                          setState(() {
-                            voteChoiceVisibility = false;
-                          });
-                        },
-                      ),
-                      FlatButton(
-                        child: const Text('NAY'),
-                        onPressed: () {
-                          widget.numNay++;
-                          setState(() {
-                            voteChoiceVisibility = false;
-                          });
-                        },
-                      ),
-                      FlatButton(
-                        child: Icon(Icons.delete),
-                        onPressed: () async {
-                          await db
-                              .collection('proposals')
-                              .document(doc.documentID)
-                              .delete();
-                          print('deleted ${doc.documentID}');
-                          getCollection();
-                        },
-                      ),
-                    ],
-                  ),
+                // make buttons use the appropriate styles for cards
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: const Text('YEA'),
+                      onPressed: () {
+                        widget.numYea++;
+                        setState(() {
+                          voteChoiceVisibility = false;
+                        });
+                      },
+                    ),
+                    FlatButton(
+                      child: const Text('NAY'),
+                      onPressed: () {
+                        widget.numNay++;
+                        setState(() {
+                          voteChoiceVisibility = false;
+                        });
+                      },
+                    ),
+                    FlatButton(
+                      child: Icon(Icons.delete),
+                      onPressed: () async {
+                        await db
+                            .collection('proposals')
+                            .document(doc.documentID)
+                            .delete();
+                        print('deleted ${doc.documentID}');
+                        getCollection();
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],

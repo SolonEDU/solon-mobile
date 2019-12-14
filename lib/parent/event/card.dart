@@ -49,32 +49,30 @@ class _EventCardState extends State<EventCard> {
                 );
               },
             ),
-            ButtonTheme.bar(
-              child: ButtonBar(
-                children: <Widget>[
-                  FlatButton(
-                    child: Icon(Icons.delete),
-                    onPressed: () => {
-                      db
-                          .collection('events')
-                          .document(widget.doc.documentID)
-                          .delete()
-                    },
-                  ),
-                  Switch.adaptive(
-                    value: attending,
-                    onChanged: (value) {
-                      setState(
-                        () => attending = value,
-                      );
-                    },
-                    activeTrackColor: Colors.lightGreenAccent,
-                    activeColor: Colors.green,
-                  ),
-                  Text(AppLocalizations.of(context).translate('attending'))
-                ],
-              ),
-            )
+            ButtonBar(
+              children: <Widget>[
+                FlatButton(
+                  child: Icon(Icons.delete),
+                  onPressed: () => {
+                    db
+                        .collection('events')
+                        .document(widget.doc.documentID)
+                        .delete()
+                  },
+                ),
+                Switch.adaptive(
+                  value: attending,
+                  onChanged: (value) {
+                    setState(
+                      () => attending = value,
+                    );
+                  },
+                  activeTrackColor: Colors.lightGreenAccent,
+                  activeColor: Colors.green,
+                ),
+                Text(AppLocalizations.of(context).translate('attending'))
+              ],
+            ),
           ],
         ),
       ),
