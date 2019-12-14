@@ -5,7 +5,7 @@ import 'package:Solon/info.dart';
 import 'package:Solon/users.dart';
 
 class api_connect {
-  static String _url = "https://api.solonedu.com/";
+  static String _url = "https://api.solonedu.com";
   
 
   static Future<Info> connectRoot() async {
@@ -15,7 +15,7 @@ class api_connect {
   }
 
   static Future<List<Users>> connectUsers() async {
-    final response = await http.get(_url + 'users');
+    final response = await http.get(_url + '/users');
     String responseBody = response.body;
     int status = response.statusCode;
     List collection = json.decode(responseBody);
