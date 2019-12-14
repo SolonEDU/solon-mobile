@@ -21,7 +21,7 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   bool attending = false;
-  // final db = Firestore.instance;
+  // final db = Firestore.instance; // connect to PG, then decode
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,8 @@ class _EventCardState extends State<EventCard> {
               children: <Widget>[
                 FlatButton(
                   child: Icon(Icons.delete),
-                  onPressed: () => {
-                    // db
+                  onPressed: () => { // send a DELETE request to PG, including the  in the request body to specify
+                    // db 
                     //     .collection('events')
                     //     .document(widget.doc.documentID)
                     //     .delete()

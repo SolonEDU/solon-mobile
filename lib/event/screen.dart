@@ -50,7 +50,7 @@ class _EventsScreenState extends State<EventsScreen> {
     Map<String, String> translatedDescriptions = {};
     List<Map> translated = [translatedTitles, translatedDescriptions];
     translated = await translateAll(title, description, translated, languages);
-    // db.collection('events').add(
+    // db.collection('events').add( //send a POST request to the API with title, desc, and date
     //   {
     //     'title': translated[0],
     //     'description': translated[1],
@@ -59,7 +59,7 @@ class _EventsScreenState extends State<EventsScreen> {
     // );
   }
 
-  // Future<List> toNativeLanguage(DocumentSnapshot doc) async {
+  // Future<List> toNativeLanguage(DocumentSnapshot doc) async { //GET the native language of the user 
   //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
   //   DocumentSnapshot userData =
   //       await db.collection('users').document(user.uid).get();
@@ -74,8 +74,8 @@ class _EventsScreenState extends State<EventsScreen> {
   //   return FutureBuilder(
   //     future: toNativeLanguage(doc),
   //     builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
-  //       return EventCard(
-  //         key: UniqueKey(),
+    //       return EventCard(
+    //         key: UniqueKey(),
   //         title: translatedEvent.hasData ? translatedEvent.data[0] : '',
   //         description: translatedEvent.hasData ? translatedEvent.data[1] : '',
   //         time: DateTime.parse(doc.data['date']),
