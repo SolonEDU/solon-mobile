@@ -88,7 +88,7 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();
-    // return StreamBuilder<QuerySnapshot>(
+    // return StreamBuilder<QuerySnapshot>( 
     //   stream: db
     //       .collection('events')
     //       .orderBy('date', descending: false)
