@@ -17,32 +17,38 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF98D2EB),
+      ),
       body: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please type an email';
-                  }
-                  return null;
-                },
-                onSaved: (input) => _email = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('email')),
-              ),
-              TextFormField(
-                onSaved: (input) => _password = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
-                obscureText: true,
-              ),
-              RaisedButton(
-                onPressed: signIn,
-                child: Text(AppLocalizations.of(context).translate('signin')),
-              )
-            ],
-          )),
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            TextFormField(
+              validator: (input) {
+                if (input.isEmpty) {
+                  return 'Please type an email';
+                }
+                return null;
+              },
+              onSaved: (input) => _email = input,
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context).translate('email')),
+            ),
+            TextFormField(
+              onSaved: (input) => _password = input,
+              decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context).translate('password')),
+              obscureText: true,
+            ),
+            RaisedButton(
+              onPressed: signIn,
+              child: Text(AppLocalizations.of(context).translate('signin')),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -62,12 +68,12 @@ class _LoginPageState extends State<LoginPage> {
               .document(user.uid)
               .get()
               .then((DocumentSnapshot ds) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Main(),
-                ),
-              );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Main(),
+              ),
+            );
           });
         }
       } catch (e) {
