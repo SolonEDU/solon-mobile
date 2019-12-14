@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert'; // for jsonDecode
 
 import 'dart:collection';
 
@@ -23,7 +24,7 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  final db = Firestore.instance;
+  // final db = Firestore.instance;
   final translator = GoogleTranslator();
   FocusNode _focusNode = FocusNode();
   var document;
@@ -31,7 +32,7 @@ class _PostPageState extends State<PostPage> {
 
   void _update() {
     setState(() {
-      document = db.collection('forum').document(widget.doc.documentID);
+      // document = db.collection('forum').document(widget.doc.documentID);
     });
   }
 
@@ -47,26 +48,26 @@ class _PostPageState extends State<PostPage> {
     super.dispose();
   }
 
-  Future<ListView> getComments(snapshot) async {
-    Map<dynamic, dynamic> text = snapshot.data.data['comments'];
-    text = SplayTreeMap.from(text);
-    List<Widget> textComments = [];
-    var textKey;
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    DocumentSnapshot userData =
-        await db.collection('users').document(user.uid).get();
-    String nativeLanguage = userData.data['nativeLanguage'];
-    text.forEach((key, value) => {
-          textKey = key,
-          value.forEach((key, value) => {
-                textComments.add(Comment(
-                    DateTime.parse(textKey), value[nativeLanguage].toString()))
-              })
-        });
-    return ListView(
-      children: textComments,
-    );
-  }
+  // Future<ListView> getComments(snapshot) async {
+  //   Map<dynamic, dynamic> text = snapshot.data.data['comments'];
+  //   text = SplayTreeMap.from(text);
+  //   List<Widget> textComments = [];
+  //   var textKey;
+  //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  //   DocumentSnapshot userData =
+  //       await db.collection('users').document(user.uid).get();
+  //   String nativeLanguage = userData.data['nativeLanguage'];
+  //   text.forEach((key, value) => {
+  //         textKey = key,
+  //         value.forEach((key, value) => {
+  //               textComments.add(Comment(
+  //                   DateTime.parse(textKey), value[nativeLanguage].toString()))
+  //             })
+  //       });
+  //   return ListView(
+  //     children: textComments,
+  //   );
+  // }
 
   Future<String> translateText(text, code) async {
     return await translator.translate(text, to: code);
@@ -98,97 +99,98 @@ class _PostPageState extends State<PostPage> {
   }
 
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: document.get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-          // return Container();
-          // return Center(
-          // child: Loader(),
-          // );
-          default:
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(widget.title),
-              ),
-              body: Center(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        child: Card(
-                            child: ListTile(
-                              leading: Icon(Icons.account_box),
-                              title: Container(
-                                  child: Text(widget.description),
-                                  margin:
-                                      EdgeInsets.only(top: 8.0, bottom: 4.0)),
-                              subtitle: Container(
-                                  child: Text(new DateFormat.yMMMMd("en_US")
-                                      .add_jm()
-                                      .format(widget.time)),
-                                  margin: EdgeInsets.only(bottom: 4.0)),
-                            ),
-                            margin: EdgeInsets.only(
-                                top: 8.0, left: 8.0, right: 8.0)),
-                        margin: EdgeInsets.only(bottom: 8.0)),
-                    Container(
-                        child: Text(AppLocalizations.of(context)
-                            .translate('commentSection')),
-                        margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
-                    FutureBuilder(
-                      future: getComments(snapshot),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<ListView> translatedComments) {
-                        return Expanded(
-                          child: translatedComments.hasData
-                              ? translatedComments.data
-                              : Text(''),
-                        );
-                      },
-                    ),
-                    Container(
-                      child: TextField(
-                        style: TextStyle(height: .4),
-                        controller: commentController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          hintText: AppLocalizations.of(context)
-                              .translate('enterAComment'),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.send),
-                            onPressed: () async {
-                              if (commentController.text.isNotEmpty) {
-                                var commentText = commentController.text;
-                                SchedulerBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  FocusScope.of(context).unfocus();
-                                  commentController.clear();
-                                });
-                                document.updateData(
-                                  {
-                                    'comments.' + DateTime.now().toString():
-                                        await _addComment(commentText)
-                                  },
-                                );
-                                _update();
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      margin: EdgeInsets.all(12.0),
-                    ),
-                  ],
-                ),
-              ),
-            );
-        }
-      },
-    );
+    return Scaffold();
+    // return FutureBuilder(
+    //   future: document.get(),
+    //   builder:
+    //       (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+    //     if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.waiting:
+    //       // return Container();
+    //       // return Center(
+    //       // child: Loader(),
+    //       // );
+    //       default:
+    //         return Scaffold(
+    //           appBar: AppBar(
+    //             title: Text(widget.title),
+    //           ),
+    //           body: Center(
+    //             child: Column(
+    //               children: <Widget>[
+    //                 Container(
+    //                     child: Card(
+    //                         child: ListTile(
+    //                           leading: Icon(Icons.account_box),
+    //                           title: Container(
+    //                               child: Text(widget.description),
+    //                               margin:
+    //                                   EdgeInsets.only(top: 8.0, bottom: 4.0)),
+    //                           subtitle: Container(
+    //                               child: Text(new DateFormat.yMMMMd("en_US")
+    //                                   .add_jm()
+    //                                   .format(widget.time)),
+    //                               margin: EdgeInsets.only(bottom: 4.0)),
+    //                         ),
+    //                         margin: EdgeInsets.only(
+    //                             top: 8.0, left: 8.0, right: 8.0)),
+    //                     margin: EdgeInsets.only(bottom: 8.0)),
+    //                 Container(
+    //                     child: Text(AppLocalizations.of(context)
+    //                         .translate('commentSection')),
+    //                     margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
+    //                 FutureBuilder(
+    //                   future: getComments(snapshot),
+    //                   builder: (BuildContext context,
+    //                       AsyncSnapshot<ListView> translatedComments) {
+    //                     return Expanded(
+    //                       child: translatedComments.hasData
+    //                           ? translatedComments.data
+    //                           : Text(''),
+    //                     );
+    //                   },
+    //                 ),
+    //                 Container(
+    //                   child: TextField(
+    //                     style: TextStyle(height: .4),
+    //                     controller: commentController,
+    //                     decoration: InputDecoration(
+    //                       border: OutlineInputBorder(
+    //                         borderRadius: BorderRadius.circular(16),
+    //                       ),
+    //                       hintText: AppLocalizations.of(context)
+    //                           .translate('enterAComment'),
+    //                       suffixIcon: IconButton(
+    //                         icon: Icon(Icons.send),
+    //                         onPressed: () async {
+    //                           if (commentController.text.isNotEmpty) {
+    //                             var commentText = commentController.text;
+    //                             SchedulerBinding.instance
+    //                                 .addPostFrameCallback((_) {
+    //                               FocusScope.of(context).unfocus();
+    //                               commentController.clear();
+    //                             });
+    //                             document.updateData(
+    //                               {
+    //                                 'comments.' + DateTime.now().toString():
+    //                                     await _addComment(commentText)
+    //                               },
+    //                             );
+    //                             _update();
+    //                           }
+    //                         },
+    //                       ),
+    //                     ),
+    //                   ),
+    //                   margin: EdgeInsets.all(12.0),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         );
+    //     }
+    //   },
+    // );
   }
 }

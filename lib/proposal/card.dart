@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
+import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
 
@@ -34,12 +35,12 @@ class Proposal extends StatefulWidget {
 class _ProposalState extends State<Proposal> {
   var voteChoiceVisibility = true;
   var collection;
-  final db = Firestore.instance;
+  // final db = Firestore.instance;
   // String creatorName;
 
   void getCollection() {
     setState(() {
-      collection = db.collection('proposals');
+      // collection = db.collection('proposals');
     });
   }
 

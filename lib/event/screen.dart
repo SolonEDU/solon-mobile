@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert'; // for jsonDecode
 
 import './card.dart';
 import './create.dart';
@@ -13,7 +14,7 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  final db = Firestore.instance;
+  // final db = Firestore.instance; 
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -49,85 +50,86 @@ class _EventsScreenState extends State<EventsScreen> {
     Map<String, String> translatedDescriptions = {};
     List<Map> translated = [translatedTitles, translatedDescriptions];
     translated = await translateAll(title, description, translated, languages);
-    db.collection('events').add(
-      {
-        'title': translated[0],
-        'description': translated[1],
-        'date': time.toString(),
-      },
-    );
+    // db.collection('events').add(
+    //   {
+    //     'title': translated[0],
+    //     'description': translated[1],
+    //     'date': time.toString(),
+    //   },
+    // );
   }
 
-  Future<List> toNativeLanguage(DocumentSnapshot doc) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    DocumentSnapshot userData =
-        await db.collection('users').document(user.uid).get();
-    String nativeLanguage = userData.data['nativeLanguage'];
-    List translatedEvent = List();
-    translatedEvent.add(doc.data['title'][nativeLanguage]);
-    translatedEvent.add(doc.data['description'][nativeLanguage]);
-    return translatedEvent;
-  }
+  // Future<List> toNativeLanguage(DocumentSnapshot doc) async {
+  //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  //   DocumentSnapshot userData =
+  //       await db.collection('users').document(user.uid).get();
+  //   String nativeLanguage = userData.data['nativeLanguage'];
+  //   List translatedEvent = List();
+  //   translatedEvent.add(doc.data['title'][nativeLanguage]);
+  //   translatedEvent.add(doc.data['description'][nativeLanguage]);
+  //   return translatedEvent;
+  // }
 
-  Widget buildEventCard(doc) {
-    return FutureBuilder(
-      future: toNativeLanguage(doc),
-      builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
-        return EventCard(
-          key: UniqueKey(),
-          title: translatedEvent.hasData ? translatedEvent.data[0] : '',
-          description: translatedEvent.hasData ? translatedEvent.data[1] : '',
-          time: DateTime.parse(doc.data['date']),
-          doc: doc,
-        );
-      },
-    );
-  }
+  // Widget buildEventCard(doc) {
+  //   return FutureBuilder(
+  //     future: toNativeLanguage(doc),
+  //     builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
+  //       return EventCard(
+  //         key: UniqueKey(),
+  //         title: translatedEvent.hasData ? translatedEvent.data[0] : '',
+  //         description: translatedEvent.hasData ? translatedEvent.data[1] : '',
+  //         time: DateTime.parse(doc.data['date']),
+  //         doc: doc,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: db
-          .collection('events')
-          .orderBy('date', descending: false)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Scaffold(
-              body: Center(
-                child: Loader(),
-              ),
-            );
-          default:
-            return Scaffold(
-              body: Center(
-                child: ListView(
-                  padding: EdgeInsets.all(8),
-                  children: <Widget>[
-                    Column(
-                      children: snapshot.data.documents
-                          .map((doc) => buildEventCard(doc))
-                          .toList(),
-                    )
-                  ],
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                heroTag: 'unq1',
-                child: Icon(Icons.add),
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreateEvent(_addEvent)),
-                  )
-                },
-              ),
-            );
-        }
-      },
-    );
+    return Scaffold();
+    // return StreamBuilder<QuerySnapshot>(
+    //   stream: db
+    //       .collection('events')
+    //       .orderBy('date', descending: false)
+    //       .snapshots(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.waiting:
+    //         return Scaffold(
+    //           body: Center(
+    //             child: Loader(),
+    //           ),
+    //         );
+    //       default:
+    //         return Scaffold(
+    //           body: Center(
+    //             child: ListView(
+    //               padding: EdgeInsets.all(8),
+    //               children: <Widget>[
+    //                 Column(
+    //                   children: snapshot.data.documents
+    //                       .map((doc) => buildEventCard(doc))
+    //                       .toList(),
+    //                 )
+    //               ],
+    //             ),
+    //           ),
+    //           floatingActionButton: FloatingActionButton(
+    //             heroTag: 'unq1',
+    //             child: Icon(Icons.add),
+    //             onPressed: () => {
+    //               Navigator.push(
+    //                 context,
+    //                 MaterialPageRoute(
+    //                     builder: (context) => CreateEvent(_addEvent)),
+    //               )
+    //             },
+    //           ),
+    //         );
+    //     }
+    //   },
+    // );
   }
 }
