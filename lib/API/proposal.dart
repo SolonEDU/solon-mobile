@@ -2,8 +2,10 @@ class Proposal {
   final int pid;
   final String title;
   final String description;
-  final DateTime startTime;
-  final DateTime endTime;
+  final String startTime;
+  final String endTime;
+  // final DateTime startTime;
+  // final DateTime endTime;
   final int uid;
   final int numYes;
   final int numNo;

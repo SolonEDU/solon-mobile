@@ -1,8 +1,8 @@
-import 'package:Solon/API/secret.dart';
+import 'package:Solon/api/secret.dart';
 import 'package:flutter/material.dart';
 // import 'package:Solon/app_localizations.dart';
-import 'package:Solon/API/api_connect.dart';
-import 'package:Solon/API/info.dart';
+import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/api/info.dart';
 import 'package:Solon/loader.dart';
 
 class HomeScreen extends StatelessWidget {

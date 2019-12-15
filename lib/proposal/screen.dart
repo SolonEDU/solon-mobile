@@ -1,3 +1,7 @@
+import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/api/proposal.dart';
+import 'package:Solon/loader.dart';
+import 'package:Solon/proposal/card.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
@@ -93,9 +97,32 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   //   );
   // }
 
+  ProposalCard buildProposal(data) {
+    return ProposalCard(
+      key: UniqueKey(),
+      title: data.title,
+      descripton: data.description,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: FutureBuilder<List<Proposal>>(
+          future: APIConnect.connectProposals(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<ProposalCard> proposals = snapshot.data.map((i) => buildProposal(i)).toList();
+              return Column(
+                children: proposals,
+              );
+            }
+            return Loader();
+          }
+        ),
+      )
+    );
   //   return StreamBuilder<QuerySnapshot>(
   //     stream: db
   //         .collection('proposals')

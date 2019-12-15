@@ -18,3 +18,4 @@
 2019-12-15 Eric Lau
 
     * disconnect Firebase from sign in
+    * add proposal display with title and description

@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert'; // for jsonDecode
-import 'package:Solon/API/info.dart';
-import 'package:Solon/API/user.dart';
-import 'package:Solon/API/proposal.dart';
+import 'package:Solon/api/info.dart';
+import 'package:Solon/api/user.dart';
+import 'package:Solon/api/proposal.dart';
 import 'dart:io';
 
 class APIConnect {
@@ -18,14 +18,9 @@ class APIConnect {
 
   static Future<List<Proposal>> connectProposals() async {
     final response = await http.get("$_url/proposals", headers: {HttpHeaders.authorizationHeader: "onlyweknowthiskey"},);
-    String responseBody = response.body;
-    print(responseBody);
     int status = response.statusCode;
-    List collection = json.decode(responseBody);
+    List collection = json.decode(response.body)['proposals'];
     List<Proposal> _proposals = collection.map((json) => Proposal.fromJson(json)).toList();
-
     return status == 200 ? _proposals : throw Exception('data not found');
   }
-
-
 }
