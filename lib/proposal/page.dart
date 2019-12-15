@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:Solon/app_localizations.dart';
 
 class ProposalPage extends StatelessWidget {
+  final int pid;
   final String title;
   final String description;
   // final double daysLeft;
@@ -13,6 +14,7 @@ class ProposalPage extends StatelessWidget {
   // final Future<DocumentSnapshot> creator;
 
   ProposalPage(
+    this.pid,
     this.title,
     this.description,
     // this.daysLeft,

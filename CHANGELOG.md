@@ -22,3 +22,4 @@
     * add proposal display with title and description
     * add flutter retrieval of plaintext secret file
     * style sign in screen
+    * add temporary delete proposals method

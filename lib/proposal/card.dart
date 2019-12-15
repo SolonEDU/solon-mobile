@@ -1,3 +1,4 @@
+import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:Solon/app_localizations.dart';
 import './page.dart';
 
 class ProposalCard extends StatefulWidget {
+  final int pid;
   final String title;
   final String descripton;
   // final double daysLeft;
@@ -18,6 +20,7 @@ class ProposalCard extends StatefulWidget {
 
   ProposalCard({
     Key key,
+    this.pid,
     this.title,
     this.descripton,
     // this.daysLeft,
@@ -57,6 +60,7 @@ class _ProposalCardState extends State<ProposalCard> {
           context,
           MaterialPageRoute(
             builder: (context) => ProposalPage(
+              widget.pid,
               widget.title,
               widget.descripton,
               // widget.daysLeft,
@@ -112,6 +116,7 @@ class _ProposalCardState extends State<ProposalCard> {
                     FlatButton(
                       child: Icon(Icons.delete),
                       onPressed: () {
+                        APIConnect.deleteProposal(widget.pid);
                         // collection.document(widget.doc.documentID).delete();
                       },
                     ),

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:Solon/api/info.dart';
+import 'package:Solon/api/message.dart';
 // import 'package:Solon/api/user.dart';
 import 'package:Solon/api/proposal.dart';
 import 'dart:io';
@@ -14,10 +14,10 @@ class APIConnect {
     return await rootBundle.loadString('assets/secret');
   }
 
-  static Future<Info> connectRoot() async {
+  static Future<Message> connectRoot() async {
     final response = await http.get(_url);
     int status = response.statusCode;
-    return status == 200 ? Info.fromJson(json.decode(response.body)) : throw Exception('data not found');
+    return status == 200 ? Message.fromJson(json.decode(response.body)['message']) : throw Exception('data not found');
   }
 
   static Future<List<Proposal>> connectProposals() async {
@@ -26,5 +26,11 @@ class APIConnect {
     List collection = json.decode(response.body)['proposals'];
     List<Proposal> _proposals = collection.map((json) => Proposal.fromJson(json)).toList();
     return status == 200 ? _proposals : throw Exception('data not found');
+  }
+
+  static Future<Message> deleteProposal(pid) async {
+    final response = await http.get("INSERT DELETE ROUTE HERE");
+    int status = response.statusCode;
+    return status == 200 ? Message.fromJson(json.decode(response.body)['message']) : throw Exception('data not found');
   }
 }
