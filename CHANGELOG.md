@@ -6,6 +6,11 @@
     * migrate project to AndroidX
     * remove deprecated Flutter widgets
 
+2019-12-14 Eric Lau
+
+    * reorganize http testing
+    * test secret apikeys
+
 2019-12-14 Ray Lee
 
     * added proposal, event, forum post, and comment skeleton classes
