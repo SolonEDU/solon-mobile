@@ -12,11 +12,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder<Secret>(
-          future: SecretLoader.load("./API/secrets.json"),
+        child: FutureBuilder<Info>(
+          future: APIConnect.connectRoot(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text("${snapshot.data.apikey}");
+              return Text("${snapshot.data.info}");
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }

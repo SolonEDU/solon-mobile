@@ -5,7 +5,7 @@ class Info {
 
   factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
-      info: json['info']
+      info: json['message']
     );
   }
 }
