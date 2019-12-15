@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 import 'package:Solon/API/api_connect.dart';
-import 'package:Solon/info.dart';
+import 'package:Solon/API/info.dart';
 import 'package:Solon/loader.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,10 +12,12 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder<Info>(
-          future: api_connect.connectRoot(),
+          future: APIConnect.connectRoot(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Text("${snapshot.data.info}");
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
             }
             return Loader();
           }

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert'; // for jsonDecode
+// import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
 import 'package:intl/intl.dart';
@@ -12,9 +12,9 @@ class PostCard extends StatefulWidget {
   final DocumentSnapshot doc;
 
   PostCard(
-    this.title, 
-    this.description, 
-    this.time, 
+    this.title,
+    this.description,
+    this.time,
     this.doc);
 
   @override

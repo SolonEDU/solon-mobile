@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:convert'; // for jsonDecode
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'dart:convert'; // for jsonDecode
 
-import './card.dart';
-import './create.dart';
-import './../loader.dart';
+// import './card.dart';
+// import './create.dart';
+// import './../loader.dart';
 
 class EventsScreen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  // final db = Firestore.instance; 
+  // final db = Firestore.instance;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -31,35 +31,35 @@ class _EventsScreenState extends State<EventsScreen> {
     return maps;
   }
 
-  void _addEvent(
-    String title,
-    String description,
-    DateTime time,
-  ) async {
-    Map<String, String> languages = {
-      'English': 'en',
-      'Chinese (Simplified)': 'zh-cn',
-      'Chinese (Traditional)': 'zh-tw',
-      'Bengali': 'bn',
-      'Korean': 'ko',
-      'Russian': 'ru',
-      'Japanese': 'ja',
-      'Ukrainian': 'uk'
-    };
-    Map<String, String> translatedTitles = {};
-    Map<String, String> translatedDescriptions = {};
-    List<Map> translated = [translatedTitles, translatedDescriptions];
-    translated = await translateAll(title, description, translated, languages);
-    // db.collection('events').add( //send a POST request to the API with title, desc, and date
-    //   {
-    //     'title': translated[0],
-    //     'description': translated[1],
-    //     'date': time.toString(),
-    //   },
-    // );
-  }
+  // void _addEvent(
+  //   String title,
+  //   String description,
+  //   DateTime time,
+  // ) async {
+  //   Map<String, String> languages = {
+  //     'English': 'en',
+  //     'Chinese (Simplified)': 'zh-cn',
+  //     'Chinese (Traditional)': 'zh-tw',
+  //     'Bengali': 'bn',
+  //     'Korean': 'ko',
+  //     'Russian': 'ru',
+  //     'Japanese': 'ja',
+  //     'Ukrainian': 'uk'
+  //   };
+  //   Map<String, String> translatedTitles = {};
+  //   Map<String, String> translatedDescriptions = {};
+  //   List<Map> translated = [translatedTitles, translatedDescriptions];
+  //   translated = await translateAll(title, description, translated, languages);
+  //   // db.collection('events').add( //send a POST request to the API with title, desc, and date
+  //   //   {
+  //   //     'title': translated[0],
+  //   //     'description': translated[1],
+  //   //     'date': time.toString(),
+  //   //   },
+  //   // );
+  // }
 
-  // Future<List> toNativeLanguage(DocumentSnapshot doc) async { //GET the native language of the user 
+  // Future<List> toNativeLanguage(DocumentSnapshot doc) async { //GET the native language of the user
   //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
   //   DocumentSnapshot userData =
   //       await db.collection('users').document(user.uid).get();
@@ -88,7 +88,7 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();
-    // return StreamBuilder<QuerySnapshot>( 
+    // return StreamBuilder<QuerySnapshot>(
     //   stream: db
     //       .collection('events')
     //       .orderBy('date', descending: false)

@@ -3,15 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'app_localizations.dart';
-import 'dart:convert'; // for jsonDecode
+// import 'app_localizations.dart';
 import 'package:Solon/API/api_connect.dart';
-import 'package:Solon/info.dart';
-import 'package:Solon/users.dart';
+import 'package:Solon/API/user.dart';
 
 
 import './loader.dart';
-import 'main.dart';
+// import 'main.dart';
 // import './parent/proposal/proposals_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -22,10 +20,10 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final db = Firestore.instance;
   var document;
-  var _language;
+  // var _language;
 
   void _update() {
     setState(() {
@@ -33,11 +31,11 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
-  void _setLanguage(newValue) {
-    setState(() {
-      _language = newValue;
-    });
-  }
+  // void _setLanguage(newValue) {
+  //   setState(() {
+  //     _language = newValue;
+  //   });
+  // }
 
   @override
   initState() {
@@ -47,8 +45,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Users>>(
-          future: api_connect.connectUsers(),
+    return FutureBuilder<List<User>>(
+          future: APIConnect.connectUsers(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<Widget> users = [];
@@ -136,11 +134,11 @@ class _AccountScreenState extends State<AccountScreen> {
     // );
   }
 
-  void _showToast(String message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
+  // void _showToast(String message) {
+  //   _scaffoldKey.currentState.showSnackBar(
+  //     SnackBar(
+  //       content: Text(message),
+  //     ),
+  //   );
+  // }
 }

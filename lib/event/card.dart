@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/app_localizations.dart';
-import 'dart:convert'; // for jsonDecode
+// import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
 import 'package:intl/intl.dart';
@@ -55,7 +55,7 @@ class _EventCardState extends State<EventCard> {
                 FlatButton(
                   child: Icon(Icons.delete),
                   onPressed: () => { // send a DELETE request to PG, including the  in the request body to specify
-                    // db 
+                    // db
                     //     .collection('events')
                     //     .document(widget.doc.documentID)
                     //     .delete()

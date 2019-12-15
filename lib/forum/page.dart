@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:intl/intl.dart';
+// import 'package:flutter/scheduler.dart';
+// import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:convert'; // for jsonDecode
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'dart:convert'; // for jsonDecode
 
-import 'dart:collection';
+// import 'dart:collection';
 
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 
 // import '../../loader.dart';
-import './comment.dart';
+// import './comment.dart';
 
 class PostPage extends StatefulWidget {
   final String title;
@@ -81,22 +81,22 @@ class _PostPageState extends State<PostPage> {
     return maps;
   }
 
-  Future<Map<String, String>> _addComment(String comment) async {
-    Map<String, String> languages = {
-      'English': 'en',
-      'Chinese (Simplified)': 'zh-cn',
-      'Chinese (Traditional)': 'zh-tw',
-      'Bengali': 'bn',
-      'Korean': 'ko',
-      'Russian': 'ru',
-      'Japanese': 'ja',
-      'Ukrainian': 'uk'
-    };
-    Map<String, String> translatedComments = {};
-    List<Map> translated = [translatedComments];
-    translated = await translateAll(comment, translated, languages);
-    return translatedComments;
-  }
+  // Future<Map<String, String>> _addComment(String comment) async {
+  //   Map<String, String> languages = {
+  //     'English': 'en',
+  //     'Chinese (Simplified)': 'zh-cn',
+  //     'Chinese (Traditional)': 'zh-tw',
+  //     'Bengali': 'bn',
+  //     'Korean': 'ko',
+  //     'Russian': 'ru',
+  //     'Japanese': 'ja',
+  //     'Ukrainian': 'uk'
+  //   };
+  //   Map<String, String> translatedComments = {};
+  //   List<Map> translated = [translatedComments];
+  //   translated = await translateAll(comment, translated, languages);
+  //   return translatedComments;
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold();

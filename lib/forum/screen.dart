@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
-import './card.dart';
-import './create.dart';
-import '../loader.dart';
+// import './card.dart';
+// import './create.dart';
+// import '../loader.dart';
 
 class ForumScreen extends StatefulWidget {
   @override
@@ -29,33 +29,33 @@ class _ForumScreenState extends State<ForumScreen> {
     return maps;
   }
 
-  void _addPost(
-    String title,
-    String description,
-  ) async {
-    Map<String, String> languages = {
-      'English': 'en',
-      'Chinese (Simplified)': 'zh-cn',
-      'Chinese (Traditional)': 'zh-tw',
-      'Bengali': 'bn',
-      'Korean': 'ko',
-      'Russian': 'ru',
-      'Japanese': 'ja',
-      'Ukrainian': 'uk'
-    };
-    Map<String, String> translatedTitles = {};
-    Map<String, String> translatedDescriptions = {};
-    List<Map> translated = [translatedTitles, translatedDescriptions];
-    translated = await translateAll(title, description, translated, languages);
-    // db.collection('forum').add(
-    //   {
-    //     'title': translatedTitles,
-    //     'description': translatedDescriptions,
-    //     'time': DateTime.now().toString(),
-    //     'comments': {}
-    //   },
-    // );
-  }
+  // void _addPost(
+  //   String title,
+  //   String description,
+  // ) async {
+  //   Map<String, String> languages = {
+  //     'English': 'en',
+  //     'Chinese (Simplified)': 'zh-cn',
+  //     'Chinese (Traditional)': 'zh-tw',
+  //     'Bengali': 'bn',
+  //     'Korean': 'ko',
+  //     'Russian': 'ru',
+  //     'Japanese': 'ja',
+  //     'Ukrainian': 'uk'
+  //   };
+  //   Map<String, String> translatedTitles = {};
+  //   Map<String, String> translatedDescriptions = {};
+  //   List<Map> translated = [translatedTitles, translatedDescriptions];
+  //   translated = await translateAll(title, description, translated, languages);
+  //   // db.collection('forum').add(
+  //   //   {
+  //   //     'title': translatedTitles,
+  //   //     'description': translatedDescriptions,
+  //   //     'time': DateTime.now().toString(),
+  //   //     'comments': {}
+  //   //   },
+  //   // );
+  // }
 
   // Future<List> toNativeLanguage(DocumentSnapshot doc) async {
   //   FirebaseUser user = await FirebaseAuth.instance.currentUser();

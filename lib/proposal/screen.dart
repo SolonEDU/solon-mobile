@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:convert'; // for jsonDecode
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'dart:convert'; // for jsonDecode
 
-import './card.dart';
-import './create.dart';
-import './../loader.dart';
+// import './card.dart';
+// import './create.dart';
+// import './../loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
   @override
