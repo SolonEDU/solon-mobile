@@ -19,3 +19,4 @@
 
     * disconnect Firebase from sign in
     * add proposal display with title and description
+    * add flutter retrieval of plaintext secret file

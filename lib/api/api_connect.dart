@@ -11,7 +11,7 @@ class APIConnect {
   static String _url = "https://api.solonedu.com";
 
   static Future<String> loadHeader() async {
-    return await rootBundle.loadString('assets/secret.json');
+    return await rootBundle.loadString('assets/secret');
   }
 
   static Future<Info> connectRoot() async {
@@ -21,11 +21,7 @@ class APIConnect {
   }
 
   static Future<List<Proposal>> connectProposals() async {
-    print(await loadHeader());
-    var header = await loadHeader();
-    List temp = json.decode(header);
-    print(temp);
-    final response = await http.get("$_url/proposals", headers: {HttpHeaders.authorizationHeader: "onlyweknowthiskey"},);
+    final response = await http.get("$_url/proposals", headers: {HttpHeaders.authorizationHeader: await loadHeader()},);
     int status = response.statusCode;
     List collection = json.decode(response.body)['proposals'];
     List<Proposal> _proposals = collection.map((json) => Proposal.fromJson(json)).toList();
