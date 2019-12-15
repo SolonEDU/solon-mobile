@@ -10,15 +10,16 @@ class Proposal {
   final int numYes;
   final int numNo;
 
-  Proposal(
-      {this.pid,
-      this.title,
-      this.description,
-      this.startTime,
-      this.endTime,
-      this.uid,
-      this.numYes,
-      this.numNo});
+  Proposal({
+    this.pid,
+    this.title,
+    this.description,
+    this.startTime,
+    this.endTime,
+    this.uid,
+    this.numYes,
+    this.numNo,
+  });
 
   factory Proposal.fromJson(Map<String, dynamic> json) {
     return Proposal(
@@ -31,5 +32,17 @@ class Proposal {
       numYes: json['numyes'],
       numNo: json['numno'],
     );
+  }
+
+  Map toProposalMap() {
+    var map = new Map<String, dynamic>();
+    map['title'] = title;
+    map['description'] = description;
+    map['starttime'] = startTime;
+    map['endtime'] = endTime;
+    map['uid'] = uid;
+    print("${title} ${description} ${startTime} ${endTime} ${uid}");
+    print("MAP ${map}");
+    return map;
   }
 }

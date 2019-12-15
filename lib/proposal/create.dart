@@ -139,12 +139,13 @@ class _CreateProposalState extends State<CreateProposal> {
                   widget._addProposal(
                     controllers[0].text,
                     controllers[1].text,
-                    _sliderValue,
+                    _date,
                     _date.add(
                       new Duration(
                         days: _sliderValue.toInt(),
                       ),
                     ),
+                    0 //dummy uid
                   ),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context, true),
