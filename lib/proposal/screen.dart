@@ -102,7 +102,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return ProposalCard(
       key: UniqueKey(),
       title: data.title,
-      descripton: data.description,
+      description: data.description,
     );
   }
 
@@ -116,7 +116,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
               if (snapshot.hasData) {
                 List<ProposalCard> proposals =
                     snapshot.data.map((i) => buildProposal(i)).toList();
-                return Column(
+                return ListView(
                   children: proposals,
                 );
               }
