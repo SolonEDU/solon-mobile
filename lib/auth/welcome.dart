@@ -16,8 +16,9 @@ class _WelcomePageState extends State<WelcomePage> {
       image: logoAsset,
       fit: BoxFit.fitHeight,
     );
+
     return Scaffold(
-      // backgroundColor: Color(0xFFECE2D0),
+      // backgroundColor: Color(0xDD5050D0),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,25 +30,36 @@ class _WelcomePageState extends State<WelcomePage> {
               margin: const EdgeInsets.only(bottom: 40),
             ),
             ButtonTheme(
-              minWidth: 125,
+              minWidth: 155,
+              height: 55,
               child: RaisedButton(
                 shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20),
+                  borderRadius: new BorderRadius.circular(30),
                 ),
                 onPressed: navigateToSignIn,
                 color: Color(0xFF98D2EB),
-                child: Text("Sign in"),
+                child: Text(
+                  "Sign In",
+                  textScaleFactor: 1.5,
+                ), // AppLocalizations.of(context).translate('signin'),
               ),
             ),
-            ButtonTheme(
-              minWidth: 125,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: ButtonTheme(
+                minWidth: 155,
+                height: 55,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30),
+                  ),
+                  onPressed: navigateToSignUp,
+                  color: Color(0xFF98D2EB),
+                  child: Text(
+                    "Sign Up",
+                    textScaleFactor: 1.5,
+                  ), // AppLocalizations.of(context).translate('signup')
                 ),
-                onPressed: navigateToSignUp,
-                color: Color(0xFF98D2EB),
-                child: Text("Sign up"),
               ),
             ),
           ],

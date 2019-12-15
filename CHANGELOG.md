@@ -10,6 +10,7 @@
 
     * reorganize http testing
     * test secret apikeys
+    * style welcome screen
 
 2019-12-14 Ray Lee
 
@@ -20,3 +21,4 @@
     * disconnect Firebase from sign in
     * add proposal display with title and description
     * add flutter retrieval of plaintext secret file
+    * style sign in screen
