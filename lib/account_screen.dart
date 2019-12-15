@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'app_localizations.dart';
 import 'package:Solon/API/api_connect.dart';
 import 'package:Solon/API/user.dart';
+import 'package:Solon/API/proposal.dart';
 
 
 import './loader.dart';
@@ -45,13 +46,13 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<User>>(
-          future: APIConnect.connectUsers(),
+    return FutureBuilder<List<Proposal>>(
+          future: APIConnect.connectProposals(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<Widget> users = [];
               for(var i = 0; i < snapshot.data.length; i++) {
-                users.add(Text("uid: ${snapshot.data[i].uid}, first name: ${snapshot.data[i].firstName}, last name: ${snapshot.data[i].lastName}, email: ${snapshot.data[i].email}"));
+                users.add(Text("${snapshot.data}"));
               }
               return Scaffold(
                 body: ListView(
