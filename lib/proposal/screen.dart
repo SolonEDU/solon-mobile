@@ -2,6 +2,7 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/api/proposal.dart';
 import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
+import 'package:Solon/proposal/create.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
@@ -108,34 +109,33 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: FutureBuilder<List<Proposal>>(
-          future: APIConnect.connectProposals(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<ProposalCard> proposals =
-                  snapshot.data.map((i) => buildProposal(i)).toList();
-              return Scaffold(
-                body: Column(
+      body: Center(
+        child: FutureBuilder<List<Proposal>>(
+            future: APIConnect.connectProposals(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<ProposalCard> proposals =
+                    snapshot.data.map((i) => buildProposal(i)).toList();
+                return Column(
                   children: proposals,
-                ),
-                floatingActionButton: FloatingActionButton(
-                heroTag: 'unq1',
-                child: Icon(Icons.add),
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateProposal(_addProposal),
-                    ),
-                  )
-                },
-              ),
-              );
-            }
-            return Loader();
-          }),
-    ));
+                );
+              }
+              return Loader();
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'unq1',
+        child: Icon(Icons.add),
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateProposal(APIConnect.addProposal),
+            ),
+          )
+        },
+      ),
+    );
     //   return StreamBuilder<QuerySnapshot>(
     //     stream: db
     //         .collection('proposals')
