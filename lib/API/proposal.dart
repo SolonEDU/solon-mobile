@@ -1,6 +1,7 @@
 class Proposal {
   final int pid;
   final String title;
+  final String description;
   final DateTime startTime;
   final DateTime endTime;
   final int uid;
@@ -10,6 +11,7 @@ class Proposal {
   Proposal(
       {this.pid,
       this.title,
+      this.description,
       this.startTime,
       this.endTime,
       this.uid,
@@ -20,6 +22,7 @@ class Proposal {
     return Proposal(
       pid: json['pid'],
       title: json['title'],
+      description: json['description'],
       startTime: json['starttime'],
       endTime: json['endtime'],
       uid: json['uid'],
