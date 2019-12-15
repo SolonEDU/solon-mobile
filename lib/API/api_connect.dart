@@ -15,7 +15,7 @@ class APIConnect {
   }
 
   static Future<List<User>> connectUsers() async {
-    final response = await http.get(_url + '/users');
+    final response = await http.get("${_url}/users");
     String responseBody = response.body;
     int status = response.statusCode;
     List collection = json.decode(responseBody);
