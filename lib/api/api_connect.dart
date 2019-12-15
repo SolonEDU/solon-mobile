@@ -65,7 +65,7 @@ class APIConnect {
       "${_url}/proposals",
       body: json.encode(newProposal.toProposalMap()),
       headers: {
-        "Content-type": "application/json",
+        HttpHeaders.contentTypeHeader: "application/json",
         HttpHeaders.authorizationHeader: await loadHeader()
       },
     );
