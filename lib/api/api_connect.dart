@@ -41,7 +41,7 @@ class APIConnect {
   //   return status == 200 ? Message.fromJson(json.decode(response.body)['message']) : throw Exception('data not found');
   // }
 
-  static void addProposal(
+  static Future<Message> addProposal(
     String title,
     String description,
     DateTime startTime,
@@ -65,8 +65,8 @@ class APIConnect {
     print(response.body);
     int status = response.statusCode;
     print(status);
-    // return status == 201
-    //     ? Message.fromJson(json.decode(response.body)['message'])
-    //     : throw Exception('data not found');
+    return status == 201
+        ? Message.fromJson(json.decode(response.body)['message'])
+        : throw Exception('data not found');
   }
 }
