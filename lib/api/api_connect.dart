@@ -29,8 +29,14 @@ class APIConnect {
   }
 
   static Future<Message> deleteProposal(pid) async {
-    final response = await http.get("INSERT DELETE ROUTE HERE");
+    final response = await http.post("INSERT DELETE ROUTE HERE");
     int status = response.statusCode;
     return status == 200 ? Message.fromJson(json.decode(response.body)['message']) : throw Exception('data not found');
+  }
+
+  static Future<Message> addProposal() async {
+    final response = await http.post("INSERT ADD ROUTE HERE");
+    int status = response.statusCode;
+    return status == 201 ? Message.fromJson(json.decode(response.body)['message']) : throw Exception('data not found');
   }
 }

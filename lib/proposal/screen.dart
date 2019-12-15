@@ -2,15 +2,12 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/api/proposal.dart';
 import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
+import 'package:Solon/proposal/create.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:convert'; // for jsonDecode
-
-// import './card.dart';
-// import './create.dart';
-// import './../loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
   @override
@@ -110,62 +107,74 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return Scaffold(
       body: Center(
         child: FutureBuilder<List<Proposal>>(
-          future: APIConnect.connectProposals(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<ProposalCard> proposals = snapshot.data.map((i) => buildProposal(i)).toList();
-              return Column(
-                children: proposals,
-              );
-            }
-            return Loader();
-          }
-        ),
-      )
+            future: APIConnect.connectProposals(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<ProposalCard> proposals =
+                    snapshot.data.map((i) => buildProposal(i)).toList();
+                return Column(
+                  children: proposals,
+                );
+              }
+              return Loader();
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'unq1',
+        child: Icon(Icons.add),
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateProposal(APIConnect.addProposal),
+            ),
+          )
+        },
+      ),
     );
-  //   return StreamBuilder<QuerySnapshot>(
-  //     stream: db
-  //         .collection('proposals')
-  //         .orderBy('daysLeft', descending: false)
-  //         .snapshots(),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-  //       switch (snapshot.connectionState) {
-  //         case ConnectionState.waiting:
-  //           return Scaffold(
-  //             body: Center(
-  //               child: Loader(),
-  //             ),
-  //           );
-  //         default:
-  //           return Scaffold(
-  //             body: Center(
-  //               child: ListView(
-  //                 padding: EdgeInsets.all(8),
-  //                 children: <Widget>[
-  //                   Column(
-  //                     children: snapshot.data.documents
-  //                         .map((doc) => buildProposal(doc))
-  //                         .toList(),
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //             floatingActionButton: FloatingActionButton(
-  //               heroTag: 'unq1',
-  //               child: Icon(Icons.add),
-  //               onPressed: () => {
-  //                 Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                     builder: (context) => CreateProposal(_addProposal),
-  //                   ),
-  //                 )
-  //               },
-  //             ),
-  //           );
-  //       }
-  //     },
-  //   );
+    //   return StreamBuilder<QuerySnapshot>(
+    //     stream: db
+    //         .collection('proposals')
+    //         .orderBy('daysLeft', descending: false)
+    //         .snapshots(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+    //       switch (snapshot.connectionState) {
+    //         case ConnectionState.waiting:
+    //           return Scaffold(
+    //             body: Center(
+    //               child: Loader(),
+    //             ),
+    //           );
+    //         default:
+    //           return Scaffold(
+    //             body: Center(
+    //               child: ListView(
+    //                 padding: EdgeInsets.all(8),
+    //                 children: <Widget>[
+    //                   Column(
+    //                     children: snapshot.data.documents
+    //                         .map((doc) => buildProposal(doc))
+    //                         .toList(),
+    //                   )
+    //                 ],
+    //               ),
+    //             ),
+    //             floatingActionButton: FloatingActionButton(
+    //               heroTag: 'unq1',
+    //               child: Icon(Icons.add),
+    //               onPressed: () => {
+    //                 Navigator.push(
+    //                   context,
+    //                   MaterialPageRoute(
+    //                     builder: (context) => CreateProposal(_addProposal),
+    //                   ),
+    //                 )
+    //               },
+    //             ),
+    //           );
+    //       }
+    //     },
+    //   );
   }
 }

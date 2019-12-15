@@ -38,12 +38,14 @@ class _CreateProposalState extends State<CreateProposal> {
         state: _currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
+          decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).translate('title')),
           controller: controllers[0],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return AppLocalizations.of(context).translate('pleaseEnterATitle');
+              return AppLocalizations.of(context)
+                  .translate('pleaseEnterATitle');
             }
             return null;
           },
@@ -58,12 +60,14 @@ class _CreateProposalState extends State<CreateProposal> {
         content: TextFormField(
           autofocus: true,
           focusNode: _focusNode,
-          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
+          decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).translate('description')),
           controller: controllers[1],
           autovalidate: true,
           validator: (value) {
             if (value.isEmpty) {
-              return AppLocalizations.of(context).translate('pleaseEnterADescription');
+              return AppLocalizations.of(context)
+                  .translate('pleaseEnterADescription');
             }
             return null;
           },
@@ -133,10 +137,15 @@ class _CreateProposalState extends State<CreateProposal> {
                 }
               : {
                   widget._addProposal(
-                      controllers[0].text,
-                      controllers[1].text,
-                      _sliderValue,
-                      _date.add(new Duration(days: _sliderValue.toInt()))),
+                    controllers[0].text,
+                    controllers[1].text,
+                    _sliderValue,
+                    _date.add(
+                      new Duration(
+                        days: _sliderValue.toInt(),
+                      ),
+                    ),
+                  ),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context, true),
                 }
