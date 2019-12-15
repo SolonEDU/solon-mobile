@@ -8,9 +8,9 @@ import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:convert'; // for jsonDecode
 
-// import './card.dart';
-// import './create.dart';
-// import './../loader.dart';
+import './card.dart';
+import './create.dart';
+import './../loader.dart';
 
 class ProposalsScreen extends StatefulWidget {
   @override
@@ -108,64 +108,77 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<List<Proposal>>(
+        body: Center(
+      child: FutureBuilder<List<Proposal>>(
           future: APIConnect.connectProposals(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<ProposalCard> proposals = snapshot.data.map((i) => buildProposal(i)).toList();
-              return Column(
-                children: proposals,
+              List<ProposalCard> proposals =
+                  snapshot.data.map((i) => buildProposal(i)).toList();
+              return Scaffold(
+                body: Column(
+                  children: proposals,
+                ),
+                floatingActionButton: FloatingActionButton(
+                heroTag: 'unq1',
+                child: Icon(Icons.add),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateProposal(_addProposal),
+                    ),
+                  )
+                },
+              ),
               );
             }
             return Loader();
-          }
-        ),
-      )
-    );
-  //   return StreamBuilder<QuerySnapshot>(
-  //     stream: db
-  //         .collection('proposals')
-  //         .orderBy('daysLeft', descending: false)
-  //         .snapshots(),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-  //       switch (snapshot.connectionState) {
-  //         case ConnectionState.waiting:
-  //           return Scaffold(
-  //             body: Center(
-  //               child: Loader(),
-  //             ),
-  //           );
-  //         default:
-  //           return Scaffold(
-  //             body: Center(
-  //               child: ListView(
-  //                 padding: EdgeInsets.all(8),
-  //                 children: <Widget>[
-  //                   Column(
-  //                     children: snapshot.data.documents
-  //                         .map((doc) => buildProposal(doc))
-  //                         .toList(),
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //             floatingActionButton: FloatingActionButton(
-  //               heroTag: 'unq1',
-  //               child: Icon(Icons.add),
-  //               onPressed: () => {
-  //                 Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                     builder: (context) => CreateProposal(_addProposal),
-  //                   ),
-  //                 )
-  //               },
-  //             ),
-  //           );
-  //       }
-  //     },
-  //   );
+          }),
+    ));
+    //   return StreamBuilder<QuerySnapshot>(
+    //     stream: db
+    //         .collection('proposals')
+    //         .orderBy('daysLeft', descending: false)
+    //         .snapshots(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+    //       switch (snapshot.connectionState) {
+    //         case ConnectionState.waiting:
+    //           return Scaffold(
+    //             body: Center(
+    //               child: Loader(),
+    //             ),
+    //           );
+    //         default:
+    //           return Scaffold(
+    //             body: Center(
+    //               child: ListView(
+    //                 padding: EdgeInsets.all(8),
+    //                 children: <Widget>[
+    //                   Column(
+    //                     children: snapshot.data.documents
+    //                         .map((doc) => buildProposal(doc))
+    //                         .toList(),
+    //                   )
+    //                 ],
+    //               ),
+    //             ),
+    //             floatingActionButton: FloatingActionButton(
+    //               heroTag: 'unq1',
+    //               child: Icon(Icons.add),
+    //               onPressed: () => {
+    //                 Navigator.push(
+    //                   context,
+    //                   MaterialPageRoute(
+    //                     builder: (context) => CreateProposal(_addProposal),
+    //                   ),
+    //                 )
+    //               },
+    //             ),
+    //           );
+    //       }
+    //     },
+    //   );
   }
 }
