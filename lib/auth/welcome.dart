@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -11,34 +11,59 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
+    var logoAsset = new AssetImage('images/solon.png');
+    var logo = new Image(
+      image: logoAsset,
+      fit: BoxFit.fitHeight,
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/solon.png'),
+      // backgroundColor: Color(0xDD5050D0),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: logo,
+              height: 200,
+              margin: const EdgeInsets.only(bottom: 40),
+            ),
+            ButtonTheme(
+              minWidth: 155,
+              height: 55,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30),
+                ),
+                onPressed: navigateToSignIn,
+                color: Color(0xFF98D2EB),
+                child: Text(
+                  "Sign In",
+                  textScaleFactor: 1.5,
+                ), // AppLocalizations.of(context).translate('signin'),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: ButtonTheme(
+                minWidth: 155,
+                height: 55,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30),
+                  ),
+                  onPressed: navigateToSignUp,
+                  color: Color(0xFF98D2EB),
+                  child: Text(
+                    "Sign Up",
+                    textScaleFactor: 1.5,
+                  ), // AppLocalizations.of(context).translate('signup')
                 ),
               ),
-            );
-          },
+            ),
+          ],
         ),
-        title: Text('Solon'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RaisedButton(
-            onPressed: navigateToSignIn,
-            child: Text(AppLocalizations.of(context).translate('signin')),
-          ),
-          RaisedButton(
-            onPressed: navigateToSignUp,
-            child: Text(AppLocalizations.of(context).translate('signup')),
-          ),
-        ],
       ),
     );
   }
