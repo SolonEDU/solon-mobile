@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/app_localizations.dart';
+// import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +21,7 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   bool attending = false;
-  final db = Firestore.instance;
+  // final db = Firestore.instance; // connect to PG, then decode
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +54,11 @@ class _EventCardState extends State<EventCard> {
               children: <Widget>[
                 FlatButton(
                   child: Icon(Icons.delete),
-                  onPressed: () => {
-                    db
-                        .collection('events')
-                        .document(widget.doc.documentID)
-                        .delete()
+                  onPressed: () => { // send a DELETE request to PG, including the  in the request body to specify
+                    // db
+                    //     .collection('events')
+                    //     .document(widget.doc.documentID)
+                    //     .delete()
                   },
                 ),
                 Switch.adaptive(

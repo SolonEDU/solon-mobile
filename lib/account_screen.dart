@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'app_localizations.dart';
+// import 'package:Solon/api/api_connect.dart';
+// import 'package:Solon/api/user.dart';
+// import 'package:Solon/api/proposal.dart';
 
 import './loader.dart';
 import 'main.dart';
@@ -42,6 +45,23 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   body: FutureBuilder<List<Proposal>>(
+    //     future: APIConnect.connectProposals(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasData) {
+    //         List<Widget> users = [];
+    //         for (var i = 0; i < snapshot.data.length; i++) {
+    //           users.add(Text("${snapshot.data}"));
+    //         }
+    //         return ListView(
+    //           children: users,
+    //         );
+    //       }
+    //       return Loader();
+    //     },
+    //   ),
+    // );
     return FutureBuilder(
       future: document.get(),
       builder:
@@ -58,7 +78,9 @@ class _AccountScreenState extends State<AccountScreen> {
             return Scaffold(
               key: _scaffoldKey,
               appBar: AppBar(
-                title: Text(AppLocalizations.of(context).translate('account')),
+                title: Text(
+                  AppLocalizations.of(context).translate('account'),
+                ),
               ),
               body: Center(
                 child: Column(
@@ -73,7 +95,8 @@ class _AccountScreenState extends State<AccountScreen> {
                             .document(widget.user.uid)
                             .updateData({'nativeLanguage': newValue});
                         _setLanguage(newValue);
-                        print(_language); //printing language to prevent blue error from popping up
+                        print(
+                            _language); //printing language to prevent blue error from popping up
                       },
                       items: <String>[
                         'English',
@@ -93,15 +116,20 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     RaisedButton(
                       onPressed: () async {
-                        _showToast("Instructions to change your password were sent to your email address");
-                        return FirebaseAuth.instance.sendPasswordResetEmail(email: snapshot.data.data['email']);
+                        _showToast(
+                            "Instructions to change your password were sent to your email address");
+                        return FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: snapshot.data.data['email']);
                       },
                       child: Text("Change Password"),
                     ),
                     RaisedButton(
                       onPressed: () async {
                         await FirebaseAuth.instance.signOut();
-                        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => new MyApp()));
+                        Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new MyApp()));
                       },
                       child: Text("Log Out"),
                     ),

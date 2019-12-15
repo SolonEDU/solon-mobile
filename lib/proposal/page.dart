@@ -1,27 +1,27 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
 
 class ProposalPage extends StatelessWidget {
   final String title;
   final String description;
-  final double daysLeft;
-  final DateTime endDate;
-  final int numYea;
-  final int numNay;
+  // final double daysLeft;
+  // final DateTime endDate;
+  // final int numYea;
+  // final int numNay;
   // final Future<DocumentSnapshot> creator;
 
   ProposalPage(
     this.title,
     this.description,
-    this.daysLeft,
-    this.endDate,
-    this.numYea,
-    this.numNay,
+    // this.daysLeft,
+    // this.endDate,
+    // this.numYea,
+    // this.numNay,
     // this.creator,
   );
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +43,10 @@ class ProposalPage extends StatelessWidget {
               Text(description),
               Icon(Icons.comment),
               Text(AppLocalizations.of(context).translate('votesFor')),
-              Text('${AppLocalizations.of(context).translate('yea')}: $numYea'),
-              Text('${AppLocalizations.of(context).translate('nay')}: $numNay'),
-              Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
-              Text('Days left: ' + daysLeft.toInt().toString()),
+              // Text('${AppLocalizations.of(context).translate('yea')}: $numYea'),
+              // Text('${AppLocalizations.of(context).translate('nay')}: $numNay'),
+              // Text('Voting on proposal ends on: ' + new DateFormat.yMMMMd("en_US").add_jm().format(endDate)),
+              // Text('Days left: ' + daysLeft.toInt().toString()),
             ],
           ),
         ),

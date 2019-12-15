@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
+// import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
 
-class Proposal extends StatefulWidget {
+class ProposalCard extends StatefulWidget {
   final String title;
   final String descripton;
-  final double daysLeft;
-  final DateTime endDate;
-  final DocumentSnapshot doc;
-  int numYea;
-  int numNay;
+  // final double daysLeft;
+  // final DateTime endDate;
+  // final DocumentSnapshot doc;
+  // int numYea;
+  // int numNay;
   // final String creator;
 
-  Proposal({
+  ProposalCard({
     Key key,
     this.title,
     this.descripton,
-    this.daysLeft,
-    this.endDate,
-    this.numYea,
-    this.numNay,
-    this.doc,
+    // this.daysLeft,
+    // this.endDate,
+    // this.numYea,
+    // this.numNay,
+    // this.doc,
     // this.creator,
   }) : super(key: key);
 
   @override
-  _ProposalState createState() => _ProposalState();
+  _ProposalCardState createState() => _ProposalCardState();
 }
 
-class _ProposalState extends State<Proposal> {
+class _ProposalCardState extends State<ProposalCard> {
   var voteChoiceVisibility = true;
   var collection;
-  final db = Firestore.instance;
+  // final db = Firestore.instance;
   // String creatorName;
 
   void getCollection() {
     setState(() {
-      collection = db.collection('proposals');
+      // collection = db.collection('proposals');
     });
   }
 
@@ -58,10 +59,10 @@ class _ProposalState extends State<Proposal> {
             builder: (context) => ProposalPage(
               widget.title,
               widget.descripton,
-              widget.daysLeft,
-              widget.endDate,
-              widget.numYea,
-              widget.numNay,
+              // widget.daysLeft,
+              // widget.endDate,
+              // widget.numYea,
+              // widget.numNay,
               // getCreator(),
             ),
           ),
@@ -77,11 +78,11 @@ class _ProposalState extends State<Proposal> {
                 title: Text(widget.title),
                 subtitle: Text(widget.descripton),
               ),
-              Text('Voting on proposal ends on: ' +
-                  new DateFormat.yMMMMd("en_US")
-                      .add_jm()
-                      .format(widget.endDate)),
-              Text('Days left: ' + widget.daysLeft.toInt().toString()),
+              // Text('Voting on proposal ends on: ' +
+              //     new DateFormat.yMMMMd("en_US")
+              //         .add_jm()
+              //         .format(widget.endDate)),
+              // Text('Days left: ' + widget.daysLeft.toInt().toString()),
               Visibility(
                 visible: voteChoiceVisibility ? true : false,
                 replacement: Text('You voted already!'),
@@ -92,7 +93,7 @@ class _ProposalState extends State<Proposal> {
                       child:
                           Text(AppLocalizations.of(context).translate('yea')),
                       onPressed: () {
-                        widget.numYea++;
+                        // widget.numYea++;
                         setState(() {
                           voteChoiceVisibility = false;
                         });
@@ -102,7 +103,7 @@ class _ProposalState extends State<Proposal> {
                       child:
                           Text(AppLocalizations.of(context).translate('nay')),
                       onPressed: () {
-                        widget.numNay++;
+                        // widget.numNay++;
                         setState(() {
                           voteChoiceVisibility = false;
                         });
@@ -111,7 +112,7 @@ class _ProposalState extends State<Proposal> {
                     FlatButton(
                       child: Icon(Icons.delete),
                       onPressed: () {
-                        collection.document(widget.doc.documentID).delete();
+                        // collection.document(widget.doc.documentID).delete();
                       },
                     ),
                   ],

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+// import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
 import 'package:intl/intl.dart';
@@ -11,9 +12,9 @@ class PostCard extends StatefulWidget {
   final DocumentSnapshot doc;
 
   PostCard(
-    this.title, 
-    this.description, 
-    this.time, 
+    this.title,
+    this.description,
+    this.time,
     this.doc);
 
   @override
@@ -21,7 +22,7 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  final db = Firestore.instance;
+  // final db = Firestore.instance; // db is not used anywhere and idk if this is even needed here
 
   @override
   Widget build(BuildContext context) {
