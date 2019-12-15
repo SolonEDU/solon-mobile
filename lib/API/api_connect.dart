@@ -17,7 +17,7 @@ class APIConnect {
   }
 
   static Future<List<Proposal>> connectProposals() async {
-    final response = await http.get("${_url}/proposals", headers: {HttpHeaders.authorizationHeader: "onlyweknowthiskey"},);
+    final response = await http.get("$_url/proposals", headers: {HttpHeaders.authorizationHeader: "onlyweknowthiskey"},);
     String responseBody = response.body;
     print(responseBody);
     int status = response.statusCode;

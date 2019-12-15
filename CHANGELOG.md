@@ -14,3 +14,7 @@
 2019-12-14 Ray Lee
 
     * added proposal, event, forum post, and comment skeleton classes
+
+2019-12-15 Eric Lau
+
+    * disconnect Firebase from sign in

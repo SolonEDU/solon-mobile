@@ -30,15 +30,26 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 onSaved: (input) => _email = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('email')),
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context).translate('email')),
               ),
               TextFormField(
                 onSaved: (input) => _password = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
+                decoration: InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context).translate('password')),
                 obscureText: true,
               ),
               RaisedButton(
-                onPressed: signIn,
+                onPressed: () => {
+                  //signIn
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Main(),
+                    ),
+                  )
+                },
                 child: Text(AppLocalizations.of(context).translate('signin')),
               )
             ],
@@ -62,12 +73,12 @@ class _LoginPageState extends State<LoginPage> {
               .document(user.uid)
               .get()
               .then((DocumentSnapshot ds) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Main(),
-                ),
-              );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Main(),
+              ),
+            );
           });
         }
       } catch (e) {
