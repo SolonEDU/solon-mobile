@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'app_localizations.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/api/user.dart';
-import 'package:Solon/api/proposal.dart';
+// import 'package:Solon/api/api_connect.dart';
+// import 'package:Solon/api/user.dart';
+// import 'package:Solon/api/proposal.dart';
 
 import './loader.dart';
 import 'main.dart';
