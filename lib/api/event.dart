@@ -2,8 +2,8 @@ class Event {
   final int eid;
   final String title;
   final String description;
-  final DateTime date;
-  final DateTime dateCreated;
+  final String date;
+  final String dateCreated;
   final int numAttenders;
 
   Event({

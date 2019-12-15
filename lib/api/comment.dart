@@ -2,7 +2,7 @@ class Comment {
   final int cid;
   final int fid;
   final String content;
-  final DateTime timestamp;
+  final String timestamp;
   final int uid;
 
   Comment({

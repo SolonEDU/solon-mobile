@@ -2,7 +2,7 @@ class ForumPost {
   final int fid;
   final String title;
   final String description;
-  final DateTime timestamp;
+  final String timestamp;
   final int uid;
 
   ForumPost({
