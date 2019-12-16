@@ -23,3 +23,10 @@
     * add flutter retrieval of plaintext secret file
     * style sign in screen
     * add temporary delete proposals method
+
+2019-12-15 Ray Lee
+
+    * added file dependencies
+    * added Map functions
+    * converted ProposalPage into Stateful Widget
+    * implemented making proposals through POST request

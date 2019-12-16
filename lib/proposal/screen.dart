@@ -120,7 +120,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                   children: proposals,
                 );
               }
-              return Loader();
+              return CircularProgressIndicator();
             }),
       ),
       floatingActionButton: FloatingActionButton(
