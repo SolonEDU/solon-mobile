@@ -3,9 +3,9 @@ class Message {
 
   Message({this.message});
 
-  factory Message.fromJson(Map<String, dynamic> json) {
+  factory Message.fromJson(String json) {
     return Message(
-      message: json['message']
+      message: json
     );
   }
 }
