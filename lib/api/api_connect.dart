@@ -74,7 +74,7 @@ class APIConnect {
     print(status);
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('data not found');
+        : throw Exception('Message field in proposal object not found.');
   }
 
   static Future<Vote> connectVotes() async {
