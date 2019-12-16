@@ -9,6 +9,10 @@ import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:convert'; // for jsonDecode
 
+import './card.dart';
+import './create.dart';
+import './../loader.dart';
+
 class ProposalsScreen extends StatefulWidget {
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();
@@ -98,7 +102,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return ProposalCard(
       key: UniqueKey(),
       title: data.title,
-      descripton: data.description,
+      description: data.description,
     );
   }
 
@@ -113,7 +117,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                 List<ProposalCard> proposals =
                     snapshot.data.map((i) => buildProposal(i)).toList();
                 return ListView(
-                  children: proposals
+                  children: proposals,
                 );
               }
               return Loader();

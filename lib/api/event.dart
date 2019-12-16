@@ -2,8 +2,8 @@ class Event {
   final int eid;
   final String title;
   final String description;
-  final DateTime date;
-  final DateTime dateCreated;
+  final String date;
+  final String dateCreated;
   final int numAttenders;
 
   Event({
@@ -24,5 +24,15 @@ class Event {
       dateCreated: json['datecreated'],
       numAttenders: json['numattenders'],
     );
+  }
+
+  Map toEventMap() {
+    var map = new Map<String, dynamic>();
+    map['title'] = title;
+    map['description'] = description;
+    map['date'] = date;
+    print("${title} ${description} ${date}");
+    print("MAP ${map}");
+    return map;
   }
 }

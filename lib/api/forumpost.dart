@@ -2,7 +2,7 @@ class ForumPost {
   final int fid;
   final String title;
   final String description;
-  final DateTime timestamp;
+  final String timestamp;
   final int uid;
 
   ForumPost({
@@ -21,6 +21,17 @@ class ForumPost {
       timestamp: json['timestamp'],
       uid: json['uid'],
     );
+  }
+
+  Map toForumPostMap() {
+    var map = new Map<String, dynamic>();
+    map['title'] = title;
+    map['description'] = description;
+    map['timestamp'] = timestamp;
+    map['uid'] = uid;
+    print("${title} ${description} ${timestamp} ${uid}");
+    print("MAP ${map}");
+    return map;
   }
 }
 
