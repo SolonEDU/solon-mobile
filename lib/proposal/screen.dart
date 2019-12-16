@@ -112,8 +112,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
               if (snapshot.hasData) {
                 List<ProposalCard> proposals =
                     snapshot.data.map((i) => buildProposal(i)).toList();
-                return Column(
-                  children: proposals,
+                return ListView(
+                  children: proposals
                 );
               }
               return Loader();
