@@ -25,8 +25,8 @@ class Vote {
     map['pid'] = pid;
     map['uid'] = uid;
     map['value'] = value;
-    print("${pid} ${uid} ${value}");
-    print("MAP ${map}");
+    print("$pid $uid $value");
+    print("MAP $map");
     return map;
   }
 }

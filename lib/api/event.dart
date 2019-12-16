@@ -31,8 +31,8 @@ class Event {
     map['title'] = title;
     map['description'] = description;
     map['date'] = date;
-    print("${title} ${description} ${date}");
-    print("MAP ${map}");
+    print("$title $description $date");
+    print("MAP $map");
     return map;
   }
 }

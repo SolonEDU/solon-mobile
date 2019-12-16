@@ -27,8 +27,8 @@ class User {
     map['firstname'] = firstName;
     map['lastname'] = lastName;
     map['nativeLang'] = nativeLang;
-    print("${firstName} ${lastName} ${nativeLang}");
-    print("MAP ${map}");
+    print("$firstName $lastName $nativeLang");
+    print("MAP $map");
     return map;
   }
 }

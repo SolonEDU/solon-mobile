@@ -41,8 +41,8 @@ class Proposal {
     map['starttime'] = startTime;
     map['endtime'] = endTime;
     map['uid'] = uid;
-    print("${title} ${description} ${startTime} ${endTime} ${uid}");
-    print("MAP ${map}");
+    print("$title $description $startTime $endTime $uid");
+    print("MAP $map");
     return map;
   }
 }

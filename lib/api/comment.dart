@@ -29,8 +29,8 @@ class Comment {
     map['content'] = content;
     map['timestamp'] = timestamp;
     map['uid'] = uid;
-    print("${fid} ${content} ${timestamp} ${uid}");
-    print("MAP ${map}");
+    print("$fid $content $timestamp $uid");
+    print("MAP $map");
     return map;
   }
 }

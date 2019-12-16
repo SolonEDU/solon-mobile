@@ -9,10 +9,6 @@ import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:convert'; // for jsonDecode
 
-import './card.dart';
-import './create.dart';
-import './../loader.dart';
-
 class ProposalsScreen extends StatefulWidget {
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();

@@ -7,7 +7,6 @@ import 'package:Solon/api/proposal.dart';
 import 'package:Solon/api/comment.dart';
 import 'package:Solon/api/event.dart';
 import 'package:Solon/api/forumpost.dart';
-import 'package:Solon/api/message.dart';
 import 'package:Solon/api/vote.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -30,7 +29,7 @@ class APIConnect {
 
   static Future<List<Proposal>> connectProposals() async {
     final response = await http.get(
-      "${_url}/proposals",
+      "$_url/proposals",
       headers: {HttpHeaders.authorizationHeader: await loadHeader()},
     );
     int status = response.statusCode;
@@ -62,7 +61,7 @@ class APIConnect {
     );
     print("${startTime.toIso8601String()} ${endTime.toIso8601String()}");
     final response = await http.post(
-      "${_url}/proposals",
+      "$_url/proposals",
       body: json.encode(newProposal.toProposalMap()),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
@@ -80,7 +79,7 @@ class APIConnect {
 
   static Future<Vote> connectVotes() async {
     final response = await http.get(
-      "${_url}/votes",
+      "$_url/votes",
       headers: {HttpHeaders.authorizationHeader: await loadHeader()},
     );
   }

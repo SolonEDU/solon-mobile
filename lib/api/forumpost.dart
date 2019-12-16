@@ -29,8 +29,8 @@ class ForumPost {
     map['description'] = description;
     map['timestamp'] = timestamp;
     map['uid'] = uid;
-    print("${title} ${description} ${timestamp} ${uid}");
-    print("MAP ${map}");
+    print("$title $description $timestamp $uid");
+    print("MAP $map");
     return map;
   }
 }
