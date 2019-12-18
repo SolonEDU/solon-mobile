@@ -80,3 +80,4 @@ solon-mobile.code-workspace
 
 # Secrets
 android/app/google-services.json
+assets/secret

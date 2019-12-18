@@ -17,14 +17,14 @@ class APIConnect {
 
   static Future<String> loadHeader() async {
     return await rootBundle.loadString('assets/secret');
-  }
 
+  }
   static Future<Message> connectRoot() async {
     final response = await http.get(_url);
     int status = response.statusCode;
     return status == 200
         ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('data not found');
+        : throw Exception('Message for root not found.');
   }
 
   static Future<List<Proposal>> connectProposals() async {
