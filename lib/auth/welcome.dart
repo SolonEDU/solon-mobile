@@ -20,7 +20,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       // backgroundColor: Color(0xDD5050D0),
       body: Center(
-        child: Column(
+        child: ListView(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
