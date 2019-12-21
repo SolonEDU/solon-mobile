@@ -148,7 +148,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
     //       switch (snapshot.connectionState) {
     //         case ConnectionState.waiting:
-    //           ret urn Scaffold(
+    //           return Scaffold(
     //             body: Center(
     //               child: Loader(),
     //             ),
