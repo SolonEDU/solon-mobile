@@ -106,17 +106,24 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder<List<Proposal>>(
-            future: APIConnect.connectProposals(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<ProposalCard> proposals =
-                    snapshot.data.map((i) => buildProposal(i)).toList();
-                return ListView(
-                  children: proposals,
-                );
+        child: StreamBuilder<List<Proposal>>( //for StreamBuilder
+            stream: APIConnect.proposalListView,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  return Center(child: Loader());
+                case ConnectionState.done:
+                  if (snapshot.hasData) {
+                    List<ProposalCard> proposals =
+                        snapshot.data.map((i) => buildProposal(i)).toList();
+                    return ListView(
+                      children: proposals,
+                    );
+                  }
               }
-              return Loader();
             }),
       ),
       floatingActionButton: FloatingActionButton(
@@ -141,7 +148,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
     //       switch (snapshot.connectionState) {
     //         case ConnectionState.waiting:
-    //           return Scaffold(
+    //           ret urn Scaffold(
     //             body: Center(
     //               child: Loader(),
     //             ),

@@ -15,10 +15,15 @@ import 'package:intl/intl.dart';
 class APIConnect {
   static String _url = "https://api.solonedu.com";
 
+  //for StreamBuilder
+  final StreamController<List<Proposal>> _proposals =
+      StreamController<List<Proposal>>();
+  Stream<List<Proposal>> get proposals => _proposals.stream;
+
   static Future<String> loadHeader() async {
     return await rootBundle.loadString('assets/secret');
-
   }
+
   static Future<Message> connectRoot() async {
     final response = await http.get(_url);
     int status = response.statusCode;
@@ -28,15 +33,25 @@ class APIConnect {
   }
 
   static Future<List<Proposal>> connectProposals() async {
-    final response = await http.get(
+    final http.Response response = await http.get(
       "$_url/proposals",
       headers: {HttpHeaders.authorizationHeader: await loadHeader()},
     );
+
+    // await Future.delayed(Duration(seconds: 1));
+
     int status = response.statusCode;
     List collection = json.decode(response.body)['proposals'];
     List<Proposal> _proposals =
         collection.map((json) => Proposal.fromJson(json)).toList();
-    return status == 200 ? _proposals : throw Exception('data not found');
+    return status == 200
+        ? _proposals
+        : throw Exception('failed to retrieve proposals');
+  }
+
+  //for StreamBuilder
+  static Stream<List<Proposal>> get proposalListView async* {
+    yield await connectProposals();
   }
 
   // static Future<Message> deleteProposal(pid) async {
