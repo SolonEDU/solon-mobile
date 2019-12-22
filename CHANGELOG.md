@@ -38,3 +38,4 @@
     * reformat sign in page
     * toggle password obscurity
     * remove app side encryption
+    * fix rendering overflow on pop to welcome

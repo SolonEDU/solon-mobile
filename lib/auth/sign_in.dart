@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -30,87 +31,82 @@ class _LoginPageState extends State<LoginPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-          ),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+            icon: Icon(
+              Icons.arrow_back_ios,
+            ),
+            color: Colors.black,
+            onPressed: () => {
+                  FocusScope.of(context).unfocus(),
+                  Navigator.pop(context),
+                }),
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
       body: Center(
-        child: ListView(
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, left: 20),
-                    child: Text(
-                      AppLocalizations.of(context).translate('email'),
-                      textScaleFactor: 1.5,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: TextFormField(
-                      validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Please type an email';
-                        }
-                        return null;
-                      },
-                      onSaved: (input) => _email = input,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      AppLocalizations.of(context).translate('password'),
-                      textScaleFactor: 1.5,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: TextFormField(
-                      onSaved: (input) => _password = input,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          onPressed: _toggle,
-                        )
-                      ),
-                    ),
-                  ),
-                ],
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 10, left: 20),
+                child: Text(
+                  AppLocalizations.of(context).translate('email'),
+                  textScaleFactor: 1.5,
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 25),
-              child: Align(
-                child: SizedBox(
-                  height: 55,
-                  width: 155,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: TextFormField(
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return 'Please type an email';
+                    }
+                    return null;
+                  },
+                  onSaved: (input) => _email = input,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: Text(
+                  AppLocalizations.of(context).translate('password'),
+                  textScaleFactor: 1.5,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: TextFormField(
+                  onSaved: (input) => _password = input,
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                    icon: Icon(Icons.remove_red_eye),
+                    onPressed: _toggle,
+                  )),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 25),
+                child: Align(
+                  child: SizedBox(
+                    height: 55,
+                    width: 155,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30),
+                      ),
+                      color: Color(0xFF98D2EB),
+                      onPressed: signIn,
+                      child: Text(
+                        "Sign In",
+                        textScaleFactor: 1.5,
+                      ), // AppLocalizations.of(context).translate('signin'),
                     ),
-                    color: Color(0xFF98D2EB),
-                    onPressed: signIn,
-                    child: Text(
-                      "Sign In",
-                      textScaleFactor: 1.5,
-                    ), // AppLocalizations.of(context).translate('signin'),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
