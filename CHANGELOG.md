@@ -30,3 +30,8 @@
     * added Map functions
     * converted ProposalPage into Stateful Widget
     * implemented making proposals through POST request
+
+
+2019-12-22 Eric Lau
+
+    * clean up import mess

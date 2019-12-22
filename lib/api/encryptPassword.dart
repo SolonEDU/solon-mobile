@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:Solon/api/rsa_pem.dart';
@@ -14,7 +14,7 @@ class EncryptPassword {
   }
 
   Future<String> encryptPassword(String plainText) async {
-    var rsaKeyHelper = new RsaKeyHelper(); 
+    var rsaKeyHelper = new RsaKeyHelper();
     final RSAPublicKey publicKey = rsaKeyHelper.parsePublicKeyFromPem(await loadPublicKey());
     final RSAPrivateKey privKey = rsaKeyHelper.parsePrivateKeyFromPem(await loadPrivateKey());
 
