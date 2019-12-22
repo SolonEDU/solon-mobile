@@ -1,7 +1,7 @@
 // import 'dart:convert';
-
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -21,14 +21,15 @@ class _SignUpPageState extends State<SignUpPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-            ),
-            color: Colors.black,
-            onPressed: () => {
-                  FocusScope.of(context).unfocus(),
-                  Navigator.pop(context),
-                }),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          color: Colors.black,
+          onPressed: () => {
+            FocusScope.of(context).unfocus(),
+            Navigator.pop(context),
+          },
+        ),
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
@@ -37,65 +38,103 @@ class _SignUpPageState extends State<SignUpPage> {
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            DropdownButtonFormField(
-              value: _nativeLanguage,
-              validator: (input) {
-                if (input.isEmpty) {
-                  return 'Please enter your native language';
-                }
-                return null;
-              },
-              onSaved: (input) => _nativeLanguage = input,
-              onChanged: (input) {
-                setState(() {
-                  _nativeLanguage = input;
-                });
-              },
-              decoration: InputDecoration(
-                  labelText:
-                      AppLocalizations.of(context).translate('language')),
-              items: <String>[
-                'English',
-                'Chinese (Simplified)',
-                'Chinese (Traditional)',
-                'Bengali'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            Container(
+              margin: const EdgeInsets.only(top: 10, left: 20),
+              child: Text(
+                AppLocalizations.of(context).translate('language'),
+                textScaleFactor: 1.5,
+              ),
             ),
-            TextFormField(
-              validator: (input) {
-                if (input.isEmpty) {
-                  return 'Please enter your first name';
-                }
-                return null;
-              },
-              onSaved: (input) => _firstName = input,
-              decoration: InputDecoration(labelText: 'First Name'),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: DropdownButtonFormField(
+                value: _nativeLanguage,
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your native language';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _nativeLanguage = input,
+                onChanged: (input) {
+                  setState(() {
+                    _nativeLanguage = input;
+                  });
+                },
+                items: <String>[
+                  'English',
+                  'Chinese (Simplified)',
+                  'Chinese (Traditional)',
+                  'Bengali'
+                ].map<DropdownMenuItem<String>>(
+                  (String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  },
+                ).toList(),
+              ),
             ),
-            TextFormField(
-              validator: (input) {
-                if (input.isEmpty) {
-                  return 'Please enter your last name';
-                }
-                return null;
-              },
-              onSaved: (input) => _lastName = input,
-              decoration: InputDecoration(labelText: 'Last Name'),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                "First Name",
+                textScaleFactor: 1.5,
+              ),
             ),
-            TextFormField(
-              validator: (input) {
-                if (input.isEmpty) {
-                  return 'Please enter your email address';
-                }
-                return null;
-              },
-              onSaved: (input) => _email = input,
-              decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context).translate('email')),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your first name';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _firstName = input,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                "Last Name",
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your last name';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _lastName = input,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                AppLocalizations.of(context).translate('email'),
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your email address';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _email = input,
+              ),
             ),
             // TextFormField(
             //   validator: (input) {
@@ -107,23 +146,47 @@ class _SignUpPageState extends State<SignUpPage> {
             //   onSaved: (input) => _authpin = input,
             //   decoration: InputDecoration(labelText: 'Authentication Pin')
             // ),
-            TextFormField(
-              validator: (input) {
-                if (input.length < 6) {
-                  return 'Your password needs to be at least 6 characters';
-                }
-                return null;
-              },
-              onSaved: (input) => _password = input,
-              decoration: InputDecoration(
-                  labelText:
-                      AppLocalizations.of(context).translate('password')),
-              obscureText: true,
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                AppLocalizations.of(context).translate('password'),
+                textScaleFactor: 1.5,
+              ),
             ),
-            RaisedButton(
-              onPressed: signUp,
-              child: Text(AppLocalizations.of(context).translate('signup')),
-            )
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                validator: (input) {
+                  if (input.length < 6) {
+                    return 'Your password needs to be at least 6 characters';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _password = input,
+                obscureText: true,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 25),
+              child: Align(
+                child: SizedBox(
+                  height: 55,
+                  width: 155,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30),
+                    ),
+                    color: Color(0xFF98D2EB),
+                    onPressed: signUp,
+                    child: Text(
+                      "Sign Up",
+                      textScaleFactor: 1.5,
+                    ), // AppLocalizations.of(context).translate('signup'),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -141,7 +204,13 @@ class _SignUpPageState extends State<SignUpPage> {
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
-        _showToast(responseMessage["message"]);
+        // _showToast(responseMessage["message"]);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage()
+          )
+        );
       }
       // Firestore.instance.collection('authpins').document(_authpin).get().then((DocumentSnapshot ds) async {
       //   if (ds.data == null) _showToast("Invalid authentication pin");

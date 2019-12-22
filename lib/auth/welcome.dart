@@ -46,7 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20, bottom: 5),
                 child: ButtonTheme(
                   minWidth: 155,
                   height: 55,
