@@ -35,3 +35,4 @@
 2019-12-22 Eric Lau
 
     * clean up import mess
+    * remove app side encryption

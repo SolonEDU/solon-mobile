@@ -107,33 +107,12 @@ class APIConnect {
     String email,
     String password,
   ) async {
-    // print(await EncryptPassword.loadPublicKey());
-    // final privKeyPem = await EncryptPassword.loadPrivateKey();
-    // print(privKeyPem);
-    // final privKey = await RsaKeyHelper.parsePrivateKeyFromPem(privKeyPem);
-    // print(privKey);
-    // final privKey = await RsaKeyHelper.parsePrivateKeyFromPem(await EncryptPassword.loadPrivateKey());
-    // final passwordEncrypted = await RsaKeyHelper.encrypt(password, privKey);
-    // print(passwordEncrypted);
-    // print(await RsaKeyHelper.encrypt(password, privKey));
-    // var encryptPW = new EncryptPassword();
-    // print(encryptPW.encryptPassword(password));
-    // final cryptor = new PlatformStringCryptor();
-    // final String salt = await cryptor.generateSalt();
-    // final String key = await rootBundle.loadString('assets/passwordKey');
-    // print(key);
-    // final String encrypted = await cryptor.encrypt(password, key);
-    // print(password);
-    // print(encrypted);
-    // final String decrypted = await cryptor.decrypt(encrypted, key);
-    // print(decrypted);
     Register newUser = new Register(
       lang: lang,
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: password,
-      // password: Password.hash(password, new PBKDF2()),
     );
     final response = await http.post(
       "$_url/users/register",
