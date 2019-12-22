@@ -199,9 +199,10 @@ class _ProposalPageState extends State<ProposalPage> {
                           FlatButton(
                             child: Text(
                                 AppLocalizations.of(context).translate('yea')),
-                            color: voteVal == null
-                                ? Colors.white
-                                : pressAttention ? Colors.white : Colors.blue,
+                            color: Colors.blue,
+                            // voteVal == null
+                            //     ? Colors.white
+                            //     : pressAttention ? Colors.white : Colors.blue,
                             onPressed: () {
                               // widget.numYea++;
                               setState(() {
@@ -217,9 +218,10 @@ class _ProposalPageState extends State<ProposalPage> {
                           FlatButton(
                             child: Text(
                                 AppLocalizations.of(context).translate('nay')),
-                            color: voteVal == null
-                                ? Colors.white
-                                : !pressAttention ? Colors.white : Colors.blue,
+                            color: Colors.blue, 
+                            // voteVal == null
+                            //     ? Colors.white
+                            //     : !pressAttention ? Colors.white : Colors.blue,
                             onPressed: () {
                               // widget.numNay++;
                               voteVisibility = false;
