@@ -1,4 +1,4 @@
-import 'package:Solon/api/rsa_pem.dart';
+// import 'package:Solon/api/rsa_pem.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -10,12 +10,13 @@ import 'package:Solon/api/event.dart';
 import 'package:Solon/api/forumpost.dart';
 import 'package:Solon/api/vote.dart';
 import 'package:Solon/api/register.dart';
+import 'package:Solon/api/login.dart';
 import 'package:Solon/api/encryptPassword.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import "package:pointycastle/export.dart";
-import 'package:flutter_string_encryption/flutter_string_encryption.dart';
+// import "package:pointycastle/export.dart";
+// import 'package:flutter_string_encryption/flutter_string_encryption.dart';
 
 class APIConnect {
   static String _url = "https://api.solonedu.com";
@@ -117,21 +118,21 @@ class APIConnect {
     // print(await RsaKeyHelper.encrypt(password, privKey));
     // var encryptPW = new EncryptPassword();
     // print(encryptPW.encryptPassword(password));
-    final cryptor = new PlatformStringCryptor();
-    final String salt = await cryptor.generateSalt();
-    final String key = await rootBundle.loadString('assets/passwordKey');
-    print(key);
-    final String encrypted = await cryptor.encrypt(password, key);
-    print(password);
-    print(encrypted);
-    final String decrypted = await cryptor.decrypt(encrypted, key);
-    print(decrypted);
+    // final cryptor = new PlatformStringCryptor();
+    // final String salt = await cryptor.generateSalt();
+    // final String key = await rootBundle.loadString('assets/passwordKey');
+    // print(key);
+    // final String encrypted = await cryptor.encrypt(password, key);
+    // print(password);
+    // print(encrypted);
+    // final String decrypted = await cryptor.decrypt(encrypted, key);
+    // print(decrypted);
     Register newUser = new Register(
       lang: lang,
       firstName: firstName,
       lastName: lastName,
       email: email,
-      password: encrypted,
+      password: password,
       // password: Password.hash(password, new PBKDF2()),
     );
     final response = await http.post(
@@ -139,7 +140,7 @@ class APIConnect {
       body: json.encode(newUser.toRegisterMap()),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: await loadHeader()
+        HttpHeaders.authorizationHeader: await loadHeader(),
       },
     );
     print(json.encode(newUser.toRegisterMap()).toString());
@@ -149,6 +150,30 @@ class APIConnect {
     print(json.decode(response.body));
     return json.decode(response.body);
     // return Message.fromJson(json.decode(response.body)['message']);
+  }
+
+  static Future<Map<String, dynamic>> loginUser(
+    String email,
+    String password,
+  ) async {
+    Login user = new Login(
+      email: email,
+      password: password,
+    );
+    final response = await http.post(
+      "$_url/users/login",
+      body: json.encode(user.toLoginMap()),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: await loadHeader(),
+      },
+    );
+    print(json.encode(user.toLoginMap()).toString());
+    print(response.body);
+    int status = response.statusCode;
+    print(status);
+    print(json.decode(response.body));
+    return json.decode(response.body);
   }
 
   static Future<Vote> connectVotes() async {
