@@ -155,20 +155,40 @@ class APIConnect {
     return json.decode(response.body);
   }
 
-  static Future<Map<String, dynamic>> connectVotes(int pid, int uid, int value) async {
+  static Future<Map<String, dynamic>> connectVotes(String httpReqType, {int pid, int uidUser, int voteVal}) async {
     Vote vote = new Vote(
       pid: pid,
-      uid: uid,
-      value: value,
+      uidUser: uidUser,
+      voteVal: voteVal,
     );
-    final response = await http.post(
-      "$_url/votes",
-      body: json.encode(vote.toVoteMap()),
-      headers: {
-        HttpHeaders.authorizationHeader: await loadHeader(),
-        HttpHeaders.contentTypeHeader: "application/json",
-      },
-    );
+    var response;
+    if(httpReqType == 'POST') { // need pid, uid, and voteVal
+      response = await http.post(
+        "$_url/votes",
+        body: json.encode(vote.toVoteMap()),
+        headers: {
+          HttpHeaders.authorizationHeader: await loadHeader(),
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+    } else if (httpReqType == 'GET') { // need pid and uidUser
+      response = await http.get(
+        "$_url/votes/$pid/$uidUser",
+        headers: {
+          HttpHeaders.authorizationHeader: await loadHeader(),
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+    } else if (httpReqType == 'PATCH') { // need pid, uid, and voteVal
+      response = await http.patch(
+        "$_url/votes",
+        body: json.encode(vote.toVoteMap()),
+        headers: {
+          HttpHeaders.authorizationHeader: await loadHeader(),
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+      );
+    }
     return json.decode(response.body);
   }
 }

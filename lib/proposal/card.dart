@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:Solon/app_localizations.dart';
 // import 'dart:convert'; // for jsonDecode
 
+import 'package:Solon/api/api_connect.dart';
 import './page.dart';
 
 class ProposalCard extends StatefulWidget {
@@ -53,9 +54,19 @@ class _ProposalCardState extends State<ProposalCard> {
   //   return await db.collection('users').document(widget.creator).get();
   // }
 
+  // Future<void> getVote(int pid, int uidUser) async {
+  //   final responseMessage = await APIConnect.connectVotes(
+  //     'GET',
+  //     pid: pid,
+  //     uidUser: uidUser,
+  //   );
+  //   print(responseMessage['message']);
+  // }
+
   @override
   Widget build(BuildContext context) {
     getCollection();
+    // print(getVote(widget.pid, widget.uid));
     return GestureDetector(
       onTap: () {
         Navigator.push(

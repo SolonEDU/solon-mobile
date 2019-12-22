@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextFormField(
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Please type an email';
+                      return 'Please type your email';
                     }
                     return null;
                   },
@@ -74,6 +74,12 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return 'Please type your password';
+                    }
+                    return null;
+                  },
                   onSaved: (input) => _password = input,
                   obscureText: _obscureText,
                   decoration: InputDecoration(
