@@ -54,6 +54,12 @@ class _LoginPageState extends State<LoginPage> {
                             AppLocalizations.of(context).translate('email')),
                   ),
                   TextFormField(
+                    validator: (input) {
+                      if (input.isEmpty) {
+                        return 'Please type a password';
+                      }
+                      return null;
+                    },
                     onSaved: (input) => _password = input,
                     decoration: InputDecoration(
                         labelText:
@@ -102,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Main(),
+            builder: (context) => Main(uid: responseMessage["uid"]),
           ),
         );
       }

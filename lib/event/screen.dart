@@ -9,6 +9,9 @@ import 'package:translator/translator.dart';
 // import './../loader.dart';
 
 class EventsScreen extends StatefulWidget {
+  final int uid;
+  EventsScreen({Key key, this.uid}) : super(key: key);
+
   @override
   _EventsScreenState createState() => _EventsScreenState();
 }

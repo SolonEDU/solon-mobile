@@ -8,6 +8,9 @@ import 'package:translator/translator.dart';
 // import '../loader.dart';
 
 class ForumScreen extends StatefulWidget {
+  final int uid;
+  ForumScreen({Key key, this.uid}) : super(key: key);
+
   @override
   _ForumScreenState createState() => _ForumScreenState();
 }

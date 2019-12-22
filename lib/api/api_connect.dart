@@ -176,10 +176,19 @@ class APIConnect {
     return json.decode(response.body);
   }
 
-  static Future<Vote> connectVotes() async {
-    final response = await http.get(
+  static Future<Vote> connectVotes(int pid, int uid, int value) async {
+    Vote vote = new Vote(
+      pid: pid,
+      uid: uid,
+      value: value,
+    );
+    final response = await http.post(
       "$_url/votes",
-      headers: {HttpHeaders.authorizationHeader: await loadHeader()},
+      body: json.encode(vote.toVoteMap()),
+      headers: {
+        HttpHeaders.authorizationHeader: await loadHeader(),
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
     );
   }
 }

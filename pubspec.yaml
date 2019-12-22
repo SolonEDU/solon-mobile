@@ -35,6 +35,8 @@ dependencies:
   pointycastle:
   password:
   flutter_string_encryption:
+  rxdart:
+  dio:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
