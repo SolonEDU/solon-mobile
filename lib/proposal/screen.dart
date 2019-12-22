@@ -10,6 +10,9 @@ import 'package:translator/translator.dart';
 // import 'dart:convert'; // for jsonDecode
 
 class ProposalsScreen extends StatefulWidget {
+  final int uid;
+  ProposalsScreen({Key key, this.uid}) : super(key: key);
+
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();
 }

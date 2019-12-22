@@ -8,7 +8,7 @@ import 'package:Solon/api/proposal.dart';
 // import 'package:Solon/api/comment.dart';
 // import 'package:Solon/api/event.dart';
 // import 'package:Solon/api/forumpost.dart';
-// import 'package:Solon/api/vote.dart';
+import 'package:Solon/api/vote.dart';
 import 'package:Solon/api/register.dart';
 import 'package:Solon/api/login.dart';
 // import 'package:Solon/api/encryptPassword.dart';
@@ -155,10 +155,19 @@ class APIConnect {
     return json.decode(response.body);
   }
 
-  // static Future<Vote> connectVotes() async {
-  //   final response = await http.get(
-  //     "$_url/votes",
-  //     headers: {HttpHeaders.authorizationHeader: await loadHeader()},
-  //   );
-  // }
+  static Future<Vote> connectVotes(int pid, int uid, int value) async {
+    Vote vote = new Vote(
+      pid: pid,
+      uid: uid,
+      value: value,
+    );
+    final response = await http.post(
+      "$_url/votes",
+      body: json.encode(vote.toVoteMap()),
+      headers: {
+        HttpHeaders.authorizationHeader: await loadHeader(),
+        HttpHeaders.contentTypeHeader: "application/json",
+      },
+    );
+  }
 }

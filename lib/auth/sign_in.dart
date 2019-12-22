@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart';
 import 'package:Solon/api/api_connect.dart';
-// import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -115,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      // print('$_email $_password');
+      print('$_email $_password');
       final responseMessage = await APIConnect.loginUser(_email, _password);
       // print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
@@ -125,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Main(),
+            builder: (context) => Main(uid: responseMessage["uid"]),
           ),
         );
       }

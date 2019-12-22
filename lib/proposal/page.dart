@@ -1,4 +1,5 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
@@ -92,6 +93,7 @@ class ProposalPage extends StatefulWidget {
   final int pid;
   final String title;
   final String description;
+  final int uidUser;
   // final double daysLeft;
   // final DateTime endDate;
   // final int numYea;
@@ -103,6 +105,7 @@ class ProposalPage extends StatefulWidget {
     this.pid,
     this.title,
     this.description,
+    this.uidUser,
     // this.daysLeft,
     // this.endDate,
     // this.numYea,
@@ -153,6 +156,7 @@ class _ProposalPageState extends State<ProposalPage> {
                         pressAttention = !pressAttention;
                         // voteChoiceVisibility = false;
                       });
+                      APIConnect.connectVotes(widget.pid, widget.uidUser, 1);
                     },
                   ),
                   FlatButton(
@@ -164,6 +168,7 @@ class _ProposalPageState extends State<ProposalPage> {
                         pressAttention = !pressAttention;
                         // voteChoiceVisibility = false;
                       });
+                      APIConnect.connectVotes(widget.pid, widget.uidUser, 0);
                     },
                   ),
                   // FlatButton(
