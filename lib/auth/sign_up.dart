@@ -1,7 +1,5 @@
 // import 'dart:convert';
 
-import 'dart:io';
-
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
