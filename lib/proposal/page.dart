@@ -119,6 +119,11 @@ class ProposalPage extends StatefulWidget {
 class _ProposalPageState extends State<ProposalPage> {
   bool pressAttention = false;
 
+  Future<void> vote(int pid, int uidUser, int voteVal) async {
+    final responseMessage = await APIConnect.connectVotes(pid, uidUser, voteVal);
+    print(responseMessage['message']);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +161,7 @@ class _ProposalPageState extends State<ProposalPage> {
                         pressAttention = !pressAttention;
                         // voteChoiceVisibility = false;
                       });
-                      APIConnect.connectVotes(widget.pid, widget.uidUser, 1);
+                      vote(widget.pid, widget.uidUser, 1);
                     },
                   ),
                   FlatButton(
@@ -168,7 +173,7 @@ class _ProposalPageState extends State<ProposalPage> {
                         pressAttention = !pressAttention;
                         // voteChoiceVisibility = false;
                       });
-                      APIConnect.connectVotes(widget.pid, widget.uidUser, 0);
+                      vote(widget.pid, widget.uidUser, 0);
                     },
                   ),
                   // FlatButton(
