@@ -31,10 +31,9 @@
     * converted ProposalPage into Stateful Widget
     * implemented making proposals through POST request
 
-
 2019-12-22 Eric Lau
 
     * clean up import mess
     * add back button to auth pages
     * reformat sign in page
-
+    * toggle password obscurity

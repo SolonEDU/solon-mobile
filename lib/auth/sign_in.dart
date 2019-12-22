@@ -12,6 +12,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   String _email, _password;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -50,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     margin: const EdgeInsets.all(20),
                     child: TextFormField(
-                      // key: _formKey,
                       validator: (input) {
                         if (input.isEmpty) {
                           return 'Please type an email';
@@ -71,7 +78,13 @@ class _LoginPageState extends State<LoginPage> {
                     margin: const EdgeInsets.all(20),
                     child: TextFormField(
                       onSaved: (input) => _password = input,
-                      obscureText: true,
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.remove_red_eye),
+                          onPressed: _toggle,
+                        )
+                      ),
                     ),
                   ),
                 ],
