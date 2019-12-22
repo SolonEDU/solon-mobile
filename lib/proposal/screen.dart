@@ -109,25 +109,37 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: StreamBuilder<List<Proposal>>( //for StreamBuilder
-            stream: APIConnect.proposalListView,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                case ConnectionState.active:
-                  return Center(child: Loader());
-                case ConnectionState.done:
-                  if (snapshot.hasData) {
-                    List<ProposalCard> proposals =
-                        snapshot.data.map((i) => buildProposal(i)).toList();
-                    return ListView(
-                      children: proposals,
-                    );
-                  }
-              }
-            }),
+        child: StreamBuilder<List<Proposal>>(
+          //for StreamBuilder
+          stream: APIConnect.proposalListView,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Center(
+                  child: Loader(),
+                );
+              case ConnectionState.waiting:
+                return Center(
+                  child: Loader(),
+                );
+              case ConnectionState.active:
+                return Center(
+                  child: Loader(),
+                );
+              case ConnectionState.done:
+                if (snapshot.hasData) {
+                  List<ProposalCard> proposals =
+                      snapshot.data.map((i) => buildProposal(i)).toList();
+                  return ListView(
+                    children: proposals,
+                  );
+                }
+            }
+            return Center(
+              child: Loader(),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'unq1',

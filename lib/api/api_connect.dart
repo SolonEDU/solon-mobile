@@ -3,18 +3,18 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:Solon/api/message.dart';
-import 'package:Solon/api/user.dart';
+// import 'package:Solon/api/user.dart';
 import 'package:Solon/api/proposal.dart';
-import 'package:Solon/api/comment.dart';
-import 'package:Solon/api/event.dart';
-import 'package:Solon/api/forumpost.dart';
+// import 'package:Solon/api/comment.dart';
+// import 'package:Solon/api/event.dart';
+// import 'package:Solon/api/forumpost.dart';
 import 'package:Solon/api/vote.dart';
 import 'package:Solon/api/register.dart';
 import 'package:Solon/api/login.dart';
-import 'package:Solon/api/encryptPassword.dart';
+// import 'package:Solon/api/encryptPassword.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 // import "package:pointycastle/export.dart";
 // import 'package:flutter_string_encryption/flutter_string_encryption.dart';
 
@@ -107,33 +107,12 @@ class APIConnect {
     String email,
     String password,
   ) async {
-    // print(await EncryptPassword.loadPublicKey());
-    // final privKeyPem = await EncryptPassword.loadPrivateKey();
-    // print(privKeyPem);
-    // final privKey = await RsaKeyHelper.parsePrivateKeyFromPem(privKeyPem);
-    // print(privKey);
-    // final privKey = await RsaKeyHelper.parsePrivateKeyFromPem(await EncryptPassword.loadPrivateKey());
-    // final passwordEncrypted = await RsaKeyHelper.encrypt(password, privKey);
-    // print(passwordEncrypted);
-    // print(await RsaKeyHelper.encrypt(password, privKey));
-    // var encryptPW = new EncryptPassword();
-    // print(encryptPW.encryptPassword(password));
-    // final cryptor = new PlatformStringCryptor();
-    // final String salt = await cryptor.generateSalt();
-    // final String key = await rootBundle.loadString('assets/passwordKey');
-    // print(key);
-    // final String encrypted = await cryptor.encrypt(password, key);
-    // print(password);
-    // print(encrypted);
-    // final String decrypted = await cryptor.decrypt(encrypted, key);
-    // print(decrypted);
     Register newUser = new Register(
       lang: lang,
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: password,
-      // password: Password.hash(password, new PBKDF2()),
     );
     final response = await http.post(
       "$_url/users/register",
