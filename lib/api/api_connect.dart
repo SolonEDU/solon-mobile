@@ -155,7 +155,7 @@ class APIConnect {
     return json.decode(response.body);
   }
 
-  static Future<Vote> connectVotes(int pid, int uid, int value) async {
+  static Future<Map<String, dynamic>> connectVotes(int pid, int uid, int value) async {
     Vote vote = new Vote(
       pid: pid,
       uid: uid,
@@ -169,5 +169,6 @@ class APIConnect {
         HttpHeaders.contentTypeHeader: "application/json",
       },
     );
+    return json.decode(response.body);
   }
 }

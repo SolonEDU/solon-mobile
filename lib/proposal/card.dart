@@ -11,6 +11,7 @@ class ProposalCard extends StatefulWidget {
   final int pid;
   final String title;
   final String description;
+  final int uid;
   // final double daysLeft;
   // final DateTime endDate;
   // final DocumentSnapshot doc;
@@ -23,6 +24,7 @@ class ProposalCard extends StatefulWidget {
     this.pid,
     this.title,
     this.description,
+    this.uid,
     // this.daysLeft,
     // this.endDate,
     // this.numYea,
@@ -63,6 +65,7 @@ class _ProposalCardState extends State<ProposalCard> {
               pid: widget.pid,
               title: widget.title,
               description: widget.description,
+              uidUser: widget.uid,
               // widget.daysLeft,
               // widget.endDate,
               // widget.numYea,

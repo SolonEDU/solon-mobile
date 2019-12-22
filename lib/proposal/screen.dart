@@ -12,7 +12,6 @@ import 'package:translator/translator.dart';
 class ProposalsScreen extends StatefulWidget {
   final int uid;
   ProposalsScreen({Key key, this.uid}) : super(key: key);
-
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();
 }
@@ -102,9 +101,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       key: UniqueKey(),
       title: data.title,
       description: data.description,
+      uid: widget.uid,
+      pid: data.pid,  
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
