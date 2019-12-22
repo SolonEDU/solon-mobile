@@ -36,4 +36,5 @@
 
     * clean up import mess
     * add back button to auth pages
+    * reformat sign in page
 

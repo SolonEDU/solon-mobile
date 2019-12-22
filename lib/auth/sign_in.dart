@@ -40,31 +40,45 @@ class _LoginPageState extends State<LoginPage> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 children: <Widget>[
-                  TextFormField(
-                    // key: _formKey,
-                    validator: (input) {
-                      if (input.isEmpty) {
-                        return 'Please type an email';
-                      }
-                      return null;
-                    },
-                    onSaved: (input) => _email = input,
-                    decoration: InputDecoration(
-                        labelText:
-                            AppLocalizations.of(context).translate('email')),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10, left: 20),
+                    child: Text(
+                      AppLocalizations.of(context).translate('email'),
+                      textScaleFactor: 1.5,
+                    ),
                   ),
-                  TextFormField(
-                    onSaved: (input) => _password = input,
-                    decoration: InputDecoration(
-                        labelText:
-                            AppLocalizations.of(context).translate('password')),
-                    obscureText: true,
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    child: TextFormField(
+                      // key: _formKey,
+                      validator: (input) {
+                        if (input.isEmpty) {
+                          return 'Please type an email';
+                        }
+                        return null;
+                      },
+                      onSaved: (input) => _email = input,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      AppLocalizations.of(context).translate('password'),
+                      textScaleFactor: 1.5,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    child: TextFormField(
+                      onSaved: (input) => _password = input,
+                      obscureText: true,
+                    ),
                   ),
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 40),
+              margin: const EdgeInsets.only(top: 25),
               child: Align(
                 child: SizedBox(
                   height: 55,
@@ -93,12 +107,13 @@ class _LoginPageState extends State<LoginPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      print('$_email $_password');
+      // print('$_email $_password');
       final responseMessage = await APIConnect.loginUser(_email, _password);
-      print(responseMessage["message"]);
+      // print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
+        FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,
           MaterialPageRoute(
