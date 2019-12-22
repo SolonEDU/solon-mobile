@@ -18,51 +18,53 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
-      // backgroundColor: Color(0xDD5050D0),
+      backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: logo,
-              height: 200,
-              margin: const EdgeInsets.only(bottom: 40),
-            ),
-            ButtonTheme(
-              minWidth: 155,
-              height: 55,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30),
-                ),
-                onPressed: navigateToSignIn,
-                color: Color(0xFF98D2EB),
-                child: Text(
-                  "Sign In",
-                  textScaleFactor: 1.5,
-                ), // AppLocalizations.of(context).translate('signin'),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: logo,
+                height: 200,
+                margin: const EdgeInsets.only(bottom: 40),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: ButtonTheme(
+              ButtonTheme(
                 minWidth: 155,
                 height: 55,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30),
                   ),
-                  onPressed: navigateToSignUp,
+                  onPressed: navigateToSignIn,
                   color: Color(0xFF98D2EB),
                   child: Text(
-                    "Sign Up",
+                    "Sign In",
                     textScaleFactor: 1.5,
-                  ), // AppLocalizations.of(context).translate('signup')
+                  ), // AppLocalizations.of(context).translate('signin'),
                 ),
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: ButtonTheme(
+                  minWidth: 155,
+                  height: 55,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30),
+                    ),
+                    onPressed: navigateToSignUp,
+                    color: Color(0xFF98D2EB),
+                    child: Text(
+                      "Register",
+                      textScaleFactor: 1.5,
+                    ), // AppLocalizations.of(context).translate('signup')
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

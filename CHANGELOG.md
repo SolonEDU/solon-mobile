@@ -39,7 +39,11 @@
 2019-12-22 Eric Lau
 
     * clean up import mess
+    * add back button to auth pages
+    * reformat sign in page
+    * toggle password obscurity
     * remove app side encryption
+    * fix rendering overflow on pop to welcome
 
 2019-12-22 ray. lee.
 

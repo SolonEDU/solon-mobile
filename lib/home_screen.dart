@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           future: APIConnect.connectRoot(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text("${snapshot.data.message} Your uid is: ${uid}");
+              return Text("${snapshot.data.message} Your uid is: $uid");
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }

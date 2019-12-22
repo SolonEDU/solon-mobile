@@ -11,84 +11,100 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   String _email, _password;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var logoAsset = new AssetImage('images/solon.png');
-    var logo = new Image(
-      image: logoAsset,
-      fit: BoxFit.fitHeight,
-    );
-
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: <Widget>[
-                  Container(
-                    child: logo,
-                    height: 150,
-                  ),
-                  TextFormField(
-                    // key: _formKey,
-                    validator: (input) {
-                      if (input.isEmpty) {
-                        return 'Please type an email';
-                      }
-                      return null;
-                    },
-                    onSaved: (input) => _email = input,
-                    decoration: InputDecoration(
-                        labelText:
-                            AppLocalizations.of(context).translate('email')),
-                  ),
-                  TextFormField(
-                    validator: (input) {
-                      if (input.isEmpty) {
-                        return 'Please type a password';
-                      }
-                      return null;
-                    },
-                    onSaved: (input) => _password = input,
-                    decoration: InputDecoration(
-                        labelText:
-                            AppLocalizations.of(context).translate('password')),
-                    obscureText: true,
-                  ),
-                ],
-              ),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 40),
-              child: Align(
-                child: SizedBox(
-                  height: 55,
-                  width: 155,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30),
+            color: Colors.black,
+            onPressed: () => {
+                  FocusScope.of(context).unfocus(),
+                  Navigator.pop(context),
+                }),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+      ),
+      body: Center(
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 10, left: 20),
+                child: Text(
+                  AppLocalizations.of(context).translate('email'),
+                  textScaleFactor: 1.5,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: TextFormField(
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return 'Please type an email';
+                    }
+                    return null;
+                  },
+                  onSaved: (input) => _email = input,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: Text(
+                  AppLocalizations.of(context).translate('password'),
+                  textScaleFactor: 1.5,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: TextFormField(
+                  onSaved: (input) => _password = input,
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                    icon: Icon(Icons.remove_red_eye),
+                    onPressed: _toggle,
+                  )),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 25),
+                child: Align(
+                  child: SizedBox(
+                    height: 55,
+                    width: 155,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30),
+                      ),
+                      color: Color(0xFF98D2EB),
+                      onPressed: signIn,
+                      child: Text(
+                        "Sign In",
+                        textScaleFactor: 1.5,
+                      ), // AppLocalizations.of(context).translate('signin'),
                     ),
-                    color: Color(0xFF98D2EB),
-                    onPressed: signIn,
-                    child: Text(
-                      "Sign In",
-                      textScaleFactor: 1.5,
-                    ), // AppLocalizations.of(context).translate('signin'),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -98,12 +114,13 @@ class _LoginPageState extends State<LoginPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      print('${_email} ${_password}');
+      print('$_email $_password');
       final responseMessage = await APIConnect.loginUser(_email, _password);
-      print(responseMessage["message"]);
+      // print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
+        FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,
           MaterialPageRoute(
