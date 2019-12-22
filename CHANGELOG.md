@@ -37,3 +37,4 @@
     * add back button to auth pages
     * reformat sign in page
     * toggle password obscurity
+    * remove app side encryption
