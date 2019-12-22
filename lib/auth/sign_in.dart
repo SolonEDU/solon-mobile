@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart';
+import 'package:Solon/api/api_connect.dart';
+// import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,7 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // String _email, _password;
+  String _email, _password;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -46,13 +48,13 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                    // onSaved: (input) => _email = input,
+                    onSaved: (input) => _email = input,
                     decoration: InputDecoration(
                         labelText:
                             AppLocalizations.of(context).translate('email')),
                   ),
                   TextFormField(
-                    // onSaved: (input) => _password = input,
+                    onSaved: (input) => _password = input,
                     decoration: InputDecoration(
                         labelText:
                             AppLocalizations.of(context).translate('password')),
@@ -88,40 +90,47 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> signIn() async {
-    // final formState = _formKey.currentState;
-    // if (formState.validate()) {
-    //   formState.save();
-    //   try {
-    //     AuthResult result = await FirebaseAuth.instance
-    //         .signInWithEmailAndPassword(email: _email, password: _password);
-    //     FirebaseUser user = result.user;
-    //     if (!user.isEmailVerified) {
-    //       _showToast('Email is not verified');
-    //     } else {
-    //       Firestore.instance
-    //           .collection('users')
-    //           .document(user.uid)
-    //           .get()
-    //           .then((DocumentSnapshot ds) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Main(),
-      ),
-    );
-    //       });
-    //     }
-    //   } catch (e) {
-    //     _showToast(e.message);
-    //   }
-    // }
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      print('$_email $_password');
+      final responseMessage = await APIConnect.loginUser(_email, _password);
+      print(responseMessage["message"]);
+      if (responseMessage["message"] == "Error") {
+        _showToast(responseMessage["error"]["errorMessage"]);
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Main(),
+          ),
+        );
+      }
+      //   try {
+      //     AuthResult result = await FirebaseAuth.instance
+      //         .signInWithEmailAndPassword(email: _email, password: _password);
+      //     FirebaseUser user = result.user;
+      //     if (!user.isEmailVerified) {
+      //       _showToast('Email is not verified');
+      //     } else {
+      //       Firestore.instance
+      //           .collection('users')
+      //           .document(user.uid)
+      //           .get()
+      //           .then((DocumentSnapshot ds) {
+      //       });
+      //     }
+      //   } catch (e) {
+      //     _showToast(e.message);
+      //   }
+    }
   }
 
-  // void _showToast(String message) {
-  //   _scaffoldKey.currentState.showSnackBar(
-  //     SnackBar(
-  //       content: Text(message),
-  //     ),
-  //   );
-  // }
+  void _showToast(String message) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
 }

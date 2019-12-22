@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Solon/auth/sign_in.dart';
+// import 'dart:convert';
+
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _authpin, _name, _email, _password;
+  String _firstName, _lastName, _email, _password;
   String _nativeLanguage = 'English';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -64,25 +64,24 @@ class _SignUpPageState extends State<SignUpPage> {
                 }).toList(),
               ),
               TextFormField(
-                  validator: (input) {
-                    if (input.isEmpty) {
-                      return 'Please enter the authentication pin provided to you by email';
-                    }
-                    return null;
-                  },
-                  onSaved: (input) => _authpin = input,
-                  decoration: InputDecoration(labelText: 'Authentication Pin')),
-              TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
-                    return 'Please enter your full name';
+                    return 'Please enter your first name';
                   }
                   return null;
                 },
-                onSaved: (input) => _name = input,
-                decoration: InputDecoration(
-                    labelText:
-                        AppLocalizations.of(context).translate('fullName')),
+                onSaved: (input) => _firstName = input,
+                decoration: InputDecoration(labelText: 'First Name'),
+              ),
+              TextFormField(
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Please enter your last name';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _lastName = input,
+                decoration: InputDecoration(labelText: 'Last Name'),
               ),
               TextFormField(
                 validator: (input) {
@@ -95,6 +94,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 decoration: InputDecoration(
                     labelText: AppLocalizations.of(context).translate('email')),
               ),
+              // TextFormField(
+              //   validator: (input) {
+              //     if (input.isEmpty) {
+              //       return 'Please enter the authentication pin provided to you by email';
+              //     }
+              //     return null;
+              //   },
+              //   onSaved: (input) => _authpin = input,
+              //   decoration: InputDecoration(labelText: 'Authentication Pin')
+              // ),
               TextFormField(
                 validator: (input) {
                   if (input.length < 6) {
@@ -121,62 +130,53 @@ class _SignUpPageState extends State<SignUpPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      Firestore.instance
-          .collection('authpins')
-          .document(_authpin)
-          .get()
-          .then((DocumentSnapshot ds) async {
-        if (ds.data == null)
-          _showToast("Invalid authentication pin");
-        else {
-          if (ds.data['uid'] != '0')
-            _showToast(
-                "An account was already created with the authentication pin");
-          else {
-            if (ds.data['email'] != _email)
-              _showToast(
-                  "Please use the email that the authentication pin was sent to");
-            else {
-              try {
-                AuthResult result = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: _email, password: _password);
-                FirebaseUser user = result.user;
-                user.sendEmailVerification();
-                // add user to firestore as a parent
-                Firestore.instance
-                    .collection('authpins')
-                    .document(_authpin)
-                    .updateData(
-                  {
-                    'uid': user.uid,
-                  },
-                );
-                Firestore.instance
-                    .collection('users')
-                    .document(user.uid)
-                    .setData(
-                  {
-                    'email': user.email,
-                    'name': _name,
-                    'role': 'parent',
-                    'nativeLanguage': _nativeLanguage,
-                  },
-                );
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ),
-                );
-              } catch (e) {
-                print(e.message);
-              }
-            }
-          }
-        }
-      });
+      // print(_password);
+      final responseMessage = await APIConnect.registerUser(
+          _nativeLanguage, _firstName, _lastName, _email, _password);
+      print(responseMessage["message"]);
+      if (responseMessage["message"] == "Error") {
+        _showToast(responseMessage["error"]["errorMessage"]);
+      } else {
+        _showToast(responseMessage["message"]);
+      }
+      // Firestore.instance.collection('authpins').document(_authpin).get().then((DocumentSnapshot ds) async {
+      //   if (ds.data == null) _showToast("Invalid authentication pin");
+      //   else {
+      //     if (ds.data['uid'] != '0') _showToast("An account was already created with the authentication pin");
+      //     else {
+      //     if (ds.data['email'] != _email) _showToast("Please use the email that the authentication pin was sent to");
+      //       else {
+      //         try {
+      //           AuthResult result = await FirebaseAuth.instance
+      //               .createUserWithEmailAndPassword(email: _email, password: _password);
+      //           FirebaseUser user = result.user;
+      //           user.sendEmailVerification();
+      //           // add user to firestore as a parent
+      //           Firestore.instance.collection('authpins').document(_authpin).updateData(
+      //             {
+      //               'uid': user.uid,
+      //             },
+      //           );
+      //           Firestore.instance.collection('users').document(user.uid).setData(
+      //             {
+      //               'email': user.email,
+      //               'name': _name,
+      //               'role': 'parent',
+      //               'nativeLanguage': _nativeLanguage,
+      //             },
+      //           );
+      //           Navigator.of(context).pop();
+      //           Navigator.pushReplacement(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => LoginPage()),
+      //           );
+      //         } catch (e) {
+      //           print(e.message);
+      //         }
+      //       }
+      //     }
+      //   }
+      // });
     }
   }
 
