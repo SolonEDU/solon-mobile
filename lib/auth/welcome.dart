@@ -18,7 +18,7 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
-      // backgroundColor: Color(0xDD5050D0),
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +56,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   onPressed: navigateToSignUp,
                   color: Color(0xFF98D2EB),
                   child: Text(
-                    "Sign Up",
+                    "Register",
                     textScaleFactor: 1.5,
                   ), // AppLocalizations.of(context).translate('signup')
                 ),

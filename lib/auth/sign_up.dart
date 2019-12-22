@@ -17,8 +17,19 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          color: Colors.black,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+      ),
       body: Form(
           key: _formKey,
           child: ListView(
@@ -37,7 +48,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     _nativeLanguage = input;
                   });
                 },
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('language')),
+                decoration: InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context).translate('language')),
                 items: <String>[
                   'English',
                   'Chinese (Simplified)',
@@ -51,15 +64,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 }).toList(),
               ),
               TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please enter the authentication pin provided to you by email';
-                  }
-                  return null;
-                },
-                onSaved: (input) => _authpin = input,
-                decoration: InputDecoration(labelText: 'Authentication Pin')
-              ),
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return 'Please enter the authentication pin provided to you by email';
+                    }
+                    return null;
+                  },
+                  onSaved: (input) => _authpin = input,
+                  decoration: InputDecoration(labelText: 'Authentication Pin')),
               TextFormField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -68,7 +80,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _name = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('fullName')),
+                decoration: InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context).translate('fullName')),
               ),
               TextFormField(
                 validator: (input) {
@@ -78,7 +92,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _email = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('email')),
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context).translate('email')),
               ),
               TextFormField(
                 validator: (input) {
@@ -88,7 +103,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _password = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
+                decoration: InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context).translate('password')),
                 obscureText: true,
               ),
               RaisedButton(
@@ -104,25 +121,41 @@ class _SignUpPageState extends State<SignUpPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      Firestore.instance.collection('authpins').document(_authpin).get().then((DocumentSnapshot ds) async {
-        if (ds.data == null) _showToast("Invalid authentication pin");
+      Firestore.instance
+          .collection('authpins')
+          .document(_authpin)
+          .get()
+          .then((DocumentSnapshot ds) async {
+        if (ds.data == null)
+          _showToast("Invalid authentication pin");
         else {
-          if (ds.data['uid'] != '0') _showToast("An account was already created with the authentication pin");
+          if (ds.data['uid'] != '0')
+            _showToast(
+                "An account was already created with the authentication pin");
           else {
-          if (ds.data['email'] != _email) _showToast("Please use the email that the authentication pin was sent to");
+            if (ds.data['email'] != _email)
+              _showToast(
+                  "Please use the email that the authentication pin was sent to");
             else {
               try {
                 AuthResult result = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(email: _email, password: _password);
+                    .createUserWithEmailAndPassword(
+                        email: _email, password: _password);
                 FirebaseUser user = result.user;
                 user.sendEmailVerification();
                 // add user to firestore as a parent
-                Firestore.instance.collection('authpins').document(_authpin).updateData(
+                Firestore.instance
+                    .collection('authpins')
+                    .document(_authpin)
+                    .updateData(
                   {
                     'uid': user.uid,
                   },
                 );
-                Firestore.instance.collection('users').document(user.uid).setData(
+                Firestore.instance
+                    .collection('users')
+                    .document(user.uid)
+                    .setData(
                   {
                     'email': user.email,
                     'name': _name,
@@ -133,7 +166,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
                 );
               } catch (e) {
                 print(e.message);

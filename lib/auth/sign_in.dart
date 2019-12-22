@@ -15,18 +15,22 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var logoAsset = new AssetImage('images/solon.png');
-    var logo = new Image(
-      image: logoAsset,
-      fit: BoxFit.fitHeight,
-    );
-
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          color: Colors.black,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+      ),
       body: Center(
         child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
           children: <Widget>[
             Form(
               key: _formKey,
@@ -34,10 +38,6 @@ class _LoginPageState extends State<LoginPage> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 children: <Widget>[
-                  Container(
-                    child: logo,
-                    height: 150,
-                  ),
                   TextFormField(
                     // key: _formKey,
                     validator: (input) {

@@ -2,15 +2,15 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:Solon/api/message.dart';
-import 'package:Solon/api/user.dart';
+// import 'package:Solon/api/user.dart';
 import 'package:Solon/api/proposal.dart';
-import 'package:Solon/api/comment.dart';
-import 'package:Solon/api/event.dart';
-import 'package:Solon/api/forumpost.dart';
-import 'package:Solon/api/vote.dart';
+// import 'package:Solon/api/comment.dart';
+// import 'package:Solon/api/event.dart';
+// import 'package:Solon/api/forumpost.dart';
+// import 'package:Solon/api/vote.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class APIConnect {
   static String _url = "https://api.solonedu.com";
@@ -77,10 +77,10 @@ class APIConnect {
         : throw Exception('Message field in proposal object not found.');
   }
 
-  static Future<Vote> connectVotes() async {
-    final response = await http.get(
-      "$_url/votes",
-      headers: {HttpHeaders.authorizationHeader: await loadHeader()},
-    );
-  }
+  // static Future<Vote> connectVotes() async {
+  //   final response = await http.get(
+  //     "$_url/votes",
+  //     headers: {HttpHeaders.authorizationHeader: await loadHeader()},
+  //   );
+  // }
 }
