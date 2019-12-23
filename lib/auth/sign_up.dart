@@ -204,7 +204,6 @@ class _SignUpPageState extends State<SignUpPage> {
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
-        // _showToast(responseMessage["message"]);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -212,44 +211,6 @@ class _SignUpPageState extends State<SignUpPage> {
           )
         );
       }
-      // Firestore.instance.collection('authpins').document(_authpin).get().then((DocumentSnapshot ds) async {
-      //   if (ds.data == null) _showToast("Invalid authentication pin");
-      //   else {
-      //     if (ds.data['uid'] != '0') _showToast("An account was already created with the authentication pin");
-      //     else {
-      //     if (ds.data['email'] != _email) _showToast("Please use the email that the authentication pin was sent to");
-      //       else {
-      //         try {
-      //           AuthResult result = await FirebaseAuth.instance
-      //               .createUserWithEmailAndPassword(email: _email, password: _password);
-      //           FirebaseUser user = result.user;
-      //           user.sendEmailVerification();
-      //           // add user to firestore as a parent
-      //           Firestore.instance.collection('authpins').document(_authpin).updateData(
-      //             {
-      //               'uid': user.uid,
-      //             },
-      //           );
-      //           Firestore.instance.collection('users').document(user.uid).setData(
-      //             {
-      //               'email': user.email,
-      //               'name': _name,
-      //               'role': 'parent',
-      //               'nativeLanguage': _nativeLanguage,
-      //             },
-      //           );
-      //           Navigator.of(context).pop();
-      //           Navigator.pushReplacement(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => LoginPage()),
-      //           );
-      //         } catch (e) {
-      //           print(e.message);
-      //         }
-      //       }
-      //     }
-      //   }
-      // });
     }
   }
 

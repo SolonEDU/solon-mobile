@@ -4,8 +4,6 @@ class Proposal {
   final String description;
   final String startTime;
   final String endTime;
-  // final DateTime startTime;
-  // final DateTime endTime;
   final int uid;
   final int numYes;
   final int numNo;
@@ -41,8 +39,6 @@ class Proposal {
     map['starttime'] = startTime;
     map['endtime'] = endTime;
     map['uid'] = uid;
-    print("$title $description $startTime $endTime $uid");
-    print("MAP $map");
     return map;
   }
 }

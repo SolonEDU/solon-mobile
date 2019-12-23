@@ -102,9 +102,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       title: data.title,
       description: data.description,
       uid: widget.uid,
-      pid: data.pid,  
+      pid: data.pid,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

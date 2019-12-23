@@ -125,7 +125,6 @@ class _LoginPageState extends State<LoginPage> {
       formState.save();
       print('$_email $_password');
       final responseMessage = await APIConnect.loginUser(_email, _password);
-      // print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
@@ -137,23 +136,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }
-      //   try {
-      //     AuthResult result = await FirebaseAuth.instance
-      //         .signInWithEmailAndPassword(email: _email, password: _password);
-      //     FirebaseUser user = result.user;
-      //     if (!user.isEmailVerified) {
-      //       _showToast('Email is not verified');
-      //     } else {
-      //       Firestore.instance
-      //           .collection('users')
-      //           .document(user.uid)
-      //           .get()
-      //           .then((DocumentSnapshot ds) {
-      //       });
-      //     }
-      //   } catch (e) {
-      //     _showToast(e.message);
-      //   }
     }
   }
 

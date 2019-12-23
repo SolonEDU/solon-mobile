@@ -53,6 +53,7 @@
 2019-12-23 Eric Lau
 
     * display forum cards
+    * generalize getting headers
 
 2019-12-23 ray. lee.
 
