@@ -122,20 +122,20 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
   _onYeaTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? yea ${_isButtonTapped}');
+    print('is button tapped? yea $_isButtonTapped');
     vote(widget.pid, widget.uidUser, 1);
   }
 
   _onNayTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? nay ${_isButtonTapped}');
+    print('is button tapped? nay $_isButtonTapped');
     vote(widget.pid, widget.uidUser, 0);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('is button tapped? build ${_isButtonTapped}');
+    print('is button tapped? build $_isButtonTapped');
     return ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
       RaisedButton(
         color: Colors.red,

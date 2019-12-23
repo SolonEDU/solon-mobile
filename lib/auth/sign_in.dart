@@ -29,14 +29,15 @@ class _LoginPageState extends State<LoginPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-            ),
-            color: Colors.black,
-            onPressed: () => {
-                  FocusScope.of(context).unfocus(),
-                  Navigator.pop(context),
-                }),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          color: Colors.black,
+          onPressed: () => {
+            FocusScope.of(context).unfocus(),
+            Navigator.pop(context),
+          },
+        ),
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
@@ -53,8 +54,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   validator: (input) {
                     if (input.isEmpty) {
                       return 'Please type your email';
@@ -72,8 +74,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
+                  keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
                       return 'Please type your password';

@@ -44,10 +44,15 @@
     * toggle password obscurity
     * remove app side encryption
     * fix rendering overflow on pop to welcome
+    * style sign up page
 
 2019-12-22 ray. lee.
 
     * made voting semi-work
+
+2019-12-23 Eric Lau
+
+    * display forum cards
 
 2019-12-23 ray. lee.
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:Solon/app_localizations.dart';
 // import 'dart:convert'; // for jsonDecode
 
-import 'package:Solon/api/api_connect.dart';
+// import 'package:Solon/api/api_connect.dart';
 import './page.dart';
 
 class ProposalCard extends StatefulWidget {
@@ -77,11 +77,6 @@ class _ProposalCardState extends State<ProposalCard> {
               title: widget.title,
               description: widget.description,
               uidUser: widget.uid,
-              // widget.daysLeft,
-              // widget.endDate,
-              // widget.numYea,
-              // widget.numNay,
-              // getCreator(),
             ),
           ),
         );
