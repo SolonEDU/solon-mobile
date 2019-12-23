@@ -17,14 +17,14 @@ class APIConnect {
   static String _url = "https://api.solonedu.com";
 
   //for StreamBuilder
-  final StreamController<List<Proposal>> _proposals =
-      StreamController<List<Proposal>>();
+  // final StreamController<List<Proposal>> _proposals =
+  //     StreamController<List<Proposal>>();
 
-  final StreamController<List<ForumPost>> _forumposts =
-      StreamController<List<ForumPost>>();
+  // final StreamController<List<ForumPost>> _forumposts =
+  //     StreamController<List<ForumPost>>();
 
-  Stream<List<Proposal>> get proposals => _proposals.stream;
-  Stream<List<ForumPost>> get forumposts => _forumposts.stream;
+  // Stream<List<Proposal>> get proposals => _proposals.stream;
+  // Stream<List<ForumPost>> get forumposts => _forumposts.stream;
 
   static Future<String> loadHeader() async {
     return await rootBundle.loadString('assets/secret');
