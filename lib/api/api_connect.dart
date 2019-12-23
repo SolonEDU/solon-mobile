@@ -1,4 +1,4 @@
-// import 'package:Solon/api/rsa_pem.dart';
+import 'package:Solon/api/forumpost.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -7,16 +7,11 @@ import 'package:Solon/api/message.dart';
 import 'package:Solon/api/proposal.dart';
 // import 'package:Solon/api/comment.dart';
 // import 'package:Solon/api/event.dart';
-// import 'package:Solon/api/forumpost.dart';
 import 'package:Solon/api/vote.dart';
 import 'package:Solon/api/register.dart';
 import 'package:Solon/api/login.dart';
-// import 'package:Solon/api/encryptPassword.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-// import 'package:intl/intl.dart';
-// import "package:pointycastle/export.dart";
-// import 'package:flutter_string_encryption/flutter_string_encryption.dart';
 
 class APIConnect {
   static String _url = "https://api.solonedu.com";
@@ -24,7 +19,12 @@ class APIConnect {
   //for StreamBuilder
   final StreamController<List<Proposal>> _proposals =
       StreamController<List<Proposal>>();
+
+  final StreamController<List<ForumPost>> _forumposts =
+      StreamController<List<ForumPost>>();
+
   Stream<List<Proposal>> get proposals => _proposals.stream;
+  Stream<List<ForumPost>> get forumposts => _forumposts.stream;
 
   static Future<String> loadHeader() async {
     return await rootBundle.loadString('assets/secret');
@@ -44,29 +44,21 @@ class APIConnect {
       headers: {HttpHeaders.authorizationHeader: await loadHeader()},
     );
 
-    // await Future.delayed(Duration(seconds: 1));
-
     int status = response.statusCode;
     List collection = json.decode(response.body)['proposals'];
     List<Proposal> _proposals =
         collection.map((json) => Proposal.fromJson(json)).toList();
     print(status);
     return _proposals;
-    // return status == 200
-    //     ? _proposals
-    //     : throw Exception('failed to retrieve proposals');
   }
 
-  //for StreamBuilder
   static Stream<List<Proposal>> get proposalListView async* {
     yield await connectProposals();
   }
 
-  // static Future<Message> deleteProposal(pid) async {
-  //   final response = await http.post("INSERT DELETE ROUTE HERE");
-  //   int status = response.statusCode;
-  //   return status == 200 ? Message.fromJson(json.decode(response.body)['message']) : throw Exception('data not found');
-  // }
+  static Stream<List<ForumPost>> get forumListView async* {
+    yield await connectForumPosts();
+  }
 
   static Future<Message> addProposal(
     String title,
@@ -155,7 +147,8 @@ class APIConnect {
     return json.decode(response.body);
   }
 
-  static Future<Map<String, dynamic>> connectVotes(int pid, int uid, int value) async {
+  static Future<Map<String, dynamic>> connectVotes(
+      int pid, int uid, int value) async {
     Vote vote = new Vote(
       pid: pid,
       uid: uid,
@@ -170,5 +163,19 @@ class APIConnect {
       },
     );
     return json.decode(response.body);
+  }
+
+  static Future<List<ForumPost>> connectForumPosts() async {
+    final http.Response response = await http.get(
+      "$_url/forumposts",
+      headers: {HttpHeaders.authorizationHeader: await loadHeader()},
+    );
+
+    int status = response.statusCode;
+    List collection = json.decode(response.body)['forumposts'];
+    List<ForumPost> _proposals =
+        collection.map((json) => ForumPost.fromJson(json)).toList();
+    print(status);
+    return _proposals;
   }
 }

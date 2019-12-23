@@ -49,3 +49,7 @@
 2019-12-22 ray. lee.
 
     * made voting semi-work
+
+2019-12-23 Eric Lau
+
+    * display forum cards
