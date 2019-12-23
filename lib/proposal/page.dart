@@ -113,15 +113,6 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
   //boolean value to determine whether button is tapped
   bool _isButtonTapped = false;
 
-  Future<Map<String, dynamic>> getVote() async {
-    final responseMessage = await APIConnect.connectVotes(
-      'GET',
-      pid: widget.pid,
-      uidUser: widget.uidUser,
-    );
-    return responseMessage;
-  }
-
   Future<void> vote(int pid, int uidUser, int voteVal) async {
     APIConnect.connectVotes('POST',
         pid: pid, uidUser: uidUser, voteVal: voteVal);
