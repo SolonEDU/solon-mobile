@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/scheduler.dart';
 // import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
@@ -14,11 +14,19 @@ import 'package:translator/translator.dart';
 // import './comment.dart';
 
 class PostPage extends StatefulWidget {
+  final int fid;
   final String title;
   final String description;
-  final DateTime time;
-  final DocumentSnapshot doc;
-  PostPage(this.title, this.description, this.time, this.doc);
+  final int uid;
+  // final DateTime time;
+  // final DocumentSnapshot doc;
+  PostPage({
+    Key key,
+    this.fid,
+    this.title,
+    this.description,
+    this.uid,
+  }) : super(key: key);
 
   _PostPageState createState() => _PostPageState();
 }

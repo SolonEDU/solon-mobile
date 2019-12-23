@@ -30,3 +30,31 @@
     * added Map functions
     * converted ProposalPage into Stateful Widget
     * implemented making proposals through POST request
+
+2019-12-21 ray. lee.
+
+    * made register and login work
+    * worked on encrypting passwords but removed this feature upon kaz's reminder that we are connecting through HTTPS anyways
+
+2019-12-22 Eric Lau
+
+    * clean up import mess
+    * add back button to auth pages
+    * reformat sign in page
+    * toggle password obscurity
+    * remove app side encryption
+    * fix rendering overflow on pop to welcome
+    * style sign up page
+
+2019-12-22 ray. lee.
+
+    * made voting semi-work
+
+2019-12-23 Eric Lau
+
+    * display forum cards
+
+2019-12-23 ray. lee.
+
+    * made voting secure (i think), now the button bar goes null (grays out) upon pressing either 'Yea' or 'Nay'. if the phone lags out and a second vote request went thru, kaz's api check (prevents duplicate voting records in his db votes table) will catch the error. after a user has voted on a proposal, if they choose to pop the page and go back, they no longer see the voting buttons and only see their past vote choice.
+    * created a new file to replace proposal page dart file to clean things up; im pushing both files then deleting the old file and then pushing so the old file stays on our commit history record.

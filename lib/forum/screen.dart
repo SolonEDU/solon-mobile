@@ -1,3 +1,8 @@
+import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/api/forumpost.dart';
+import 'package:Solon/forum/card.dart';
+// import 'package:Solon/forum/create.dart';
+import 'package:Solon/loader.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
@@ -8,6 +13,9 @@ import 'package:translator/translator.dart';
 // import '../loader.dart';
 
 class ForumScreen extends StatefulWidget {
+  final int uid;
+  ForumScreen({Key key, this.uid}) : super(key: key);
+
   @override
   _ForumScreenState createState() => _ForumScreenState();
 }
@@ -82,51 +90,48 @@ class _ForumScreenState extends State<ForumScreen> {
   //   );
   // }
 
+  PostCard buildPostCard(data) {
+    return PostCard(
+      key: UniqueKey(),
+      title: data.title,
+      description: data.description,
+      uid: data.uid,
+      fid: data.fid,
+    );
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
-    // return StreamBuilder<QuerySnapshot>(
-    //   stream: db
-    //       .collection('forum')
-    //       // .orderBy('eventDate', descending: false)
-    //       .snapshots(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.waiting:
-    //         return Scaffold(
-    //           body: Center(
-    //             child: Loader(),
-    //           ),
-    //         );
-    //       default:
-    //         return Scaffold(
-    //           body: Center(
-    //             child: ListView(
-    //               padding: EdgeInsets.all(8),
-    //               children: <Widget>[
-    //                 Column(
-    //                   children: snapshot.data.documents
-    //                       .map((doc) => buildPostCard(doc))
-    //                       .toList(),
-    //                 )
-    //               ],
-    //             ),
-    //           ),
-    //           floatingActionButton: FloatingActionButton(
-    //             heroTag: 'unq1',
-    //             child: Icon(Icons.add),
-    //             onPressed: () => {
-    //               Navigator.push(
-    //                 context,
-    //                 MaterialPageRoute(
-    //                     builder: (context) => CreatePost(_addPost)),
-    //               )
-    //             },
-    //           ),
-    //         );
-    //     }
-    //   },
-    // );
+    return Scaffold(
+      body: StreamBuilder<List<ForumPost>>(
+        stream: APIConnect.forumListView,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Center(
+                child: Loader(),
+              );
+            case ConnectionState.waiting:
+              return Center(
+                child: Loader(),
+              );
+            case ConnectionState.active:
+              return Center(
+                child: Loader(),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                List<PostCard> forumposts =
+                  snapshot.data.map((i) => buildPostCard(i)).toList();
+                return ListView(
+                  children: forumposts,
+                );
+              }
+          }
+          return Center(
+            child: Loader(),
+          );
+        },
+      ),
+    );
   }
 }

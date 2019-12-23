@@ -6,7 +6,8 @@ import 'package:Solon/api/message.dart';
 import 'package:Solon/loader.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key key}) : super(key: key);
+  final int uid;
+  HomeScreen({Key key, this.uid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           future: APIConnect.connectRoot(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text("${snapshot.data.message}");
+              return Text("${snapshot.data.message} Your uid is: $uid");
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }

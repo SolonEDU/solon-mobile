@@ -1,31 +1,31 @@
 class Vote {
   final int vid;
   final int pid;
-  final int uid;
-  final int value;
+  final int uidUser;
+  final int voteVal;
 
   Vote({
     this.vid,
     this.pid,
-    this.uid,
-    this.value,
+    this.uidUser,
+    this.voteVal,
   });
 
   factory Vote.fromJson(Map<String, dynamic> json) {
     return Vote(
       vid: json['vid'],
       pid: json['pid'],
-      uid: json['uid'],
-      value: json['value'],
+      uidUser: json['uid'],
+      voteVal: json['value'],
     );
   }
 
   Map toVoteMap() {
     var map = new Map<String, dynamic>();
     map['pid'] = pid;
-    map['uid'] = uid;
-    map['value'] = value;
-    print("$pid $uid $value");
+    map['uid'] = uidUser;
+    map['value'] = voteVal;
+    print("$pid $uidUser $voteVal");
     print("MAP $map");
     return map;
   }

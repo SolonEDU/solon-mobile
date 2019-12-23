@@ -10,6 +10,8 @@ import 'package:translator/translator.dart';
 // import 'dart:convert'; // for jsonDecode
 
 class ProposalsScreen extends StatefulWidget {
+  final int uid;
+  ProposalsScreen({Key key, this.uid}) : super(key: key);
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();
 }
@@ -99,25 +101,45 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       key: UniqueKey(),
       title: data.title,
       description: data.description,
+      uid: widget.uid,
+      pid: data.pid,  
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder<List<Proposal>>(
-            future: APIConnect.connectProposals(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<ProposalCard> proposals =
-                    snapshot.data.map((i) => buildProposal(i)).toList();
-                return ListView(
-                  children: proposals,
+        child: StreamBuilder<List<Proposal>>(
+          //for StreamBuilder
+          stream: APIConnect.proposalListView,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Center(
+                  child: Loader(),
                 );
-              }
-              return Loader();
-            }),
+              case ConnectionState.waiting:
+                return Center(
+                  child: Loader(),
+                );
+              case ConnectionState.active:
+                return Center(
+                  child: Loader(),
+                );
+              case ConnectionState.done:
+                if (snapshot.hasData) {
+                  List<ProposalCard> proposals =
+                      snapshot.data.map((i) => buildProposal(i)).toList();
+                  return ListView(
+                    children: proposals,
+                  );
+                }
+            }
+            return Center(
+              child: Loader(),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'unq1',
