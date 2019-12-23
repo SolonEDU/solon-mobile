@@ -13,6 +13,7 @@ class ProposalCard extends StatefulWidget {
   final String title;
   final String description;
   final int uid;
+  final int totalVotes;
   // final double daysLeft;
   // final DateTime endDate;
   // final DocumentSnapshot doc;
@@ -26,6 +27,7 @@ class ProposalCard extends StatefulWidget {
     this.title,
     this.description,
     this.uid,
+    this.totalVotes,
     // this.daysLeft,
     // this.endDate,
     // this.numYea,
@@ -83,14 +85,26 @@ class _ProposalCardState extends State<ProposalCard> {
       },
       child: Center(
         child: Card(
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.account_balance),
+                leading: Column(
+                  children: <Widget>[
+                    Icon(Icons.gavel),
+                    Text(
+                      widget.totalVotes.toString(),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
+                ),
                 title: Text(widget.title),
                 subtitle: Text(widget.description),
               ),
+
               // Text('Voting on proposal ends on: ' +
               //     new DateFormat.yMMMMd("en_US")
               //         .add_jm()
