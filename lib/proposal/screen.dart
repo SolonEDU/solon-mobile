@@ -105,6 +105,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       uid: widget.uid,
       pid: data.pid,
       totalVotes: _totalVotes,  
+      endTime: data.endTime,
     );
   }
   @override

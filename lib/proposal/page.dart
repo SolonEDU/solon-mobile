@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 import 'package:Solon/loader.dart';
 
 class ProposalPage extends StatefulWidget {

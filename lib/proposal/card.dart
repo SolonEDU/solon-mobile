@@ -1,5 +1,6 @@
 // import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
+import 'package:date_format/date_format.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:intl/intl.dart';
 // import 'package:Solon/app_localizations.dart';
@@ -14,6 +15,7 @@ class ProposalCard extends StatefulWidget {
   final String description;
   final int uid;
   final int totalVotes;
+  final String endTime;
   // final double daysLeft;
   // final DateTime endDate;
   // final DocumentSnapshot doc;
@@ -28,6 +30,7 @@ class ProposalCard extends StatefulWidget {
     this.description,
     this.uid,
     this.totalVotes,
+    this.endTime,
     // this.daysLeft,
     // this.endDate,
     // this.numYea,
@@ -67,6 +70,11 @@ class _ProposalCardState extends State<ProposalCard> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime endTime = DateTime.parse(widget.endTime);
+    String endTimeParsed = formatDate(
+        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+    print(endTimeParsed);
+
     getCollection();
     // print(getVote(widget.pid, widget.uid));
     return GestureDetector(
@@ -102,7 +110,12 @@ class _ProposalCardState extends State<ProposalCard> {
                   ],
                 ),
                 title: Text(widget.title),
-                subtitle: Text(widget.description),
+                subtitle: Column(
+                  children: <Widget>[
+                    Text(widget.description),
+                    Text('Voting on proposal ends on: ' + endTimeParsed)
+                  ],
+                ),
               ),
 
               // Text('Voting on proposal ends on: ' +
