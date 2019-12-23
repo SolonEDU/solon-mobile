@@ -72,7 +72,7 @@ class _ProposalPageState extends State<ProposalPage> {
                 return ListView(
                   children: <Widget>[
                     Text(widget.description),
-                    Text(AppLocalizations.of(context).translate('votesFor')),
+                    // Text(AppLocalizations.of(context).translate('votesFor')),
                     snapshot.data['message'] == 'Error'
                         ? PreventDoubleTap(
                             pid: widget.pid,
@@ -139,14 +139,14 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
     return ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
       RaisedButton(
         color: Colors.red,
-        child: Text('Tap Once'),
+        child: Text('Yea'),
         onPressed: _isButtonTapped
             ? null
             : _onYeaTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
       ),
       RaisedButton(
         color: Colors.red,
-        child: Text('Tap Once'),
+        child: Text('Nay'),
         onPressed: _isButtonTapped
             ? null
             : _onNayTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
