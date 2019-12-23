@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
   final int fid;

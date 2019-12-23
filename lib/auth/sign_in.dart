@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Please type an email';
+                      return 'Please type your email';
                     }
                     return null;
                   },
@@ -77,6 +77,12 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return 'Please type your password';
+                    }
+                    return null;
+                  },
                   onSaved: (input) => _password = input,
                   obscureText: _obscureText,
                   decoration: InputDecoration(
