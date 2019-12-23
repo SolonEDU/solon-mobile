@@ -50,6 +50,10 @@
 
     * made voting semi-work
 
+2019-12-23 Eric Lau
+
+    * display forum cards
+
 2019-12-23 ray. lee.
 
     * made voting secure (i think), now the button bar goes null (grays out) upon pressing either 'Yea' or 'Nay'. if the phone lags out and a second vote request went thru, kaz's api check (prevents duplicate voting records in his db votes table) will catch the error. after a user has voted on a proposal, if they choose to pop the page and go back, they no longer see the voting buttons and only see their past vote choice.

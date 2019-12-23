@@ -77,11 +77,6 @@ class _ProposalCardState extends State<ProposalCard> {
               title: widget.title,
               description: widget.description,
               uidUser: widget.uid,
-              // widget.daysLeft,
-              // widget.endDate,
-              // widget.numYea,
-              // widget.numNay,
-              // getCreator(),
             ),
           ),
         );
