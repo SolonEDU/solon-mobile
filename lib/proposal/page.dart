@@ -8,6 +8,7 @@ class ProposalPage extends StatefulWidget {
   final String title;
   final String description;
   final int uidUser;
+  final String endTimeParsed;
 
   ProposalPage({
     Key key,
@@ -15,6 +16,7 @@ class ProposalPage extends StatefulWidget {
     this.title,
     this.description,
     this.uidUser,
+    this.endTimeParsed,
   }) : super(key: key);
 
   @override
@@ -72,6 +74,7 @@ class _ProposalPageState extends State<ProposalPage> {
                 return ListView(
                   children: <Widget>[
                     Text(widget.description),
+                    Text('Voting on proposal ends on: ' + widget.endTimeParsed),
                     // Text(AppLocalizations.of(context).translate('votesFor')),
                     snapshot.data['message'] == 'Error'
                         ? PreventDoubleTap(

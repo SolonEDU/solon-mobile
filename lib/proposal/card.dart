@@ -73,7 +73,7 @@ class _ProposalCardState extends State<ProposalCard> {
     DateTime endTime = DateTime.parse(widget.endTime);
     String endTimeParsed = formatDate(
         endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
-    print(endTimeParsed);
+    // print(endTimeParsed);
 
     getCollection();
     // print(getVote(widget.pid, widget.uid));
@@ -87,6 +87,7 @@ class _ProposalCardState extends State<ProposalCard> {
               title: widget.title,
               description: widget.description,
               uidUser: widget.uid,
+              endTimeParsed: endTimeParsed,
             ),
           ),
         );
