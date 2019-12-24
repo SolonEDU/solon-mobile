@@ -1,6 +1,7 @@
 // import 'dart:convert';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:flutter/material.dart';
 
@@ -167,25 +168,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 obscureText: true,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 25),
-              child: Align(
-                child: SizedBox(
-                  height: 55,
-                  width: 155,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30),
-                    ),
-                    color: Color(0xFF98D2EB),
-                    onPressed: signUp,
-                    child: Text(
-                      "Sign Up",
-                      textScaleFactor: 1.5,
-                    ), // AppLocalizations.of(context).translate('signup'),
-                  ),
-                ),
-              ),
+            Button(
+              function: signUp,
+              margin: const EdgeInsets.only(top: 25, bottom: 10),
+              label: "Sign Up", // AppLocalizations.of(context).translate('signup')
             ),
           ],
         ),

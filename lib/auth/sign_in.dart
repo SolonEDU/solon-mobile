@@ -1,4 +1,5 @@
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,7 +55,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   validator: (input) {
@@ -74,7 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   validator: (input) {
@@ -92,25 +95,10 @@ class _LoginPageState extends State<LoginPage> {
                   )),
                 ),
               ),
-              Container(
+              Button(
+                function: signIn,
                 margin: const EdgeInsets.only(top: 25),
-                child: Align(
-                  child: SizedBox(
-                    height: 55,
-                    width: 155,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30),
-                      ),
-                      color: Color(0xFF98D2EB),
-                      onPressed: signIn,
-                      child: Text(
-                        "Sign In",
-                        textScaleFactor: 1.5,
-                      ), // AppLocalizations.of(context).translate('signin'),
-                    ),
-                  ),
-                ),
+                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
               ),
             ],
           ),

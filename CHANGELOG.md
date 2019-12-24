@@ -63,3 +63,4 @@
 2019-12-24 Eric Lau
 
     * remove comments and unnecessary methods
+    * refactor authentication buttons
