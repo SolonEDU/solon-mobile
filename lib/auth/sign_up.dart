@@ -1,6 +1,6 @@
-// import 'dart:convert';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +65,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   'English',
                   'Chinese (Simplified)',
                   'Chinese (Traditional)',
-                  'Bengali'
+                  'Bengali',
+                  'Korean',
+                  'Russian',
+                  'Japanese',
+                  'Ukrainian',
                 ].map<DropdownMenuItem<String>>(
                   (String value) {
                     return DropdownMenuItem<String>(
@@ -136,16 +140,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 onSaved: (input) => _email = input,
               ),
             ),
-            // TextFormField(
-            //   validator: (input) {
-            //     if (input.isEmpty) {
-            //       return 'Please enter the authentication pin provided to you by email';
-            //     }
-            //     return null;
-            //   },
-            //   onSaved: (input) => _authpin = input,
-            //   decoration: InputDecoration(labelText: 'Authentication Pin')
-            // ),
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
@@ -167,25 +161,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 obscureText: true,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 25),
-              child: Align(
-                child: SizedBox(
-                  height: 55,
-                  width: 155,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30),
-                    ),
-                    color: Color(0xFF98D2EB),
-                    onPressed: signUp,
-                    child: Text(
-                      "Sign Up",
-                      textScaleFactor: 1.5,
-                    ), // AppLocalizations.of(context).translate('signup'),
-                  ),
-                ),
-              ),
+            Button(
+              function: signUp,
+              margin: const EdgeInsets.only(top: 25, bottom: 10),
+              label:
+                  "Sign Up", // AppLocalizations.of(context).translate('signup')
             ),
           ],
         ),
@@ -197,59 +177,15 @@ class _SignUpPageState extends State<SignUpPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      // print(_password);
       final responseMessage = await APIConnect.registerUser(
           _nativeLanguage, _firstName, _lastName, _email, _password);
       print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
-        // _showToast(responseMessage["message"]);
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage()
-          )
-        );
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       }
-      // Firestore.instance.collection('authpins').document(_authpin).get().then((DocumentSnapshot ds) async {
-      //   if (ds.data == null) _showToast("Invalid authentication pin");
-      //   else {
-      //     if (ds.data['uid'] != '0') _showToast("An account was already created with the authentication pin");
-      //     else {
-      //     if (ds.data['email'] != _email) _showToast("Please use the email that the authentication pin was sent to");
-      //       else {
-      //         try {
-      //           AuthResult result = await FirebaseAuth.instance
-      //               .createUserWithEmailAndPassword(email: _email, password: _password);
-      //           FirebaseUser user = result.user;
-      //           user.sendEmailVerification();
-      //           // add user to firestore as a parent
-      //           Firestore.instance.collection('authpins').document(_authpin).updateData(
-      //             {
-      //               'uid': user.uid,
-      //             },
-      //           );
-      //           Firestore.instance.collection('users').document(user.uid).setData(
-      //             {
-      //               'email': user.email,
-      //               'name': _name,
-      //               'role': 'parent',
-      //               'nativeLanguage': _nativeLanguage,
-      //             },
-      //           );
-      //           Navigator.of(context).pop();
-      //           Navigator.pushReplacement(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => LoginPage()),
-      //           );
-      //         } catch (e) {
-      //           print(e.message);
-      //         }
-      //       }
-      //     }
-      //   }
-      // });
     }
   }
 

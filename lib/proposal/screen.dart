@@ -1,5 +1,4 @@
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/api/proposal.dart';
 import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/create.dart';
@@ -17,7 +16,6 @@ class ProposalsScreen extends StatefulWidget {
 }
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
-  // final db = Firestore.instance;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -96,45 +94,24 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   //   );
   // }
 
-  ProposalCard buildProposal(data) {
-    int _totalVotes = data.numYes + data.numNo;
-    return ProposalCard(
-      key: UniqueKey(),
-      title: data.title,
-      description: data.description,
-      uid: widget.uid,
-      pid: data.pid,
-      totalVotes: _totalVotes,  
-      endTime: data.endTime,
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: StreamBuilder<List<Proposal>>(
-          //for StreamBuilder
+        child: StreamBuilder<List<ProposalCard>>(
           stream: APIConnect.proposalListView,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return Center(
-                  child: Loader(),
-                );
+                break;
               case ConnectionState.waiting:
-                return Center(
-                  child: Loader(),
-                );
+                break;
               case ConnectionState.active:
-                return Center(
-                  child: Loader(),
-                );
+                break;
               case ConnectionState.done:
                 if (snapshot.hasData) {
-                  List<ProposalCard> proposals =
-                      snapshot.data.map((i) => buildProposal(i)).toList();
                   return ListView(
-                    children: proposals,
+                    children: snapshot.data,
                   );
                 }
             }
@@ -157,49 +134,5 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
         },
       ),
     );
-    //   return StreamBuilder<QuerySnapshot>(
-    //     stream: db
-    //         .collection('proposals')
-    //         .orderBy('daysLeft', descending: false)
-    //         .snapshots(),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-    //       switch (snapshot.connectionState) {
-    //         case ConnectionState.waiting:
-    //           return Scaffold(
-    //             body: Center(
-    //               child: Loader(),
-    //             ),
-    //           );
-    //         default:
-    //           return Scaffold(
-    //             body: Center(
-    //               child: ListView(
-    //                 padding: EdgeInsets.all(8),
-    //                 children: <Widget>[
-    //                   Column(
-    //                     children: snapshot.data.documents
-    //                         .map((doc) => buildProposal(doc))
-    //                         .toList(),
-    //                   )
-    //                 ],
-    //               ),
-    //             ),
-    //             floatingActionButton: FloatingActionButton(
-    //               heroTag: 'unq1',
-    //               child: Icon(Icons.add),
-    //               onPressed: () => {
-    //                 Navigator.push(
-    //                   context,
-    //                   MaterialPageRoute(
-    //                     builder: (context) => CreateProposal(_addProposal),
-    //                   ),
-    //                 )
-    //               },
-    //             ),
-    //           );
-    //       }
-    //     },
-    //   );
   }
 }

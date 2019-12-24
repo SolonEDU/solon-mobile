@@ -1,3 +1,4 @@
+import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
@@ -30,38 +31,15 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 200,
                 margin: const EdgeInsets.only(bottom: 40),
               ),
-              ButtonTheme(
-                minWidth: 155,
-                height: 55,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30),
-                  ),
-                  onPressed: navigateToSignIn,
-                  color: Color(0xFF98D2EB),
-                  child: Text(
-                    "Sign In",
-                    textScaleFactor: 1.5,
-                  ), // AppLocalizations.of(context).translate('signin'),
-                ),
+              Button(
+                function: navigateToSignIn,
+                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
+                margin: const EdgeInsets.all(0),
               ),
-              Container(
+              Button(
+                function: navigateToSignUp,
+                label: "Register", // AppLocalizations.of(context).translate('signup')
                 margin: const EdgeInsets.only(top: 20, bottom: 5),
-                child: ButtonTheme(
-                  minWidth: 155,
-                  height: 55,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30),
-                    ),
-                    onPressed: navigateToSignUp,
-                    color: Color(0xFF98D2EB),
-                    child: Text(
-                      "Register",
-                      textScaleFactor: 1.5,
-                    ), // AppLocalizations.of(context).translate('signup')
-                  ),
-                ),
               ),
             ],
           ),

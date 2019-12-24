@@ -1,7 +1,6 @@
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart';
 import 'package:Solon/api/api_connect.dart';
 
@@ -54,7 +53,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   validator: (input) {
@@ -74,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, bottom: 15, top: 5),
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   validator: (input) {
@@ -92,25 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                   )),
                 ),
               ),
-              Container(
+              Button(
+                function: signIn,
                 margin: const EdgeInsets.only(top: 25),
-                child: Align(
-                  child: SizedBox(
-                    height: 55,
-                    width: 155,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30),
-                      ),
-                      color: Color(0xFF98D2EB),
-                      onPressed: signIn,
-                      child: Text(
-                        "Sign In",
-                        textScaleFactor: 1.5,
-                      ), // AppLocalizations.of(context).translate('signin'),
-                    ),
-                  ),
-                ),
+                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
               ),
             ],
           ),
@@ -123,9 +109,7 @@ class _LoginPageState extends State<LoginPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      print('$_email $_password');
       final responseMessage = await APIConnect.loginUser(_email, _password);
-      // print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
@@ -137,23 +121,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }
-      //   try {
-      //     AuthResult result = await FirebaseAuth.instance
-      //         .signInWithEmailAndPassword(email: _email, password: _password);
-      //     FirebaseUser user = result.user;
-      //     if (!user.isEmailVerified) {
-      //       _showToast('Email is not verified');
-      //     } else {
-      //       Firestore.instance
-      //           .collection('users')
-      //           .document(user.uid)
-      //           .get()
-      //           .then((DocumentSnapshot ds) {
-      //       });
-      //     }
-      //   } catch (e) {
-      //     _showToast(e.message);
-      //   }
     }
   }
 
