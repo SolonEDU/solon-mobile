@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app_localizations.dart';
@@ -11,7 +11,7 @@ import 'package:Solon/home_screen.dart';
 import './proposal/screen.dart';
 import './event/screen.dart';
 import './forum/screen.dart';
-import './account_screen.dart';
+// import './account_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -122,7 +122,7 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  final db = Firestore.instance;
+  // final db = Firestore.instance;
   var _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -172,13 +172,13 @@ class _MainState extends State<Main> {
             elevation: 0.0,
             child: Icon(Icons.account_circle),
             onPressed: () async {
-              FirebaseUser user = await FirebaseAuth.instance.currentUser();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AccountScreen(user: user),
-                ),
-              );
+              // FirebaseUser user = await FirebaseAuth.instance.currentUser();
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => AccountScreen(user: user),
+              //   ),
+              // );
             },
           ),
         ],
