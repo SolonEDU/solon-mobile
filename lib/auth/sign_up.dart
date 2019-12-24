@@ -64,9 +64,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 items: <String>[
                   'English',
-                  'Chinese (Simplified)',
-                  'Chinese (Traditional)',
-                  'Bengali'
+      'Chinese (Simplified)',
+      'Chinese (Traditional)',
+      'Bengali',
+      'Korean',
+      'Russian',
+      'Japanese',
+      'Ukrainian',
                 ].map<DropdownMenuItem<String>>(
                   (String value) {
                     return DropdownMenuItem<String>(
