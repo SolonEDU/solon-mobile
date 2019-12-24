@@ -109,10 +109,20 @@ class APIConnect {
     String email,
     String password,
   ) async {
+    Map<String, String> languages = {
+      'English': 'en',
+      'Chinese (Simplified)': 'zh-cn',
+      'Chinese (Traditional)': 'zh-tw',
+      'Bengali': 'bn',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Japanese': 'ja',
+      'Ukrainian': 'uk',
+    };
     final response = await http.post(
       "$_url/users/register",
       body: json.encode({
-        'lang': "en", // for now
+        'lang': languages[lang], // for now
         'firstname': firstName,
         'lastname': lastName,
         'email': email,
