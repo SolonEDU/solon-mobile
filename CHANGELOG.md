@@ -65,3 +65,4 @@
     * remove comments and unnecessary methods
     * refactor authentication buttons
     * remove unneeded variable from toMap functions
+    * remove need for toMap functions all together

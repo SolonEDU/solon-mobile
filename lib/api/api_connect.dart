@@ -3,13 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:Solon/api/message.dart';
-// import 'package:Solon/api/user.dart';
 import 'package:Solon/api/proposal.dart';
-// import 'package:Solon/api/comment.dart';
-// import 'package:Solon/api/event.dart';
-import 'package:Solon/api/vote.dart';
-import 'package:Solon/api/register.dart';
-import 'package:Solon/api/login.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 
@@ -72,16 +66,15 @@ class APIConnect {
     DateTime endTime,
     int uid,
   ) async {
-    Proposal newProposal = new Proposal(
-      title: title,
-      description: description,
-      startTime: startTime.toIso8601String(),
-      endTime: endTime.toIso8601String(),
-      uid: uid,
-    );
     final response = await http.post(
       "$_url/proposals",
-      body: json.encode(newProposal.toProposalMap()),
+      body: json.encode({
+        'title': title,
+        'description': description,
+        'starttime': startTime.toIso8601String(),
+        'endtime': endTime.toIso8601String(),
+        'uid': uid,
+      }),
       headers: await headers,
     );
     int status = response.statusCode;
@@ -97,16 +90,15 @@ class APIConnect {
     String email,
     String password,
   ) async {
-    Register newUser = new Register(
-      lang: lang,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-    );
     final response = await http.post(
       "$_url/users/register",
-      body: json.encode(newUser.toRegisterMap()),
+      body: json.encode({
+        'lang': "en", // for now
+        'firstname': firstName,
+        'lastname': lastName,
+        'email': email,
+        'password': password,
+      }),
       headers: await headers,
     );
     return json.decode(response.body);
@@ -116,13 +108,12 @@ class APIConnect {
     String email,
     String password,
   ) async {
-    Login user = new Login(
-      email: email,
-      password: password,
-    );
     final response = await http.post(
       "$_url/users/login",
-      body: json.encode(user.toLoginMap()),
+      body: json.encode({
+        'email': email,
+        'password': password
+      }),
       headers: await headers,
     );
     return json.decode(response.body);
@@ -130,15 +121,15 @@ class APIConnect {
 
   static Future<Map<String, dynamic>> connectVotes(String httpReqType,
       {int pid, int uidUser, int voteVal}) async {
-    Vote vote = new Vote(
-      pid: pid,
-      uidUser: uidUser,
-      voteVal: voteVal,
-    );
+    Map vote = {
+      'pid': pid,
+      'uid': uidUser,
+      'value': voteVal,
+    };
     var response = (httpReqType == 'POST') // need pid, uid, and voteVal
         ? await http.post(
             "$_url/votes",
-            body: json.encode(vote.toVoteMap()),
+            body: json.encode(vote),
             headers: await headers,
           )
         : (httpReqType == 'GET') // need pid and uidUser
@@ -149,7 +140,7 @@ class APIConnect {
             : await http.patch(
                 // need pid, uid, and voteVal
                 "$_url/votes",
-                body: json.encode(vote.toVoteMap()),
+                body: json.encode(vote),
                 headers: await headers,
               );
     return json.decode(response.body);
