@@ -24,14 +24,12 @@ class Register {
   // }
 
   Map toRegisterMap() {
-    var map = new Map<String, dynamic>();
-    map['firstname'] = firstName;
-    map['lastname'] = lastName;
-    map['email'] = email;
-    map['password'] = password;
-    map['lang'] = "en";
-    // print("$firstName $lastName $email $password $lang");
-    print("MAP $map");
-    return map;
+    return {
+      'firstname': firstName,
+      'lastname': lastName,
+      'email': email,
+      'password': password,
+      'lang': "en",
+    };
   }
 }

@@ -24,14 +24,12 @@ class Comment {
   }
 
   Map toCommentMap() {
-    var map = new Map<String, dynamic>();
-    map['fid'] = fid;
-    map['content'] = content;
-    map['timestamp'] = timestamp;
-    map['uid'] = uid;
-    print("$fid $content $timestamp $uid");
-    print("MAP $map");
-    return map;
+    return {
+      'fid': fid,
+      'content': content,
+      'timestamp': timestamp,
+      'uid': uid,
+    };
   }
 }
 

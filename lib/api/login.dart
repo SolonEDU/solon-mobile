@@ -8,10 +8,9 @@ class Login {
   });
 
   Map toLoginMap() {
-    var map = new Map<String, dynamic>();
-    map['email'] = email;
-    map['password'] = password;
-    print("MAP $map");
-    return map;
+    return {
+      'email': email,
+      'password': password,
+    };
   }
 }

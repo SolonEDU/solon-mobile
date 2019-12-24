@@ -27,12 +27,10 @@ class Event {
   }
 
   Map toEventMap() {
-    var map = new Map<String, dynamic>();
-    map['title'] = title;
-    map['description'] = description;
-    map['date'] = date;
-    print("$title $description $date");
-    print("MAP $map");
-    return map;
+    return {
+      'title': title,
+      'description': description,
+      'date': date,
+    };
   }
 }

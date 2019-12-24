@@ -111,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      print('$_email $_password');
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
         _showToast(responseMessage["error"]["errorMessage"]);

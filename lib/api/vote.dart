@@ -21,12 +21,10 @@ class Vote {
   }
 
   Map toVoteMap() {
-    var map = new Map<String, dynamic>();
-    map['pid'] = pid;
-    map['uid'] = uidUser;
-    map['value'] = voteVal;
-    print("$pid $uidUser $voteVal");
-    print("MAP $map");
-    return map;
+    return {
+      'pid': pid,
+      'uid': uidUser,
+      'value': voteVal,
+    };
   }
 }

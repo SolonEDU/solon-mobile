@@ -23,12 +23,10 @@ class User {
   }
 
   Map toUserMap() {
-    var map = new Map<String, dynamic>();
-    map['firstname'] = firstName;
-    map['lastname'] = lastName;
-    map['nativeLang'] = nativeLang;
-    print("$firstName $lastName $nativeLang");
-    print("MAP $map");
-    return map;
+    return {
+      'firstname': firstName,
+      'lastname': lastName,
+      'nativeLang': nativeLang,
+    };
   }
 }

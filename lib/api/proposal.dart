@@ -33,12 +33,12 @@ class Proposal {
   }
 
   Map toProposalMap() {
-    var map = new Map<String, dynamic>();
-    map['title'] = title;
-    map['description'] = description;
-    map['starttime'] = startTime;
-    map['endtime'] = endTime;
-    map['uid'] = uid;
-    return map;
+    return {
+      'title': title,
+      'description': description,
+      'starttime': startTime,
+      'endtime': endTime,
+      'uid': uid,
+    };
   }
 }
