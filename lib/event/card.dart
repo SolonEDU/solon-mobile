@@ -1,42 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/app_localizations.dart';
+// import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
+import 'package:intl/intl.dart';
 
 class EventCard extends StatefulWidget {
   final String title;
   final String description;
-  final DateTime date;
-  final TimeOfDay time;
-  final DocumentSnapshot doc;
-  EventCard(this.title, this.description, this.date, this.time, this.doc);
+  final DateTime time;
+  final doc;
+
+  EventCard({Key key, this.title, this.description, this.time, this.doc})
+      : super(key: key);
 
   @override
-  _EventCardState createState() => _EventCardState(
-        title,
-        description,
-        date,
-        time,
-        doc,
-      );
+  _EventCardState createState() => _EventCardState();
 }
 
 class _EventCardState extends State<EventCard> {
-  final String title;
-  final String description;
-  final DateTime date;
-  final TimeOfDay time;
   bool attending = false;
-  DocumentSnapshot doc;
-  final db = Firestore.instance;
-
-  _EventCardState(
-    this.title,
-    this.description,
-    this.date,
-    this.time,
-    this.doc,
-  );
+  // final db = Firestore.instance; // connect to PG, then decode
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +32,19 @@ class _EventCardState extends State<EventCard> {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.calendar_today),
-              title: Text(title),
-              subtitle: Text(description +
+              title: Text(widget.title),
+              subtitle: Text(widget.description +
                   '\n' +
-                  'Event will occur on ' +
-                  date.toString().substring(0, 10) +
-                  ' at ' +
-                  time.toString().substring(10, 15)),
+                  'Event Time: ' +
+                  DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => EventPage(
-                      title,
-                      description,
-                      date,
-                      time,
+                      widget.title,
+                      widget.description,
+                      widget.time,
                     ),
                   ),
                 );
@@ -72,11 +54,11 @@ class _EventCardState extends State<EventCard> {
               children: <Widget>[
                 FlatButton(
                   child: Icon(Icons.delete),
-                  onPressed: () async => {
-                    await db
-                        .collection('events')
-                        .document(doc.documentID)
-                        .delete()
+                  onPressed: () => { // send a DELETE request to PG, including the  in the request body to specify
+                    // db
+                    //     .collection('events')
+                    //     .document(widget.doc.documentID)
+                    //     .delete()
                   },
                 ),
                 Switch.adaptive(
@@ -89,7 +71,7 @@ class _EventCardState extends State<EventCard> {
                   activeTrackColor: Colors.lightGreenAccent,
                   activeColor: Colors.green,
                 ),
-                Text('Attending?')
+                Text(AppLocalizations.of(context).translate('attending'))
               ],
             ),
           ],

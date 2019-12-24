@@ -7,12 +7,11 @@ import 'app_localizations.dart';
 
 import './navbar.dart';
 import 'package:Solon/auth/welcome.dart';
-import 'package:Solon/parent/home_screen.dart';
-import './parent/proposal/screen.dart';
-import './parent/event/screen.dart';
-import './parent/forum/screen.dart';
+import 'package:Solon/home_screen.dart';
+import './proposal/screen.dart';
+import './event/screen.dart';
+import './forum/screen.dart';
 import './account_screen.dart';
-
 
 void main() => runApp(MyApp());
 
@@ -115,12 +114,11 @@ class MyApp extends StatelessWidget {
 }
 
 class Main extends StatefulWidget {
-  Main({Key key}) : super(key: key);
+  final int uid;
+  Main({Key key, this.uid}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _MainState();
-  }
+  State<StatefulWidget> createState() => _MainState();
 }
 
 class _MainState extends State<Main> {
@@ -133,27 +131,26 @@ class _MainState extends State<Main> {
     });
   }
 
-  var _widgetOptions = [
-    {
-      'title': 'home',
-      'widget': HomeScreen(),
-    },
-    {
-      'title': 'proposals',
-      'widget': ProposalsScreen(),
-    },
-    {
-      'title': 'events',
-      'widget': EventsScreen(),
-    },
-    {
-      'title': 'forum',
-      'widget': ForumScreen(),
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    var _widgetOptions = [
+      {
+        'title': 'home',
+        'widget': HomeScreen(uid: widget.uid),
+      },
+      {
+        'title': 'proposals',
+        'widget': ProposalsScreen(uid: widget.uid),
+      },
+      {
+        'title': 'events',
+        'widget': EventsScreen(uid: widget.uid),
+      },
+      {
+        'title': 'forum',
+        'widget': ForumScreen(uid: widget.uid),
+      },
+    ];
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -167,7 +164,8 @@ class _MainState extends State<Main> {
             );
           },
         ),
-        title: Text(AppLocalizations.of(context).translate(_widgetOptions[_selectedIndex]['title'])),
+        title: Text(AppLocalizations.of(context)
+            .translate(_widgetOptions[_selectedIndex]['title'])),
         actions: <Widget>[
           FloatingActionButton(
             heroTag: 'unq0',

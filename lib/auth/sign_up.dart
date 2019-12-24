@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Solon/auth/sign_in.dart';
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/button.dart';
+import 'package:Solon/auth/sign_in.dart';
+import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -10,20 +10,44 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _authpin, _name, _email, _password;
+  String _firstName, _lastName, _email, _password;
   String _nativeLanguage = 'English';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          color: Colors.black,
+          onPressed: () => {
+            FocusScope.of(context).unfocus(),
+            Navigator.pop(context),
+          },
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+      ),
       body: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              DropdownButtonFormField(
+        key: _formKey,
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 10, left: 20),
+              child: Text(
+                AppLocalizations.of(context).translate('language'),
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: DropdownButtonFormField(
                 value: _nativeLanguage,
                 validator: (input) {
                   if (input.isEmpty) {
@@ -37,40 +61,76 @@ class _SignUpPageState extends State<SignUpPage> {
                     _nativeLanguage = input;
                   });
                 },
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('language')),
                 items: <String>[
                   'English',
                   'Chinese (Simplified)',
                   'Chinese (Traditional)',
-                  'Bengali'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+                  'Bengali',
+                  'Korean',
+                  'Russian',
+                  'Japanese',
+                  'Ukrainian',
+                ].map<DropdownMenuItem<String>>(
+                  (String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  },
+                ).toList(),
               ),
-              TextFormField(
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                "First Name",
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.isEmpty) {
-                    return 'Please enter the authentication pin provided to you by email';
+                    return 'Please enter your first name';
                   }
                   return null;
                 },
-                onSaved: (input) => _authpin = input,
-                decoration: InputDecoration(labelText: 'Authentication Pin')
+                onSaved: (input) => _firstName = input,
               ),
-              TextFormField(
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                "Last Name",
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.isEmpty) {
-                    return 'Please enter your full name';
+                    return 'Please enter your last name';
                   }
                   return null;
                 },
-                onSaved: (input) => _name = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('fullName')),
+                onSaved: (input) => _lastName = input,
               ),
-              TextFormField(
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                AppLocalizations.of(context).translate('email'),
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 validator: (input) {
                   if (input.isEmpty) {
                     return 'Please enter your email address';
@@ -78,9 +138,19 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _email = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('email')),
               ),
-              TextFormField(
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                AppLocalizations.of(context).translate('password'),
+                textScaleFactor: 1.5,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.length < 6) {
                     return 'Your password needs to be at least 6 characters';
@@ -88,15 +158,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
                 onSaved: (input) => _password = input,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
                 obscureText: true,
               ),
-              RaisedButton(
-                onPressed: signUp,
-                child: Text(AppLocalizations.of(context).translate('signup')),
-              )
-            ],
-          )),
+            ),
+            Button(
+              function: signUp,
+              margin: const EdgeInsets.only(top: 25, bottom: 10),
+              label:
+                  "Sign Up", // AppLocalizations.of(context).translate('signup')
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -104,44 +177,15 @@ class _SignUpPageState extends State<SignUpPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      Firestore.instance.collection('authpins').document(_authpin).get().then((DocumentSnapshot ds) async {
-        if (ds.data == null) _showToast("Invalid authentication pin");
-        else {
-          if (ds.data['uid'] != '0') _showToast("An account was already created with the authentication pin");
-          else {
-          if (ds.data['email'] != _email) _showToast("Please use the email that the authentication pin was sent to");
-            else {
-              try {
-                AuthResult result = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(email: _email, password: _password);
-                FirebaseUser user = result.user;
-                user.sendEmailVerification();
-                // add user to firestore as a parent
-                Firestore.instance.collection('authpins').document(_authpin).updateData(
-                  {
-                    'uid': user.uid,
-                  },
-                );
-                Firestore.instance.collection('users').document(user.uid).setData(
-                  {
-                    'email': user.email,
-                    'name': _name,
-                    'role': 'parent',
-                    'nativeLanguage': _nativeLanguage,
-                  },
-                );
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              } catch (e) {
-                print(e.message);
-              }
-            }
-          }
-        }
-      });
+      final responseMessage = await APIConnect.registerUser(
+          _nativeLanguage, _firstName, _lastName, _email, _password);
+      print(responseMessage["message"]);
+      if (responseMessage["message"] == "Error") {
+        _showToast(responseMessage["error"]["errorMessage"]);
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      }
     }
   }
 

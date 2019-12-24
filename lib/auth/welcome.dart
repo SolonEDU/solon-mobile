@@ -1,7 +1,8 @@
+import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -11,34 +12,38 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
+    var logoAsset = new AssetImage('images/solon.png');
+    var logo = new Image(
+      image: logoAsset,
+      fit: BoxFit.fitHeight,
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/solon.png'),
-                ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: logo,
+                height: 200,
+                margin: const EdgeInsets.only(bottom: 40),
               ),
-            );
-          },
+              Button(
+                function: navigateToSignIn,
+                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
+                margin: const EdgeInsets.all(0),
+              ),
+              Button(
+                function: navigateToSignUp,
+                label: "Register", // AppLocalizations.of(context).translate('signup')
+                margin: const EdgeInsets.only(top: 20, bottom: 5),
+              ),
+            ],
+          ),
         ),
-        title: Text('Solon'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RaisedButton(
-            onPressed: navigateToSignIn,
-            child: Text(AppLocalizations.of(context).translate('signin')),
-          ),
-          RaisedButton(
-            onPressed: navigateToSignUp,
-            child: Text(AppLocalizations.of(context).translate('signup')),
-          ),
-        ],
       ),
     );
   }
