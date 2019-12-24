@@ -64,13 +64,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 items: <String>[
                   'English',
-      'Chinese (Simplified)',
-      'Chinese (Traditional)',
-      'Bengali',
-      'Korean',
-      'Russian',
-      'Japanese',
-      'Ukrainian',
+                  'Chinese (Simplified)',
+                  'Chinese (Traditional)',
+                  'Bengali',
+                  'Korean',
+                  'Russian',
+                  'Japanese',
+                  'Ukrainian',
                 ].map<DropdownMenuItem<String>>(
                   (String value) {
                     return DropdownMenuItem<String>(
@@ -175,7 +175,8 @@ class _SignUpPageState extends State<SignUpPage> {
             Button(
               function: signUp,
               margin: const EdgeInsets.only(top: 25, bottom: 10),
-              label: "Sign Up", // AppLocalizations.of(context).translate('signup')
+              label:
+                  "Sign Up", // AppLocalizations.of(context).translate('signup')
             ),
           ],
         ),
@@ -195,11 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage()
-          )
-        );
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       }
     }
   }

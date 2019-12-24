@@ -66,7 +66,6 @@ class APIConnect {
     return _proposals;
   }
 
-
   // static Future<List<EventCard>> connectEvents() async {
   //   final http.Response response = await http.get(
   //     "$_url/events",
@@ -122,7 +121,7 @@ class APIConnect {
     final response = await http.post(
       "$_url/users/register",
       body: json.encode({
-        'lang': languages[lang], // for now
+        'lang': languages[lang],
         'firstname': firstName,
         'lastname': lastName,
         'email': email,
