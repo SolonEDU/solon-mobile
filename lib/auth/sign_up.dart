@@ -1,4 +1,3 @@
-// import 'dart:convert';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
@@ -64,13 +63,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 items: <String>[
                   'English',
-      'Chinese (Simplified)',
-      'Chinese (Traditional)',
-      'Bengali',
-      'Korean',
-      'Russian',
-      'Japanese',
-      'Ukrainian',
+                  'Chinese (Simplified)',
+                  'Chinese (Traditional)',
+                  'Bengali',
+                  'Korean',
+                  'Russian',
+                  'Japanese',
+                  'Ukrainian',
                 ].map<DropdownMenuItem<String>>(
                   (String value) {
                     return DropdownMenuItem<String>(
@@ -141,16 +140,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 onSaved: (input) => _email = input,
               ),
             ),
-            // TextFormField(
-            //   validator: (input) {
-            //     if (input.isEmpty) {
-            //       return 'Please enter the authentication pin provided to you by email';
-            //     }
-            //     return null;
-            //   },
-            //   onSaved: (input) => _authpin = input,
-            //   decoration: InputDecoration(labelText: 'Authentication Pin')
-            // ),
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
@@ -187,7 +176,6 @@ class _SignUpPageState extends State<SignUpPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      // print(_password);
       final responseMessage = await APIConnect.registerUser(
           _nativeLanguage, _firstName, _lastName, _email, _password);
       print(responseMessage["message"]);
