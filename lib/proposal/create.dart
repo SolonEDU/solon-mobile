@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:flutter/services.dart';
 
 class CreateProposal extends StatefulWidget {
   final Function _addProposal;
@@ -37,6 +38,9 @@ class _CreateProposalState extends State<CreateProposal> {
         isActive: _currentStep == 0 ? true : false,
         state: _currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(100),
+          ],
           autofocus: true,
           decoration: InputDecoration(
               labelText: AppLocalizations.of(context).translate('title')),
@@ -58,6 +62,9 @@ class _CreateProposalState extends State<CreateProposal> {
             ? StepState.editing
             : _currentStep < 1 ? StepState.disabled : StepState.complete,
         content: TextFormField(
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(100),
+          ],
           autofocus: true,
           focusNode: _focusNode,
           decoration: InputDecoration(
@@ -137,19 +144,21 @@ class _CreateProposalState extends State<CreateProposal> {
                 }
               : {
                   widget._addProposal(
-                    controllers[0].text,
-                    controllers[1].text,
-                    _date,
-                    _date.add(
-                      new Duration(
-                        days: _sliderValue.toInt(),
+                      controllers[0].text,
+                      controllers[1].text,
+                      _date,
+                      _date.add(
+                        new Duration(
+                          days: _sliderValue.toInt(),
+                        ),
                       ),
-                    ),
-                    0 //dummy uid
-                  ),
+                      0 //dummy uid
+                      ),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context, true),
-                  Future.delayed(const Duration(milliseconds: 500)), //allow newly created proposal to properly load after creation
+                  Future.delayed(const Duration(
+                      milliseconds:
+                          500)), //allow newly created proposal to properly load after creation
                 }
         },
         onStepCancel: () => {
