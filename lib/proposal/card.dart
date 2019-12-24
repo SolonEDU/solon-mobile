@@ -113,8 +113,8 @@ class _ProposalCardState extends State<ProposalCard> {
                 title: Text(widget.title),
                 subtitle: Column(
                   children: <Widget>[
-                    Text(widget.description),
-                    Text('Voting on proposal ends on: ' + endTimeParsed)
+                    // Text(widget.description),
+                    Text('Voting ends on ' + endTimeParsed)
                   ],
                 ),
               ),
