@@ -94,19 +94,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   //   );
   // }
 
-  ProposalCard buildProposal(data) {
-    int _totalVotes = data.numYes + data.numNo;
-    return ProposalCard(
-      key: UniqueKey(),
-      title: data.title,
-      description: data.description,
-      uid: widget.uid,
-      pid: data.pid,
-      totalVotes: _totalVotes,
-      endTime: data.endTime,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

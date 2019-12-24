@@ -164,7 +164,8 @@ class _SignUpPageState extends State<SignUpPage> {
             Button(
               function: signUp,
               margin: const EdgeInsets.only(top: 25, bottom: 10),
-              label: "Sign Up", // AppLocalizations.of(context).translate('signup')
+              label:
+                  "Sign Up", // AppLocalizations.of(context).translate('signup')
             ),
           ],
         ),
@@ -183,11 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
         _showToast(responseMessage["error"]["errorMessage"]);
       } else {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage()
-          )
-        );
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       }
     }
   }

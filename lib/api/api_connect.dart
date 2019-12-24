@@ -5,9 +5,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 import 'package:Solon/api/message.dart';
-import 'package:Solon/api/forumpost.dart';
 
 import 'package:Solon/proposal/card.dart';
+import 'package:Solon/forum/card.dart';
+// import 'package:Solon/event/card.dart';
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -26,9 +27,13 @@ class APIConnect {
     yield await connectProposals();
   }
 
-  static Stream<List<ForumPost>> get forumListView async* {
+  static Stream<List<PostCard>> get forumListView async* {
     yield await connectForumPosts();
   }
+
+  // static Stream<List<EventCard>> get eventListView async* {
+  //   yield await connectEvents();
+  // }
 
   static Future<Message> connectRoot() async {
     final response = await http.get(_url);
@@ -49,17 +54,28 @@ class APIConnect {
     return _proposals;
   }
 
-  static Future<List<ForumPost>> connectForumPosts() async {
+  static Future<List<PostCard>> connectForumPosts() async {
     final http.Response response = await http.get(
       "$_url/forumposts",
       headers: await headers,
     );
 
     List collection = json.decode(response.body)['forumposts'];
-    List<ForumPost> _proposals =
-        collection.map((json) => ForumPost.fromJson(json)).toList();
+    List<PostCard> _proposals =
+        collection.map((json) => PostCard.fromJson(json)).toList();
     return _proposals;
   }
+
+  // static Future<List<EventCard>> connectEvents() async {
+  //   final http.Response response = await http.get(
+  //     "$_url/events",
+  //     headers: await headers,
+  //   );
+  //   List collection = json.decode(response.body)['events'];
+  //   List<EventCard> _events =
+  //       collection.map((json) => EventCard.fromJson(json)).toList();
+  //   return _events;
+  // }
 
   static Future<Message> addProposal(
     String title,
@@ -105,7 +121,7 @@ class APIConnect {
     final response = await http.post(
       "$_url/users/register",
       body: json.encode({
-        'lang': languages[lang], // for now
+        'lang': languages[lang],
         'firstname': firstName,
         'lastname': lastName,
         'email': email,

@@ -67,6 +67,7 @@
     * remove unneeded variable from toMap functions
     * remove need for toMap functions all together
     * remove register object and transfer proposal to proposalcard
+    * remodel forum streaming
 
 2019-12-24 ray. lee.
 

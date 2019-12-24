@@ -10,7 +10,7 @@ class PostCard extends StatefulWidget {
   final String title;
   final String description;
   final int uid;
-  // final DateTime time;
+  final String timestamp;
 
   PostCard({
     Key key,
@@ -18,16 +18,24 @@ class PostCard extends StatefulWidget {
     this.title,
     this.description,
     this.uid,
-    // this.time,
-    // this.doc,
+    this.timestamp,
   }) : super(key: key);
+
+  factory PostCard.fromJson(Map<String, dynamic> json) {
+    return PostCard(
+      fid: json['fid'],
+      title: json['title'],
+      description: json['description'],
+      timestamp: json['timestamp'],
+      uid: json['uid'],
+    );
+  }
 
   @override
   _PostCardState createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
-  // final db = Firestore.instance; // db is not used anywhere and idk if this is even needed here
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/api/forumpost.dart';
 import 'package:Solon/forum/card.dart';
 // import 'package:Solon/forum/create.dart';
 import 'package:Solon/loader.dart';
@@ -98,7 +97,7 @@ class _ForumScreenState extends State<ForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<List<ForumPost>>(
+      body: StreamBuilder<List<PostCard>>(
         stream: APIConnect.forumListView,
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -116,10 +115,8 @@ class _ForumScreenState extends State<ForumScreen> {
               );
             case ConnectionState.done:
               if (snapshot.hasData) {
-                List<PostCard> forumposts =
-                  snapshot.data.map((i) => buildPostCard(i)).toList();
                 return ListView(
-                  children: forumposts,
+                  children: snapshot.data,
                 );
               }
           }
