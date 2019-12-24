@@ -8,10 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
-// import './card.dart';
-// import './create.dart';
-// import '../loader.dart';
-
 class ForumScreen extends StatefulWidget {
   final int uid;
   ForumScreen({Key key, this.uid}) : super(key: key);

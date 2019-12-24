@@ -44,12 +44,6 @@ class _ProposalCardState extends State<ProposalCard> {
   // final db = Firestore.instance;
   // String creatorName;
 
-  void getCollection() {
-    setState(() {
-      // collection = db.collection('proposals');
-    });
-  }
-
   // Future<DocumentSnapshot> getCreator() async {
   //   return await db.collection('users').document(widget.creator).get();
   // }
@@ -65,7 +59,6 @@ class _ProposalCardState extends State<ProposalCard> {
 
   @override
   Widget build(BuildContext context) {
-    getCollection();
     // print(getVote(widget.pid, widget.uid));
     return GestureDetector(
       onTap: () {

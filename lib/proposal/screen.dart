@@ -17,7 +17,6 @@ class ProposalsScreen extends StatefulWidget {
 }
 
 class _ProposalsScreenState extends State<ProposalsScreen> {
-  // final db = Firestore.instance;
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -111,22 +110,15 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     return Scaffold(
       body: Center(
         child: StreamBuilder<List<Proposal>>(
-          //for StreamBuilder
           stream: APIConnect.proposalListView,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return Center(
-                  child: Loader(),
-                );
+                break;
               case ConnectionState.waiting:
-                return Center(
-                  child: Loader(),
-                );
+                break;
               case ConnectionState.active:
-                return Center(
-                  child: Loader(),
-                );
+                break;
               case ConnectionState.done:
                 if (snapshot.hasData) {
                   List<ProposalCard> proposals =

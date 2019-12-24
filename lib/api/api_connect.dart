@@ -26,10 +26,6 @@ class APIConnect {
     };
   }
 
-  static Future<String> loadHeader() async {
-    return await rootBundle.loadString('assets/secret');
-  }
-
   static Stream<List<Proposal>> get proposalListView async* {
     yield await connectProposals();
   }
