@@ -68,3 +68,8 @@
     * remove need for toMap functions all together
     * remove register object and transfer proposal to proposalcard
     * remodel forum streaming
+
+2019-12-24 ray. lee.
+
+    * helped erc clean up
+    * added proper language choice upon register and send the correct ISO 639-1 language code to API
