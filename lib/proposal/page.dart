@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 import 'package:Solon/loader.dart';
 
 class ProposalPage extends StatefulWidget {
@@ -8,6 +8,7 @@ class ProposalPage extends StatefulWidget {
   final String title;
   final String description;
   final int uidUser;
+  final String endTimeParsed;
 
   ProposalPage({
     Key key,
@@ -15,6 +16,7 @@ class ProposalPage extends StatefulWidget {
     this.title,
     this.description,
     this.uidUser,
+    this.endTimeParsed,
   }) : super(key: key);
 
   @override
@@ -72,7 +74,8 @@ class _ProposalPageState extends State<ProposalPage> {
                 return ListView(
                   children: <Widget>[
                     Text(widget.description),
-                    Text(AppLocalizations.of(context).translate('votesFor')),
+                    Text('Voting on proposal ends on: ' + widget.endTimeParsed),
+                    // Text(AppLocalizations.of(context).translate('votesFor')),
                     snapshot.data['message'] == 'Error'
                         ? PreventDoubleTap(
                             pid: widget.pid,
@@ -139,14 +142,14 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
     return ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
       RaisedButton(
         color: Colors.red,
-        child: Text('Tap Once'),
+        child: Text('Yea'),
         onPressed: _isButtonTapped
             ? null
             : _onYeaTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
       ),
       RaisedButton(
         color: Colors.red,
-        child: Text('Tap Once'),
+        child: Text('Nay'),
         onPressed: _isButtonTapped
             ? null
             : _onNayTapped, //if button hasnt being tapped, allow user tapped. else, dont allow

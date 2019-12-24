@@ -1,5 +1,6 @@
 // import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
+import 'package:date_format/date_format.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:intl/intl.dart';
 // import 'package:Solon/app_localizations.dart';
@@ -13,6 +14,8 @@ class ProposalCard extends StatefulWidget {
   final String title;
   final String description;
   final int uid;
+  final int totalVotes;
+  final String endTime;
   // final double daysLeft;
   // final DateTime endDate;
   // final DocumentSnapshot doc;
@@ -26,6 +29,8 @@ class ProposalCard extends StatefulWidget {
     this.title,
     this.description,
     this.uid,
+    this.totalVotes,
+    this.endTime,
     // this.daysLeft,
     // this.endDate,
     // this.numYea,
@@ -65,6 +70,11 @@ class _ProposalCardState extends State<ProposalCard> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime endTime = DateTime.parse(widget.endTime);
+    String endTimeParsed = formatDate(
+        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+    // print(endTimeParsed);
+
     getCollection();
     // print(getVote(widget.pid, widget.uid));
     return GestureDetector(
@@ -77,20 +87,38 @@ class _ProposalCardState extends State<ProposalCard> {
               title: widget.title,
               description: widget.description,
               uidUser: widget.uid,
+              endTimeParsed: endTimeParsed,
             ),
           ),
         );
       },
       child: Center(
         child: Card(
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.account_balance),
+                leading: Column(
+                  children: <Widget>[
+                    Icon(Icons.gavel),
+                    Text(
+                      widget.totalVotes.toString(),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
+                ),
                 title: Text(widget.title),
-                subtitle: Text(widget.description),
+                subtitle: Column(
+                  children: <Widget>[
+                    // Text(widget.description),
+                    Text('Voting ends on ' + endTimeParsed)
+                  ],
+                ),
               ),
+
               // Text('Voting on proposal ends on: ' +
               //     new DateFormat.yMMMMd("en_US")
               //         .add_jm()
