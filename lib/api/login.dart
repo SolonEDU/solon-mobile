@@ -6,11 +6,4 @@ class Login {
     this.email,
     this.password,
   });
-
-  Map toLoginMap() {
-    return {
-      'email': email,
-      'password': password,
-    };
-  }
 }

@@ -19,12 +19,4 @@ class Vote {
       voteVal: json['value'],
     );
   }
-
-  Map toVoteMap() {
-    return {
-      'pid': pid,
-      'uid': uidUser,
-      'value': voteVal,
-    };
-  }
 }

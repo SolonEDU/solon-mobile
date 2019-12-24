@@ -13,23 +13,4 @@ class Register {
     this.password,
   });
 
-  // factory Register.fromJson(Map<String, dynamic> json) {
-  //   return Register(
-  //     lang: json['lang'],
-  //     firstName: json['firstname'],
-  //     lastName: json['lastname'],
-  //     email: json['email'],
-  //     password: json['password'],
-  //   );
-  // }
-
-  Map toRegisterMap() {
-    return {
-      'firstname': firstName,
-      'lastname': lastName,
-      'email': email,
-      'password': password,
-      'lang': "en",
-    };
-  }
 }

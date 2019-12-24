@@ -31,14 +31,4 @@ class Proposal {
       numNo: json['numno'],
     );
   }
-
-  Map toProposalMap() {
-    return {
-      'title': title,
-      'description': description,
-      'starttime': startTime,
-      'endtime': endTime,
-      'uid': uid,
-    };
-  }
 }
