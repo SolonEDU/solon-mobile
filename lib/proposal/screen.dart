@@ -1,5 +1,4 @@
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/api/proposal.dart';
 import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/create.dart';
@@ -112,7 +111,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: StreamBuilder<List<Proposal>>(
+        child: StreamBuilder<List<ProposalCard>>(
           stream: APIConnect.proposalListView,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -124,10 +123,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                 break;
               case ConnectionState.done:
                 if (snapshot.hasData) {
-                  List<ProposalCard> proposals =
-                      snapshot.data.map((i) => buildProposal(i)).toList();
                   return ListView(
-                    children: proposals,
+                    children: snapshot.data,
                   );
                 }
             }

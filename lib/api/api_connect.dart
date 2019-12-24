@@ -1,11 +1,13 @@
-import 'package:Solon/api/forumpost.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:Solon/api/message.dart';
-import 'package:Solon/api/proposal.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+
+import 'package:Solon/api/message.dart';
+import 'package:Solon/api/forumpost.dart';
+
+import 'package:Solon/proposal/card.dart';
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -20,7 +22,7 @@ class APIConnect {
     };
   }
 
-  static Stream<List<Proposal>> get proposalListView async* {
+  static Stream<List<ProposalCard>> get proposalListView async* {
     yield await connectProposals();
   }
 
@@ -36,14 +38,14 @@ class APIConnect {
         : throw Exception('Message for root not found.');
   }
 
-  static Future<List<Proposal>> connectProposals() async {
+  static Future<List<ProposalCard>> connectProposals() async {
     final http.Response response = await http.get(
       "$_url/proposals",
       headers: await headers,
     );
     List collection = json.decode(response.body)['proposals'];
-    List<Proposal> _proposals =
-        collection.map((json) => Proposal.fromJson(json)).toList();
+    List<ProposalCard> _proposals =
+        collection.map((json) => ProposalCard.fromJson(json)).toList();
     return _proposals;
   }
 

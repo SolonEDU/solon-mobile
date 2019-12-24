@@ -13,31 +13,30 @@ class ProposalCard extends StatefulWidget {
   final int pid;
   final String title;
   final String description;
+  final String endTime;
   final int uid;
   final int totalVotes;
-  final String endTime;
-  // final double daysLeft;
-  // final DateTime endDate;
-  // final DocumentSnapshot doc;
-  // int numYea;
-  // int numNay;
-  // final String creator;
 
   ProposalCard({
     Key key,
     this.pid,
     this.title,
     this.description,
-    this.uid,
-    this.totalVotes,
     this.endTime,
-    // this.daysLeft,
-    // this.endDate,
-    // this.numYea,
-    // this.numNay,
-    // this.doc,
-    // this.creator,
+    this.uid,
+    this.totalVotes
   }) : super(key: key);
+
+  factory ProposalCard.fromJson(Map<String, dynamic> json) {
+    return ProposalCard(
+      pid: json['pid'],
+      title: json['title'],
+      description: json['description'],
+      endTime: json['endtime'],
+      uid: json['uid'],
+      totalVotes: json['numyes'] + json['numno'],
+    );
+  }
 
   @override
   _ProposalCardState createState() => _ProposalCardState();
