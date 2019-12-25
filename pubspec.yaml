@@ -25,16 +25,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_cupertino_localizations:
-  cloud_firestore:
-  firebase_auth:
   translator:
   intl:
-  encrypt:
   http:
   asn1lib:
-  pointycastle:
   password:
-  flutter_string_encryption:
   rxdart:
   dio:
   date_format:
