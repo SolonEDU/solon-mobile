@@ -12,7 +12,8 @@ import 'app_localizations.dart';
 import 'package:Solon/loader.dart';
 import 'main.dart';
 // import './parent/proposal/proposals_screen.dart';
-import 'package:Solon/api/user.dart';
+// import 'package:Solon/api/user.dart';
+import 'package:Solon/api/message.dart';
 
 class AccountScreen extends StatefulWidget {
   final int uid;
@@ -99,12 +100,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     DropdownButton<String>(
                       value: _language,
                       onChanged: (String newValue) async {
-                        setState(() {
-                          _language = newValue;
-                        });
+                        _setLanguage(newValue);
                         print(newValue);
-                        await APIConnect.changeLanguage(
-                            uid: widget.uid, updatedLang: newValue);
+                        Message responseMessage =
+                            await APIConnect.changeLanguage(
+                                uid: widget.uid, updatedLang: newValue);
+                        _showToast(responseMessage.message == 'Error'
+                            ? 'Language could not be changed to $newValue'
+                            : "Language was successfully changed to $newValue");
                         // db
                         //     .collection('users')
                         //     .document(widget.user.uid)
