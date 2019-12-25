@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/scheduler.dart';
+import 'package:flutter/scheduler.dart';
 // import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -125,7 +125,7 @@ class _PostPageState extends State<PostPage> {
             Container(
                 child: Card(
                     child: ListTile(
-                      leading: Icon(Icons.account_box),
+                      leading: Icon(Icons.account_circle),
                       title: Container(
                           child: Text(widget.description),
                           margin: EdgeInsets.only(top: 8.0, bottom: 4.0)),
@@ -163,20 +163,26 @@ class _PostPageState extends State<PostPage> {
                   suffixIcon: IconButton(
                     icon: Icon(Icons.send),
                     onPressed: () async {
-                      // if (commentController.text.isNotEmpty) {
-                      //   var commentText = commentController.text;
-                      //   SchedulerBinding.instance.addPostFrameCallback((_) {
-                      //     FocusScope.of(context).unfocus();
-                      //     commentController.clear();
-                      //   });
-                      //   document.updateData(
-                      //     {
-                      //       'comments.' + DateTime.now().toString():
-                      //           await _addComment(commentText)
-                      //     },
-                      //   );
-                      //   _update();
-                      // }
+                      if (commentController.text.isNotEmpty) {
+                        var commentText = commentController.text;
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          FocusScope.of(context).unfocus();
+                          commentController.clear();
+                        });
+                        APIConnect.addComment(
+                          fid: widget.fid,
+                          content: commentText,
+                          timestamp: widget.timestamp,
+                          uid: widget.uid,
+                        );
+                        // document.updateData(
+                        //   {
+                        //     'comments.' + DateTime.now().toString():
+                        //         await APIConnect.addComment(fid: widget.fid, content: commentText)
+                        //   },
+                        // );
+                        _update();
+                      }
                     },
                   ),
                 ),

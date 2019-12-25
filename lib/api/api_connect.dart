@@ -170,4 +170,26 @@ class APIConnect {
               );
     return json.decode(response.body);
   }
+
+  static Future<Message> addComment({
+    int fid,
+    String content,
+    String timestamp,
+    int uid,
+  }) async {
+    final response = await http.post(
+      "$_url/comments",
+      body: json.encode({
+        'fid': fid,
+        'content': content,
+        'timestamp': timestamp,
+        'uid': uid,
+      }),
+      headers: await headers,
+    );
+    int status = response.statusCode;
+    return status == 201
+        ? Message.fromJson(json.decode(response.body)['message'])
+        : throw Exception('Message field in comment object not found.');
+  }
 }
