@@ -95,7 +95,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                        "Name: ${snapshot.data.firstName} ${snapshot.data.lastName}"),
+                        "Welcome ${snapshot.data.firstName} ${snapshot.data.lastName}!"),
                     Text("Email: ${snapshot.data.email}"),
                     DropdownButton<String>(
                       value: _language,
