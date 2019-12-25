@@ -194,12 +194,13 @@ class _PostPageState extends State<PostPage> {
                           FocusScope.of(context).unfocus();
                           commentController.clear();
                         });
-                        APIConnect.addComment(
+                        await APIConnect.addComment(
                           fid: widget.fid,
                           content: commentText,
                           timestamp: widget.timestamp,
                           uid: widget.uid,
                         );
+                        
                         // document.updateData(
                         //   {
                         //     'comments.' + DateTime.now().toString():

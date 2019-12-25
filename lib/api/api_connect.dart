@@ -10,7 +10,7 @@ import 'package:Solon/proposal/card.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/comment.dart';
 import 'package:Solon/api/user.dart';
-// import 'package:Solon/event/card.dart';
+import 'package:Solon/event/card.dart';
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -35,6 +35,10 @@ class APIConnect {
 
   static Stream<List<Comment>> commentListView(int fid) async* {
     yield await connectComments(fid: fid);
+  }
+
+  static Stream<List<EventCard>> get eventListView async* {
+    yield await connectEvents();
   }
 
   // static Stream<List<EventCard>> get eventListView async* {
@@ -239,5 +243,17 @@ class APIConnect {
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Language could not be changed to $updatedLang for user with uid $uid');
+  }
+
+  static Future<List<EventCard>> connectEvents() async {
+    final http.Response response = await http.get(
+      "$_url/events",
+      headers: await headers,
+    );
+
+    List collection = json.decode(response.body)['events'];
+    List<EventCard> _events =
+        collection.map((json) => EventCard.fromJson(json)).toList();
+    return _events;
   }
 }

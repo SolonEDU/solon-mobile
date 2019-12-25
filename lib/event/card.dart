@@ -4,16 +4,28 @@ import 'package:Solon/app_localizations.dart';
 // import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
+import 'package:date_format/date_format.dart';
 
 class EventCard extends StatefulWidget {
   final String title;
   final String description;
-  final DateTime time;
-  final doc;
+  final String date;
+  // final doc;
 
-  EventCard({Key key, this.title, this.description, this.time, this.doc})
+  EventCard({Key key, this.title, this.description, this.date})
       : super(key: key);
+
+  factory EventCard.fromJson(Map<String, dynamic> json) {
+    DateTime date = DateTime.parse(json['date']);
+    String dateParsed = formatDate(date,
+        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+    return EventCard(
+      title: json['title'],
+      description: json['description'],
+      date: dateParsed,
+    );
+  }
 
   @override
   _EventCardState createState() => _EventCardState();
@@ -36,7 +48,7 @@ class _EventCardState extends State<EventCard> {
               subtitle: Text(widget.description +
                   '\n' +
                   'Event Time: ' +
-                  DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
+                  widget.date),
               onTap: () {
                 Navigator.push(
                   context,
@@ -44,7 +56,7 @@ class _EventCardState extends State<EventCard> {
                     builder: (context) => EventPage(
                       widget.title,
                       widget.description,
-                      widget.time,
+                      widget.date,
                     ),
                   ),
                 );

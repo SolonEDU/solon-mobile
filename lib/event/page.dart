@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class EventPage extends StatelessWidget {
   final String title;
   final String description;
-  final DateTime time;
+  final String time;
 
   EventPage(
     this.title,
@@ -21,7 +21,7 @@ class EventPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Text(description),
-          Text(new DateFormat.yMMMMd("en_US").add_jm().format(time)),
+          Text(time),
         ],
       ),
     );
