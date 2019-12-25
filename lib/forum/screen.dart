@@ -94,6 +94,7 @@ class _ForumScreenState extends State<ForumScreen> {
       fid: data.fid,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

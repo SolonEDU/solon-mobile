@@ -8,6 +8,7 @@ import 'package:Solon/api/message.dart';
 
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/forum/card.dart';
+import 'package:Solon/forum/comment.dart';
 // import 'package:Solon/event/card.dart';
 
 class APIConnect {
@@ -29,6 +30,10 @@ class APIConnect {
 
   static Stream<List<PostCard>> get forumListView async* {
     yield await connectForumPosts();
+  }
+
+  static Stream<List<Comment>> commentListView(int fid) async* {
+    yield await connectComments(fid: fid);
   }
 
   // static Stream<List<EventCard>> get eventListView async* {
@@ -169,6 +174,18 @@ class APIConnect {
                 headers: await headers,
               );
     return json.decode(response.body);
+  }
+
+  static Future<List<Comment>> connectComments({int fid}) async {
+    final http.Response response = await http.get(
+      "$_url/comments/forumpost/$fid",
+      headers: await headers,
+    );
+
+    List collection = json.decode(response.body)['comments'];
+    List<Comment> _comments =
+        collection.map((json) => Comment.fromJson(json)).toList();
+    return _comments;
   }
 
   static Future<Message> addComment({

@@ -12,6 +12,8 @@ import 'package:Solon/app_localizations.dart';
 // import 'package:Solon/loader.dart';
 // import './comment.dart';
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/forum/comment.dart';
+import 'package:Solon/loader.dart';
 
 class PostPage extends StatefulWidget {
   final int fid;
@@ -120,7 +122,7 @@ class _PostPageState extends State<PostPage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Container(
                 child: Card(
@@ -139,20 +141,43 @@ class _PostPageState extends State<PostPage> {
                 child: Text(
                     AppLocalizations.of(context).translate('commentSection')),
                 margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
-            // FutureBuilder(
-            //   future: getComments(snapshot),
-            //   builder: (BuildContext context,
-            //       AsyncSnapshot<ListView> translatedComments) {
-            //     return Expanded(
-            //       child: translatedComments.hasData
-            //           ? translatedComments.data
-            //           : Text(''),
-            //     );
-            //   },
-            // ),
+            StreamBuilder(
+              stream: Function.apply(
+                  APIConnect.commentListView, [widget.fid],),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Comment>> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return Center(
+                      child: Loader(),
+                    );
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: Loader(),
+                    );
+                  case ConnectionState.active:
+                    return Center(
+                      child: Loader(),
+                    );
+                  case ConnectionState.done:
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: snapshot.data,
+                      );
+                    }
+                }
+                return Center(
+                  child: Loader(),
+                );
+                // translatedComments.hasData
+                //     ? translatedComments.data
+                //     : Text(''),
+                // );
+              },
+            ),
             Container(
               child: TextField(
-                style: TextStyle(height: .4),
+                // style: TextStyle(height: .4),
                 controller: commentController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -181,7 +206,7 @@ class _PostPageState extends State<PostPage> {
                         //         await APIConnect.addComment(fid: widget.fid, content: commentText)
                         //   },
                         // );
-                        _update();
+                        // _update();
                       }
                     },
                   ),
