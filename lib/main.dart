@@ -8,10 +8,10 @@ import 'app_localizations.dart';
 import './navbar.dart';
 import 'package:Solon/auth/welcome.dart';
 import 'package:Solon/home_screen.dart';
-import './proposal/screen.dart';
-import './event/screen.dart';
-import './forum/screen.dart';
-// import './account_screen.dart';
+import 'package:Solon/proposal/screen.dart';
+import 'package:Solon/event/screen.dart';
+import 'package:Solon/forum/screen.dart';
+import 'package:Solon/account_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -173,12 +173,12 @@ class _MainState extends State<Main> {
             child: Icon(Icons.account_circle),
             onPressed: () async {
               // FirebaseUser user = await FirebaseAuth.instance.currentUser();
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => AccountScreen(user: user),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AccountScreen(uid: widget.uid),
+                ),
+              );
             },
           ),
         ],
