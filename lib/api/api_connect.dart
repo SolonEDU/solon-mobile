@@ -138,10 +138,7 @@ class APIConnect {
   ) async {
     final response = await http.post(
       "$_url/users/login",
-      body: json.encode({
-        'email': email,
-        'password': password
-      }),
+      body: json.encode({'email': email, 'password': password}),
       headers: await headers,
     );
     return json.decode(response.body);

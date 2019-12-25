@@ -13,23 +13,23 @@ import 'main.dart';
 // import './parent/proposal/proposals_screen.dart';
 
 class AccountScreen extends StatefulWidget {
-  final FirebaseUser user;
-  const AccountScreen({this.user});
+  final int uid;
+  const AccountScreen({this.uid});
   @override
   _AccountScreenState createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final db = Firestore.instance;
+  // final db = Firestore.instance;
   var document;
   var _language;
 
-  void _update() {
-    setState(() {
-      document = db.collection('users').document(widget.user.uid);
-    });
-  }
+  // void _update() {
+  //   setState(() {
+  //     document = db.collection('users').document(widget.user.uid);
+  //   });
+  // }
 
   void _setLanguage(newValue) {
     setState(() {
@@ -40,7 +40,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   initState() {
     super.initState();
-    _update();
+    print(widget.uid);
   }
 
   @override
@@ -90,10 +90,10 @@ class _AccountScreenState extends State<AccountScreen> {
                     DropdownButton<String>(
                       value: snapshot.data.data['nativeLanguage'],
                       onChanged: (String newValue) {
-                        db
-                            .collection('users')
-                            .document(widget.user.uid)
-                            .updateData({'nativeLanguage': newValue});
+                        // db
+                        //     .collection('users')
+                        //     .document(widget.user.uid)
+                        //     .updateData({'nativeLanguage': newValue});
                         _setLanguage(newValue);
                         print(
                             _language); //printing language to prevent blue error from popping up

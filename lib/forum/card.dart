@@ -1,5 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:date_format/date_format.dart';
 // import 'dart:convert'; // for jsonDecode
 
 import './page.dart';
@@ -22,11 +23,14 @@ class PostCard extends StatefulWidget {
   }) : super(key: key);
 
   factory PostCard.fromJson(Map<String, dynamic> json) {
+    DateTime timestamp = DateTime.parse(json['timestamp']);
+    String timestampParsed = formatDate(timestamp,
+        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
     return PostCard(
       fid: json['fid'],
       title: json['title'],
       description: json['description'],
-      timestamp: json['timestamp'],
+      timestamp: timestampParsed,
       uid: json['uid'],
     );
   }
@@ -36,7 +40,6 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -46,6 +49,7 @@ class _PostCardState extends State<PostCard> {
           children: <Widget>[
             ListTile(
               title: Text(widget.title),
+              subtitle: Text(widget.timestamp),
               // subtitle: Text(widget.description +
               //     "\n" +
               //     new DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
@@ -58,6 +62,7 @@ class _PostCardState extends State<PostCard> {
                       title: widget.title,
                       description: widget.description,
                       uid: widget.uid,
+                      timestamp: widget.timestamp,
                     ),
                   ),
                 );
