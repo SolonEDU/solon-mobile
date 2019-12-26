@@ -25,6 +25,8 @@ class _CreateEventState extends State<CreateEvent> {
     super.dispose();
   }
 
+  double _timeOfDayToDouble(TimeOfDay tod) => tod.hour + tod.minute/60.0;
+
   goTo(int step) {
     setState(() => {_currentStep = step});
     if (step == 2) _selectDate(context);
@@ -36,7 +38,7 @@ class _CreateEventState extends State<CreateEvent> {
       context: context,
       initialDate: _date,
       firstDate: DateTime(now.year, now.month, now.day),
-      lastDate: DateTime(2020),
+      lastDate: DateTime(now.year, now.month + 3),
     );
 
     if (picked != null) {
@@ -52,6 +54,9 @@ class _CreateEventState extends State<CreateEvent> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
+
+    double timeOfDayNow = _timeOfDayToDouble(TimeOfDay.now()); //TODO: PREVENT USERS FROM SELECTING EVENT TIME BEFORE EVENT CREATION TIME
+    double timeOfDayPicked = _timeOfDayToDouble(picked);
 
     if (picked != null) {
       setState(() {
