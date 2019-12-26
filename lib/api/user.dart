@@ -17,7 +17,8 @@ class User {
     Map<String, String> _languages = {
       'en': 'English',
       'zh': 'Chinese (Simplified)',
-      'zh-tw': 'Chinese (Traditional)',
+      'zh-CN': 'Chinese (Simplified)',
+      'zh-TW': 'Chinese (Traditional)',
       'bn': 'Bengali',
       'ko': 'Korean',
       'ru': 'Russian',

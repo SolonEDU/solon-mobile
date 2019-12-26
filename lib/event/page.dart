@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/loader.dart';
+import 'dart:async';
 
 class EventPage extends StatefulWidget {
   final int eid;
@@ -24,10 +25,18 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
-  Future<bool> _futureAttendanceVal;
-  bool _attendanceVal = false;
+  // Future<bool> _futureAttendanceVal;
+  bool attendanceVal;
+  StreamController streamController = StreamController();
 
-  void _onChanged(bool value) => setState(() => _attendanceVal = value);
+  void _onChanged(bool value) async {
+    if (value) {
+      APIConnect.changeAttendance('POST', eid: widget.eid, uid: widget.uid);
+    } else {
+      APIConnect.changeAttendance('DELETE', eid: widget.eid, uid: widget.uid);
+    }
+    streamController.sink.add(value);
+  }
 
   // Future<Map<String, dynamic>> getAttendance() async {
   //   final responseMessage = await APIConnect.getAttendance(
@@ -40,11 +49,24 @@ class _EventPageState extends State<EventPage> {
 
   @override
   void initState() {
+    load();
     super.initState();
 
-    _futureAttendanceVal =
-        APIConnect.getAttendance(eid: widget.eid, uid: widget.uid);
+    // _futureAttendanceVal =
+    //     APIConnect.getAttendance(eid: widget.eid, uid: widget.uid);
     // print(_futureAttendanceVal.toString());
+  }
+
+  void load() async {
+    streamController
+        .add(await APIConnect.getAttendance(eid: widget.eid, uid: widget.uid));
+    // await Future.delayed(Duration(seconds: 1));
+  }
+
+  @override
+  void dispose() {
+    streamController.close();
+    super.dispose();
   }
 
   @override
@@ -54,15 +76,15 @@ class _EventPageState extends State<EventPage> {
         title: Text(widget.title),
       ),
       body: Container(
-        child: FutureBuilder(
-          future: _futureAttendanceVal,
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        child: StreamBuilder(
+          stream: streamController.stream,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Center(
                 child: Loader(),
               );
             }
-            _attendanceVal = snapshot.data;
+            attendanceVal = snapshot.data;
             return Column(
               children: <Widget>[
                 Text(widget.description),
@@ -81,7 +103,7 @@ class _EventPageState extends State<EventPage> {
                     // ),
                     Text(AppLocalizations.of(context).translate('attending')),
                     Switch.adaptive(
-                      value: _attendanceVal,
+                      value: attendanceVal,
                       onChanged: _onChanged,
                       activeTrackColor: Colors.purpleAccent,
                       activeColor: Colors.purple,

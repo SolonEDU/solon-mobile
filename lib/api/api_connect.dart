@@ -47,8 +47,8 @@ class APIConnect {
 
   static Map<String, String> languages = {
     'English': 'en',
-    'Chinese (Simplified)': 'zh',
-    'Chinese (Traditional)': 'zh',
+    'Chinese (Simplified)': 'zh-CN',
+    'Chinese (Traditional)': 'zh-TW',
     'Bengali': 'bn',
     'Korean': 'ko',
     'Russian': 'ru',
@@ -291,7 +291,7 @@ class APIConnect {
   static Future<Message> changeAttendance(String httpReqType,
       {int eid, int uid}) async {
     http.Response response;
-    if (httpReqType == "CREATE") {
+    if (httpReqType == "POST") {
       response = await http.post(
         "$_url/attenders",
         body: json.encode({
@@ -300,16 +300,21 @@ class APIConnect {
         }),
         headers: await headers,
       );
+      int status = response.statusCode;
+      return status == 201
+          ? Message.fromJson(json.decode(response.body)['message'])
+          : throw Exception(
+              'Attendance value of user $uid could not be created for proposal $eid.');
     } else if (httpReqType == "DELETE") {
       response = await http.delete(
         "$_url/attenders/$eid/$uid",
         headers: await headers,
       );
+      int status = response.statusCode;
+      return status == 201
+          ? Message.fromJson(json.decode(response.body)['message'])
+          : throw Exception(
+              'Attendance value of user $uid could not be deleted for proposal $eid.');
     }
-    int status = response.statusCode;
-    return status == 201
-        ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception(
-            'Attendance value of user $uid could not be changed for proposal $eid.');
   }
 }
