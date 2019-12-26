@@ -16,7 +16,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     Map<String, String> _languages = {
       'en': 'English',
-       'zh-cn': 'Chinese (Simplified)',
+      'zh': 'Chinese (Simplified)',
       'zh-tw': 'Chinese (Traditional)',
       'bn': 'Bengali',
       'ko': 'Korean',

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/api/api_connect.dart';
 
 class CreateEvent extends StatefulWidget {
-  final Function _addEvent;
-  CreateEvent(this._addEvent);
+  // final Function _addEvent;
+  // CreateEvent(this._addEvent);
 
   @override
   _CreateEventState createState() => _CreateEventState();
@@ -146,8 +147,8 @@ class _CreateEventState extends State<CreateEvent> {
                     }
                 }
               : {
-                  widget._addEvent(controllers[0].text,
-                      controllers[1].text, _date),
+                  APIConnect.addEvent(title: controllers[0].text,
+                      description: controllers[1].text, date: _date),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
                 }

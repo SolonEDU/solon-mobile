@@ -37,8 +37,8 @@ class APIConnect {
     yield await connectComments(fid: fid);
   }
 
-  static Stream<List<EventCard>> get eventListView async* {
-    yield await connectEvents();
+  static Stream<List<EventCard>> eventListView(int uid) async* {
+    yield await connectEvents(uid: uid);
   }
 
   // static Stream<List<EventCard>> get eventListView async* {
@@ -46,15 +46,15 @@ class APIConnect {
   // }
 
   static Map<String, String> languages = {
-      'English': 'en',
-      'Chinese (Simplified)': 'zh-cn',
-      'Chinese (Traditional)': 'zh-tw',
-      'Bengali': 'bn',
-      'Korean': 'ko',
-      'Russian': 'ru',
-      'Japanese': 'ja',
-      'Ukrainian': 'uk',
-    };
+    'English': 'en',
+    'Chinese (Simplified)': 'zh',
+    'Chinese (Traditional)': 'zh',
+    'Bengali': 'bn',
+    'Korean': 'ko',
+    'Russian': 'ru',
+    'Japanese': 'ja',
+    'Ukrainian': 'uk',
+  };
 
   static Future<Message> connectRoot() async {
     final response = await http.get(_url);
@@ -230,7 +230,6 @@ class APIConnect {
 
   static Future<Message> changeLanguage({int uid, String updatedLang}) async {
     String updatedLangISO6391Code = languages[updatedLang];
-
     final response = await http.patch(
       "$_url/users/language",
       body: json.encode({
@@ -242,10 +241,11 @@ class APIConnect {
     int status = response.statusCode;
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('Language could not be changed to $updatedLang for user with uid $uid');
+        : throw Exception(
+            'Language could not be changed to $updatedLang for user with uid $uid');
   }
 
-  static Future<List<EventCard>> connectEvents() async {
+  static Future<List<EventCard>> connectEvents({int uid}) async {
     final http.Response response = await http.get(
       "$_url/events",
       headers: await headers,
@@ -253,7 +253,63 @@ class APIConnect {
 
     List collection = json.decode(response.body)['events'];
     List<EventCard> _events =
-        collection.map((json) => EventCard.fromJson(json)).toList();
+        collection.map((json) => EventCard.fromJson(json, uid)).toList();
     return _events;
+  }
+
+  static Future<Message> addEvent({
+    String title,
+    String description,
+    DateTime date,
+  }) async {
+    final response = await http.post(
+      "$_url/events",
+      body: json.encode({
+        'title': title,
+        'description': description,
+        'date': date.toIso8601String(),
+      }),
+      headers: await headers,
+    );
+    int status = response.statusCode;
+    return status == 201
+        ? Message.fromJson(json.decode(response.body)['message'])
+        : throw Exception('Event could not be created.');
+  }
+
+  static Future<bool> getAttendance({int eid, int uid}) async {
+    final response = await http.get(
+      "$_url/attenders/$eid/$uid",
+      headers: await headers,
+    );
+    print("$_url/attenders/$eid/$uid");
+    String responseMessage = json.decode(response.body)['message'];
+    // print(responseMessage);
+    return responseMessage == 'Error' ? false : true;
+  }
+
+  static Future<Message> changeAttendance(String httpReqType,
+      {int eid, int uid}) async {
+    http.Response response;
+    if (httpReqType == "CREATE") {
+      response = await http.post(
+        "$_url/attenders",
+        body: json.encode({
+          'eid': eid,
+          'uid': uid,
+        }),
+        headers: await headers,
+      );
+    } else if (httpReqType == "DELETE") {
+      response = await http.delete(
+        "$_url/attenders/$eid/$uid",
+        headers: await headers,
+      );
+    }
+    int status = response.statusCode;
+    return status == 201
+        ? Message.fromJson(json.decode(response.body)['message'])
+        : throw Exception(
+            'Attendance value of user $uid could not be changed for proposal $eid.');
   }
 }

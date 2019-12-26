@@ -92,7 +92,10 @@ class _EventsScreenState extends State<EventsScreen> {
   Widget build(BuildContext context) {
     // return Scaffold();
     return StreamBuilder<List<EventCard>>(
-      stream: APIConnect.eventListView,
+      stream: Function.apply(
+        APIConnect.eventListView,
+        [widget.uid],
+      ),
       builder: (context, snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
@@ -114,17 +117,18 @@ class _EventsScreenState extends State<EventsScreen> {
                   ],
                 ),
               ),
-              // floatingActionButton: FloatingActionButton(
-              //   heroTag: 'unq1',
-              //   child: Icon(Icons.add),
-              //   onPressed: () => {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => CreateEvent(_addEvent)),
-              //     ),
-              //   },
-              // ),
+              floatingActionButton: FloatingActionButton(
+                heroTag: 'unq1',
+                child: Icon(Icons.add),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateEvent(),
+                    ),
+                  ),
+                },
+              ),
             );
         }
       },

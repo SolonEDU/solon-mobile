@@ -16,6 +16,7 @@ class Event {
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
+    print(json.toString());
     return Event(
       eid: json['eid'],
       title: json['title'],
