@@ -96,7 +96,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( //TODO: PUT SCAFFOLD IN A STREAMBUILDER SO THAT FLOATIN ACTION BUTTON DOES NOT LOAD B4 REST OF SCREEN
       body: Center(
         child: StreamBuilder<List<ProposalCard>>(
           stream: APIConnect.proposalListView,

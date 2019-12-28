@@ -117,18 +117,18 @@ class _EventsScreenState extends State<EventsScreen> {
                   ],
                 ),
               ),
-              floatingActionButton: FloatingActionButton(
-                heroTag: 'unq1',
-                child: Icon(Icons.add),
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateEvent(),
-                    ),
-                  ),
-                },
-              ),
+              // floatingActionButton: FloatingActionButton(
+              //   heroTag: 'unq1',
+              //   child: Icon(Icons.add),
+              //   onPressed: () => {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => CreateEvent(),
+              //       ),
+              //     ),
+              //   },
+              // ),
             );
         }
       },
