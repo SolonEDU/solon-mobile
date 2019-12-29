@@ -268,7 +268,7 @@ class APIConnect {
         : throw Exception('Message field in comment object not found.');
   }
 
-  static Future<User> connectUser({int uid}) async {
+  static Future<Map<String, dynamic>> connectUser({int uid}) async {
     final http.Response response = await http.get(
       "$_url/users/$uid",
       headers: await headers,
@@ -277,7 +277,7 @@ class APIConnect {
     Map collection = json.decode(response.body)['user'];
     print('PRINT COLLECTION ${collection.toString()}');
     User _user = User.fromJson(collection);
-    return _user;
+    return collection;
   }
 
   static Future<Message> changeLanguage({int uid, String updatedLang}) async {

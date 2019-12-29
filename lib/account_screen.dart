@@ -29,10 +29,13 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   StreamController streamController = StreamController();
   // final db = Firestore.instance;
   var document;
   var _language;
+  int _userUid;
 
   // void _update() {
   //   setState(() {
@@ -56,9 +59,17 @@ class _AccountScreenState extends State<AccountScreen> {
     // print(_futureAttendanceVal.toString());
   }
 
-  void load() async {
+  Future<Null> load() async {
     streamController.add(await APIConnect.connectSharedPreferences());
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userUid = json.decode(prefs.getString('userData'))['uid'];
+    });
     // await Future.delayed(Duration(seconds: 1));
+  }
+
+  Future<Null> _refresh() async {
+    streamController.add(await APIConnect.connectUser(uid: _userUid));
   }
 
   @override
@@ -110,103 +121,109 @@ class _AccountScreenState extends State<AccountScreen> {
           default:
             print(snapshot.data['lang']);
             _language = snapshot.data['lang'];
-            return Scaffold(
-              key: _scaffoldKey,
-              appBar: AppBar(
-                title: Text(
-                  AppLocalizations.of(context).translate('account'),
+            return RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: _refresh,
+              child: Scaffold(
+                key: _scaffoldKey,
+                appBar: AppBar(
+                  title: Text(
+                    AppLocalizations.of(context).translate('account'),
+                  ),
                 ),
-              ),
-              body: Center(
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                        "Welcome ${snapshot.data['firstname']} ${snapshot.data['lastname']}!"),
-                    Text("Email: ${snapshot.data['email']}"),
-                    DropdownButton<String>(
-                      value: _language,
-                      onChanged: (String newValue) async {
-                        // _setLanguage(newValue);
-                        Map<String, dynamic> newMap = snapshot.data;
-                        newMap['lang'] = newValue;
-                        streamController.sink.add(newMap);
-                        print(newValue);
-                        final prefs = await SharedPreferences.getInstance();
-                        final userData = prefs.getString('userData');
-                        final userDataJson = json.decode(userData);
-                        userDataJson['lang'] = newValue;
-                        prefs.setString('userData', json.encode(userDataJson));
-                        print(json.encode(userDataJson));
-                        Message responseMessage =
-                            await APIConnect.changeLanguage(
-                                uid: snapshot.data['uid'],
-                                updatedLang: json.decode(prefs.getString('userData'))['lang']);
-                        _showToast(responseMessage.message == 'Error'
-                            ? 'Language could not be changed to $newValue'
-                            : "Language was successfully changed to $newValue");
-                        // db
-                        //     .collection('users')
-                        //     .document(widget.user.uid)
-                        //     .updateData({'nativeLanguage': newValue});
-                        // _setLanguage(newValue);
-                        print(
-                            _language); //printing language to prevent blue error from popping up
-                      },
-                      items: <String>[
-                        'English',
-                        'Chinese (Simplified)',
-                        'Chinese (Traditional)',
-                        'Bengali',
-                        'Korean',
-                        'Russian',
-                        'Japanese',
-                        'Ukrainian'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        print(snapshot.data['lang']);
-                        print(value);
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    // RaisedButton(
-                    //   onPressed: () async {
-                    //     _showToast(
-                    //         "Instructions to change your password were sent to your email address");
-                    //     return FirebaseAuth.instance.sendPasswordResetEmail(
-                    //         email: snapshot.data.data['email']);
-                    //   },
-                    //   child: Text("Change Password"),
-                    // ),
-                    RaisedButton(
-                      onPressed: () async {
-                        final prefs = await SharedPreferences.getInstance();
-                        final userData = prefs.clear();
-                        // await FirebaseAuth.instance.signOut();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            PageRouteBuilder(pageBuilder: (BuildContext context,
-                                Animation animation,
-                                Animation secondaryAnimation) {
-                              return MyApp();
-                            }, transitionsBuilder: (BuildContext context,
-                                Animation<double> animation,
-                                Animation<double> secondaryAnimation,
-                                Widget child) {
-                              return new SlideTransition(
-                                position: new Tween<Offset>(
-                                  begin: const Offset(1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: child,
-                              );
-                            }),
-                            (Route route) => false);
-                      },
-                      child: Text("Log Out"),
-                    ),
-                  ],
+                body: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                          "Welcome ${snapshot.data['firstname']} ${snapshot.data['lastname']}!"),
+                      Text("Email: ${snapshot.data['email']}"),
+                      DropdownButton<String>(
+                        value: _language,
+                        onChanged: (String newValue) async {
+                          // _setLanguage(newValue);
+                          Map<String, dynamic> newMap = snapshot.data;
+                          newMap['lang'] = newValue;
+                          streamController.sink.add(newMap);
+                          print(newValue);
+                          final prefs = await SharedPreferences.getInstance();
+                          final userData = prefs.getString('userData');
+                          final userDataJson = json.decode(userData);
+                          userDataJson['lang'] = newValue;
+                          prefs.setString(
+                              'userData', json.encode(userDataJson));
+                          print(json.encode(userDataJson));
+                          Message responseMessage =
+                              await APIConnect.changeLanguage(
+                                  uid: snapshot.data['uid'],
+                                  updatedLang: json.decode(
+                                      prefs.getString('userData'))['lang']);
+                          _showToast(responseMessage.message == 'Error'
+                              ? 'Language could not be changed to $newValue'
+                              : "Language was successfully changed to $newValue");
+                          // db
+                          //     .collection('users')
+                          //     .document(widget.user.uid)
+                          //     .updateData({'nativeLanguage': newValue});
+                          // _setLanguage(newValue);
+                          print(
+                              _language); //printing language to prevent blue error from popping up
+                        },
+                        items: <String>[
+                          'English',
+                          'Chinese (Simplified)',
+                          'Chinese (Traditional)',
+                          'Bengali',
+                          'Korean',
+                          'Russian',
+                          'Japanese',
+                          'Ukrainian'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          print(snapshot.data['lang']);
+                          print(value);
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                      // RaisedButton(
+                      //   onPressed: () async {
+                      //     _showToast(
+                      //         "Instructions to change your password were sent to your email address");
+                      //     return FirebaseAuth.instance.sendPasswordResetEmail(
+                      //         email: snapshot.data.data['email']);
+                      //   },
+                      //   child: Text("Change Password"),
+                      // ),
+                      RaisedButton(
+                        onPressed: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          final userData = prefs.clear();
+                          // await FirebaseAuth.instance.signOut();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              PageRouteBuilder(pageBuilder:
+                                  (BuildContext context, Animation animation,
+                                      Animation secondaryAnimation) {
+                                return MyApp();
+                              }, transitionsBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation,
+                                  Widget child) {
+                                return new SlideTransition(
+                                  position: new Tween<Offset>(
+                                    begin: const Offset(1.0, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(animation),
+                                  child: child,
+                                );
+                              }),
+                              (Route route) => false);
+                        },
+                        child: Text("Log Out"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
