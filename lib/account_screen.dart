@@ -14,6 +14,9 @@ import 'main.dart';
 // import './parent/proposal/proposals_screen.dart';
 // import 'package:Solon/api/user.dart';
 import 'package:Solon/api/message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class AccountScreen extends StatefulWidget {
   final int uid;
@@ -26,6 +29,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  StreamController streamController = StreamController();
   // final db = Firestore.instance;
   var document;
   var _language;
@@ -36,17 +40,38 @@ class _AccountScreenState extends State<AccountScreen> {
   //   });
   // }
 
-  void _setLanguage(newValue) {
-    setState(() {
-      _language = newValue;
-    });
+  // void _setLanguage(newValue) {
+  //   setState(() {
+  //     _language = newValue;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    load();
+    super.initState();
+
+    // _futureAttendanceVal =
+    //     APIConnect.getAttendance(eid: widget.eid, uid: widget.uid);
+    // print(_futureAttendanceVal.toString());
+  }
+
+  void load() async {
+    streamController.add(await APIConnect.connectSharedPreferences());
+    // await Future.delayed(Duration(seconds: 1));
   }
 
   @override
-  initState() {
-    super.initState();
-    print(widget.uid);
+  void dispose() {
+    streamController.close();
+    super.dispose();
   }
+
+  // @override
+  // initState() {
+  //   super.initState();
+  //   print(widget.uid);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +95,8 @@ class _AccountScreenState extends State<AccountScreen> {
     //     },
     //   ),
     // );
-    return FutureBuilder(
-      future: APIConnect.connectUser(uid: widget.uid),
+    return StreamBuilder(
+      stream: streamController.stream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         // print('HELLO ${snapshot.data.firstName.toString()}');
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
@@ -83,7 +108,8 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             );
           default:
-            _language = snapshot.data.nativeLang;
+            print(snapshot.data['lang']);
+            _language = snapshot.data['lang'];
             return Scaffold(
               key: _scaffoldKey,
               appBar: AppBar(
@@ -95,16 +121,26 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                        "Welcome ${snapshot.data.firstName} ${snapshot.data.lastName}!"),
-                    Text("Email: ${snapshot.data.email}"),
+                        "Welcome ${snapshot.data['firstname']} ${snapshot.data['lastname']}!"),
+                    Text("Email: ${snapshot.data['email']}"),
                     DropdownButton<String>(
                       value: _language,
                       onChanged: (String newValue) async {
-                        _setLanguage(newValue);
+                        // _setLanguage(newValue);
+                        Map<String, dynamic> newMap = snapshot.data;
+                        newMap['lang'] = newValue;
+                        streamController.sink.add(newMap);
                         print(newValue);
+                        final prefs = await SharedPreferences.getInstance();
+                        final userData = prefs.getString('userData');
+                        final userDataJson = json.decode(userData);
+                        userDataJson['lang'] = newValue;
+                        prefs.setString('userData', json.encode(userDataJson));
+                        print(json.encode(userDataJson));
                         Message responseMessage =
                             await APIConnect.changeLanguage(
-                                uid: widget.uid, updatedLang: newValue);
+                                uid: snapshot.data['uid'],
+                                updatedLang: json.decode(prefs.getString('userData'))['lang']);
                         _showToast(responseMessage.message == 'Error'
                             ? 'Language could not be changed to $newValue'
                             : "Language was successfully changed to $newValue");
@@ -126,6 +162,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         'Japanese',
                         'Ukrainian'
                       ].map<DropdownMenuItem<String>>((String value) {
+                        print(snapshot.data['lang']);
+                        print(value);
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -143,6 +181,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     // ),
                     RaisedButton(
                       onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final userData = prefs.clear();
                         // await FirebaseAuth.instance.signOut();
                         Navigator.pushAndRemoveUntil(
                             context,

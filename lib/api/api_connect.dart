@@ -11,6 +11,7 @@ import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/comment.dart';
 import 'package:Solon/api/user.dart';
 import 'package:Solon/event/card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -54,6 +55,18 @@ class APIConnect {
     'Russian': 'ru',
     'Japanese': 'ja',
     'Ukrainian': 'uk',
+  };
+
+  static Map<String, String> langCodeToLang = {
+    'en': 'English',
+    'zh': 'Chinese (Simplified)',
+    'zh-CN': 'Chinese (Simplified)',
+    'zh-TW': 'Chinese (Traditional)',
+    'bn': 'Bengali',
+    'ko': 'Korean',
+    'ru': 'Russian',
+    'ja': 'Japanese',
+    'uk': 'Ukrainian',
   };
 
   static Future<Message> connectRoot() async {
@@ -147,12 +160,51 @@ class APIConnect {
     String email,
     String password,
   ) async {
-    final response = await http.post(
-      "$_url/users/login",
-      body: json.encode({'email': email, 'password': password}),
-      headers: await headers,
-    );
-    return json.decode(response.body);
+    try {
+      final http.Response response = await http.post(
+        "$_url/users/login",
+        body: json.encode({'email': email, 'password': password}),
+        headers: await headers,
+      );
+
+      final userUid = json.decode(response.body)["uid"];
+      // print(userUid);
+
+      final http.Response userDataResponse = await http.get(
+        "$_url/users/$userUid",
+        headers: await headers,
+      );
+      final userDataResponseJson = json.decode(userDataResponse.body)['user'];
+      userDataResponseJson['lang'] = langCodeToLang[userDataResponseJson['lang']];
+      // print(json.encode(json.decode(userDataResponse.body)['user']));
+      print(userDataResponseJson);
+      final userData = json.encode(userDataResponseJson);
+      // final userData = ;
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('userData', userData);
+      print("${prefs.getString('userData')}");
+      return json.decode(response.body);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static Future<Map<String, dynamic>> connectSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return null;
+    }
+    final userData = prefs.getString('userData');
+    final userDataMap = json.decode(userData);
+    return userDataMap;
+  }
+
+  static Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    }
+    return true;
   }
 
   static Future<Map<String, dynamic>> connectVotes(String httpReqType,
