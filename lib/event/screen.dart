@@ -1,13 +1,9 @@
-import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'dart:convert'; // for jsonDecode
 
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/event/card.dart';
-import './create.dart';
-import './../loader.dart';
+import 'package:Solon/loader.dart';
 
 class EventsScreen extends StatefulWidget {
   final int uid;

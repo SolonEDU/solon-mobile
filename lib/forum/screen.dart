@@ -1,11 +1,11 @@
+
+import 'package:flutter/material.dart';
+import 'package:translator/translator.dart';
+
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/create.dart';
 import 'package:Solon/loader.dart';
-import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:translator/translator.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 
 class ForumScreen extends StatefulWidget {
   final int uid;

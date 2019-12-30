@@ -1,13 +1,11 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
-import 'package:Solon/app_localizations.dart';
-// import 'dart:convert'; // for jsonDecode
-
-import './page.dart';
-// import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
-import 'package:Solon/loader.dart';
+// import 'package:intl/intl.dart';
+
+import 'package:Solon/event/page.dart';
+// import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/api/api_connect.dart';
+// import 'package:Solon/loader.dart';
 
 class EventCard extends StatefulWidget {
   final int eid;
@@ -57,13 +55,13 @@ class _EventCardState extends State<EventCard> {
   //   return responseMessage;
   // }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
   //   _futureAttendance = getAttendance();
-  // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +77,7 @@ class _EventCardState extends State<EventCard> {
               leading: Icon(Icons.calendar_today),
               title: Text(widget.title),
               subtitle: Text(
-                  // widget.description + '\n' + 
+                  // widget.description + '\n' +
                   'Event Time: ' + widget.date),
               onTap: () {
                 print("${widget.eid} ${widget.uid}");

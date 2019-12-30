@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
-import 'package:Solon/app_localizations.dart';
 import 'package:flutter/services.dart';
+
+import 'package:Solon/app_localizations.dart';
 
 class CreateProposal extends StatefulWidget {
   final Function _addProposal;

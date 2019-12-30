@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
+import 'package:Solon/main.dart';
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
-import 'package:flutter/material.dart';
-import '../main.dart';
-import 'package:Solon/api/api_connect.dart';
 
 class LoginPage extends StatefulWidget {
   @override

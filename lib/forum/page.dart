@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
-// import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'dart:convert'; // for jsonDecode
-
-// import 'dart:collection';
 
 import 'package:Solon/app_localizations.dart';
-// import 'package:Solon/loader.dart';
-// import './comment.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/comment.dart';
 import 'package:Solon/loader.dart';
@@ -200,7 +192,7 @@ class _PostPageState extends State<PostPage> {
                           timestamp: widget.timestamp,
                           uid: widget.uid,
                         );
-                        
+
                         // document.updateData(
                         //   {
                         //     'comments.' + DateTime.now().toString():

@@ -73,3 +73,7 @@
 
     * helped erc clean up
     * added proper language choice upon register and send the correct ISO 639-1 language code to API
+
+2019-12-30 Eric Lau
+
+    * import cleanup

@@ -3,10 +3,7 @@ import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/create.dart';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'dart:convert'; // for jsonDecode
 
 class ProposalsScreen extends StatefulWidget {
   final int uid;

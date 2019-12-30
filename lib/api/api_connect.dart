@@ -3,15 +3,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/api/message.dart';
-
+// import 'package:Solon/api/user.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/comment.dart';
-import 'package:Solon/api/user.dart';
 import 'package:Solon/event/card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -277,7 +277,7 @@ class APIConnect {
     // print(json.decode(response.body)['user'].toString());
     Map collection = json.decode(response.body)['user'];
     print('PRINT COLLECTION ${collection.toString()}');
-    User _user = User.fromJson(collection);
+    // User _user = User.fromJson(collection);
     return collection;
   }
 

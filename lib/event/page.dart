@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 // import 'package:intl/intl.dart';
+
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/loader.dart';
-import 'dart:async';
 
 class EventPage extends StatefulWidget {
   final int eid;

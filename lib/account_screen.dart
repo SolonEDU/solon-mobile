@@ -1,22 +1,17 @@
-// import 'package:Solon/admin/proposal/proposal.dart';
 // import 'package:Solon/auth/welcome.dart';
-import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'app_localizations.dart';
-// import 'package:Solon/api/api_connect.dart';
-// import 'package:Solon/api/user.dart';
-// import 'package:Solon/api/proposal.dart';
-
-import 'package:Solon/loader.dart';
-import 'main.dart';
-// import './parent/proposal/proposals_screen.dart';
-// import 'package:Solon/api/user.dart';
-import 'package:Solon/api/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:Solon/loader.dart';
+import 'package:Solon/main.dart';
+import 'package:Solon/app_localizations.dart';
+import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/api/message.dart';
+// import './parent/proposal/proposals_screen.dart';
+// import 'package:Solon/api/proposal.dart';
+// import 'package:Solon/api/user.dart';
 
 class AccountScreen extends StatefulWidget {
   final int uid;
@@ -201,7 +196,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       RaisedButton(
                         onPressed: () async {
                           final prefs = await SharedPreferences.getInstance();
-                          final userData = prefs.clear();
+                          prefs.clear();
                           // await FirebaseAuth.instance.signOut();
                           Navigator.pushAndRemoveUntil(
                               context,

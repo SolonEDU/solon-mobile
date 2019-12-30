@@ -1,5 +1,6 @@
-import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
+
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
 // import 'package:Solon/app_localizations.dart';

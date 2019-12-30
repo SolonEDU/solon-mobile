@@ -1,10 +1,7 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
-// import 'dart:convert'; // for jsonDecode
 
-import './page.dart';
-// import 'package:intl/intl.dart';
+import 'package:Solon/forum/page.dart';
 
 class PostCard extends StatefulWidget {
   final int fid;

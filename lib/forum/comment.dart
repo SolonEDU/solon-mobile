@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
 
 class Comment extends StatelessWidget {
   final String date;
   final String comment;
 
-  Comment({this.date,this.comment}); 
+  Comment({this.date,this.comment});
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     DateTime timestamp = DateTime.parse(json['timestamp']);

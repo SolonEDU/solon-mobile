@@ -1,11 +1,8 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'app_localizations.dart';
 // import 'package:flutter/services.dart';
 
-import './navbar.dart';
+import 'package:Solon/navbar.dart';
 import 'package:Solon/auth/welcome.dart';
 import 'package:Solon/home_screen.dart';
 import 'package:Solon/proposal/screen.dart';
@@ -13,7 +10,8 @@ import 'package:Solon/event/screen.dart';
 import 'package:Solon/forum/screen.dart';
 import 'package:Solon/account_screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/loader.dart';
+import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/loader.dart';
 
 void main() => runApp(MyApp());
 

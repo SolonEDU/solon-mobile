@@ -1,13 +1,8 @@
-// import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:intl/intl.dart';
-// import 'package:Solon/app_localizations.dart';
-// import 'dart:convert'; // for jsonDecode
 
-// import 'package:Solon/api/api_connect.dart';
-import './page.dart';
+// import 'package:Solon/app_localizations.dart';
+import 'package:Solon/proposal/page.dart';
 
 class ProposalCard extends StatefulWidget {
   final int pid;
