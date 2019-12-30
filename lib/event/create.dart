@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:Solon/api/api_connect.dart';
 
 class CreateEvent extends StatefulWidget {
-  final Function _addEvent;
-  CreateEvent(this._addEvent);
+  // final Function _addEvent;
+  // CreateEvent(this._addEvent);
 
   @override
   _CreateEventState createState() => _CreateEventState();
@@ -24,6 +25,8 @@ class _CreateEventState extends State<CreateEvent> {
     super.dispose();
   }
 
+  double _timeOfDayToDouble(TimeOfDay tod) => tod.hour + tod.minute/60.0;
+
   goTo(int step) {
     setState(() => {_currentStep = step});
     if (step == 2) _selectDate(context);
@@ -35,7 +38,7 @@ class _CreateEventState extends State<CreateEvent> {
       context: context,
       initialDate: _date,
       firstDate: DateTime(now.year, now.month, now.day),
-      lastDate: DateTime(2020),
+      lastDate: DateTime(now.year, now.month + 3),
     );
 
     if (picked != null) {
@@ -51,6 +54,9 @@ class _CreateEventState extends State<CreateEvent> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
+
+    double timeOfDayNow = _timeOfDayToDouble(TimeOfDay.now()); //TODO: PREVENT USERS FROM SELECTING EVENT TIME BEFORE EVENT CREATION TIME
+    double timeOfDayPicked = _timeOfDayToDouble(picked);
 
     if (picked != null) {
       setState(() {
@@ -146,8 +152,8 @@ class _CreateEventState extends State<CreateEvent> {
                     }
                 }
               : {
-                  widget._addEvent(controllers[0].text,
-                      controllers[1].text, _date),
+                  APIConnect.addEvent(title: controllers[0].text,
+                      description: controllers[1].text, date: _date),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
                 }

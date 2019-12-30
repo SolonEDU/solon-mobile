@@ -1,12 +1,13 @@
+import 'package:Solon/api/api_connect.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:translator/translator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:convert'; // for jsonDecode
 
-// import './card.dart';
-// import './create.dart';
-// import './../loader.dart';
+import 'package:Solon/event/card.dart';
+import './create.dart';
+import './../loader.dart';
 
 class EventsScreen extends StatefulWidget {
   final int uid;
@@ -22,7 +23,6 @@ class _EventsScreenState extends State<EventsScreen> {
 
   Future<String> translateText(text, code) async {
     return await translator.translate(text, to: code);
-
   }
 
   Future<List<Map>> translateAll(String title, String description,
@@ -77,8 +77,8 @@ class _EventsScreenState extends State<EventsScreen> {
   //   return FutureBuilder(
   //     future: toNativeLanguage(doc),
   //     builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
-    //       return EventCard(
-    //         key: UniqueKey(),
+  //       return EventCard(
+  //         key: UniqueKey(),
   //         title: translatedEvent.hasData ? translatedEvent.data[0] : '',
   //         description: translatedEvent.hasData ? translatedEvent.data[1] : '',
   //         time: DateTime.parse(doc.data['date']),
@@ -90,49 +90,48 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
-    // return StreamBuilder<QuerySnapshot>(
-    //   stream: db
-    //       .collection('events')
-    //       .orderBy('date', descending: false)
-    //       .snapshots(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.waiting:
-    //         return Scaffold(
-    //           body: Center(
-    //             child: Loader(),
-    //           ),
-    //         );
-    //       default:
-    //         return Scaffold(
-    //           body: Center(
-    //             child: ListView(
-    //               padding: EdgeInsets.all(8),
-    //               children: <Widget>[
-    //                 Column(
-    //                   children: snapshot.data.documents
-    //                       .map((doc) => buildEventCard(doc))
-    //                       .toList(),
-    //                 )
-    //               ],
-    //             ),
-    //           ),
-    //           floatingActionButton: FloatingActionButton(
-    //             heroTag: 'unq1',
-    //             child: Icon(Icons.add),
-    //             onPressed: () => {
-    //               Navigator.push(
-    //                 context,
-    //                 MaterialPageRoute(
-    //                     builder: (context) => CreateEvent(_addEvent)),
-    //               )
-    //             },
-    //           ),
-    //         );
-    //     }
-    //   },
-    // );
+    // return Scaffold();
+    return StreamBuilder<List<EventCard>>(
+      stream: Function.apply(
+        APIConnect.eventListView,
+        [widget.uid],
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Scaffold(
+              body: Center(
+                child: Loader(),
+              ),
+            );
+          default:
+            return Scaffold(
+              body: Center(
+                child: ListView(
+                  padding: EdgeInsets.all(8),
+                  children: <Widget>[
+                    Column(
+                      children: snapshot.data,
+                    ),
+                  ],
+                ),
+              ),
+              // floatingActionButton: FloatingActionButton(
+              //   heroTag: 'unq1',
+              //   child: Icon(Icons.add),
+              //   onPressed: () => {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => CreateEvent(),
+              //       ),
+              //     ),
+              //   },
+              // ),
+            );
+        }
+      },
+    );
   }
 }

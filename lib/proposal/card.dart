@@ -17,22 +17,25 @@ class ProposalCard extends StatefulWidget {
   final int uid;
   final int totalVotes;
 
-  ProposalCard({
-    Key key,
-    this.pid,
-    this.title,
-    this.description,
-    this.endTime,
-    this.uid,
-    this.totalVotes
-  }) : super(key: key);
+  ProposalCard(
+      {Key key,
+      this.pid,
+      this.title,
+      this.description,
+      this.endTime,
+      this.uid,
+      this.totalVotes})
+      : super(key: key);
 
   factory ProposalCard.fromJson(Map<String, dynamic> json) {
+    DateTime endTime = DateTime.parse(json['endtime']);
+    String endTimeParsed = formatDate(
+        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
     return ProposalCard(
       pid: json['pid'],
       title: json['title'],
       description: json['description'],
-      endTime: json['endtime'],
+      endTime: endTimeParsed,
       uid: json['uid'],
       totalVotes: json['numyes'] + json['numno'],
     );
@@ -63,9 +66,6 @@ class _ProposalCardState extends State<ProposalCard> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime endTime = DateTime.parse(widget.endTime);
-    String endTimeParsed = formatDate(
-        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -76,34 +76,29 @@ class _ProposalCardState extends State<ProposalCard> {
               title: widget.title,
               description: widget.description,
               uidUser: widget.uid,
-              endTimeParsed: endTimeParsed,
+              endTime: widget.endTime,
             ),
           ),
         );
       },
       child: Center(
         child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          // margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Column(
-                  children: <Widget>[
-                    Icon(Icons.gavel),
-                    Text(
-                      widget.totalVotes.toString(),
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ],
+                leading: Text(
+                  widget.totalVotes.toString(),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
                 ),
                 title: Text(widget.title),
                 subtitle: Column(
                   children: <Widget>[
                     // Text(widget.description),
-                    Text('Voting ends on ' + endTimeParsed)
+                    Text('Voting ends on ' + widget.endTime),
                   ],
                 ),
               ),

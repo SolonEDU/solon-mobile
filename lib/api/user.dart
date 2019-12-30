@@ -14,11 +14,23 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    Map<String, String> _languages = {
+      'en': 'English',
+      'zh': 'Chinese (Simplified)',
+      'zh-CN': 'Chinese (Simplified)',
+      'zh-TW': 'Chinese (Traditional)',
+      'bn': 'Bengali',
+      'ko': 'Korean',
+      'ru': 'Russian',
+      'ja': 'Japanese',
+      'uk': 'Ukrainian',
+    };
     return User(
       uid: json['uid'],
       firstName: json['firstname'],
       lastName: json['lastname'],
       email: json['email'],
+      nativeLang: _languages[json['lang']],
     );
   }
 

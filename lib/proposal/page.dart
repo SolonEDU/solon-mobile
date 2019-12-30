@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:Solon/api/api_connect.dart';
 // import 'package:Solon/app_localizations.dart';
 import 'package:Solon/loader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class ProposalPage extends StatefulWidget {
   final int pid;
   final String title;
   final String description;
   final int uidUser;
-  final String endTimeParsed;
+  final String endTime;
 
   ProposalPage({
     Key key,
@@ -16,7 +18,7 @@ class ProposalPage extends StatefulWidget {
     this.title,
     this.description,
     this.uidUser,
-    this.endTimeParsed,
+    this.endTime,
   }) : super(key: key);
 
   @override
@@ -28,11 +30,15 @@ class _ProposalPageState extends State<ProposalPage> {
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    print('HELLO $userUid');
     final responseMessage = await APIConnect.connectVotes(
       'GET',
       pid: widget.pid,
-      uidUser: widget.uidUser,
+      uidUser: userUid,
     );
+    print('HELLO $userUid $responseMessage');
     return responseMessage;
   }
 
@@ -74,7 +80,7 @@ class _ProposalPageState extends State<ProposalPage> {
                 return ListView(
                   children: <Widget>[
                     Text(widget.description),
-                    Text('Voting on proposal ends on: ' + widget.endTimeParsed),
+                    Text('Voting on proposal ends ' + widget.endTime),
                     // Text(AppLocalizations.of(context).translate('votesFor')),
                     snapshot.data['message'] == 'Error'
                         ? PreventDoubleTap(
@@ -116,9 +122,11 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
   //boolean value to determine whether button is tapped
   bool _isButtonTapped = false;
 
-  Future<void> vote(int pid, int uidUser, int voteVal) async {
+  Future<void> vote(int pid, int voteVal) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
     APIConnect.connectVotes('POST',
-        pid: pid, uidUser: uidUser, voteVal: voteVal);
+        pid: pid, uidUser: userUid, voteVal: voteVal);
     // print(responseMessage['message']);
   }
 
@@ -126,14 +134,14 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
     print('is button tapped? yea $_isButtonTapped');
-    vote(widget.pid, widget.uidUser, 1);
+    vote(widget.pid, 1);
   }
 
   _onNayTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
     print('is button tapped? nay $_isButtonTapped');
-    vote(widget.pid, widget.uidUser, 0);
+    vote(widget.pid, 0);
   }
 
   @override
