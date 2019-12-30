@@ -77,3 +77,4 @@
 2019-12-30 Eric Lau
 
     * import cleanup
+    * remove firebase remnants
