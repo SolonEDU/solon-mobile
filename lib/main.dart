@@ -13,6 +13,7 @@ import 'package:Solon/event/screen.dart';
 import 'package:Solon/forum/screen.dart';
 import 'package:Solon/account_screen.dart';
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/loader.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +24,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: WelcomePage(),
+      home: FutureBuilder(
+        future: APIConnect.connectSharedPreferences(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) { //change to connectionState.waiting instead?
+            return Loader();
+          }
+          print(snapshot.data);
+          return snapshot.data.containsKey('errorMessage') ? WelcomePage() : Main(uid: snapshot.data['uid']);
+        },
+      ),
       supportedLocales: [
         Locale('en'),
         Locale('af'),

@@ -31,7 +31,7 @@ class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  StreamController streamController = StreamController();
+  StreamController streamController = StreamController.broadcast();
   // final db = Firestore.instance;
   var document;
   var _language;
@@ -69,7 +69,10 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Future<Null> _refresh() async {
-    streamController.add(await APIConnect.connectUser(uid: _userUid));
+    final dbUserData = await APIConnect.connectUser(uid: _userUid);
+    print(dbUserData);
+    streamController.add(dbUserData);
+    return null;
   }
 
   @override

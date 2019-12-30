@@ -37,7 +37,8 @@ class _CreatePostState extends State<CreatePost> {
         state: currentStep == 0 ? StepState.editing : StepState.complete,
         content: TextFormField(
           autofocus: true,
-          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('title')),
+          decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).translate('title')),
           controller: controllers[0],
           autovalidate: true,
         ),
@@ -51,7 +52,8 @@ class _CreatePostState extends State<CreatePost> {
         content: TextFormField(
           autofocus: true,
           focusNode: _focusNode,
-          decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('description')),
+          decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).translate('description')),
           controller: controllers[1],
           autovalidate: true,
           validator: (value) {
@@ -78,9 +80,16 @@ class _CreatePostState extends State<CreatePost> {
                   FocusScope.of(context).requestFocus(_focusNode)
                 }
               : {
-                  widget._addPost(controllers[0].text, controllers[1].text),
+                  widget._addPost(
+                    controllers[0].text,
+                    controllers[1].text,
+                    DateTime.now(),
+                  ),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context),
+                  Future.delayed(const Duration(
+                      milliseconds:
+                          500)), //allow newly created forum post to properly load after creation
                 }
         },
         onStepCancel: () => {

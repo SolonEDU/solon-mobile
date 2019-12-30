@@ -175,7 +175,8 @@ class APIConnect {
         headers: await headers,
       );
       final userDataResponseJson = json.decode(userDataResponse.body)['user'];
-      userDataResponseJson['lang'] = langCodeToLang[userDataResponseJson['lang']];
+      userDataResponseJson['lang'] =
+          langCodeToLang[userDataResponseJson['lang']];
       // print(json.encode(json.decode(userDataResponse.body)['user']));
       print(userDataResponseJson);
       final userData = json.encode(userDataResponseJson);
@@ -192,7 +193,7 @@ class APIConnect {
   static Future<Map<String, dynamic>> connectSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userData')) {
-      return null;
+      return {"errorMessage": "Error"};
     }
     final userData = prefs.getString('userData');
     final userDataMap = json.decode(userData);
@@ -368,5 +369,35 @@ class APIConnect {
           : throw Exception(
               'Attendance value of user $uid could not be deleted for proposal $eid.');
     }
+  }
+
+  static Future<Message> addForumPost(
+    String title,
+    String description,
+    DateTime timestamp,
+  ) async {
+    final userData = await connectSharedPreferences();
+    print(userData['uid']);
+    print(json.encode({
+      'title': title,
+      'description': description,
+      'starttime': timestamp.toIso8601String(),
+      'uid': userData['uid'],
+    }));
+    final response = await http.post(
+      "$_url/forumposts",
+      body: json.encode({
+        'title': title,
+        'description': description,
+        'timestamp': timestamp.toIso8601String(),
+        'uid': userData['uid'],
+      }),
+      headers: await headers,
+    );
+
+    int status = response.statusCode;
+    return status == 201
+        ? Message.fromJson(json.decode(response.body)['message'])
+        : throw Exception('Message field in forum post object not found.');
   }
 }

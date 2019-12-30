@@ -1,6 +1,6 @@
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/card.dart';
-// import 'package:Solon/forum/create.dart';
+import 'package:Solon/forum/create.dart';
 import 'package:Solon/loader.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,35 +97,48 @@ class _ForumScreenState extends State<ForumScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<List<PostCard>>(
-        stream: APIConnect.forumListView,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return Center(
-                child: Loader(),
-              );
-            case ConnectionState.waiting:
-              return Center(
-                child: Loader(),
-              );
-            case ConnectionState.active:
-              return Center(
-                child: Loader(),
-              );
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                return ListView(
+    return StreamBuilder<List<PostCard>>(
+      stream: APIConnect.forumListView,
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return Center(
+              child: Loader(),
+            );
+          case ConnectionState.waiting:
+            return Center(
+              child: Loader(),
+            );
+          case ConnectionState.active:
+            return Center(
+              child: Loader(),
+            );
+          case ConnectionState.done:
+            if (snapshot.hasData) {
+              return Scaffold(
+                body: ListView(
                   children: snapshot.data,
-                );
-              }
-          }
-          return Center(
-            child: Loader(),
-          );
-        },
-      ),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  heroTag: 'unq1',
+                  child: Icon(Icons.add),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            CreatePost(APIConnect.addForumPost),
+                      ),
+                    )
+                  },
+                ),
+              );
+            }
+        }
+        return Center(
+          child: Loader(),
+        );
+      },
     );
   }
 }
