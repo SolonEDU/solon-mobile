@@ -24,15 +24,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: FutureBuilder(
-        future: APIConnect.connectSharedPreferences(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) { //change to connectionState.waiting instead?
-            return Loader();
-          }
-          print(snapshot.data);
-          return snapshot.data.containsKey('errorMessage') ? WelcomePage() : Main(uid: snapshot.data['uid']);
-        },
+      home: Scaffold(
+        body: FutureBuilder(
+          future: APIConnect.connectSharedPreferences(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Container();
+            }
+            // print(snapshot.data);
+            return snapshot.data.containsKey('errorMessage')
+                ? WelcomePage()
+                : Main(uid: snapshot.data['uid']);
+          },
+        ),
       ),
       supportedLocales: [
         Locale('en'),
