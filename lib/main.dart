@@ -29,10 +29,9 @@ class MyApp extends StatelessWidget {
           future: APIConnect.connectSharedPreferences(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
-              //change to connectionState.waiting instead?
-              return Loader();
+              return Container();
             }
-            print(snapshot.data);
+            // print(snapshot.data);
             return snapshot.data.containsKey('errorMessage')
                 ? WelcomePage()
                 : Main(uid: snapshot.data['uid']);
