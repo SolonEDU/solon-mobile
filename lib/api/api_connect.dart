@@ -167,8 +167,11 @@ class APIConnect {
         headers: await headers,
       );
 
+      if (json.decode(response.body)['message'] == 'Error') {
+        return json.decode(response.body);
+      }
+
       final userUid = json.decode(response.body)["uid"];
-      // print(userUid);
 
       final http.Response userDataResponse = await http.get(
         "$_url/users/$userUid",

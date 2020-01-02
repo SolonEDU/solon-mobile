@@ -78,3 +78,8 @@
 
     * import cleanup
     * remove firebase remnants
+
+
+2020-01-02 Eric Lau
+
+    * fix login for wrong password
