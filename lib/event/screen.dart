@@ -17,6 +17,21 @@ class _EventsScreenState extends State<EventsScreen> {
   // final db = Firestore.instance;
   final translator = GoogleTranslator();
 
+  Stream<List<EventCard>> stream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    stream = APIConnect.eventListView(widget.uid);
+  }
+
+  Future<void> getStream() async {
+    setState(() {
+      stream = APIConnect.eventListView(widget.uid);
+    });
+  }
+
   Future<String> translateText(text, code) async {
     return await translator.translate(text, to: code);
   }
@@ -86,48 +101,38 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold();
-    return StreamBuilder<List<EventCard>>(
-      stream: Function.apply(
-        APIConnect.eventListView,
-        [widget.uid],
-      ),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Scaffold(
-              body: Center(
-                child: Loader(),
-              ),
-            );
-          default:
-            return Scaffold(
-              body: Center(
-                child: ListView(
-                  padding: EdgeInsets.all(8),
-                  children: <Widget>[
-                    Column(
-                      children: snapshot.data,
-                    ),
-                  ],
+    return RefreshIndicator(
+      onRefresh: getStream,
+      child: StreamBuilder<List<EventCard>>(
+        stream: Function.apply(
+          APIConnect.eventListView,
+          [widget.uid],
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Scaffold(
+                body: Center(
+                  child: Loader(),
                 ),
-              ),
-              // floatingActionButton: FloatingActionButton(
-              //   heroTag: 'unq1',
-              //   child: Icon(Icons.add),
-              //   onPressed: () => {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => CreateEvent(),
-              //       ),
-              //     ),
-              //   },
-              // ),
-            );
-        }
-      },
+              );
+            default:
+              return Scaffold(
+                body: Center(
+                  child: ListView(
+                    padding: EdgeInsets.all(8),
+                    children: <Widget>[
+                      Column(
+                        children: snapshot.data,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+          }
+        },
+      ),
     );
   }
 }

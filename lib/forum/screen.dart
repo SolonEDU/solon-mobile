@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 
@@ -16,7 +15,21 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> {
-  // final db = Firestore.instance;
+  Stream<List<PostCard>> stream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    stream = APIConnect.forumListView;
+  }
+
+  Future<void> getStream() async {
+    setState(() {
+      stream = APIConnect.forumListView;
+    });
+  }
+
   final translator = GoogleTranslator();
 
   Future<String> translateText(text, code) async {
@@ -97,48 +110,51 @@ class _ForumScreenState extends State<ForumScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<PostCard>>(
-      stream: APIConnect.forumListView,
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            return Center(
-              child: Loader(),
-            );
-          case ConnectionState.waiting:
-            return Center(
-              child: Loader(),
-            );
-          case ConnectionState.active:
-            return Center(
-              child: Loader(),
-            );
-          case ConnectionState.done:
-            if (snapshot.hasData) {
-              return Scaffold(
-                body: ListView(
-                  children: snapshot.data,
-                ),
-                floatingActionButton: FloatingActionButton(
-                  heroTag: 'unq1',
-                  child: Icon(Icons.add),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CreatePost(APIConnect.addForumPost),
-                      ),
-                    )
-                  },
-                ),
+    return RefreshIndicator(
+      onRefresh: getStream,
+      child: StreamBuilder<List<PostCard>>(
+        stream: APIConnect.forumListView,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Center(
+                child: Loader(),
               );
-            }
-        }
-        return Center(
-          child: Loader(),
-        );
-      },
+            case ConnectionState.waiting:
+              return Center(
+                child: Loader(),
+              );
+            case ConnectionState.active:
+              return Center(
+                child: Loader(),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                return Scaffold(
+                  body: ListView(
+                    children: snapshot.data,
+                  ),
+                  floatingActionButton: FloatingActionButton(
+                    heroTag: 'unq1',
+                    child: Icon(Icons.add),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CreatePost(APIConnect.addForumPost),
+                        ),
+                      )
+                    },
+                  ),
+                );
+              }
+          }
+          return Center(
+            child: Loader(),
+          );
+        },
+      ),
     );
   }
 }

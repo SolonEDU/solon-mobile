@@ -42,10 +42,6 @@ class APIConnect {
     yield await connectEvents(uid: uid);
   }
 
-  // static Stream<List<EventCard>> get eventListView async* {
-  //   yield await connectEvents();
-  // }
-
   static Map<String, String> languages = {
     'English': 'en',
     'Chinese (Simplified)': 'zh-CN',

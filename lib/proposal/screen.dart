@@ -15,6 +15,21 @@ class ProposalsScreen extends StatefulWidget {
 class _ProposalsScreenState extends State<ProposalsScreen> {
   final translator = GoogleTranslator();
 
+  Stream<List<ProposalCard>> stream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    stream = APIConnect.proposalListView;
+  }
+
+  Future<void> getStream() async {
+    setState(() {
+      stream = APIConnect.proposalListView;
+    });
+  }
+
   Future<String> translateText(text, code) async {
     return await translator.translate(text, to: code);
   }
@@ -93,44 +108,47 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<ProposalCard>>(
-      stream: APIConnect.proposalListView,
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            break;
-          case ConnectionState.waiting:
-            break;
-          case ConnectionState.active:
-            break;
-          case ConnectionState.done:
-            if (snapshot.hasData) {
-              return Scaffold(
-                body: Center(
-                  child: ListView(
-                    children: snapshot.data,
+    return RefreshIndicator(
+      onRefresh: getStream,
+      child: StreamBuilder<List<ProposalCard>>(
+        stream: stream,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              break;
+            case ConnectionState.waiting:
+              break;
+            case ConnectionState.active:
+              break;
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                return Scaffold(
+                  body: Center(
+                    child: ListView(
+                      children: snapshot.data,
+                    ),
                   ),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  heroTag: 'unq1',
-                  child: Icon(Icons.add),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CreateProposal(APIConnect.addProposal),
-                      ),
-                    )
-                  },
-                ),
-              );
-            }
-        }
-        return Center(
-          child: Loader(),
-        );
-      },
+                  floatingActionButton: FloatingActionButton(
+                    heroTag: 'unq1',
+                    child: Icon(Icons.add),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CreateProposal(APIConnect.addProposal),
+                        ),
+                      )
+                    },
+                  ),
+                );
+              }
+          }
+          return Center(
+            child: Loader(),
+          );
+        },
+      ),
     );
   }
 }

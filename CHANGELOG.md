@@ -83,3 +83,4 @@
 2020-01-02 Eric Lau
 
     * fix login for wrong password
+    * implement pull to refresh on screens
