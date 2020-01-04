@@ -115,19 +115,14 @@ class _ForumScreenState extends State<ForumScreen> {
       child: StreamBuilder<List<PostCard>>(
         stream: APIConnect.forumListView,
         builder: (context, snapshot) {
+          if (snapshot.hasError) return Text("${snapshot.error}");
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return Center(
-                child: Loader(),
-              );
+              break;
             case ConnectionState.waiting:
-              return Center(
-                child: Loader(),
-              );
+              break;
             case ConnectionState.active:
-              return Center(
-                child: Loader(),
-              );
+              break;
             case ConnectionState.done:
               if (snapshot.hasData) {
                 return Scaffold(

@@ -12,7 +12,6 @@ import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/comment.dart';
 import 'package:Solon/event/card.dart';
 
-
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
 
@@ -91,21 +90,22 @@ class APIConnect {
     );
 
     List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _proposals =
+    List<PostCard> _forumposts =
         collection.map((json) => PostCard.fromJson(json)).toList();
-    return _proposals;
+    return _forumposts;
   }
 
-  // static Future<List<EventCard>> connectEvents() async {
-  //   final http.Response response = await http.get(
-  //     "$_url/events",
-  //     headers: await headers,
-  //   );
-  //   List collection = json.decode(response.body)['events'];
-  //   List<EventCard> _events =
-  //       collection.map((json) => EventCard.fromJson(json)).toList();
-  //   return _events;
-  // }
+  static Future<List<EventCard>> connectEvents({int uid}) async {
+    final http.Response response = await http.get(
+      "$_url/events",
+      headers: await headers,
+    );
+
+    List collection = json.decode(response.body)['events'];
+    List<EventCard> _events =
+        collection.map((json) => EventCard.fromJson(json, uid)).toList();
+    return _events;
+  }
 
   static Future<Message> addProposal(
     String title,
@@ -295,18 +295,6 @@ class APIConnect {
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception(
             'Language could not be changed to $updatedLang for user with uid $uid');
-  }
-
-  static Future<List<EventCard>> connectEvents({int uid}) async {
-    final http.Response response = await http.get(
-      "$_url/events",
-      headers: await headers,
-    );
-
-    List collection = json.decode(response.body)['events'];
-    List<EventCard> _events =
-        collection.map((json) => EventCard.fromJson(json, uid)).toList();
-    return _events;
   }
 
   static Future<Message> addEvent({

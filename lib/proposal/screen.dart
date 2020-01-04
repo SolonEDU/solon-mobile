@@ -113,6 +113,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
       child: StreamBuilder<List<ProposalCard>>(
         stream: stream,
         builder: (context, snapshot) {
+          if (snapshot.hasError) return Text("${snapshot.error}");
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               break;

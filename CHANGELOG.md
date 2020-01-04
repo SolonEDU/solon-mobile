@@ -84,3 +84,7 @@
 
     * fix login for wrong password
     * implement pull to refresh on screens
+
+2020-01-03 Eric Lau
+
+    * show SocketError on screens without internet
