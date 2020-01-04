@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:translator/translator.dart';
+
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/create.dart';
-import 'package:flutter/material.dart';
-import 'package:translator/translator.dart';
 
 class ProposalsScreen extends StatefulWidget {
   final int uid;

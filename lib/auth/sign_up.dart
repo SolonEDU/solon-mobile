@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
@@ -10,7 +11,7 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => new _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends State<SignUpPage> with Screen{
   String _firstName, _lastName, _email, _password;
   String _nativeLanguage = 'English';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -182,19 +183,11 @@ class _SignUpPageState extends State<SignUpPage> {
           _nativeLanguage, _firstName, _lastName, _email, _password);
       print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
-        _showToast(responseMessage["error"]["errorMessage"]);
+        showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
       } else {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       }
     }
-  }
-
-  void _showToast(String message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
   }
 }

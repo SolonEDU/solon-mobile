@@ -89,3 +89,4 @@
 
     * show SocketError on screens without internet
     * remove extraneous files and code
+    * move showToast method to Screen mixin

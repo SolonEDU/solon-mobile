@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:Solon/main.dart';
+import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
@@ -10,7 +11,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with Screen{
   bool _obscureText = true;
 
   void _toggle() {
@@ -112,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
       formState.save();
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
-        _showToast(responseMessage["error"]["errorMessage"]);
+        showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
       } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
@@ -123,13 +124,5 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     }
-  }
-
-  void _showToast(String message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
   }
 }

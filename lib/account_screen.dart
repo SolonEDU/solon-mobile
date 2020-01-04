@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:Solon/loader.dart';
 import 'package:Solon/main.dart';
+import 'package:Solon/screen.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/api/message.dart';
@@ -18,7 +19,7 @@ class AccountScreen extends StatefulWidget {
   _AccountScreenState createState() => _AccountScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _AccountScreenState extends State<AccountScreen> with Screen{
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -31,7 +32,6 @@ class _AccountScreenState extends State<AccountScreen> {
   void initState() {
     load();
     super.initState();
-
   }
 
   Future<Null> load() async {
@@ -104,9 +104,9 @@ class _AccountScreenState extends State<AccountScreen> {
                                   uid: snapshot.data['uid'],
                                   updatedLang: json.decode(
                                       prefs.getString('userData'))['lang']);
-                          _showToast(responseMessage.message == 'Error'
+                          showToast(responseMessage.message == 'Error'
                               ? 'Language could not be changed to $newValue'
-                              : "Language was successfully changed to $newValue");
+                              : "Language was successfully changed to $newValue", _scaffoldKey);
                         },
                         items: <String>[
                           'English',
@@ -168,14 +168,6 @@ class _AccountScreenState extends State<AccountScreen> {
             );
         }
       },
-    );
-  }
-
-  void _showToast(String message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
     );
   }
 }
