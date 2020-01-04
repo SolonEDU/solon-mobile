@@ -79,6 +79,11 @@
     * import cleanup
     * remove firebase remnants
 
+2019-12-29 ray. lee.
+
+    * added auto login using shared prefs
+    * loader in proposal screen shows before FAB
+    * adding forum posts work
 
 2020-01-02 Eric Lau
 
