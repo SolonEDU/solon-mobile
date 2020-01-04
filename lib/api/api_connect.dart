@@ -6,11 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/api/message.dart';
-// import 'package:Solon/api/user.dart';
 import 'package:Solon/proposal/card.dart';
+import 'package:Solon/event/card.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/comment.dart';
-import 'package:Solon/event/card.dart';
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -356,6 +355,7 @@ class APIConnect {
           : throw Exception(
               'Attendance value of user $uid could not be deleted for proposal $eid.');
     }
+    return Message(message: 'Something wrong has happened!');
   }
 
   static Future<Message> addForumPost(

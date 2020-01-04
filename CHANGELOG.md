@@ -88,3 +88,4 @@
 2020-01-03 Eric Lau
 
     * show SocketError on screens without internet
+    * remove extraneous files and code

@@ -9,15 +9,11 @@ import 'package:Solon/main.dart';
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/api/message.dart';
-// import './parent/proposal/proposals_screen.dart';
-// import 'package:Solon/api/proposal.dart';
-// import 'package:Solon/api/user.dart';
 
 class AccountScreen extends StatefulWidget {
   final int uid;
   const AccountScreen({this.uid});
-  // final FirebaseUser user;
-  // const AccountScreen({this.user});
+
   @override
   _AccountScreenState createState() => _AccountScreenState();
 }
@@ -27,31 +23,15 @@ class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   StreamController streamController = StreamController.broadcast();
-  // final db = Firestore.instance;
   var document;
   var _language;
   int _userUid;
-
-  // void _update() {
-  //   setState(() {
-  // document = db.collection('users').document(widget.user.uid);
-  //   });
-  // }
-
-  // void _setLanguage(newValue) {
-  //   setState(() {
-  //     _language = newValue;
-  //   });
-  // }
 
   @override
   void initState() {
     load();
     super.initState();
 
-    // _futureAttendanceVal =
-    //     APIConnect.getAttendance(eid: widget.eid, uid: widget.uid);
-    // print(_futureAttendanceVal.toString());
   }
 
   Future<Null> load() async {
@@ -60,14 +40,11 @@ class _AccountScreenState extends State<AccountScreen> {
     setState(() {
       _userUid = json.decode(prefs.getString('userData'))['uid'];
     });
-    // await Future.delayed(Duration(seconds: 1));
   }
 
   Future<Null> _refresh() async {
     final dbUserData = await APIConnect.connectUser(uid: _userUid);
-    print(dbUserData);
     streamController.add(dbUserData);
-    return null;
   }
 
   @override
@@ -76,38 +53,11 @@ class _AccountScreenState extends State<AccountScreen> {
     super.dispose();
   }
 
-  // @override
-  // initState() {
-  //   super.initState();
-  //   print(widget.uid);
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-
-    // );
-    // return Scaffold(
-    //   body: FutureBuilder<List<Proposal>>(
-    //     future: APIConnect.connectProposals(),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasData) {
-    //         List<Widget> users = [];
-    //         for (var i = 0; i < snapshot.data.length; i++) {
-    //           users.add(Text("${snapshot.data}"));
-    //         }
-    //         return ListView(
-    //           children: users,
-    //         );
-    //       }
-    //       return Loader();
-    //     },
-    //   ),
-    // );
     return StreamBuilder(
       stream: streamController.stream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        // print('HELLO ${snapshot.data.firstName.toString()}');
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -117,7 +67,6 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             );
           default:
-            print(snapshot.data['lang']);
             _language = snapshot.data['lang'];
             return RefreshIndicator(
               key: _refreshIndicatorKey,
@@ -142,14 +91,14 @@ class _AccountScreenState extends State<AccountScreen> {
                           Map<String, dynamic> newMap = snapshot.data;
                           newMap['lang'] = newValue;
                           streamController.sink.add(newMap);
-                          print(newValue);
+                          // print(newValue);
                           final prefs = await SharedPreferences.getInstance();
                           final userData = prefs.getString('userData');
                           final userDataJson = json.decode(userData);
                           userDataJson['lang'] = newValue;
                           prefs.setString(
                               'userData', json.encode(userDataJson));
-                          print(json.encode(userDataJson));
+                          // print(json.encode(userDataJson));
                           Message responseMessage =
                               await APIConnect.changeLanguage(
                                   uid: snapshot.data['uid'],
@@ -158,13 +107,6 @@ class _AccountScreenState extends State<AccountScreen> {
                           _showToast(responseMessage.message == 'Error'
                               ? 'Language could not be changed to $newValue'
                               : "Language was successfully changed to $newValue");
-                          // db
-                          //     .collection('users')
-                          //     .document(widget.user.uid)
-                          //     .updateData({'nativeLanguage': newValue});
-                          // _setLanguage(newValue);
-                          print(
-                              _language); //printing language to prevent blue error from popping up
                         },
                         items: <String>[
                           'English',
@@ -176,8 +118,8 @@ class _AccountScreenState extends State<AccountScreen> {
                           'Japanese',
                           'Ukrainian'
                         ].map<DropdownMenuItem<String>>((String value) {
-                          print(snapshot.data['lang']);
-                          print(value);
+                          // print(snapshot.data['lang']);
+                          // print(value);
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -197,7 +139,6 @@ class _AccountScreenState extends State<AccountScreen> {
                         onPressed: () async {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.clear();
-                          // await FirebaseAuth.instance.signOut();
                           Navigator.pushAndRemoveUntil(
                               context,
                               PageRouteBuilder(pageBuilder:
