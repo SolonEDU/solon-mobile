@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }
-            return Loader();
+            return CircularProgressIndicator();
           }
         ),
       ),

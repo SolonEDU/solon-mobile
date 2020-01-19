@@ -82,7 +82,7 @@ class _EventPageState extends State<EventPage> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Center(
-                child: Loader(),
+                child: CircularProgressIndicator(),
               );
             }
             attendanceVal = snapshot.data;

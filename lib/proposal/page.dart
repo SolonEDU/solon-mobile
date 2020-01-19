@@ -67,7 +67,7 @@ class _ProposalPageState extends State<ProposalPage> {
                   AsyncSnapshot<Map<String, dynamic>> snapshot) {
                 if (snapshot.data == null) {
                   return Center(
-                    child: Loader(),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 if (snapshot.data['message'] == 'Error') {

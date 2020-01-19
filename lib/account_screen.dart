@@ -63,7 +63,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen{
           case ConnectionState.waiting:
             return Scaffold(
               body: Center(
-                child: Loader(),
+                child: CircularProgressIndicator(),
               ),
             );
           default:

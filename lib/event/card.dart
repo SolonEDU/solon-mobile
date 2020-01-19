@@ -114,7 +114,7 @@ class _EventCardState extends State<EventCard> {
             //             (BuildContext context, AsyncSnapshot<bool> snapshot) {
             //           if (snapshot.data == null) {
             //             return Center(
-            //               child: Loader(),
+            //               child: CircularProgressIndicator(),
             //             );
             //           }
             //           return Switch.adaptive(

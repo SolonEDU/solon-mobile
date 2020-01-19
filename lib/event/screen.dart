@@ -114,7 +114,7 @@ class _EventsScreenState extends State<EventsScreen> {
             case ConnectionState.waiting:
               return Scaffold(
                 body: Center(
-                  child: Loader(),
+                  child: CircularProgressIndicator(),
                 ),
               );
             default:
