@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 
+import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/create.dart';
@@ -14,7 +15,7 @@ class ForumScreen extends StatefulWidget {
   _ForumScreenState createState() => _ForumScreenState();
 }
 
-class _ForumScreenState extends State<ForumScreen> {
+class _ForumScreenState extends State<ForumScreen> with Screen {
   Stream<List<PostCard>> stream;
 
   @override
@@ -129,19 +130,8 @@ class _ForumScreenState extends State<ForumScreen> {
                   body: ListView(
                     children: snapshot.data,
                   ),
-                  floatingActionButton: FloatingActionButton(
-                    heroTag: 'unq1',
-                    child: Icon(Icons.add),
-                    onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CreatePost(APIConnect.addForumPost),
-                        ),
-                      )
-                    },
-                  ),
+                  floatingActionButton:
+                      getFAB(context, CreatePost(APIConnect.addForumPost)),
                 );
               }
           }

@@ -8,4 +8,19 @@ mixin Screen {
       ),
     );
   }
+
+  FloatingActionButton getFAB(BuildContext context, Widget creator) {
+    return FloatingActionButton(
+      heroTag: 'unq1',
+      child: Icon(Icons.add),
+      onPressed: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => creator,
+          ),
+        )
+      },
+    );
+  }
 }

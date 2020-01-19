@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 
+import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
@@ -13,7 +14,7 @@ class ProposalsScreen extends StatefulWidget {
   _ProposalsScreenState createState() => _ProposalsScreenState();
 }
 
-class _ProposalsScreenState extends State<ProposalsScreen> {
+class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   final translator = GoogleTranslator();
 
   Stream<List<ProposalCard>> stream;
@@ -130,19 +131,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                       children: snapshot.data,
                     ),
                   ),
-                  floatingActionButton: FloatingActionButton(
-                    heroTag: 'unq1',
-                    child: Icon(Icons.add),
-                    onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CreateProposal(APIConnect.addProposal),
-                        ),
-                      )
-                    },
-                  ),
+                  floatingActionButton:
+                      getFAB(context, CreateProposal(APIConnect.addProposal)),
                 );
               }
           }
