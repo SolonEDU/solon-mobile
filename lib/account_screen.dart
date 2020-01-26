@@ -72,6 +72,9 @@ class _AccountScreenState extends State<AccountScreen> with Screen{
               key: _refreshIndicatorKey,
               onRefresh: _refresh,
               child: Scaffold(
+                // TODO: ios back
+                // TODO: remove blue background
+                // TODO: change font and size
                 key: _scaffoldKey,
                 appBar: AppBar(
                   title: Text(

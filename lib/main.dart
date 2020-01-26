@@ -203,9 +203,13 @@ class _MainState extends State<Main> {
           ),
         ),
         actions: <Widget>[
+          // TODO: move this into the navbar
           FloatingActionButton(
             heroTag: 'unq0',
             elevation: 0.0,
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            splashColor: Colors.transparent,
             backgroundColor: Colors.white,
             foregroundColor: Colors.pinkAccent[400],
             child: Icon(Icons.account_circle),
