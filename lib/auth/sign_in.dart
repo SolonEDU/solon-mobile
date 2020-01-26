@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with Screen{
+class _LoginPageState extends State<LoginPage> with Screen {
   bool _obscureText = true;
 
   void _toggle() {
@@ -26,9 +26,12 @@ class _LoginPageState extends State<LoginPage> with Screen{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           icon: Icon(
             Icons.arrow_back_ios,
           ),
@@ -97,7 +100,8 @@ class _LoginPageState extends State<LoginPage> with Screen{
               Button(
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25),
-                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
+                label:
+                    "Sign In", // AppLocalizations.of(context).translate('signin'),
               ),
             ],
           ),

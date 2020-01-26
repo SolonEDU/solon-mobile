@@ -23,6 +23,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           icon: Icon(
             Icons.arrow_back_ios,
           ),
