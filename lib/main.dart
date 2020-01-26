@@ -22,6 +22,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
+      theme: ThemeData(
+        fontFamily: 'Raleway',
+        textTheme: TextTheme(
+          headline: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+          title: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
+          body1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        )),
       home: Scaffold(
         body: FutureBuilder(
           future: APIConnect.connectSharedPreferences(),

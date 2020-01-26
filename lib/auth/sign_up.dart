@@ -11,7 +11,7 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => new _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with Screen{
+class _SignUpPageState extends State<SignUpPage> with Screen {
   String _firstName, _lastName, _email, _password;
   String _nativeLanguage = 'English';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -44,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen{
               margin: const EdgeInsets.only(top: 10, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('language'),
-                textScaleFactor: 1.5,
+                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -85,48 +85,53 @@ class _SignUpPageState extends State<SignUpPage> with Screen{
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                "First Name",
-                textScaleFactor: 1.5,
+                "Name",
+                textScaleFactor: 1,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
-              child: TextFormField(
-                keyboardType: TextInputType.text,
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please enter your first name';
-                  }
-                  return null;
-                },
-                onSaved: (input) => _firstName = input,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 20, left: 20),
-              child: Text(
-                "Last Name",
-                textScaleFactor: 1.5,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
-              child: TextFormField(
-                keyboardType: TextInputType.text,
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Please enter your last name';
-                  }
-                  return null;
-                },
-                onSaved: (input) => _lastName = input,
-              ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    margin:
+                        const EdgeInsets.only(left: 20, right: 10, bottom: 5),
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      validator: (input) {
+                        if (input.isEmpty) {
+                          return 'Please enter your first name';
+                        }
+                        return null;
+                      },
+                      onSaved: (input) => _firstName = input,
+                      decoration: InputDecoration(labelText: 'First name'),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin:
+                        const EdgeInsets.only(left: 10, right: 20, bottom: 5),
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      validator: (input) {
+                        if (input.isEmpty) {
+                          return 'Please enter your last name';
+                        }
+                        return null;
+                      },
+                      onSaved: (input) => _lastName = input,
+                      decoration: InputDecoration(labelText: 'Last name'),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('email'),
-                textScaleFactor: 1.5,
+                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -146,7 +151,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen{
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('password'),
-                textScaleFactor: 1.5,
+                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -160,6 +165,29 @@ class _SignUpPageState extends State<SignUpPage> with Screen{
                   return null;
                 },
                 onSaved: (input) => _password = input,
+                obscureText: true,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 20),
+              child: Text(
+                'Confirm Password',
+                // AppLocalizations.of(context).translate('password'),
+                textScaleFactor: 1,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+              child: TextFormField(
+                keyboardType: TextInputType.text,
+                // TODO: implement password confirmation logic
+                // validator: (input) {
+                //   if (input.length < 6) {
+                //     return 'Your password needs to be at least 6 characters';
+                //   }
+                //   return null;
+                // },
+                // onSaved: (input) => _password = input,
                 obscureText: true,
               ),
             ),

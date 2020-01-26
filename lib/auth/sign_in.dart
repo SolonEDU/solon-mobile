@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> with Screen{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
@@ -51,7 +50,7 @@ class _LoginPageState extends State<LoginPage> with Screen{
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('email'),
-                  textScaleFactor: 1.5,
+                  textScaleFactor: 1,
                 ),
               ),
               Container(
@@ -72,7 +71,7 @@ class _LoginPageState extends State<LoginPage> with Screen{
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('password'),
-                  textScaleFactor: 1.5,
+                  textScaleFactor: 1,
                 ),
               ),
               Container(
