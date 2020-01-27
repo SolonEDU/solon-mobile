@@ -136,7 +136,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
               }
           }
           return Center(
-            child: Loader(),
+            child: CircularProgressIndicator(),
           );
         },
       ),

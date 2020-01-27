@@ -141,15 +141,15 @@ class _PostPageState extends State<PostPage> {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     return Center(
-                      child: Loader(),
+                      child: CircularProgressIndicator(),
                     );
                   case ConnectionState.waiting:
                     return Center(
-                      child: Loader(),
+                      child: CircularProgressIndicator(),
                     );
                   case ConnectionState.active:
                     return Center(
-                      child: Loader(),
+                      child: CircularProgressIndicator(),
                     );
                   case ConnectionState.done:
                     if (snapshot.hasData) {
@@ -159,7 +159,7 @@ class _PostPageState extends State<PostPage> {
                     }
                 }
                 return Center(
-                  child: Loader(),
+                  child: CircularProgressIndicator(),
                 );
                 // translatedComments.hasData
                 //     ? translatedComments.data
@@ -188,7 +188,7 @@ class _PostPageState extends State<PostPage> {
                         });
                         await APIConnect.addComment(
                           fid: widget.fid,
-                          content: commentText,
+                          comment: commentText,
                           timestamp: widget.timestamp,
                           uid: widget.uid,
                         );
@@ -220,7 +220,7 @@ class _PostPageState extends State<PostPage> {
     //       case ConnectionState.waiting:
     //       // return Container();
     //       // return Center(
-    //       // child: Loader(),
+    //       // child: CircularProgressIndicator(),
     //       // );
     //       default:
     //         return Scaffold(

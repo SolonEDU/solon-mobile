@@ -137,7 +137,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
               }
           }
           return Center(
-            child: Loader(),
+            child: CircularProgressIndicator(),
           );
         },
       ),
