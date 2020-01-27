@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:date_format/date_format.dart';
-// import 'package:intl/intl.dart';
+import 'dart:convert';
 
 import 'package:Solon/event/page.dart';
+import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 // import 'package:Solon/app_localizations.dart';
 // import 'package:Solon/api/api_connect.dart';
 // import 'package:Solon/loader.dart';
@@ -26,15 +26,19 @@ class EventCard extends StatefulWidget {
       this.attending})
       : super(key: key);
 
-  factory EventCard.fromJson(Map<String, dynamic> json, int uid) {
-    DateTime date = DateTime.parse(json['date']);
+  factory EventCard.fromJson(
+      Map<String, dynamic> map, int uid, String prefLangCode) {
+    DateTime date = DateTime.parse(map['date']);
     String dateParsed = formatDate(
         date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+    String translatedTitle = json.decode(map['title'])[prefLangCode];
+    String translatedDescription =
+        json.decode(map['description'])[prefLangCode];
     return EventCard(
       uid: uid,
-      eid: json['eid'],
-      title: json['title'],
-      description: json['description'],
+      eid: map['eid'],
+      title: translatedTitle,
+      description: translatedDescription,
       date: dateParsed,
     );
   }
@@ -60,7 +64,7 @@ class _EventCardState extends State<EventCard> {
     // TODO: implement initState
     super.initState();
 
-  //   _futureAttendance = getAttendance();
+    //   _futureAttendance = getAttendance();
   }
 
   @override
