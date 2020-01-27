@@ -182,14 +182,12 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
               child: TextFormField(
                 keyboardType: TextInputType.text,
-                // TODO: implement password confirmation logic
-                // validator: (input) {
-                //   if (input.length < 6) {
-                //     return 'Your password needs to be at least 6 characters';
-                //   }
-                //   return null;
-                // },
-                // onSaved: (input) => _password = input,
+                validator: (input) {
+                  if (input != _password) {
+                    return 'Your passwords do not match';
+                  }
+                  return null;
+                },
                 obscureText: true,
               ),
             ),

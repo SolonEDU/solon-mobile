@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:Solon/api/api_connect.dart';
 // import 'package:Solon/app_localizations.dart';
-import 'package:Solon/loader.dart';
+// import 'package:Solon/loader.dart';
 
 class ProposalPage extends StatefulWidget {
   final int pid;

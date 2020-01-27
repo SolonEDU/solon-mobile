@@ -3,7 +3,7 @@ import 'package:translator/translator.dart';
 
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/event/card.dart';
-import 'package:Solon/loader.dart';
+// import 'package:Solon/loader.dart';
 
 class EventsScreen extends StatefulWidget {
   final int uid;

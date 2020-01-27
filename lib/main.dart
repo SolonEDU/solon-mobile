@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Raleway',
         textTheme: TextTheme(
           headline: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-          title: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
-          body1: TextStyle(fontSize: 20),
+          title: TextStyle(fontSize: 24, fontFamily: 'Open Sans'),
+          body1: TextStyle(fontSize: 20, fontFamily: 'Open Sans'),
         ),
       ),
       home: Scaffold(

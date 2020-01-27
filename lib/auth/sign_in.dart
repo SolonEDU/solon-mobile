@@ -111,23 +111,23 @@ class _LoginPageState extends State<LoginPage> with Screen {
   }
 
   Future<void> signIn() async {
-    // final formState = _formKey.currentState;
-    // if (formState.validate()) {
-      // formState.save();
-      // final responseMessage = await APIConnect.loginUser(_email, _password);
-      // if (responseMessage["message"] == "Error") {
-      //   showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
-      // }
-      // else {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      final responseMessage = await APIConnect.loginUser(_email, _password);
+      if (responseMessage["message"] == "Error") {
+        showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+      }
+      else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,
           MaterialPageRoute(
-            // builder: (context) => Main(uid: responseMessage["uid"]),
-            builder: (context) => Main(uid: 1),
+            builder: (context) => Main(uid: responseMessage["uid"]),
+            // builder: (context) => Main(uid: 1),
           ),
         );
-      // }
-    // }
+      }
+    }
   }
 }
