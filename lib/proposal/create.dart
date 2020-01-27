@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +12,7 @@ class CreateProposal extends StatefulWidget {
   _CreateProposalState createState() => _CreateProposalState();
 }
 
-class _CreateProposalState extends State<CreateProposal> {
+class _CreateProposalState extends State<CreateProposal> with Screen {
   DateTime _date = DateTime.now();
   int _currentStep = 0;
   FocusNode _focusNode = FocusNode();
@@ -127,7 +128,10 @@ class _CreateProposalState extends State<CreateProposal> {
       ),
     ];
     return Scaffold(
-      appBar: AppBar(title: Text('Add Proposal')),
+      appBar: getPageAppBar(
+        context,
+        'Add Proposal',
+      ),
       body: Stepper(
         steps: form,
         currentStep: _currentStep,

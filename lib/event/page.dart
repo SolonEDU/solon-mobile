@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 // import 'package:intl/intl.dart';
@@ -6,7 +7,7 @@ import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 // import 'package:Solon/loader.dart';
 
-class EventPage extends StatefulWidget {
+class EventPage extends StatefulWidget{
   final int eid;
   final int uid;
   final String title;
@@ -25,7 +26,7 @@ class EventPage extends StatefulWidget {
   _EventPageState createState() => _EventPageState();
 }
 
-class _EventPageState extends State<EventPage> {
+class _EventPageState extends State<EventPage> with Screen{
   // Future<bool> _futureAttendanceVal;
   bool attendanceVal;
   StreamController streamController = StreamController();
@@ -73,9 +74,7 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: getPageAppBar(context, widget.title),
       body: Container(
         child: StreamBuilder(
           stream: streamController.stream,

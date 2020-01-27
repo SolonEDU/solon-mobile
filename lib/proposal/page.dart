@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -26,7 +27,7 @@ class ProposalPage extends StatefulWidget {
   _ProposalPageState createState() => _ProposalPageState();
 }
 
-class _ProposalPageState extends State<ProposalPage> {
+class _ProposalPageState extends State<ProposalPage> with Screen{
   String _voteOutput;
   Future<Map<String, dynamic>> _listFutureProposal;
 
@@ -54,9 +55,7 @@ class _ProposalPageState extends State<ProposalPage> {
   Widget build(BuildContext context) {
     print(widget.pid);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: getPageAppBar(context, widget.title),
       body: Container(
         width: double.infinity,
         child: Padding(

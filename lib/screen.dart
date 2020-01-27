@@ -24,4 +24,32 @@ mixin Screen {
       },
     );
   }
+
+  AppBar getPageAppBar(BuildContext context, String title) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      leading: IconButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        icon: Icon(
+          Icons.arrow_back_ios,
+        ),
+        color: Colors.black,
+        onPressed: () => {
+          FocusScope.of(context).unfocus(),
+          Navigator.pop(context),
+        },
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          color: Colors.black,
+          fontFamily: 'Raleway',
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      elevation: 0.0,
+    );
+  }
 }

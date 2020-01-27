@@ -73,30 +73,9 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
               onRefresh: _refresh,
               child: Scaffold(
                 key: _scaffoldKey,
-                appBar: AppBar(
-                  leading: IconButton(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                    ),
-                    color: Colors.black,
-                    onPressed: () => {
-                      FocusScope.of(context).unfocus(),
-                      Navigator.pop(context),
-                    },
-                  ),
-                  elevation: 0.0,
-                  backgroundColor: Colors.white,
-                  title: Text(
-                    AppLocalizations.of(context).translate('account'),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                    ),
-                  ),
+                appBar: getPageAppBar(
+                  context,
+                  AppLocalizations.of(context).translate('account'),
                 ),
                 body: Center(
                   child: Column(
@@ -140,23 +119,12 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                           'Japanese',
                           'Ukrainian'
                         ].map<DropdownMenuItem<String>>((String value) {
-                          // print(snapshot.data['lang']);
-                          // print(value);
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
                           );
                         }).toList(),
                       ),
-                      // RaisedButton(
-                      //   onPressed: () async {
-                      //     _showToast(
-                      //         "Instructions to change your password were sent to your email address");
-                      //     return FirebaseAuth.instance.sendPasswordResetEmail(
-                      //         email: snapshot.data.data['email']);
-                      //   },
-                      //   child: Text("Change Password"),
-                      // ),
                       RaisedButton(
                         onPressed: () async {
                           final prefs = await SharedPreferences.getInstance();

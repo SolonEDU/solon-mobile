@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Solon/app_localizations.dart';
@@ -10,7 +11,7 @@ class CreatePost extends StatefulWidget {
   _CreatePostState createState() => _CreatePostState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _CreatePostState extends State<CreatePost> with Screen {
   List<Step> form = [];
   FocusNode _focusNode = FocusNode();
 
@@ -67,8 +68,9 @@ class _CreatePostState extends State<CreatePost> {
       ),
     ];
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('createAPost')),
+      appBar: getPageAppBar(
+        context,
+        AppLocalizations.of(context).translate('createAPost'),
       ),
       body: Stepper(
         steps: form,

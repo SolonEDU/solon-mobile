@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:translator/translator.dart';
@@ -14,7 +15,6 @@ class PostPage extends StatefulWidget {
   final int uid;
   final String timestamp;
   // final DateTime time;
-  // final DocumentSnapshot doc;
   PostPage({
     Key key,
     this.fid,
@@ -27,8 +27,7 @@ class PostPage extends StatefulWidget {
   _PostPageState createState() => _PostPageState();
 }
 
-class _PostPageState extends State<PostPage> {
-  // final db = Firestore.instance;
+class _PostPageState extends State<PostPage> with Screen {
   final translator = GoogleTranslator();
   FocusNode _focusNode = FocusNode();
   var document;
@@ -110,9 +109,7 @@ class _PostPageState extends State<PostPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: getPageAppBar(context, widget.title),
       body: Center(
         child: ListView(
           children: <Widget>[
@@ -135,7 +132,9 @@ class _PostPageState extends State<PostPage> {
                 margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
             StreamBuilder(
               stream: Function.apply(
-                  APIConnect.commentListView, [widget.fid],),
+                APIConnect.commentListView,
+                [widget.fid],
+              ),
               builder: (BuildContext context,
                   AsyncSnapshot<List<Comment>> snapshot) {
                 switch (snapshot.connectionState) {

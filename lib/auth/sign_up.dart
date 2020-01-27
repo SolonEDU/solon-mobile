@@ -21,22 +21,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: Icon(
-            Icons.arrow_back_ios,
-          ),
-          color: Colors.black,
-          onPressed: () => {
-            FocusScope.of(context).unfocus(),
-            Navigator.pop(context),
-          },
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
+      appBar: getPageAppBar(context, 'Register'),
       body: Form(
         key: _formKey,
         child: ListView(

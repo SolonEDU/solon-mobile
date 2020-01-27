@@ -28,22 +28,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: Icon(
-            Icons.arrow_back_ios,
-          ),
-          color: Colors.black,
-          onPressed: () => {
-            FocusScope.of(context).unfocus(),
-            Navigator.pop(context),
-          },
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
+      appBar: getPageAppBar(context, 'Sign in'),
       body: Center(
         child: Form(
           key: _formKey,
@@ -117,8 +102,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
         showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
-      }
-      else {
+      } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,

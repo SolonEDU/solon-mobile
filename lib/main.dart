@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Raleway',
         textTheme: TextTheme(
-          headline: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+          headline: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           title: TextStyle(fontSize: 24, fontFamily: 'Open Sans'),
           body1: TextStyle(fontSize: 20, fontFamily: 'Open Sans'),
         ),
@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
             if (snapshot.data == null) {
               return Container();
             }
-            // print(snapshot.data);
             return snapshot.data.containsKey('errorMessage')
                 ? WelcomePage()
                 : Main(uid: snapshot.data['uid']);
@@ -123,7 +122,7 @@ class MyApp extends StatelessWidget {
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         if (locale == null) {
-          debugPrint("*language locale is null!!!");
+          debugPrint("*language locale is null!");
           return supportedLocales.first;
         }
         for (var supportedLocale in supportedLocales) {
@@ -149,7 +148,6 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  // final db = Firestore.instance;
   var _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -184,41 +182,22 @@ class _MainState extends State<Main> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        // leading: Text(),
-        // leading: Builder(
-        //   builder: (BuildContext context) {
-        //     return DecoratedBox(
-        //       decoration: BoxDecoration(
-        //         image: DecorationImage(
-        //           image: AssetImage('images/solon.png'),
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
         title: Text(
           AppLocalizations.of(context)
               .translate(_widgetOptions[_selectedIndex]['title']),
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            // fontWeight: FontWeight.bold,
             fontSize: 32,
           ),
         ),
         actions: <Widget>[
-          // TODO: move this into the navbar
-          FloatingActionButton(
-            heroTag: 'unq0',
-            elevation: 0.0,
-            hoverColor: Colors.transparent,
-            focusColor: Colors.transparent,
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            color: Colors.pinkAccent[400],
+            highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.pinkAccent[400],
-            child: Icon(Icons.account_circle),
             onPressed: () async {
-              // FirebaseUser user = await FirebaseAuth.instance.currentUser();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -226,7 +205,7 @@ class _MainState extends State<Main> {
                 ),
               );
             },
-          ),
+          )
         ],
       ),
       body: Center(
