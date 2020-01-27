@@ -188,7 +188,7 @@ class _PostPageState extends State<PostPage> {
                         });
                         await APIConnect.addComment(
                           fid: widget.fid,
-                          content: commentText,
+                          comment: commentText,
                           timestamp: widget.timestamp,
                           uid: widget.uid,
                         );

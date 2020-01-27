@@ -260,7 +260,7 @@ class APIConnect {
 
   static Future<Message> addComment({
     int fid,
-    String content,
+    String comment,
     String timestamp,
     int uid,
   }) async {
@@ -268,7 +268,7 @@ class APIConnect {
       "$_url/comments",
       body: json.encode({
         'fid': fid,
-        'content': content,
+        'comment': comment,
         'timestamp': timestamp,
         'uid': uid,
       }),
