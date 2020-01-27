@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
+        // accentColor: Colors.pink[400],
         bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Raleway',

@@ -43,6 +43,12 @@ class _CreatePostState extends State<CreatePost> with Screen {
               labelText: AppLocalizations.of(context).translate('title')),
           controller: controllers[0],
           autovalidate: true,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter a title';
+            }
+            return null;
+          },
         ),
       ),
       Step(

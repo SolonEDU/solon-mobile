@@ -92,7 +92,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 45.0),
               child: Slider(
-                activeColor: Colors.blue,
+                activeColor: Colors.pink[400],
                 divisions: 13,
                 label: _sliderValue == 1.0
                     ? '${_sliderValue.round()} Day'

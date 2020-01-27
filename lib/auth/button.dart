@@ -23,7 +23,7 @@ class Button extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30),
             ),
-            color: Color(0xFF98D2EB),
+            color: Colors.pink[200],
             onPressed: function,
             child: Text(
               label,
