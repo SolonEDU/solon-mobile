@@ -21,7 +21,10 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: getPageAppBar(context, 'Register'),
+      appBar: getPageAppBar(
+        context,
+        AppLocalizations.of(context).translate('signup'),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -179,8 +182,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Button(
               function: signUp,
               margin: const EdgeInsets.only(top: 25, bottom: 10),
-              label:
-                  "Sign Up", // AppLocalizations.of(context).translate('signup')
+              label: AppLocalizations.of(context).translate('signup'),
             ),
           ],
         ),

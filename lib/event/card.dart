@@ -63,7 +63,6 @@ class _EventCardState extends State<EventCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     //   _futureAttendance = getAttendance();
   }
 

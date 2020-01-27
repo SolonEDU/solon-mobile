@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: getPageAppBar(context, 'Sign in'),
+      appBar: getPageAppBar(context, AppLocalizations.of(context).translate('signin')),
       body: Center(
         child: Form(
           key: _formKey,
@@ -85,8 +85,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
               Button(
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25),
-                label:
-                    "Sign In", // AppLocalizations.of(context).translate('signin'),
+                label: AppLocalizations.of(context).translate('signin'),
               ),
             ],
           ),
@@ -108,7 +107,6 @@ class _LoginPageState extends State<LoginPage> with Screen {
           context,
           MaterialPageRoute(
             builder: (context) => Main(uid: responseMessage["uid"]),
-            // builder: (context) => Main(uid: 1),
           ),
         );
       }

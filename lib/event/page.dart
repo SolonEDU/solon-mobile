@@ -92,15 +92,6 @@ class _EventPageState extends State<EventPage> with Screen{
                 ButtonBar(
                   alignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    // FlatButton(
-                    //   child: Icon(Icons.delete),
-                    //   onPressed: () => { // send a DELETE request to PG, including the  in the request body to specify
-                    //     // db
-                    //     //     .collection('events')
-                    //     //     .document(widget.doc.documentID)
-                    //     //     .delete()
-                    //   },
-                    // ),
                     Text(AppLocalizations.of(context).translate('attending')),
                     Switch.adaptive(
                       value: attendanceVal,

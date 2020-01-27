@@ -109,6 +109,7 @@ class _PostPageState extends State<PostPage> with Screen {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: getPageAppBar(context, widget.title),
       body: Center(
         child: ListView(
@@ -166,48 +167,48 @@ class _PostPageState extends State<PostPage> with Screen {
                 // );
               },
             ),
-            Container(
-              child: TextField(
-                // style: TextStyle(height: .4),
-                controller: commentController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  hintText:
-                      AppLocalizations.of(context).translate('enterAComment'),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () async {
-                      if (commentController.text.isNotEmpty) {
-                        var commentText = commentController.text;
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          FocusScope.of(context).unfocus();
-                          commentController.clear();
-                        });
-                        await APIConnect.addComment(
-                          fid: widget.fid,
-                          comment: commentText,
-                          timestamp: widget.timestamp,
-                          uid: widget.uid,
-                        );
-
-                        // document.updateData(
-                        //   {
-                        //     'comments.' + DateTime.now().toString():
-                        //         await APIConnect.addComment(fid: widget.fid, content: commentText)
-                        //   },
-                        // );
-                        // _update();
-                      }
-                    },
-                  ),
-                ),
-              ),
-              margin: EdgeInsets.all(12.0),
-            ),
           ],
         ),
+      ),
+      bottomSheet: Container(
+        child: TextField(
+          // style: TextStyle(height: .4),
+          controller: commentController,
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            hintText: AppLocalizations.of(context).translate('enterAComment'),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.send),
+              onPressed: () async {
+                if (commentController.text.isNotEmpty) {
+                  var commentText = commentController.text;
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    FocusScope.of(context).unfocus();
+                    commentController.clear();
+                  });
+                  await APIConnect.addComment(
+                    fid: widget.fid,
+                    comment: commentText,
+                    timestamp: widget.timestamp,
+                    uid: widget.uid,
+                  );
+                  // document.updateData(
+                  //   {
+                  //     'comments.' + DateTime.now().toString():
+                  //         await APIConnect.addComment(fid: widget.fid, content: commentText)
+                  //   },
+                  // );
+                  // _update();
+                }
+              },
+            ),
+          ),
+        ),
+        margin: EdgeInsets.all(12.0),
+        color: Colors.white,
       ),
     );
     // return FutureBuilder(

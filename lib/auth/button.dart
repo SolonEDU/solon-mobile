@@ -29,7 +29,7 @@ class Button extends StatelessWidget {
               label,
               textScaleFactor: 1.5,
               style: TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.bold),
-            ), // AppLocalizations.of(context).translate('signin'),
+            ),
           ),
         ),
       ),
