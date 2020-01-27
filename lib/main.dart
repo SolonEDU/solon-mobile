@@ -22,7 +22,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Raleway',
+        textTheme: TextTheme(
+          headline: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+          title: TextStyle(fontSize: 24, fontFamily: 'Open Sans'),
+          body1: TextStyle(fontSize: 20, fontFamily: 'Open Sans'),
+        ),
+      ),
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: FutureBuilder(
           future: APIConnect.connectSharedPreferences(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -165,24 +175,43 @@ class _MainState extends State<Main> {
       },
     ];
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/solon.png'),
-                ),
-              ),
-            );
-          },
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        // leading: Text(),
+        // leading: Builder(
+        //   builder: (BuildContext context) {
+        //     return DecoratedBox(
+        //       decoration: BoxDecoration(
+        //         image: DecorationImage(
+        //           image: AssetImage('images/solon.png'),
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
+        title: Text(
+          AppLocalizations.of(context)
+              .translate(_widgetOptions[_selectedIndex]['title']),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            // fontWeight: FontWeight.bold,
+            fontSize: 32,
+          ),
         ),
-        title: Text(AppLocalizations.of(context)
-            .translate(_widgetOptions[_selectedIndex]['title'])),
         actions: <Widget>[
+          // TODO: move this into the navbar
           FloatingActionButton(
             heroTag: 'unq0',
             elevation: 0.0,
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.pinkAccent[400],
             child: Icon(Icons.account_circle),
             onPressed: () async {
               // FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -196,7 +225,9 @@ class _MainState extends State<Main> {
           ),
         ],
       ),
-      body: Center(child: _widgetOptions[_selectedIndex]['widget']),
+      body: Center(
+        child: _widgetOptions[_selectedIndex]['widget'],
+      ),
       bottomNavigationBar: NavBar(
         _selectedIndex,
         _onItemTapped,

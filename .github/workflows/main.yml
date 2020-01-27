@@ -9,6 +9,13 @@ jobs:
     name: install dependencies
     runs-on: ubuntu-latest ## this workflow is run on a ubuntu machine located at some github office
     steps:
+
+    - uses: actions/checkout@v1
+    - name: decrypt secret
+      run: ./.github/scripts/decrypt_secret.sh
+      env:
+        PASSPHRASE: ${{ secrets.PASSPHRASE }}
+
     - uses: actions/checkout@v1 ## this is a github action used to have access to, and traverse our repo's directories
     - name: install dependencies
       uses: steebchen/flutter@v1.0.0 ## this is a github action used to actually install all of the flutter prerequisites needed to build the app

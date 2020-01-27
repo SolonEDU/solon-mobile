@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:Solon/loader.dart';
+// import 'package:Solon/loader.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/app_localizations.dart';
@@ -19,7 +19,7 @@ class AccountScreen extends StatefulWidget {
   _AccountScreenState createState() => _AccountScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> with Screen{
+class _AccountScreenState extends State<AccountScreen> with Screen {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -74,8 +74,28 @@ class _AccountScreenState extends State<AccountScreen> with Screen{
               child: Scaffold(
                 key: _scaffoldKey,
                 appBar: AppBar(
+                  leading: IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                    ),
+                    color: Colors.black,
+                    onPressed: () => {
+                      FocusScope.of(context).unfocus(),
+                      Navigator.pop(context),
+                    },
+                  ),
+                  elevation: 0.0,
+                  backgroundColor: Colors.white,
                   title: Text(
                     AppLocalizations.of(context).translate('account'),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                    ),
                   ),
                 ),
                 body: Center(
@@ -104,9 +124,11 @@ class _AccountScreenState extends State<AccountScreen> with Screen{
                                   uid: snapshot.data['uid'],
                                   updatedLang: json.decode(
                                       prefs.getString('userData'))['lang']);
-                          showToast(responseMessage.message == 'Error'
-                              ? 'Language could not be changed to $newValue'
-                              : "Language was successfully changed to $newValue", _scaffoldKey);
+                          showToast(
+                              responseMessage.message == 'Error'
+                                  ? 'Language could not be changed to $newValue'
+                                  : "Language was successfully changed to $newValue",
+                              _scaffoldKey);
                         },
                         items: <String>[
                           'English',

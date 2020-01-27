@@ -5,7 +5,7 @@ import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/create.dart';
-import 'package:Solon/loader.dart';
+// import 'package:Solon/loader.dart';
 
 class ForumScreen extends StatefulWidget {
   final int uid;

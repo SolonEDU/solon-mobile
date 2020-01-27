@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with Screen{
+class _LoginPageState extends State<LoginPage> with Screen {
   bool _obscureText = true;
 
   void _toggle() {
@@ -30,6 +30,8 @@ class _LoginPageState extends State<LoginPage> with Screen{
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           icon: Icon(
             Icons.arrow_back_ios,
           ),
@@ -51,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with Screen{
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('email'),
-                  textScaleFactor: 1.5,
+                  textScaleFactor: 1,
                 ),
               ),
               Container(
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> with Screen{
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('password'),
-                  textScaleFactor: 1.5,
+                  textScaleFactor: 1,
                 ),
               ),
               Container(
@@ -98,7 +100,8 @@ class _LoginPageState extends State<LoginPage> with Screen{
               Button(
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25),
-                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
+                label:
+                    "Sign In", // AppLocalizations.of(context).translate('signin'),
               ),
             ],
           ),
@@ -114,12 +117,14 @@ class _LoginPageState extends State<LoginPage> with Screen{
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
         showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
-      } else {
+      }
+      else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Main(uid: responseMessage["uid"]),
+            // builder: (context) => Main(uid: 1),
           ),
         );
       }
