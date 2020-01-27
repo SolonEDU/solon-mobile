@@ -112,6 +112,10 @@ class MyApp extends StatelessWidget {
         DefaultMaterialLocalizations.delegate
       ],
       localeResolutionCallback: (locale, supportedLocales) {
+        if (locale == null) {
+          debugPrint("*language locale is null!!!");
+          return supportedLocales.first;
+        }
         for (var supportedLocale in supportedLocales) {
           if (supportedLocale.languageCode == locale.languageCode &&
               supportedLocale.countryCode == locale.countryCode) {
