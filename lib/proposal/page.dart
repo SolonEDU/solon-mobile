@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:Solon/api/api_connect.dart';
 // import 'package:Solon/app_localizations.dart';
-import 'package:Solon/loader.dart';
+// import 'package:Solon/loader.dart';
 
 class ProposalPage extends StatefulWidget {
   final int pid;
@@ -67,7 +67,7 @@ class _ProposalPageState extends State<ProposalPage> {
                   AsyncSnapshot<Map<String, dynamic>> snapshot) {
                 if (snapshot.data == null) {
                   return Center(
-                    child: Loader(),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 if (snapshot.data['message'] == 'Error') {

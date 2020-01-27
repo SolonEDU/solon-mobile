@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/loader.dart';
+// import 'package:Solon/loader.dart';
 
 class EventPage extends StatefulWidget {
   final int eid;
@@ -82,7 +82,7 @@ class _EventPageState extends State<EventPage> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Center(
-                child: Loader(),
+                child: CircularProgressIndicator(),
               );
             }
             attendanceVal = snapshot.data;

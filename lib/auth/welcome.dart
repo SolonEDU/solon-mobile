@@ -40,7 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
               Button(
                 function: navigateToSignUp,
                 label: "Register", // AppLocalizations.of(context).translate('signup')
-                margin: const EdgeInsets.only(top: 20, bottom: 5),
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
               ),
             ],
           ),

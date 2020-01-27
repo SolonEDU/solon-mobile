@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:date_format/date_format.dart';
+import 'dart:convert';
 
 import 'package:Solon/forum/page.dart';
+import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 
 class PostCard extends StatefulWidget {
   final int fid;
@@ -19,16 +20,19 @@ class PostCard extends StatefulWidget {
     this.timestamp,
   }) : super(key: key);
 
-  factory PostCard.fromJson(Map<String, dynamic> json) {
-    DateTime timestamp = DateTime.parse(json['timestamp']);
+  factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
+    DateTime timestamp = DateTime.parse(map['timestamp']);
     String timestampParsed = formatDate(timestamp,
         [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+    String translatedTitle = json.decode(map['title'])[prefLangCode];
+    String translatedDescription =
+        json.decode(map['description'])[prefLangCode];
     return PostCard(
-      fid: json['fid'],
-      title: json['title'],
-      description: json['description'],
+      fid: map['fid'],
+      title: translatedTitle,
+      description: translatedDescription,
       timestamp: timestampParsed,
-      uid: json['uid'],
+      uid: map['uid'],
     );
   }
 

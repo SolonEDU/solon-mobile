@@ -12,6 +12,7 @@ mixin Screen {
   FloatingActionButton getFAB(BuildContext context, Widget creator) {
     return FloatingActionButton(
       heroTag: 'unq1',
+      backgroundColor: Colors.pinkAccent[400],
       child: Icon(Icons.add),
       onPressed: () => {
         Navigator.push(
