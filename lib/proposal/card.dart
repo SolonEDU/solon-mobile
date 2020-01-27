@@ -3,6 +3,7 @@ import 'package:date_format/date_format.dart';
 
 // import 'package:Solon/app_localizations.dart';
 import 'package:Solon/proposal/page.dart';
+import 'dart:convert';
 
 class ProposalCard extends StatefulWidget {
   final int pid;
@@ -22,17 +23,20 @@ class ProposalCard extends StatefulWidget {
       this.totalVotes})
       : super(key: key);
 
-  factory ProposalCard.fromJson(Map<String, dynamic> json) {
-    DateTime endTime = DateTime.parse(json['endtime']);
+  factory ProposalCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
+    DateTime endTime = DateTime.parse(map['endtime']);
     String endTimeParsed = formatDate(
         endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+    String translatedTitle = json.decode(map['title'])[prefLangCode];
+    String translatedDescription =
+        json.decode(map['description'])[prefLangCode];
     return ProposalCard(
-      pid: json['pid'],
-      title: json['title'],
-      description: json['description'],
+      pid: map['pid'],
+      title: translatedTitle,
+      description: translatedDescription,
       endTime: endTimeParsed,
-      uid: json['uid'],
-      totalVotes: json['numyes'] + json['numno'],
+      uid: map['uid'],
+      totalVotes: map['numyes'] + map['numno'],
     );
   }
 

@@ -42,8 +42,8 @@ class APIConnect {
 
   static Map<String, String> languages = {
     'English': 'en',
-    'Chinese (Simplified)': 'zh-CN',
-    'Chinese (Traditional)': 'zh-TW',
+    'Chinese (Simplified)': 'zhcn',
+    'Chinese (Traditional)': 'zhtw',
     'Bengali': 'bn',
     'Korean': 'ko',
     'Russian': 'ru',
@@ -76,9 +76,13 @@ class APIConnect {
       "$_url/proposals",
       headers: await headers,
     );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    print(prefLangCode);
     List collection = json.decode(response.body)['proposals'];
     List<ProposalCard> _proposals =
-        collection.map((json) => ProposalCard.fromJson(json)).toList();
+        collection.map((json) => ProposalCard.fromJson(json, prefLangCode)).toList();
     return _proposals;
   }
 
@@ -88,9 +92,12 @@ class APIConnect {
       headers: await headers,
     );
 
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+
     List collection = json.decode(response.body)['forumposts'];
     List<PostCard> _forumposts =
-        collection.map((json) => PostCard.fromJson(json)).toList();
+        collection.map((json) => PostCard.fromJson(json, prefLangCode)).toList();
     return _forumposts;
   }
 
@@ -100,9 +107,12 @@ class APIConnect {
       headers: await headers,
     );
 
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+
     List collection = json.decode(response.body)['events'];
     List<EventCard> _events =
-        collection.map((json) => EventCard.fromJson(json, uid)).toList();
+        collection.map((json) => EventCard.fromJson(json, uid, prefLangCode)).toList();
     return _events;
   }
 
@@ -239,9 +249,12 @@ class APIConnect {
       headers: await headers,
     );
 
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+
     List collection = json.decode(response.body)['comments'];
     List<Comment> _comments =
-        collection.map((json) => Comment.fromJson(json)).toList();
+        collection.map((json) => Comment.fromJson(json, prefLangCode)).toList();
     return _comments;
   }
 
