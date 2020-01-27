@@ -13,7 +13,7 @@ class Comment extends StatelessWidget {
     DateTime timestamp = DateTime.parse(map['timestamp']);
     String timestampParsed = formatDate(timestamp,
         [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
-    String translatedComment = json.decode(map['comment'])[prefLangCode];
+    String translatedComment = json.decode(map['content'])[prefLangCode];
     return Comment(
       date: timestampParsed,
       comment: translatedComment,

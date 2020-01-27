@@ -268,7 +268,7 @@ class APIConnect {
       "$_url/comments",
       body: json.encode({
         'fid': fid,
-        'comment': comment,
+        'content': comment,
         'timestamp': timestamp,
         'uid': uid,
       }),
