@@ -188,7 +188,6 @@ class APIConnect {
       // print(json.encode(json.decode(userDataResponse.body)['user']));
       print(userDataResponseJson);
       final userData = json.encode(userDataResponseJson);
-      // final userData = ;
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
       print("${prefs.getString('userData')}");
