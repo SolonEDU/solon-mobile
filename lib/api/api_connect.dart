@@ -208,14 +208,6 @@ class APIConnect {
     return userDataMap;
   }
 
-  static Future<bool> tryAutoLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userData')) {
-      return false;
-    }
-    return true;
-  }
-
   static Future<Map<String, dynamic>> connectVotes(String httpReqType,
       {int pid, int uidUser, int voteVal}) async {
     Map vote = {

@@ -152,7 +152,10 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                   if (input.length < 6) {
                     return 'Your password needs to be at least 6 characters';
                   }
-                  return null;
+                  else {
+                    _password = input;
+                    return null;
+                  }
                 },
                 onSaved: (input) => _password = input,
                 obscureText: true,
