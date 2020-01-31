@@ -1,3 +1,4 @@
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,160 +14,143 @@ class CreateProposal extends StatefulWidget {
 }
 
 class _CreateProposalState extends State<CreateProposal> with Screen {
-  DateTime _date = DateTime.now();
-  int _currentStep = 0;
-  FocusNode _focusNode = FocusNode();
+  String _title, _description;
   double _sliderValue = 7.0;
-
-  List<TextEditingController> controllers =
-      List.generate(2, (int index) => TextEditingController());
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  void goTo(int step) {
-    setState(() => _currentStep = step);
-  }
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    List<Step> form = [
-      Step(
-        title: Text(AppLocalizations.of(context).translate('title')),
-        isActive: _currentStep == 0 ? true : false,
-        state: _currentStep == 0 ? StepState.editing : StepState.complete,
-        content: TextFormField(
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(100),
-          ],
-          autofocus: true,
-          decoration: InputDecoration(
-              labelText: AppLocalizations.of(context).translate('title')),
-          controller: controllers[0],
-          autovalidate: true,
-          validator: (value) {
-            if (value.isEmpty) {
-              return AppLocalizations.of(context)
-                  .translate('pleaseEnterATitle');
-            }
-            return null;
-          },
-        ),
-      ),
-      Step(
-        title: Text(AppLocalizations.of(context).translate('description')),
-        isActive: _currentStep == 1 ? true : false,
-        state: _currentStep == 1
-            ? StepState.editing
-            : _currentStep < 1 ? StepState.disabled : StepState.complete,
-        content: TextFormField(
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(100),
-          ],
-          autofocus: true,
-          focusNode: _focusNode,
-          decoration: InputDecoration(
-              labelText: AppLocalizations.of(context).translate('description')),
-          controller: controllers[1],
-          autovalidate: true,
-          validator: (value) {
-            if (value.isEmpty) {
-              return AppLocalizations.of(context)
-                  .translate('pleaseEnterADescription');
-            }
-            return null;
-          },
-        ),
-      ),
-      Step(
-        title: Text('Days Until Voting on Proposal Ends'),
-        isActive: _currentStep == 2 ? true : false,
-        state: _currentStep == 2
-            ? StepState.editing
-            : _currentStep < 2 ? StepState.disabled : StepState.complete,
-        content: Column(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 45.0),
-              child: Slider(
-                activeColor: Colors.pink[400],
-                divisions: 13,
-                label: _sliderValue == 1.0
-                    ? '${_sliderValue.round()} Day'
-                    : '${_sliderValue.round()} Days',
-                min: 1.0,
-                max: 14.0,
-                onChanged: (newRating) {
-                  setState(() => _sliderValue = newRating);
-                },
-                value: _sliderValue,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 45.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "1 Day",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "14 Days",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ];
     return Scaffold(
-      appBar: getPageAppBar(
-        context,
-        'Add Proposal',
-      ),
-      body: Stepper(
-        steps: form,
-        currentStep: _currentStep,
-        onStepContinue: () => {
-          _currentStep + 1 != form.length
-              ? {
-                  if (controllers[_currentStep].text.isNotEmpty)
-                    {
-                      goTo(_currentStep + 1),
-                      _currentStep == 2
-                          ? _focusNode.unfocus()
-                          : FocusScope.of(context).requestFocus(_focusNode)
+      appBar: getPageAppBar(context, 'New Proposal'),
+      key: _scaffoldKey,
+      body: Center(
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(top: 10, left: 20),
+                child: Text(
+                  AppLocalizations.of(context).translate('title'),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, bottom: 15, top: 5),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return AppLocalizations.of(context)
+                          .translate('pleaseEnterATitle');
                     }
-                }
-              : {
-                  widget._addProposal(
-                      controllers[0].text,
-                      controllers[1].text,
-                      _date,
-                      _date.add(
-                        new Duration(
-                          days: _sliderValue.toInt(),
-                        ),
+                    return null;
+                  },
+                  onSaved: (input) => _title = input,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child:
+                    Text(AppLocalizations.of(context).translate('description')),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, bottom: 30, top: 5),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.pink[400],
                       ),
-                      0 //dummy uid
-                      ),
-                  controllers.forEach((controller) => {controller.clear()}),
-                  Navigator.pop(context, true),
-                }
-        },
-        onStepCancel: () => {
-          if (_currentStep > 0) {goTo(_currentStep - 1)}
-        },
-        onStepTapped: (step) => goTo(step),
+                    ),
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 3,
+                  validator: (input) {
+                    if (input.isEmpty) {
+                      return AppLocalizations.of(context)
+                          .translate('pleaseEnterADescription');
+                    }
+                    return null;
+                  },
+                  onSaved: (input) => _description = input,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: Text('Days Until Proposal Ends'),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 35.0),
+                child: Slider(
+                  activeColor: Colors.pink[400],
+                  divisions: 13,
+                  label: _sliderValue == 1.0
+                      ? '${_sliderValue.round()} Day'
+                      : '${_sliderValue.round()} Days',
+                  min: 1.0,
+                  max: 14.0,
+                  onChanged: (newRating) {
+                    setState(() => _sliderValue = newRating);
+                  },
+                  value: _sliderValue,
+                ),
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.only(left: 20, right: 20, bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "1 Day",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "14 Days",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+              Button(
+                width: 255,
+                height: 55,
+                function: createProposal,
+                margin: const EdgeInsets.only(top: 25, bottom: 10),
+                label: 'Create Proposal',
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  Future<void> createProposal() async {
+    DateTime _date = DateTime.now();
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      widget._addProposal(
+          _title,
+          _description,
+          _date,
+          _date.add(
+            new Duration(
+              days: _sliderValue.toInt(),
+            ),
+          ),
+          0); //dummy uid
+      FocusScope.of(context).requestFocus(FocusNode());
+      Navigator.pop(context);
+      Future.delayed(
+        const Duration(milliseconds: 500),
+      );
+    }
   }
 }

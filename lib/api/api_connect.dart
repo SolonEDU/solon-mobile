@@ -79,7 +79,6 @@ class APIConnect {
 
     final sharedPrefs = await connectSharedPreferences();
     final prefLangCode = languages[sharedPrefs['lang']];
-    print(prefLangCode);
     List collection = json.decode(response.body)['proposals'];
     List<ProposalCard> _proposals =
         collection.map((json) => ProposalCard.fromJson(json, prefLangCode)).toList();

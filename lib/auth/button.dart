@@ -4,11 +4,15 @@ class Button extends StatelessWidget {
   final Function function;
   final String label;
   final EdgeInsets margin;
+  final double width;
+  final double height;
 
   Button({
     this.function,
     this.label,
     this.margin,
+    this.width,
+    this.height,
   });
 
   @override
@@ -17,8 +21,8 @@ class Button extends StatelessWidget {
       margin: margin,
       child: Align(
         child: SizedBox(
-          height: 55,
-          width: 155,
+          height: height,
+          width: width,
           child: RaisedButton(
             shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30),

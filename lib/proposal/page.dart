@@ -53,7 +53,6 @@ class _ProposalPageState extends State<ProposalPage> with Screen{
 
   @override
   Widget build(BuildContext context) {
-    print(widget.pid);
     return Scaffold(
       appBar: getPageAppBar(context, widget.title),
       body: Container(
@@ -76,12 +75,10 @@ class _ProposalPageState extends State<ProposalPage> with Screen{
                       ? "You have voted Yea!"
                       : "You have voted Nay!";
                 }
-                print(snapshot.data['message']);
                 return ListView(
                   children: <Widget>[
                     Text(widget.description),
                     Text('Voting on proposal ends ' + widget.endTime),
-                    // Text(AppLocalizations.of(context).translate('votesFor')),
                     snapshot.data['message'] == 'Error'
                         ? PreventDoubleTap(
                             pid: widget.pid,
@@ -127,7 +124,6 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
     final userUid = json.decode(prefs.getString('userData'))['uid'];
     APIConnect.connectVotes('POST',
         pid: pid, uidUser: userUid, voteVal: voteVal);
-    // print(responseMessage['message']);
   }
 
   _onYeaTapped() async {

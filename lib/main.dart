@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
+        primaryColor: Colors.pink[400],
+        cursorColor: Colors.pink[400],
         // accentColor: Colors.pink[400],
         bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,

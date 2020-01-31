@@ -33,11 +33,15 @@ class _WelcomePageState extends State<WelcomePage> {
                 margin: const EdgeInsets.only(bottom: 40),
               ),
               Button(
+                height: 55,
+                width: 155,
                 function: navigateToSignIn,
                 label: "Sign In", // AppLocalizations.of(context).translate('signin'),
                 margin: const EdgeInsets.all(0),
               ),
               Button(
+                height: 55,
+                width: 155,
                 function: navigateToSignUp,
                 label: "Sign Up", // AppLocalizations.of(context).translate('signup')
                 margin: const EdgeInsets.only(top: 20, bottom: 20),

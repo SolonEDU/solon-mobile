@@ -193,6 +193,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               ),
             ),
             Button(
+              height: 55,
+              width: 155,
               function: signUp,
               margin: const EdgeInsets.only(top: 25, bottom: 10),
               label: AppLocalizations.of(context).translate('signup'),

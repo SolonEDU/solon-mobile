@@ -83,6 +83,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 ),
               ),
               Button(
+                height: 55,
+                width: 155,
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25),
                 label: AppLocalizations.of(context).translate('signin'),
