@@ -52,56 +52,6 @@ class _PostPageState extends State<PostPage> with Screen {
     super.dispose();
   }
 
-  // Future<ListView> getComments(snapshot) async {
-  //   Map<dynamic, dynamic> text = snapshot.data.data['comments'];
-  //   text = SplayTreeMap.from(text);
-  //   List<Widget> textComments = [];
-  //   var textKey;
-  //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
-  //   DocumentSnapshot userData =
-  //       await db.collection('users').document(user.uid).get();
-  //   String nativeLanguage = userData.data['nativeLanguage'];
-  //   text.forEach((key, value) => {
-  //         textKey = key,
-  //         value.forEach((key, value) => {
-  //               textComments.add(Comment(
-  //                   DateTime.parse(textKey), value[nativeLanguage].toString()))
-  //             })
-  //       });
-  //   return ListView(
-  //     children: textComments,
-  //   );
-  // }
-
-  Future<String> translateText(text, code) async {
-    return await translator.translate(text, to: code);
-  }
-
-  Future<List<Map>> translateAll(
-      String comment, List<Map> maps, Map<String, String> languages) async {
-    for (var language in languages.keys) {
-      maps[0][language] = await translateText(comment, languages[language]);
-    }
-    return maps;
-  }
-
-  // Future<Map<String, String>> _addComment(String comment) async {
-  //   Map<String, String> languages = {
-  //     'English': 'en',
-  //     'Chinese (Simplified)': 'zh-cn',
-  //     'Chinese (Traditional)': 'zh-tw',
-  //     'Bengali': 'bn',
-  //     'Korean': 'ko',
-  //     'Russian': 'ru',
-  //     'Japanese': 'ja',
-  //     'Ukrainian': 'uk'
-  //   };
-  //   Map<String, String> translatedComments = {};
-  //   List<Map> translated = [translatedComments];
-  //   translated = await translateAll(comment, translated, languages);
-  //   return translatedComments;
-  // }
-
   Future<List> getPost() async {
     final responseMessage = await APIConnect.connectForumPosts();
     return responseMessage;

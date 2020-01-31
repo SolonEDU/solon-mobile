@@ -64,9 +64,19 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                   'Ukrainian',
                 ].map<DropdownMenuItem<String>>(
                   (String value) {
+                    Map<String, String> nativeLangNames = {
+                      'English': 'English',
+                      'Chinese (Simplified)': '中文（简体）',
+                      'Chinese (Traditional)': '中文（繁体）',
+                      'Bengali': 'বাংলা',
+                      'Korean': '한국어',
+                      'Russian': 'Русский язык',
+                      'Japanese': '日本語',
+                      'Ukrainian': 'українська мова',
+                    };
                     return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                      value: nativeLangNames[value],
+                      child: Text(nativeLangNames[value]),
                     );
                   },
                 ).toList(),

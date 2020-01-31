@@ -160,9 +160,6 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                       ),
                   controllers.forEach((controller) => {controller.clear()}),
                   Navigator.pop(context, true),
-                  Future.delayed(const Duration(
-                      milliseconds:
-                          500)), //allow newly created proposal to properly load after creation
                 }
         },
         onStepCancel: () => {
