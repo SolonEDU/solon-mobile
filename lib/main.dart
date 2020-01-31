@@ -25,15 +25,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.pink[400],
         cursorColor: Colors.pink[400],
-        // accentColor: Colors.pink[400],
         bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Raleway',
-        textTheme: TextTheme(
-          headline: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          title: TextStyle(fontSize: 24, fontFamily: 'Open Sans'),
-          body1: TextStyle(fontSize: 20, fontFamily: 'Open Sans'),
-        ),
       ),
       home: Scaffold(
         backgroundColor: Colors.white,

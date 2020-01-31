@@ -34,7 +34,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 10, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('language'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -86,7 +85,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 "Name",
-                textScaleFactor: 1,
               ),
             ),
             Row(
@@ -131,7 +129,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('email'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -151,7 +148,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('password'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -175,8 +171,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 'Confirm Password',
-                // AppLocalizations.of(context).translate('password'),
-                textScaleFactor: 1,
               ),
             ),
             Container(

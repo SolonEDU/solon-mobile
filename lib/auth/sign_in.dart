@@ -28,7 +28,10 @@ class _LoginPageState extends State<LoginPage> with Screen {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: getPageAppBar(context, AppLocalizations.of(context).translate('signin')),
+      appBar: getPageAppBar(
+        context,
+        AppLocalizations.of(context).translate('signin'),
+      ),
       body: Center(
         child: Form(
           key: _formKey,
@@ -38,7 +41,6 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('email'),
-                  textScaleFactor: 1,
                 ),
               ),
               Container(
@@ -59,7 +61,6 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('password'),
-                  textScaleFactor: 1,
                 ),
               ),
               Container(
