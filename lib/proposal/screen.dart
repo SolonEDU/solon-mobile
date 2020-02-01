@@ -54,28 +54,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       children: snapshot.data,
                     ),
                   ),
-                  floatingActionButton: getFAB(context, CreateProposal(APIConnect.addProposal), getStream),
-                  // FloatingActionButton(
-                  //   heroTag: 'unq1',
-                  //   backgroundColor: Colors.pinkAccent[400],
-                  //   child: Icon(Icons.add),
-                  //   onPressed: () async {
-                  //     final received = await Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) =>
-                  //             CreateProposal(APIConnect.addProposal),
-                  //       ),
-                  //     );
-                  //     Future.delayed(
-                  //       Duration(
-                  //         seconds: 2,
-                  //       ),
-                  //       () => getStream(),
-                  //     );
-                  //     print(received);
-                  //   },
-                  // ),
+                  floatingActionButton: getFAB(
+                    context,
+                    CreateProposal(APIConnect.addProposal),
+                    getStream,
+                  ),
                 );
               }
           }
