@@ -28,6 +28,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
         child: Form(
           key: _formKey,
           child: ListView(
+            primary: false,
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),

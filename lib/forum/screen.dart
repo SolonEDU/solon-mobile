@@ -46,59 +46,6 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
     return maps;
   }
 
-  // void _addPost(
-  //   String title,
-  //   String description,
-  // ) async {
-  //   Map<String, String> languages = {
-  //     'English': 'en',
-  //     'Chinese (Simplified)': 'zh-cn',
-  //     'Chinese (Traditional)': 'zh-tw',
-  //     'Bengali': 'bn',
-  //     'Korean': 'ko',
-  //     'Russian': 'ru',
-  //     'Japanese': 'ja',
-  //     'Ukrainian': 'uk'
-  //   };
-  //   Map<String, String> translatedTitles = {};
-  //   Map<String, String> translatedDescriptions = {};
-  //   List<Map> translated = [translatedTitles, translatedDescriptions];
-  //   translated = await translateAll(title, description, translated, languages);
-  //   // db.collection('forum').add(
-  //   //   {
-  //   //     'title': translatedTitles,
-  //   //     'description': translatedDescriptions,
-  //   //     'time': DateTime.now().toString(),
-  //   //     'comments': {}
-  //   //   },
-  //   // );
-  // }
-
-  // Future<List> toNativeLanguage(DocumentSnapshot doc) async {
-  //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
-  //   DocumentSnapshot userData =
-  //       await db.collection('users').document(user.uid).get();
-  //   String nativeLanguage = userData.data['nativeLanguage'];
-  //   List translatedForum = List();
-  //   translatedForum.add(doc.data['title'][nativeLanguage]);
-  //   translatedForum.add(doc.data['description'][nativeLanguage]);
-  //   return translatedForum;
-  // }
-
-  // Widget buildPostCard(doc) {
-  //   return FutureBuilder(
-  //     future: toNativeLanguage(doc),
-  //     builder: (BuildContext context, AsyncSnapshot<List> translatedForum) {
-  //       return PostCard(
-  //         translatedForum.hasData ? translatedForum.data[0] : '',
-  //         translatedForum.hasData ? translatedForum.data[1] : '',
-  //         DateTime.parse(doc.data['time']),
-  //         doc,
-  //       );
-  //     },
-  //   );
-  // }
-
   PostCard buildPostCard(data) {
     return PostCard(
       key: UniqueKey(),

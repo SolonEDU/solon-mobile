@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       body: Form(
         key: _formKey,
         child: ListView(
+          primary: false,
           shrinkWrap: true,
           children: <Widget>[
             Container(

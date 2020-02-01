@@ -35,6 +35,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
         child: Form(
           key: _formKey,
           child: ListView(
+            shrinkWrap: true,
+            primary: false,
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
@@ -86,7 +88,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 height: 55,
                 width: 155,
                 function: signIn,
-                margin: const EdgeInsets.only(top: 25),
+                margin: const EdgeInsets.only(top: 25, bottom: 25),
                 label: AppLocalizations.of(context).translate('signin'),
               ),
             ],

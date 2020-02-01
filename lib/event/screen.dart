@@ -14,7 +14,6 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  // final db = Firestore.instance;
   final translator = GoogleTranslator();
 
   Stream<List<EventCard>> stream;
@@ -44,60 +43,6 @@ class _EventsScreenState extends State<EventsScreen> {
     }
     return maps;
   }
-
-  // void _addEvent(
-  //   String title,
-  //   String description,
-  //   DateTime time,
-  // ) async {
-  //   Map<String, String> languages = {
-  //     'English': 'en',
-  //     'Chinese (Simplified)': 'zh-cn',
-  //     'Chinese (Traditional)': 'zh-tw',
-  //     'Bengali': 'bn',
-  //     'Korean': 'ko',
-  //     'Russian': 'ru',
-  //     'Japanese': 'ja',
-  //     'Ukrainian': 'uk'
-  //   };
-  //   Map<String, String> translatedTitles = {};
-  //   Map<String, String> translatedDescriptions = {};
-  //   List<Map> translated = [translatedTitles, translatedDescriptions];
-  //   translated = await translateAll(title, description, translated, languages);
-  //   // db.collection('events').add( //send a POST request to the API with title, desc, and date
-  //   //   {
-  //   //     'title': translated[0],
-  //   //     'description': translated[1],
-  //   //     'date': time.toString(),
-  //   //   },
-  //   // );
-  // }
-
-  // Future<List> toNativeLanguage(DocumentSnapshot doc) async { //GET the native language of the user
-  //   FirebaseUser user = await FirebaseAuth.instance.currentUser();
-  //   DocumentSnapshot userData =
-  //       await db.collection('users').document(user.uid).get();
-  //   String nativeLanguage = userData.data['nativeLanguage'];
-  //   List translatedEvent = List();
-  //   translatedEvent.add(doc.data['title'][nativeLanguage]);
-  //   translatedEvent.add(doc.data['description'][nativeLanguage]);
-  //   return translatedEvent;
-  // }
-
-  // Widget buildEventCard(doc) {
-  //   return FutureBuilder(
-  //     future: toNativeLanguage(doc),
-  //     builder: (BuildContext context, AsyncSnapshot<List> translatedEvent) {
-  //       return EventCard(
-  //         key: UniqueKey(),
-  //         title: translatedEvent.hasData ? translatedEvent.data[0] : '',
-  //         description: translatedEvent.hasData ? translatedEvent.data[1] : '',
-  //         time: DateTime.parse(doc.data['date']),
-  //         doc: doc,
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
