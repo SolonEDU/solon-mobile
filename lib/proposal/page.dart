@@ -13,6 +13,7 @@ class ProposalPage extends StatefulWidget {
   final String description;
   final int uidUser;
   final String endTime;
+  final DateTime date;
 
   ProposalPage({
     Key key,
@@ -21,26 +22,27 @@ class ProposalPage extends StatefulWidget {
     this.description,
     this.uidUser,
     this.endTime,
+    this.date,
   }) : super(key: key);
 
   @override
   _ProposalPageState createState() => _ProposalPageState();
 }
 
-class _ProposalPageState extends State<ProposalPage> with Screen{
+class _ProposalPageState extends State<ProposalPage> with Screen {
   String _voteOutput;
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    print('HELLO $userUid');
+    // print('HELLO $userUid');
     final responseMessage = await APIConnect.connectVotes(
       'GET',
       pid: widget.pid,
       uidUser: userUid,
     );
-    print('HELLO $userUid $responseMessage');
+    // print('HELLO $userUid $responseMessage');
     return responseMessage;
   }
 
@@ -60,37 +62,38 @@ class _ProposalPageState extends State<ProposalPage> with Screen{
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder<Map<String, dynamic>>(
-              future: _listFutureProposal,
-              builder: (BuildContext context,
-                  AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.data['message'] == 'Error') {
-                  _voteOutput = "You have not voted yet!";
-                } else {
-                  _voteOutput = snapshot.data['vote']['value'] == 1
-                      ? "You have voted Yea!"
-                      : "You have voted Nay!";
-                }
-                return ListView(
-                  children: <Widget>[
-                    Text(widget.description),
-                    Text('Voting on proposal ends ' + widget.endTime),
-                    snapshot.data['message'] == 'Error'
-                        ? PreventDoubleTap(
-                            pid: widget.pid,
-                            uidUser: widget.uidUser,
-                            voted: snapshot.data['message'] == 'Error'
-                                ? false
-                                : true,
-                          )
-                        : Text(_voteOutput),
-                  ],
+            future: _listFutureProposal,
+            builder: (BuildContext context,
+                AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.data == null) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              }),
+              }
+              if (snapshot.data['message'] == 'Error') {
+                _voteOutput = "You have not voted yet!";
+              } else {
+                _voteOutput = snapshot.data['vote']['value'] == 1
+                    ? "You have voted Yea!"
+                    : "You have voted Nay!";
+              }
+              return ListView(
+                children: <Widget>[
+                  Text(widget.description),
+                  Text('Voting on proposal ends ' + widget.endTime),
+                  snapshot.data['message'] == 'Error'
+                      ? PreventDoubleTap(
+                          pid: widget.pid,
+                          uidUser: widget.uidUser,
+                          voted: snapshot.data['message'] == 'Error'
+                              ? false
+                              : true,
+                        )
+                      : Text(_voteOutput),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
