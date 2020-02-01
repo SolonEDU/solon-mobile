@@ -23,6 +23,7 @@ class Solon extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
+        canvasColor: Colors.white,
         primaryColor: Colors.pink[400],
         appBarTheme: AppBarTheme(
           color: Colors.white,
