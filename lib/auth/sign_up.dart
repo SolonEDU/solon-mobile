@@ -74,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       'Ukrainian': 'українська мова',
                     };
                     return DropdownMenuItem<String>(
-                      value: nativeLangNames[value],
+                      value: value,
                       child: Text(nativeLangNames[value]),
                     );
                   },

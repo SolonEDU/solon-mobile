@@ -77,7 +77,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                   AppLocalizations.of(context).translate('account'),
                 ),
                 body: Container(
-                  margin: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -90,7 +90,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
+                        padding: const EdgeInsets.only(bottom: 25.0),
                         child: Text(
                           '${snapshot.data['firstname']} ${snapshot.data['lastname']}',
                           style: TextStyle(
@@ -108,7 +108,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
+                        padding: const EdgeInsets.only(bottom: 25.0),
                         child: Text(
                           "${snapshot.data['email']}",
                           style: TextStyle(
@@ -173,7 +173,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                               'Ukrainian': 'українська мова',
                             };
                             return DropdownMenuItem<String>(
-                              value: nativeLangNames[value],
+                              value: value,
                               child: Text(nativeLangNames[value]),
                             );
                           },

@@ -15,7 +15,6 @@ class EventsScreen extends StatefulWidget {
 
 class _EventsScreenState extends State<EventsScreen> {
   final translator = GoogleTranslator();
-
   Stream<List<EventCard>> stream;
 
   @override
@@ -29,19 +28,6 @@ class _EventsScreenState extends State<EventsScreen> {
     setState(() {
       stream = APIConnect.eventListView(widget.uid);
     });
-  }
-
-  Future<String> translateText(text, code) async {
-    return await translator.translate(text, to: code);
-  }
-
-  Future<List<Map>> translateAll(String title, String description,
-      List<Map> maps, Map<String, String> languages) async {
-    for (var language in languages.keys) {
-      maps[0][language] = await translateText(title, languages[language]);
-      maps[1][language] = await translateText(description, languages[language]);
-    }
-    return maps;
   }
 
   @override

@@ -3,20 +3,19 @@ import 'package:translator/translator.dart';
 
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
-// import 'package:Solon/loader.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/create.dart';
 
 class ProposalsScreen extends StatefulWidget {
   final int uid;
   ProposalsScreen({Key key, this.uid}) : super(key: key);
+
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();
 }
 
 class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   final translator = GoogleTranslator();
-
   Stream<List<ProposalCard>> stream;
 
   @override
@@ -37,7 +36,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
     return RefreshIndicator(
       onRefresh: getStream,
       child: StreamBuilder<List<ProposalCard>>(
-        stream: stream,
+        stream: APIConnect.proposalListView,
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text("${snapshot.error}");
           switch (snapshot.connectionState) {
