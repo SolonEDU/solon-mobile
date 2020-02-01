@@ -10,6 +10,7 @@ class PostCard extends StatefulWidget {
   final String description;
   final int uid;
   final String timestamp;
+  final int numcomments;
 
   PostCard({
     Key key,
@@ -18,6 +19,7 @@ class PostCard extends StatefulWidget {
     this.description,
     this.uid,
     this.timestamp,
+    this.numcomments,
   }) : super(key: key);
 
   factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
@@ -33,6 +35,7 @@ class PostCard extends StatefulWidget {
       description: translatedDescription,
       timestamp: timestampParsed,
       uid: map['uid'],
+      numcomments: map['numcomments'],
     );
   }
 
@@ -64,6 +67,7 @@ class _PostCardState extends State<PostCard> {
                       description: widget.description,
                       uid: widget.uid,
                       timestamp: widget.timestamp,
+                      numcomments: widget.numcomments,
                     ),
                   ),
                 );

@@ -73,7 +73,7 @@ class APIConnect {
 
   static Future<List<ProposalCard>> connectProposals() async {
     final http.Response response = await http.get(
-      "$_url/proposals",
+      "$_url/proposals?sort_by=starttime.desc",
       headers: await headers,
     );
 
@@ -87,7 +87,7 @@ class APIConnect {
 
   static Future<List<PostCard>> connectForumPosts() async {
     final http.Response response = await http.get(
-      "$_url/forumposts",
+      "$_url/forumposts?sort_by=numcomments.desc",
       headers: await headers,
     );
 
@@ -102,7 +102,7 @@ class APIConnect {
 
   static Future<List<EventCard>> connectEvents({int uid}) async {
     final http.Response response = await http.get(
-      "$_url/events",
+      "$_url/events?sort_by=date.desc",
       headers: await headers,
     );
 
