@@ -44,4 +44,26 @@ mixin Screen {
       ),
     );
   }
+
+  Container getCard(BuildContext context, ListTile tile, Function function) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      constraints: BoxConstraints(
+        minWidth: 300,
+        maxWidth: MediaQuery.of(context).size.width - 10,
+      ),
+      child: Align(
+        child: SizedBox(
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30),
+            ),
+            color: Colors.white,
+            child: tile,
+            onPressed: function,
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Solon/forum/page.dart';
+import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -43,59 +44,10 @@ class PostCard extends StatefulWidget {
   _PostCardState createState() => _PostCardState();
 }
 
-class _PostCardState extends State<PostCard> {
+class _PostCardState extends State<PostCard> with Screen {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      constraints: BoxConstraints(
-        minWidth: 300,
-        maxWidth: MediaQuery.of(context).size.width - 10,
-      ),
-      child: Align(
-        child: SizedBox(
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30),
-            ),
-            color: Colors.white,
-            child: ListTile(
-              contentPadding: EdgeInsets.only(
-                top: 10,
-                bottom: 10,
-                right: 15,
-                left: 15,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  widget.title,
-                  style: TextStyle(
-                    fontFamily: 'Raleway',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      '${widget.description}',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Text(widget.timestamp),
-                  Text('${widget.numcomments} comments'),
-                ],
-              ),
-            ),
-            onPressed: () {
+    Function function = () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -109,10 +61,43 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
               );
-            },
+            };
+    ListTile tile = ListTile(
+      contentPadding: EdgeInsets.only(
+        top: 10,
+        bottom: 10,
+        right: 15,
+        left: 15,
+      ),
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Text(
+          widget.title,
+          style: TextStyle(
+            fontFamily: 'Raleway',
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
           ),
         ),
       ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              '${widget.description}',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Text(widget.timestamp),
+          Text('${widget.numcomments} comments'),
+        ],
+      ),
     );
+    return getCard(context, tile, function);
   }
 }
