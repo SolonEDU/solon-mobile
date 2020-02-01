@@ -46,34 +46,71 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: Text(widget.title),
-              subtitle: Text(widget.timestamp),
-              // subtitle: Text(widget.description +
-              //     "\n" +
-              //     new DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PostPage(
-                      fid: widget.fid,
-                      title: widget.title,
-                      description: widget.description,
-                      uid: widget.uid,
-                      timestamp: widget.timestamp,
-                      numcomments: widget.numcomments,
+    return Container(
+      padding: const EdgeInsets.all(10),
+      constraints: BoxConstraints(
+        minWidth: 300,
+        maxWidth: MediaQuery.of(context).size.width - 10,
+      ),
+      child: Align(
+        child: SizedBox(
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30),
+            ),
+            color: Colors.white,
+            child: ListTile(
+              contentPadding: EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+                right: 15,
+                left: 15,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      '${widget.description}',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                );
-              },
+                  Text(widget.timestamp),
+                  Text('${widget.numcomments} comments'),
+                ],
+              ),
             ),
-          ],
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostPage(
+                    fid: widget.fid,
+                    title: widget.title,
+                    description: widget.description,
+                    uid: widget.uid,
+                    timestamp: widget.timestamp,
+                    numcomments: widget.numcomments,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

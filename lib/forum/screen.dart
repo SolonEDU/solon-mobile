@@ -50,6 +50,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
               if (snapshot.hasData) {
                 return Scaffold(
                   body: ListView(
+                    padding: const EdgeInsets.all(8),
                     children: snapshot.data,
                   ),
                   floatingActionButton:
