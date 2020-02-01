@@ -98,44 +98,5 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
       ),
     );
     return getCard(context, tile, function);
-    // return GestureDetector(
-    //   onTap: () {
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => ProposalPage(
-    //           pid: widget.pid,
-    //           title: widget.title,
-    //           description: widget.description,
-    //           uidUser: widget.uid,
-    //           endTime: widget.endTime,
-    //         ),
-    //       ),
-    //     );
-    //   },
-    //   child: Center(
-    //     child: Card(
-    //       child: Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: <Widget>[
-    //           ListTile(
-    //             leading: Text(
-    //               widget.totalVotes.toString(),
-    //               style: TextStyle(
-    //                 fontSize: 20.0,
-    //               ),
-    //             ),
-    //             title: Text(widget.title),
-    //             subtitle: Column(
-    //               children: <Widget>[
-    //                 Text('Voting ends on ' + widget.endTime),
-    //               ],
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
