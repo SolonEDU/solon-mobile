@@ -27,7 +27,6 @@ mixin Screen {
 
   AppBar getPageAppBar(BuildContext context, String title) {
     return AppBar(
-      backgroundColor: Colors.white,
       leading: IconButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -42,14 +41,7 @@ mixin Screen {
       ),
       title: Text(
         title,
-        style: TextStyle(
-          color: Colors.black,
-          fontFamily: 'Raleway',
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-        ),
       ),
-      elevation: 0.0,
     );
   }
 }

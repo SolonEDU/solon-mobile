@@ -19,7 +19,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,

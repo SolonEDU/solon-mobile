@@ -13,9 +13,9 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 // import 'package:Solon/loader.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Solon());
 
-class MyApp extends StatelessWidget {
+class Solon extends StatelessWidget {
   static const String _title = 'Home';
 
   @override
@@ -24,13 +24,23 @@ class MyApp extends StatelessWidget {
       title: _title,
       theme: ThemeData(
         primaryColor: Colors.pink[400],
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          elevation: 0.0,
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Raleway',
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
+            ),
+          ),
+        ),
         cursorColor: Colors.pink[400],
         bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Raleway',
       ),
       home: Scaffold(
-        backgroundColor: Colors.white,
         body: FutureBuilder(
           future: APIConnect.connectSharedPreferences(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -175,19 +185,11 @@ class _MainState extends State<Main> {
       },
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
         automaticallyImplyLeading: false,
         title: Text(
           AppLocalizations.of(context)
               .translate(_widgetOptions[_selectedIndex]['title']),
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 32,
-          ),
         ),
         actions: <Widget>[
           IconButton(

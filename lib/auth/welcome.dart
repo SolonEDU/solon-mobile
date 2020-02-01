@@ -20,7 +20,6 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(

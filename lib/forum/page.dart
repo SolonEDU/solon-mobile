@@ -59,7 +59,6 @@ class _PostPageState extends State<PostPage> with Screen {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: getPageAppBar(context, widget.title),
       body: Center(
         child: ListView(
@@ -122,7 +121,6 @@ class _PostPageState extends State<PostPage> with Screen {
       ),
       bottomSheet: Container(
         child: TextField(
-          // style: TextStyle(height: .4),
           controller: commentController,
           decoration: InputDecoration(
             fillColor: Colors.white,

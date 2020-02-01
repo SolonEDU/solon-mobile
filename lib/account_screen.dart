@@ -144,7 +144,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                               PageRouteBuilder(pageBuilder:
                                   (BuildContext context, Animation animation,
                                       Animation secondaryAnimation) {
-                                return MyApp();
+                                return Solon();
                               }, transitionsBuilder: (BuildContext context,
                                   Animation<double> animation,
                                   Animation<double> secondaryAnimation,
