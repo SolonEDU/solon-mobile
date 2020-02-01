@@ -1,4 +1,4 @@
-// import 'package:Solon/auth/welcome.dart';
+import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
@@ -24,7 +24,6 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   StreamController streamController = StreamController.broadcast();
-  var document;
   var _language;
   int _userUid;
 
@@ -73,57 +72,79 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
               onRefresh: _refresh,
               child: Scaffold(
                 key: _scaffoldKey,
-                appBar: AppBar(
-                  leading: IconButton(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                    ),
-                    color: Colors.black,
-                    onPressed: () => {
-                      FocusScope.of(context).unfocus(),
-                      Navigator.pop(context),
-                    },
-                  ),
-                  elevation: 0.0,
-                  backgroundColor: Colors.white,
-                  title: Text(
-                    AppLocalizations.of(context).translate('account'),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                    ),
-                  ),
+                appBar: getPageAppBar(
+                  context,
+                  AppLocalizations.of(context).translate('account'),
                 ),
-                body: Center(
+                body: Container(
+                  margin: const EdgeInsets.all(20),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                          "Welcome ${snapshot.data['firstname']} ${snapshot.data['lastname']}!"),
-                      Text("Email: ${snapshot.data['email']}"),
+                        'Name',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Raleway',
+                          fontSize: 25,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 25.0),
+                        child: Text(
+                          '${snapshot.data['firstname']} ${snapshot.data['lastname']}',
+                          style: TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Email',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Raleway',
+                          fontSize: 25,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 25.0),
+                        child: Text(
+                          "${snapshot.data['email']}",
+                          style: TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Language',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Raleway',
+                            fontSize: 25),
+                      ),
                       DropdownButton<String>(
                         value: _language,
+                        isExpanded: true,
                         onChanged: (String newValue) async {
-                          // _setLanguage(newValue);
                           Map<String, dynamic> newMap = snapshot.data;
                           newMap['lang'] = newValue;
                           streamController.sink.add(newMap);
-                          // print(newValue);
                           final prefs = await SharedPreferences.getInstance();
                           final userData = prefs.getString('userData');
                           final userDataJson = json.decode(userData);
                           userDataJson['lang'] = newValue;
                           prefs.setString(
-                              'userData', json.encode(userDataJson));
-                          // print(json.encode(userDataJson));
+                            'userData',
+                            json.encode(userDataJson),
+                          );
                           Message responseMessage =
                               await APIConnect.changeLanguage(
-                                  uid: snapshot.data['uid'],
-                                  updatedLang: json.decode(
-                                      prefs.getString('userData'))['lang']);
+                            uid: snapshot.data['uid'],
+                            updatedLang: json
+                                .decode(prefs.getString('userData'))['lang'],
+                          );
                           showToast(
                               responseMessage.message == 'Error'
                                   ? 'Language could not be changed to $newValue'
@@ -139,49 +160,63 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                           'Russian',
                           'Japanese',
                           'Ukrainian'
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          // print(snapshot.data['lang']);
-                          // print(value);
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                        ].map<DropdownMenuItem<String>>(
+                          (String value) {
+                            Map<String, String> nativeLangNames = {
+                              'English': 'English',
+                              'Chinese (Simplified)': '中文（简体）',
+                              'Chinese (Traditional)': '中文（繁体）',
+                              'Bengali': 'বাংলা',
+                              'Korean': '한국어',
+                              'Russian': 'Русский язык',
+                              'Japanese': '日本語',
+                              'Ukrainian': 'українська мова',
+                            };
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(nativeLangNames[value]),
+                            );
+                          },
+                        ).toList(),
                       ),
-                      // RaisedButton(
-                      //   onPressed: () async {
-                      //     _showToast(
-                      //         "Instructions to change your password were sent to your email address");
-                      //     return FirebaseAuth.instance.sendPasswordResetEmail(
-                      //         email: snapshot.data.data['email']);
-                      //   },
-                      //   child: Text("Change Password"),
-                      // ),
-                      RaisedButton(
-                        onPressed: () async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.clear();
-                          Navigator.pushAndRemoveUntil(
+                      Center(
+                        child: Button(
+                          height: 55,
+                          width: 155,
+                          label: "Sign Out",
+                          margin: EdgeInsets.only(top: 10),
+                          function: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.clear();
+                            Navigator.pushAndRemoveUntil(
                               context,
-                              PageRouteBuilder(pageBuilder:
-                                  (BuildContext context, Animation animation,
-                                      Animation secondaryAnimation) {
-                                return MyApp();
-                              }, transitionsBuilder: (BuildContext context,
+                              PageRouteBuilder(
+                                pageBuilder: (
+                                  BuildContext context,
+                                  Animation animation,
+                                  Animation secondaryAnimation,
+                                ) {
+                                  return Solon();
+                                },
+                                transitionsBuilder: (
+                                  BuildContext context,
                                   Animation<double> animation,
                                   Animation<double> secondaryAnimation,
-                                  Widget child) {
-                                return new SlideTransition(
-                                  position: new Tween<Offset>(
-                                    begin: const Offset(1.0, 0.0),
-                                    end: Offset.zero,
-                                  ).animate(animation),
-                                  child: child,
-                                );
-                              }),
-                              (Route route) => false);
-                        },
-                        child: Text("Log Out"),
+                                  Widget child,
+                                ) {
+                                  return new SlideTransition(
+                                    position: new Tween<Offset>(
+                                      begin: const Offset(1.0, 0.0),
+                                      end: Offset.zero,
+                                    ).animate(animation),
+                                    child: child,
+                                  );
+                                },
+                              ),
+                              (Route route) => false,
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),

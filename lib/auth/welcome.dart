@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
-// import 'package:Solon/app_localizations.dart';
+import 'package:Solon/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -20,7 +20,6 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -33,13 +32,17 @@ class _WelcomePageState extends State<WelcomePage> {
                 margin: const EdgeInsets.only(bottom: 40),
               ),
               Button(
+                height: 55,
+                width: 155,
                 function: navigateToSignIn,
-                label: "Sign In", // AppLocalizations.of(context).translate('signin'),
+                label: AppLocalizations.of(context).translate('signin'),
                 margin: const EdgeInsets.all(0),
               ),
               Button(
+                height: 55,
+                width: 155,
                 function: navigateToSignUp,
-                label: "Register", // AppLocalizations.of(context).translate('signup')
+                label: AppLocalizations.of(context).translate('signup'),
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
               ),
             ],

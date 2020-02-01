@@ -13,9 +13,9 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 // import 'package:Solon/loader.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Solon());
 
-class MyApp extends StatelessWidget {
+class Solon extends StatelessWidget {
   static const String _title = 'Home';
 
   @override
@@ -23,23 +23,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Raleway',
-        textTheme: TextTheme(
-          headline: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-          title: TextStyle(fontSize: 24, fontFamily: 'Open Sans'),
-          body1: TextStyle(fontSize: 20, fontFamily: 'Open Sans'),
+        canvasColor: Colors.white,
+        primaryColor: Colors.pink[400],
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          elevation: 0.0,
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Raleway',
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
+            ),
+          ),
         ),
+        cursorColor: Colors.pink[400],
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: Scaffold(
-        backgroundColor: Colors.white,
         body: FutureBuilder(
           future: APIConnect.connectSharedPreferences(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Container();
             }
-            // print(snapshot.data);
             return snapshot.data.containsKey('errorMessage')
                 ? WelcomePage()
                 : Main(uid: snapshot.data['uid']);
@@ -123,7 +131,7 @@ class MyApp extends StatelessWidget {
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         if (locale == null) {
-          debugPrint("*language locale is null!!!");
+          debugPrint("*language locale is null!");
           return supportedLocales.first;
         }
         for (var supportedLocale in supportedLocales) {
@@ -149,7 +157,6 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  // final db = Firestore.instance;
   var _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -179,46 +186,19 @@ class _MainState extends State<Main> {
       },
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
         automaticallyImplyLeading: false,
-        // leading: Text(),
-        // leading: Builder(
-        //   builder: (BuildContext context) {
-        //     return DecoratedBox(
-        //       decoration: BoxDecoration(
-        //         image: DecorationImage(
-        //           image: AssetImage('images/solon.png'),
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
         title: Text(
           AppLocalizations.of(context)
               .translate(_widgetOptions[_selectedIndex]['title']),
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            // fontWeight: FontWeight.bold,
-            fontSize: 32,
-          ),
         ),
         actions: <Widget>[
-          // TODO: move this into the navbar
-          FloatingActionButton(
-            heroTag: 'unq0',
-            elevation: 0.0,
-            hoverColor: Colors.transparent,
-            focusColor: Colors.transparent,
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            color: Colors.pinkAccent[400],
+            highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.pinkAccent[400],
-            child: Icon(Icons.account_circle),
             onPressed: () async {
-              // FirebaseUser user = await FirebaseAuth.instance.currentUser();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -226,7 +206,7 @@ class _MainState extends State<Main> {
                 ),
               );
             },
-          ),
+          )
         ],
       ),
       body: Center(

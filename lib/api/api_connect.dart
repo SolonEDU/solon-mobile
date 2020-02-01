@@ -73,13 +73,12 @@ class APIConnect {
 
   static Future<List<ProposalCard>> connectProposals() async {
     final http.Response response = await http.get(
-      "$_url/proposals",
+      "$_url/proposals?sort_by=starttime.desc",
       headers: await headers,
     );
 
     final sharedPrefs = await connectSharedPreferences();
     final prefLangCode = languages[sharedPrefs['lang']];
-    print(prefLangCode);
     List collection = json.decode(response.body)['proposals'];
     List<ProposalCard> _proposals =
         collection.map((json) => ProposalCard.fromJson(json, prefLangCode)).toList();
@@ -88,7 +87,7 @@ class APIConnect {
 
   static Future<List<PostCard>> connectForumPosts() async {
     final http.Response response = await http.get(
-      "$_url/forumposts",
+      "$_url/forumposts?sort_by=numcomments.desc",
       headers: await headers,
     );
 
@@ -103,7 +102,7 @@ class APIConnect {
 
   static Future<List<EventCard>> connectEvents({int uid}) async {
     final http.Response response = await http.get(
-      "$_url/events",
+      "$_url/events?sort_by=date.desc",
       headers: await headers,
     );
 
@@ -188,7 +187,6 @@ class APIConnect {
       // print(json.encode(json.decode(userDataResponse.body)['user']));
       print(userDataResponseJson);
       final userData = json.encode(userDataResponseJson);
-      // final userData = ;
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
       print("${prefs.getString('userData')}");
@@ -206,14 +204,6 @@ class APIConnect {
     final userData = prefs.getString('userData');
     final userDataMap = json.decode(userData);
     return userDataMap;
-  }
-
-  static Future<bool> tryAutoLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userData')) {
-      return false;
-    }
-    return true;
   }
 
   static Future<Map<String, dynamic>> connectVotes(String httpReqType,
@@ -268,7 +258,7 @@ class APIConnect {
       "$_url/comments",
       body: json.encode({
         'fid': fid,
-        'comment': comment,
+        'content': comment,
         'timestamp': timestamp,
         'uid': uid,
       }),

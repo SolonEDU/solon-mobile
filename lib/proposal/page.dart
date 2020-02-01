@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -12,6 +13,7 @@ class ProposalPage extends StatefulWidget {
   final String description;
   final int uidUser;
   final String endTime;
+  final DateTime date;
 
   ProposalPage({
     Key key,
@@ -20,26 +22,27 @@ class ProposalPage extends StatefulWidget {
     this.description,
     this.uidUser,
     this.endTime,
+    this.date,
   }) : super(key: key);
 
   @override
   _ProposalPageState createState() => _ProposalPageState();
 }
 
-class _ProposalPageState extends State<ProposalPage> {
+class _ProposalPageState extends State<ProposalPage> with Screen {
   String _voteOutput;
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    print('HELLO $userUid');
+    // print('HELLO $userUid');
     final responseMessage = await APIConnect.connectVotes(
       'GET',
       pid: widget.pid,
       uidUser: userUid,
     );
-    print('HELLO $userUid $responseMessage');
+    // print('HELLO $userUid $responseMessage');
     return responseMessage;
   }
 
@@ -52,49 +55,45 @@ class _ProposalPageState extends State<ProposalPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.pid);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: getPageAppBar(context, widget.title),
       body: Container(
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder<Map<String, dynamic>>(
-              future: _listFutureProposal,
-              builder: (BuildContext context,
-                  AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.data['message'] == 'Error') {
-                  _voteOutput = "You have not voted yet!";
-                } else {
-                  _voteOutput = snapshot.data['vote']['value'] == 1
-                      ? "You have voted Yea!"
-                      : "You have voted Nay!";
-                }
-                print(snapshot.data['message']);
-                return ListView(
-                  children: <Widget>[
-                    Text(widget.description),
-                    Text('Voting on proposal ends ' + widget.endTime),
-                    // Text(AppLocalizations.of(context).translate('votesFor')),
-                    snapshot.data['message'] == 'Error'
-                        ? PreventDoubleTap(
-                            pid: widget.pid,
-                            uidUser: widget.uidUser,
-                            voted: snapshot.data['message'] == 'Error'
-                                ? false
-                                : true,
-                          )
-                        : Text(_voteOutput),
-                  ],
+            future: _listFutureProposal,
+            builder: (BuildContext context,
+                AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.data == null) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              }),
+              }
+              if (snapshot.data['message'] == 'Error') {
+                _voteOutput = "You have not voted yet!";
+              } else {
+                _voteOutput = snapshot.data['vote']['value'] == 1
+                    ? "You have voted Yea!"
+                    : "You have voted Nay!";
+              }
+              return ListView(
+                children: <Widget>[
+                  Text(widget.description),
+                  Text('Voting on proposal ends ' + widget.endTime),
+                  snapshot.data['message'] == 'Error'
+                      ? PreventDoubleTap(
+                          pid: widget.pid,
+                          uidUser: widget.uidUser,
+                          voted: snapshot.data['message'] == 'Error'
+                              ? false
+                              : true,
+                        )
+                      : Text(_voteOutput),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -128,7 +127,6 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
     final userUid = json.decode(prefs.getString('userData'))['uid'];
     APIConnect.connectVotes('POST',
         pid: pid, uidUser: userUid, voteVal: voteVal);
-    // print(responseMessage['message']);
   }
 
   _onYeaTapped() async {

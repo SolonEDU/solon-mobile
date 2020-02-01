@@ -4,11 +4,15 @@ class Button extends StatelessWidget {
   final Function function;
   final String label;
   final EdgeInsets margin;
+  final double width;
+  final double height;
 
   Button({
     this.function,
     this.label,
     this.margin,
+    this.width,
+    this.height,
   });
 
   @override
@@ -17,19 +21,19 @@ class Button extends StatelessWidget {
       margin: margin,
       child: Align(
         child: SizedBox(
-          height: 55,
-          width: 155,
+          height: height,
+          width: width,
           child: RaisedButton(
             shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30),
             ),
-            color: Color(0xFF98D2EB),
+            color: Colors.pink[200],
             onPressed: function,
             child: Text(
               label,
               textScaleFactor: 1.5,
               style: TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.bold),
-            ), // AppLocalizations.of(context).translate('signin'),
+            ),
           ),
         ),
       ),

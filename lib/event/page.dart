@@ -1,3 +1,4 @@
+import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 // import 'package:intl/intl.dart';
@@ -12,6 +13,7 @@ class EventPage extends StatefulWidget {
   final String title;
   final String description;
   final String date;
+  final int numattenders;
 
   EventPage({
     this.eid,
@@ -19,14 +21,14 @@ class EventPage extends StatefulWidget {
     this.title,
     this.description,
     this.date,
+    this.numattenders,
   });
 
   @override
   _EventPageState createState() => _EventPageState();
 }
 
-class _EventPageState extends State<EventPage> {
-  // Future<bool> _futureAttendanceVal;
+class _EventPageState extends State<EventPage> with Screen {
   bool attendanceVal;
   StreamController streamController = StreamController();
 
@@ -39,29 +41,15 @@ class _EventPageState extends State<EventPage> {
     streamController.sink.add(value);
   }
 
-  // Future<Map<String, dynamic>> getAttendance() async {
-  //   final responseMessage = await APIConnect.getAttendance(
-  //     'GET',
-  //     pid: widget.pid,
-  //     uidUser: widget.uidUser,
-  //   );
-  //   return responseMessage;
-  // }
-
   @override
   void initState() {
     load();
     super.initState();
-
-    // _futureAttendanceVal =
-    //     APIConnect.getAttendance(eid: widget.eid, uid: widget.uid);
-    // print(_futureAttendanceVal.toString());
   }
 
   void load() async {
     streamController
         .add(await APIConnect.getAttendance(eid: widget.eid, uid: widget.uid));
-    // await Future.delayed(Duration(seconds: 1));
   }
 
   @override
@@ -73,9 +61,7 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: getPageAppBar(context, widget.title),
       body: Container(
         child: StreamBuilder(
           stream: streamController.stream,
@@ -93,15 +79,6 @@ class _EventPageState extends State<EventPage> {
                 ButtonBar(
                   alignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    // FlatButton(
-                    //   child: Icon(Icons.delete),
-                    //   onPressed: () => { // send a DELETE request to PG, including the  in the request body to specify
-                    //     // db
-                    //     //     .collection('events')
-                    //     //     .document(widget.doc.documentID)
-                    //     //     .delete()
-                    //   },
-                    // ),
                     Text(AppLocalizations.of(context).translate('attending')),
                     Switch.adaptive(
                       value: attendanceVal,

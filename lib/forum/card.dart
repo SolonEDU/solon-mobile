@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Solon/forum/page.dart';
+import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class PostCard extends StatefulWidget {
   final String description;
   final int uid;
   final String timestamp;
+  final int numcomments;
 
   PostCard({
     Key key,
@@ -18,6 +20,7 @@ class PostCard extends StatefulWidget {
     this.description,
     this.uid,
     this.timestamp,
+    this.numcomments,
   }) : super(key: key);
 
   factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
@@ -33,6 +36,7 @@ class PostCard extends StatefulWidget {
       description: translatedDescription,
       timestamp: timestampParsed,
       uid: map['uid'],
+      numcomments: map['numcomments'],
     );
   }
 
@@ -40,38 +44,60 @@ class PostCard extends StatefulWidget {
   _PostCardState createState() => _PostCardState();
 }
 
-class _PostCardState extends State<PostCard> {
+class _PostCardState extends State<PostCard> with Screen {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: Text(widget.title),
-              subtitle: Text(widget.timestamp),
-              // subtitle: Text(widget.description +
-              //     "\n" +
-              //     new DateFormat.yMMMMd("en_US").add_jm().format(widget.time)),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PostPage(
-                      fid: widget.fid,
-                      title: widget.title,
-                      description: widget.description,
-                      uid: widget.uid,
-                      timestamp: widget.timestamp,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
+    Function function = () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PostPage(
+            fid: widget.fid,
+            title: widget.title,
+            description: widget.description,
+            uid: widget.uid,
+            timestamp: widget.timestamp,
+            numcomments: widget.numcomments,
+          ),
+        ),
+      );
+    };
+    ListTile tile = ListTile(
+      contentPadding: EdgeInsets.only(
+        top: 10,
+        bottom: 10,
+        right: 15,
+        left: 15,
+      ),
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Text(
+          widget.title,
+          style: TextStyle(
+            fontFamily: 'Raleway',
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
         ),
       ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              '${widget.description}',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Text(widget.timestamp),
+          Text('${widget.numcomments} comments'),
+        ],
+      ),
     );
+    return getCard(context, tile, function);
   }
 }

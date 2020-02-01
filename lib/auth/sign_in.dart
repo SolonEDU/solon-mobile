@@ -26,34 +26,22 @@ class _LoginPageState extends State<LoginPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: Icon(
-            Icons.arrow_back_ios,
-          ),
-          color: Colors.black,
-          onPressed: () => {
-            FocusScope.of(context).unfocus(),
-            Navigator.pop(context),
-          },
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
+      appBar: getPageAppBar(
+        context,
+        AppLocalizations.of(context).translate('signin'),
       ),
       body: Center(
         child: Form(
           key: _formKey,
           child: ListView(
+            shrinkWrap: true,
+            primary: false,
             children: <Widget>[
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('email'),
-                  textScaleFactor: 1,
                 ),
               ),
               Container(
@@ -74,7 +62,6 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
                   AppLocalizations.of(context).translate('password'),
-                  textScaleFactor: 1,
                 ),
               ),
               Container(
@@ -98,10 +85,11 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 ),
               ),
               Button(
+                height: 55,
+                width: 155,
                 function: signIn,
-                margin: const EdgeInsets.only(top: 25),
-                label:
-                    "Sign In", // AppLocalizations.of(context).translate('signin'),
+                margin: const EdgeInsets.only(top: 25, bottom: 25),
+                label: AppLocalizations.of(context).translate('signin'),
               ),
             ],
           ),
@@ -117,14 +105,12 @@ class _LoginPageState extends State<LoginPage> with Screen {
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
         showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
-      }
-      else {
+      } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Main(uid: responseMessage["uid"]),
-            // builder: (context) => Main(uid: 1),
           ),
         );
       }

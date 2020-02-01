@@ -19,34 +19,21 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: Icon(
-            Icons.arrow_back_ios,
-          ),
-          color: Colors.black,
-          onPressed: () => {
-            FocusScope.of(context).unfocus(),
-            Navigator.pop(context),
-          },
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
+      appBar: getPageAppBar(
+        context,
+        AppLocalizations.of(context).translate('signup'),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
+          primary: false,
           shrinkWrap: true,
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(top: 10, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('language'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -76,9 +63,19 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                   'Ukrainian',
                 ].map<DropdownMenuItem<String>>(
                   (String value) {
+                    Map<String, String> nativeLangNames = {
+                      'English': 'English',
+                      'Chinese (Simplified)': '中文（简体）',
+                      'Chinese (Traditional)': '中文（繁体）',
+                      'Bengali': 'বাংলা',
+                      'Korean': '한국어',
+                      'Russian': 'Русский язык',
+                      'Japanese': '日本語',
+                      'Ukrainian': 'українська мова',
+                    };
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(nativeLangNames[value]),
                     );
                   },
                 ).toList(),
@@ -88,7 +85,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 "Name",
-                textScaleFactor: 1,
               ),
             ),
             Row(
@@ -133,7 +129,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('email'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -153,7 +148,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 AppLocalizations.of(context).translate('password'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -164,7 +158,10 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                   if (input.length < 6) {
                     return 'Your password needs to be at least 6 characters';
                   }
-                  return null;
+                  else {
+                    _password = input;
+                    return null;
+                  }
                 },
                 onSaved: (input) => _password = input,
                 obscureText: true,
@@ -174,8 +171,6 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
                 'Confirm Password',
-                // AppLocalizations.of(context).translate('password'),
-                textScaleFactor: 1,
               ),
             ),
             Container(
@@ -192,10 +187,11 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               ),
             ),
             Button(
+              height: 55,
+              width: 155,
               function: signUp,
               margin: const EdgeInsets.only(top: 25, bottom: 10),
-              label:
-                  "Sign Up", // AppLocalizations.of(context).translate('signup')
+              label: AppLocalizations.of(context).translate('signup'),
             ),
           ],
         ),
