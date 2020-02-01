@@ -53,7 +53,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                     children: snapshot.data,
                   ),
                   floatingActionButton:
-                      getFAB(context, CreatePost(APIConnect.addForumPost)),
+                      getFAB(context, CreatePost(APIConnect.addForumPost), getStream),
                 );
               }
           }
