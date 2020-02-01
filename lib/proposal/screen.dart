@@ -54,8 +54,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       children: snapshot.data,
                     ),
                   ),
-                  floatingActionButton:
-                      getFAB(context, CreateProposal(APIConnect.addProposal)),
+                  floatingActionButton: getFAB(
+                    context,
+                    CreateProposal(APIConnect.addProposal),
+                    getStream,
+                  ),
                 );
               }
           }

@@ -53,8 +53,11 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                     padding: const EdgeInsets.all(8),
                     children: snapshot.data,
                   ),
-                  floatingActionButton:
-                      getFAB(context, CreatePost(APIConnect.addForumPost)),
+                  floatingActionButton: getFAB(
+                    context,
+                    CreatePost(APIConnect.addForumPost),
+                    getStream,
+                  ),
                 );
               }
           }

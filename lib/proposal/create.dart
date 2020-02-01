@@ -2,7 +2,7 @@ import 'package:Solon/auth/button.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 
 class CreateProposal extends StatefulWidget {
@@ -148,7 +148,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
           ),
           0); //dummy uid
       FocusScope.of(context).requestFocus(FocusNode());
-      Navigator.pop(context);
+      Navigator.pop(context, APIConnect.connectProposals());
       Future.delayed(
         const Duration(milliseconds: 500),
       );
