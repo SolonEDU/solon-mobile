@@ -15,6 +15,7 @@ class PostPage extends StatefulWidget {
   final int uid;
   final String timestamp;
   final int numcomments;
+  final int attenders;
 
   PostPage({
     Key key,
@@ -24,6 +25,7 @@ class PostPage extends StatefulWidget {
     this.uid,
     this.timestamp,
     this.numcomments,
+    this.attenders,
   }) : super(key: key);
 
   _PostPageState createState() => _PostPageState();

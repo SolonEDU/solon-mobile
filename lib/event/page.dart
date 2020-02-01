@@ -7,12 +7,13 @@ import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 // import 'package:Solon/loader.dart';
 
-class EventPage extends StatefulWidget{
+class EventPage extends StatefulWidget {
   final int eid;
   final int uid;
   final String title;
   final String description;
   final String date;
+  final int numattenders;
 
   EventPage({
     this.eid,
@@ -20,14 +21,14 @@ class EventPage extends StatefulWidget{
     this.title,
     this.description,
     this.date,
+    this.numattenders,
   });
 
   @override
   _EventPageState createState() => _EventPageState();
 }
 
-class _EventPageState extends State<EventPage> with Screen{
-  // Future<bool> _futureAttendanceVal;
+class _EventPageState extends State<EventPage> with Screen {
   bool attendanceVal;
   StreamController streamController = StreamController();
 
@@ -40,29 +41,15 @@ class _EventPageState extends State<EventPage> with Screen{
     streamController.sink.add(value);
   }
 
-  // Future<Map<String, dynamic>> getAttendance() async {
-  //   final responseMessage = await APIConnect.getAttendance(
-  //     'GET',
-  //     pid: widget.pid,
-  //     uidUser: widget.uidUser,
-  //   );
-  //   return responseMessage;
-  // }
-
   @override
   void initState() {
     load();
     super.initState();
-
-    // _futureAttendanceVal =
-    //     APIConnect.getAttendance(eid: widget.eid, uid: widget.uid);
-    // print(_futureAttendanceVal.toString());
   }
 
   void load() async {
     streamController
         .add(await APIConnect.getAttendance(eid: widget.eid, uid: widget.uid));
-    // await Future.delayed(Duration(seconds: 1));
   }
 
   @override

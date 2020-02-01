@@ -48,20 +48,20 @@ class _PostCardState extends State<PostCard> with Screen {
   @override
   Widget build(BuildContext context) {
     Function function = () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PostPage(
-                    fid: widget.fid,
-                    title: widget.title,
-                    description: widget.description,
-                    uid: widget.uid,
-                    timestamp: widget.timestamp,
-                    numcomments: widget.numcomments,
-                  ),
-                ),
-              );
-            };
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PostPage(
+            fid: widget.fid,
+            title: widget.title,
+            description: widget.description,
+            uid: widget.uid,
+            timestamp: widget.timestamp,
+            numcomments: widget.numcomments,
+          ),
+        ),
+      );
+    };
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
         top: 10,
