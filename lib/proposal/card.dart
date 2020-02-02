@@ -1,3 +1,4 @@
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
@@ -5,13 +6,16 @@ import 'package:date_format/date_format.dart';
 import 'package:Solon/proposal/page.dart';
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ProposalCard extends StatefulWidget {
   final int pid;
   final String title;
   final String description;
   final String endTime;
   final int uid;
-  final int totalVotes;
+  final int yesVotes;
+  final int noVotes;
   final DateTime date;
 
   ProposalCard({
@@ -21,7 +25,8 @@ class ProposalCard extends StatefulWidget {
     this.description,
     this.endTime,
     this.uid,
-    this.totalVotes,
+    this.yesVotes,
+    this.noVotes,
     this.date,
   }) : super(key: key);
 
@@ -38,7 +43,8 @@ class ProposalCard extends StatefulWidget {
       description: translatedDescription,
       endTime: endTimeParsed,
       uid: map['uid'],
-      totalVotes: map['numyes'] + map['numno'],
+      yesVotes: map['numyes'],
+      noVotes: map['numno'],
       date: endTime,
     );
   }
@@ -48,6 +54,26 @@ class ProposalCard extends StatefulWidget {
 }
 
 class _ProposalCardState extends State<ProposalCard> with Screen {
+  bool _voted;
+  Future<Map<String, dynamic>> _listFutureProposal;
+
+  Future<Map<String, dynamic>> getVote() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final responseMessage = await APIConnect.connectVotes(
+      'GET',
+      pid: widget.pid,
+      uidUser: userUid,
+    );
+    return responseMessage;
+  }
+
+  @override
+  void initState() {
+    _listFutureProposal = getVote();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Function function = () {
@@ -76,8 +102,8 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
           (widget.title.length > 40)
-          ? '${widget.title.substring(0, 40)}...'
-          : widget.title,
+              ? '${widget.title.substring(0, 40)}...'
+              : widget.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -94,8 +120,70 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
                 'Ends in ${widget.date.difference(DateTime.now()).inDays} days'),
           ),
           Text(
-            '${widget.totalVotes} votes',
-          )
+            '${widget.yesVotes + widget.noVotes} votes',
+          ),
+          FutureBuilder<Map<String, dynamic>>(
+            future: _listFutureProposal,
+            builder: (BuildContext context,
+                AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.data == null) {
+                return Center();
+              } else {
+                _voted = (snapshot.data['message'] == 'Error') ? false : true;
+                if (_voted) {
+                  print(widget.yesVotes / (widget.yesVotes + widget.noVotes));
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        width: double.infinity,
+                        child: Text(''),
+                        decoration: ShapeDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.green,
+                              Colors.green,
+                              Colors.red,
+                              Colors.red,
+                            ],
+                            stops: [
+                              0,
+                              widget.yesVotes /
+                                  (widget.yesVotes + widget.noVotes),
+                              widget.yesVotes /
+                                  (widget.yesVotes + widget.noVotes),
+                              1.0
+                            ],
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              '${widget.yesVotes} yes',
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${widget.noVotes} no',
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return Center();
+                }
+              }
+            },
+          ),
         ],
       ),
     );

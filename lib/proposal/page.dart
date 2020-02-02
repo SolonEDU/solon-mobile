@@ -36,7 +36,6 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    // print('HELLO $userUid');
     final responseMessage = await APIConnect.connectVotes(
       'GET',
       pid: widget.pid,
