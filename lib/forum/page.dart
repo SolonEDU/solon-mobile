@@ -44,7 +44,7 @@ class _PostPageState extends State<PostPage> with Screen {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, widget.title),
+      appBar: getPageAppBar(context),
       body: Center(
         child: ListView(
           children: <Widget>[

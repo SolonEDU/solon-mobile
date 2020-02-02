@@ -40,31 +40,25 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
         builder: (context, snapshot) {
           if (snapshot.hasError) return Text("${snapshot.error}");
           switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              break;
             case ConnectionState.waiting:
-              break;
-            case ConnectionState.active:
-              break;
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                return Scaffold(
-                  body: Center(
-                    child: ListView(
-                      children: snapshot.data,
-                    ),
-                  ),
-                  floatingActionButton: getFAB(
-                    context,
-                    CreateProposal(APIConnect.addProposal),
-                    getStream,
-                  ),
-                );
-              }
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            default:
+              return Scaffold(
+                body: ListView(
+                  padding: const EdgeInsets.all(4),
+                  children: snapshot.data,
+                ),
+                floatingActionButton: getFAB(
+                  context,
+                  CreateProposal(APIConnect.addProposal),
+                  getStream,
+                ),
+              );
           }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
         },
       ),
     );

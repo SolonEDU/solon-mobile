@@ -76,11 +76,13 @@ class _EventCardState extends State<EventCard> with Screen {
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
-          widget.title,
+          (widget.title.length > 40)
+          ? '${widget.title.substring(0, 40)}...'
+          : widget.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
-            fontSize: 25,
+            fontSize: 22,
           ),
         ),
       ),

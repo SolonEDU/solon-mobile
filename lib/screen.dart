@@ -30,7 +30,7 @@ mixin Screen {
     );
   }
 
-  AppBar getPageAppBar(BuildContext context, String title) {
+  AppBar getPageAppBar(BuildContext context, {String title}) {
     return AppBar(
       leading: IconButton(
         splashColor: Colors.transparent,
@@ -45,7 +45,9 @@ mixin Screen {
         },
       ),
       title: Text(
-        title,
+        (title != null)
+        ? title
+        : '',
       ),
     );
   }

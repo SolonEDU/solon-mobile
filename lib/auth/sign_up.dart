@@ -22,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,
-        AppLocalizations.of(context).translate('signup'),
+        title: AppLocalizations.of(context).translate('signup'),
       ),
       body: Form(
         key: _formKey,

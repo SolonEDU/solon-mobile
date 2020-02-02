@@ -56,7 +56,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, widget.title),
+      appBar: getPageAppBar(context),
       body: Container(
         width: double.infinity,
         child: Padding(

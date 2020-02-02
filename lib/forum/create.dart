@@ -20,7 +20,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, 'New Post'),
+      appBar: getPageAppBar(context, title: 'New Post'),
       key: _scaffoldKey,
       body: Center(
         child: Form(

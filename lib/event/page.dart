@@ -61,7 +61,7 @@ class _EventPageState extends State<EventPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, widget.title),
+      appBar: getPageAppBar(context),
       body: Container(
         child: StreamBuilder(
           stream: streamController.stream,
