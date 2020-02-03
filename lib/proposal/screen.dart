@@ -54,7 +54,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       children: snapshot.data,
                     ),
                   ),
-                  floatingActionButton: getFAB(context, CreateProposal(APIConnect.addProposal), getStream),
+                  floatingActionButton: getFAB(
+                    context,
+                    CreateProposal(APIConnect.addProposal),
+                    getStream,
+                  ),
                   // FloatingActionButton(
                   //   heroTag: 'unq1',
                   //   backgroundColor: Colors.pinkAccent[400],

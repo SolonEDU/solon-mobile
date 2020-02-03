@@ -21,7 +21,7 @@ mixin Screen {
         );
         Future.delayed(
           Duration(
-            seconds: 2,
+            seconds: 3,
           ),
           () => getStream(),
         );
