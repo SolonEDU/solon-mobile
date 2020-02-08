@@ -1,5 +1,6 @@
 import 'package:Solon/api/message.dart';
-import 'package:Solon/auth/button.dart';
+// import 'package:Solon/auth/button.dart';
+import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -127,13 +128,17 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   ],
                 ),
               ),
-              Button(
-                color: Colors.pink[200],
-                width: 255,
-                height: 55,
-                function: createProposal,
-                margin: const EdgeInsets.only(top: 25, bottom: 10),
-                label: 'Create Proposal',
+              PreventDoubleTap(
+                body: <Map>[
+                  {
+                    "color": Colors.pink[200],
+                    "width": 255.0,
+                    "height": 55.0,
+                    "function": createProposal,
+                    "margin": const EdgeInsets.only(top: 25, bottom: 10),
+                    "label": 'Create Proposal',
+                  }
+                ],
               ),
             ],
           ),
@@ -152,21 +157,17 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               _title,
               _description,
               _date,
-              _date.add(
-                new Duration(
-                  days: _sliderValue.toInt(),
-                ),
-              ),
+              _date.add(new Duration(days: _sliderValue.toInt())),
               0) // 0 is a dummy uid
-          .then((message) {
-        FocusScope.of(context).requestFocus(FocusNode());
-        Navigator.pop(context, APIConnect.connectProposals());
-      });
-      // FocusScope.of(context).requestFocus(FocusNode());
-      // Navigator.pop(context, APIConnect.connectProposals());
-      // Future.delayed(
-      //   const Duration(milliseconds: 500),
-      // );
+          .then(
+        (message) {
+          FocusScope.of(context).requestFocus(FocusNode());
+          Navigator.pop(
+            context,
+            APIConnect.connectProposals(),
+          );
+        },
+      );
     }
   }
 }

@@ -80,8 +80,9 @@ class APIConnect {
     final sharedPrefs = await connectSharedPreferences();
     final prefLangCode = languages[sharedPrefs['lang']];
     List collection = json.decode(response.body)['proposals'];
-    List<ProposalCard> _proposals =
-        collection.map((json) => ProposalCard.fromJson(json, prefLangCode)).toList();
+    List<ProposalCard> _proposals = collection
+        .map((json) => ProposalCard.fromJson(json, prefLangCode))
+        .toList();
     return _proposals;
   }
 
@@ -95,8 +96,9 @@ class APIConnect {
     final prefLangCode = languages[sharedPrefs['lang']];
 
     List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts =
-        collection.map((json) => PostCard.fromJson(json, prefLangCode)).toList();
+    List<PostCard> _forumposts = collection
+        .map((json) => PostCard.fromJson(json, prefLangCode))
+        .toList();
     return _forumposts;
   }
 
@@ -110,8 +112,9 @@ class APIConnect {
     final prefLangCode = languages[sharedPrefs['lang']];
 
     List collection = json.decode(response.body)['events'];
-    List<EventCard> _events =
-        collection.map((json) => EventCard.fromJson(json, uid, prefLangCode)).toList();
+    List<EventCard> _events = collection
+        .map((json) => EventCard.fromJson(json, uid, prefLangCode))
+        .toList();
     return _events;
   }
 
@@ -330,8 +333,11 @@ class APIConnect {
     return responseMessage == 'Error' ? false : true;
   }
 
-  static Future<Message> changeAttendance(String httpReqType,
-      {int eid, int uid}) async {
+  static Future<Message> changeAttendance(
+    String httpReqType, {
+    int eid,
+    int uid,
+  }) async {
     http.Response response;
     if (httpReqType == "POST") {
       response = await http.post(
@@ -361,13 +367,23 @@ class APIConnect {
     return Message(message: 'Something wrong has happened!');
   }
 
+  static Future<void> vote(int pid, int voteVal) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    connectVotes(
+      'POST',
+      pid: pid,
+      uidUser: userUid,
+      voteVal: voteVal,
+    );
+  }
+
   static Future<Message> addForumPost(
     String title,
     String description,
     DateTime timestamp,
   ) async {
     final userData = await connectSharedPreferences();
-    // print(userData['uid']);
     // print(json.encode({
     //   'title': title,
     //   'description': description,
