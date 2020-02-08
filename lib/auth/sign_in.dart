@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,
-        AppLocalizations.of(context).translate('signin'),
+        title: AppLocalizations.of(context).translate('signin'),
       ),
       body: Center(
         child: Form(
@@ -85,6 +85,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 ),
               ),
               Button(
+                color: Colors.pink[200],
                 height: 55,
                 width: 155,
                 function: signIn,

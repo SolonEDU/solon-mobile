@@ -9,7 +9,8 @@ mixin Screen {
     );
   }
 
-  FloatingActionButton getFAB(BuildContext context, Widget creator, Function getStream) {
+  FloatingActionButton getFAB(
+      BuildContext context, Widget creator, Function getStream) {
     return FloatingActionButton(
       heroTag: 'unq1',
       backgroundColor: Colors.pinkAccent[400],
@@ -19,18 +20,18 @@ mixin Screen {
           context,
           MaterialPageRoute(builder: (context) => creator),
         );
+        print(received);
         Future.delayed(
           Duration(
             seconds: 3,
           ),
           () => getStream(),
         );
-        print(received);
       },
     );
   }
 
-  AppBar getPageAppBar(BuildContext context, String title) {
+  AppBar getPageAppBar(BuildContext context, {String title}) {
     return AppBar(
       leading: IconButton(
         splashColor: Colors.transparent,
@@ -45,8 +46,72 @@ mixin Screen {
         },
       ),
       title: Text(
-        title,
+        (title != null) ? title : '',
       ),
+    );
+  }
+
+  Container getCard(BuildContext context, ListTile tile, Function function) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      constraints: BoxConstraints(
+        minWidth: 300,
+        maxWidth: MediaQuery.of(context).size.width - 10,
+      ),
+      child: Align(
+        child: SizedBox(
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30),
+            ),
+            color: Colors.white,
+            child: tile,
+            onPressed: function,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column getVoteBar(BuildContext context, int yes, int no) {
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          width: double.infinity,
+          child: Text(''),
+          decoration: ShapeDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.green,
+                Colors.green,
+                Colors.red,
+                Colors.red,
+              ],
+              stops: [0, yes / (yes + no), yes / (yes + no), 1.0],
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                '$yes yes',
+                textAlign: TextAlign.start,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '$no no',
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

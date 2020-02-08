@@ -74,7 +74,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                 key: _scaffoldKey,
                 appBar: getPageAppBar(
                   context,
-                  AppLocalizations.of(context).translate('account'),
+                  title: AppLocalizations.of(context).translate('account'),
                 ),
                 body: Container(
                   margin: const EdgeInsets.all(20),
@@ -181,6 +181,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                       ),
                       Center(
                         child: Button(
+                          color: Colors.pink[200],
                           height: 55,
                           width: 155,
                           label: "Sign Out",

@@ -50,15 +50,9 @@ class _EventsScreenState extends State<EventsScreen> {
               );
             default:
               return Scaffold(
-                body: Center(
-                  child: ListView(
-                    padding: EdgeInsets.all(8),
-                    children: <Widget>[
-                      Column(
-                        children: snapshot.data,
-                      ),
-                    ],
-                  ),
+                body: ListView(
+                  padding: const EdgeInsets.all(4),
+                  children: snapshot.data,
                 ),
               );
           }

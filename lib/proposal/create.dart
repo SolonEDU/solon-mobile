@@ -22,7 +22,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, 'New Proposal'),
+      appBar: getPageAppBar(context, title: 'New Proposal'),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -119,6 +119,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                 ),
               ),
               Button(
+                color: Colors.pink[200],
                 width: 255,
                 height: 55,
                 function: createProposal,

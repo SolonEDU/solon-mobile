@@ -1,3 +1,4 @@
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,9 @@ class ProposalPage extends StatefulWidget {
   final String description;
   final int uidUser;
   final String endTime;
+  final int yesVotes;
+  final int noVotes;
+  final DateTime date;
 
   ProposalPage({
     Key key,
@@ -21,26 +25,28 @@ class ProposalPage extends StatefulWidget {
     this.description,
     this.uidUser,
     this.endTime,
+    this.yesVotes,
+    this.noVotes,
+    this.date,
   }) : super(key: key);
 
   @override
   _ProposalPageState createState() => _ProposalPageState();
 }
 
-class _ProposalPageState extends State<ProposalPage> with Screen{
+class _ProposalPageState extends State<ProposalPage> with Screen {
   String _voteOutput;
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    print('HELLO $userUid');
     final responseMessage = await APIConnect.connectVotes(
       'GET',
       pid: widget.pid,
       uidUser: userUid,
     );
-    print('HELLO $userUid $responseMessage');
+    // print('HELLO $userUid $responseMessage');
     return responseMessage;
   }
 
@@ -54,43 +60,48 @@ class _ProposalPageState extends State<ProposalPage> with Screen{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, widget.title),
+      appBar: getPageAppBar(context),
       body: Container(
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder<Map<String, dynamic>>(
-              future: _listFutureProposal,
-              builder: (BuildContext context,
-                  AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.data['message'] == 'Error') {
-                  _voteOutput = "You have not voted yet!";
-                } else {
-                  _voteOutput = snapshot.data['vote']['value'] == 1
-                      ? "You have voted Yea!"
-                      : "You have voted Nay!";
-                }
-                return ListView(
-                  children: <Widget>[
-                    Text(widget.description),
-                    Text('Voting on proposal ends ' + widget.endTime),
-                    snapshot.data['message'] == 'Error'
-                        ? PreventDoubleTap(
-                            pid: widget.pid,
-                            uidUser: widget.uidUser,
-                            voted: snapshot.data['message'] == 'Error'
-                                ? false
-                                : true,
-                          )
-                        : Text(_voteOutput),
-                  ],
+            future: _listFutureProposal,
+            builder: (BuildContext context,
+                AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.data == null) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              }),
+              }
+              if (snapshot.data['message'] == 'Error') {
+                _voteOutput = "You have not voted yet!";
+              } else {
+                _voteOutput = snapshot.data['vote']['value'] == 1
+                    ? "You have voted Yea!"
+                    : "You have voted Nay!";
+              }
+              return ListView(
+                children: <Widget>[
+                  Text(widget.title),
+                  Text(widget.description),
+                  Text('Voting on proposal ends ' + widget.endTime),
+                  snapshot.data['message'] == 'Error'
+                      ? PreventDoubleTap(
+                          pid: widget.pid,
+                          uidUser: widget.uidUser,
+                          voted: snapshot.data['message'] == 'Error'
+                              ? false
+                              : true,
+                        )
+                      : Text(_voteOutput),
+                  snapshot.data['message'] == 'Error'
+                      ? Text('')
+                      : getVoteBar(context, widget.yesVotes, widget.noVotes)
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -129,35 +140,39 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
   _onYeaTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? yea $_isButtonTapped');
+    // print('is button tapped? yea $_isButtonTapped');
     vote(widget.pid, 1);
   }
 
   _onNayTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? nay $_isButtonTapped');
+    // print('is button tapped? nay $_isButtonTapped');
     vote(widget.pid, 0);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('is button tapped? build $_isButtonTapped');
-    return ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
-      RaisedButton(
-        color: Colors.red,
-        child: Text('Yea'),
-        onPressed: _isButtonTapped
-            ? null
-            : _onYeaTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
-      ),
-      RaisedButton(
-        color: Colors.red,
-        child: Text('Nay'),
-        onPressed: _isButtonTapped
-            ? null
-            : _onNayTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
-      ),
-    ]);
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Button(
+          color: Colors.green,
+          function: _isButtonTapped ? null : _onYeaTapped,
+          label: 'Yes',
+          margin: const EdgeInsets.all(8),
+          width: 155,
+          height: 55,
+        ),
+        Button(
+          color: Colors.red,
+          function: _isButtonTapped ? null : _onNayTapped,
+          label: 'No',
+          margin: const EdgeInsets.all(8),
+          width: 155,
+          height: 55,
+        ),
+      ],
+    );
   }
 }

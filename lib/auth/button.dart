@@ -6,6 +6,7 @@ class Button extends StatelessWidget {
   final EdgeInsets margin;
   final double width;
   final double height;
+  final Color color;
 
   Button({
     this.function,
@@ -13,6 +14,7 @@ class Button extends StatelessWidget {
     this.margin,
     this.width,
     this.height,
+    this.color,
   });
 
   @override
@@ -27,7 +29,7 @@ class Button extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(30),
             ),
-            color: Colors.pink[200],
+            color: color,
             onPressed: function,
             child: Text(
               label,
