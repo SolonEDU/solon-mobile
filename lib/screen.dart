@@ -9,7 +9,8 @@ mixin Screen {
     );
   }
 
-  FloatingActionButton getFAB(BuildContext context, Widget creator, Function getStream) {
+  FloatingActionButton getFAB(
+      BuildContext context, Widget creator, Function getStream) {
     return FloatingActionButton(
       heroTag: 'unq1',
       backgroundColor: Colors.pinkAccent[400],
@@ -19,6 +20,7 @@ mixin Screen {
           context,
           MaterialPageRoute(builder: (context) => creator),
         );
+        print(received);
         Future.delayed(
           Duration(
             seconds: 2,
@@ -44,9 +46,7 @@ mixin Screen {
         },
       ),
       title: Text(
-        (title != null)
-        ? title
-        : '',
+        (title != null) ? title : '',
       ),
     );
   }
@@ -70,6 +70,48 @@ mixin Screen {
           ),
         ),
       ),
+    );
+  }
+
+  Column getVoteBar(BuildContext context, int yes, int no) {
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          width: double.infinity,
+          child: Text(''),
+          decoration: ShapeDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.green,
+                Colors.green,
+                Colors.red,
+                Colors.red,
+              ],
+              stops: [0, yes / (yes + no), yes / (yes + no), 1.0],
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                '$yes yes',
+                textAlign: TextAlign.start,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '$no no',
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

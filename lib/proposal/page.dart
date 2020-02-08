@@ -14,6 +14,8 @@ class ProposalPage extends StatefulWidget {
   final String description;
   final int uidUser;
   final String endTime;
+  final int yesVotes;
+  final int noVotes;
   final DateTime date;
 
   ProposalPage({
@@ -23,6 +25,8 @@ class ProposalPage extends StatefulWidget {
     this.description,
     this.uidUser,
     this.endTime,
+    this.yesVotes,
+    this.noVotes,
     this.date,
   }) : super(key: key);
 
@@ -91,6 +95,9 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               : true,
                         )
                       : Text(_voteOutput),
+                  snapshot.data['message'] == 'Error'
+                      ? Text('')
+                      : getVoteBar(context, widget.yesVotes, widget.noVotes)
                 ],
               );
             },
