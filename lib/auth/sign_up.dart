@@ -97,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                     child: TextFormField(
                       keyboardType: TextInputType.text,
                       validator: (input) {
-                        if (input.isEmpty) {
+                        if (input.isEmpty || input.trim().isEmpty) {
                           return 'Please enter your first name';
                         }
                         return null;
@@ -114,7 +114,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                     child: TextFormField(
                       keyboardType: TextInputType.text,
                       validator: (input) {
-                        if (input.isEmpty) {
+                        if (input.isEmpty || input.trim().isEmpty) {
                           return 'Please enter your last name';
                         }
                         return null;

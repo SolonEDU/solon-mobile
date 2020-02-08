@@ -25,7 +25,6 @@ class APIConnect {
   }
 
   static Stream<List<ProposalCard>> proposalListView(String query) async* {
-    print("print from proposalListView: $query");
     yield await connectProposals(query: query);
   }
 
@@ -206,7 +205,7 @@ class APIConnect {
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
-      prefs.setString('proposalsSortOption', 'Latest');
+      prefs.setString('proposalsSortOption', 'Newly created');
       // print("${prefs.getString('userData')}");
       return json.decode(response.body);
     } catch (error) {
