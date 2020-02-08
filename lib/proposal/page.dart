@@ -46,7 +46,6 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
       pid: widget.pid,
       uidUser: userUid,
     );
-    // print('HELLO $userUid $responseMessage');
     return responseMessage;
   }
 
@@ -83,9 +82,40 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
               }
               return ListView(
                 children: <Widget>[
-                  Text(widget.title),
-                  Text(widget.description),
-                  Text('Voting on proposal ends ' + widget.endTime),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        fontFamily: "Raleway",
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Description',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                    child: Text(
+                      widget.description,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text('Voting on proposal ends ' + widget.endTime),
+                  ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
                           body: <Map>[
@@ -93,7 +123,9 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'color': Colors.green,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () {APIConnect.vote(widget.pid, 1);},
+                              'function': () {
+                                APIConnect.vote(widget.pid, 1);
+                              },
                               'margin': const EdgeInsets.all(8),
                               'label': 'Yes',
                             },
@@ -101,7 +133,9 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'color': Colors.red,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () {APIConnect.vote(widget.pid, 0);},
+                              'function': () {
+                                APIConnect.vote(widget.pid, 0);
+                              },
                               'margin': const EdgeInsets.all(8),
                               'label': 'No',
                             }

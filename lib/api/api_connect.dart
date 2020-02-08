@@ -384,12 +384,6 @@ class APIConnect {
     DateTime timestamp,
   ) async {
     final userData = await connectSharedPreferences();
-    // print(json.encode({
-    //   'title': title,
-    //   'description': description,
-    //   'starttime': timestamp.toIso8601String(),
-    //   'uid': userData['uid'],
-    // }));
     final response = await http.post(
       "$_url/forumposts",
       body: json.encode({

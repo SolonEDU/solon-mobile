@@ -98,14 +98,6 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   }
                 ],
               ),
-              // Button(
-              //   color: Colors.pink[200],
-              //   width: 185,
-              //   height: 55,
-              //   function: createPost,
-              //   margin: const EdgeInsets.only(top: 25, bottom: 10),
-              //   label: 'Create Post',
-              // ),
             ],
           ),
         ),
