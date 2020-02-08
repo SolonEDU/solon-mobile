@@ -25,8 +25,8 @@ class Comment extends StatelessWidget with Screen{
   Widget build(BuildContext context) {
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
-        top: 10,
-        bottom: 10,
+        top: 5,
+        bottom: 5,
         right: 15,
         left: 15,
       ),
@@ -36,7 +36,7 @@ class Comment extends StatelessWidget with Screen{
       ),
       subtitle: Container(
         child: Text(date),
-        margin: EdgeInsets.only(bottom: 8),
+        margin: EdgeInsets.only(bottom: 4),
       ),
     );
 

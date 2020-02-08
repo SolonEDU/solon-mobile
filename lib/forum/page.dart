@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+// import 'package:flutter/scheduler.dart';
 import 'package:translator/translator.dart';
 
 import 'package:Solon/app_localizations.dart';
@@ -33,11 +35,24 @@ class _PostPageState extends State<PostPage> with Screen {
   final translator = GoogleTranslator();
   FocusNode _focusNode = FocusNode();
   static var commentController = TextEditingController();
+  Stream<List<Comment>> stream;
 
   @override
   void dispose() {
     _focusNode.dispose();
     super.dispose();
+  }
+
+  Future<void> getStream() async {
+    setState(() {
+      stream = APIConnect.commentListView(widget.fid);
+    });
+  }
+
+  @override
+  void initState(){
+    getStream();
+    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -86,10 +101,7 @@ class _PostPageState extends State<PostPage> with Screen {
               margin: const EdgeInsets.only(left: 20, right: 20),
             ),
             StreamBuilder(
-              stream: Function.apply(
-                APIConnect.commentListView,
-                [widget.fid],
-              ),
+              stream: stream,
               builder: (BuildContext context,
                   AsyncSnapshot<List<Comment>> snapshot) {
                 if (snapshot.data == null) {
@@ -97,8 +109,11 @@ class _PostPageState extends State<PostPage> with Screen {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return Column(
-                  children: snapshot.data,
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 100.0),
+                  child: Column(
+                    children: snapshot.data,
+                  ),
                 );
               },
             ),
@@ -119,16 +134,15 @@ class _PostPageState extends State<PostPage> with Screen {
               onPressed: () {
                 if (commentController.text.isNotEmpty) {
                   var commentText = commentController.text;
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    FocusScope.of(context).unfocus();
-                    commentController.clear();
-                  });
                   APIConnect.addComment(
                     fid: widget.fid,
                     comment: commentText,
                     timestamp: widget.timestamp,
                     uid: widget.uid,
-                  );
+                  ).then((message) {
+                    getStream();
+                    commentController.clear();
+                  });
                 }
               },
             ),
