@@ -1,5 +1,5 @@
 // import 'package:Solon/auth/button.dart';
-import 'package:Solon/auth/button.dart';
+// import 'package:Solon/auth/button.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +90,24 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Text('Voting on proposal ends ' + widget.endTime),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
-                          body: <Map>[],
+                          body: <Map>[
+                            {
+                              'color': Colors.green,
+                              'width': 155.0,
+                              'height': 55.0,
+                              'function': () {APIConnect.vote(widget.pid, 1);},
+                              'margin': const EdgeInsets.all(8),
+                              'label': 'Yes',
+                            },
+                            {
+                              'color': Colors.red,
+                              'width': 155.0,
+                              'height': 55.0,
+                              'function': () {APIConnect.vote(widget.pid, 0);},
+                              'margin': const EdgeInsets.all(8),
+                              'label': 'No',
+                            }
+                          ],
                         )
                       : Text(_voteOutput),
                   snapshot.data['message'] == 'Error'
