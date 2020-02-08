@@ -1,9 +1,10 @@
+import 'package:Solon/doubletap.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
-import 'package:Solon/auth/button.dart';
+// import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -157,8 +158,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 validator: (input) {
                   if (input.length < 6) {
                     return 'Your password needs to be at least 6 characters';
-                  }
-                  else {
+                  } else {
                     _password = input;
                     return null;
                   }
@@ -186,13 +186,17 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 obscureText: true,
               ),
             ),
-            Button(
-              color: Colors.pink[200],
-              height: 55,
-              width: 155,
-              function: signUp,
-              margin: const EdgeInsets.only(top: 25, bottom: 10),
-              label: AppLocalizations.of(context).translate('signup'),
+            PreventDoubleTap(
+              body: <Map>[
+                {
+                  "color": Colors.pink[200],
+                  "height": 55.0,
+                  "width": 155.0,
+                  "function": signUp,
+                  "margin": const EdgeInsets.only(top: 25, bottom: 10),
+                  "label": AppLocalizations.of(context).translate('signup'),
+                }
+              ],
             ),
           ],
         ),
@@ -206,12 +210,15 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       formState.save();
       final responseMessage = await APIConnect.registerUser(
           _nativeLanguage, _firstName, _lastName, _email, _password);
-      print(responseMessage["message"]);
       if (responseMessage["message"] == "Error") {
         showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
       } else {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage(),
+          ),
+        );
       }
     }
   }

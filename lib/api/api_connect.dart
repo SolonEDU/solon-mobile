@@ -77,8 +77,6 @@ class APIConnect {
       query = 'Newly created';
     }
 
-    String sortOption;
-
     Map<String, String> queryMap = {
       'Most votes': 'numvotes.desc',
       'Least votes': 'numvotes.asc',
@@ -88,11 +86,8 @@ class APIConnect {
       'Oldest deadlines': 'endtime.asc',
     };
 
-    sortOption = queryMap[query];
-    print(sortOption);
-
     final http.Response response = await http.get(
-      "$_url/proposals?sort_by=$sortOption",
+      "$_url/proposals?sort_by=${queryMap[query]}",
       headers: await headers,
     );
 
@@ -107,7 +102,7 @@ class APIConnect {
 
   static Future<List<PostCard>> connectForumPosts() async {
     final http.Response response = await http.get(
-      "$_url/forumposts?sort_by=numcomments.desc",
+      "$_url/forumposts?sort_by=timestamp.desc",
       headers: await headers,
     );
 
@@ -353,8 +348,11 @@ class APIConnect {
     return responseMessage == 'Error' ? false : true;
   }
 
-  static Future<Message> changeAttendance(String httpReqType,
-      {int eid, int uid}) async {
+  static Future<Message> changeAttendance(
+    String httpReqType, {
+    int eid,
+    int uid,
+  }) async {
     http.Response response;
     if (httpReqType == "POST") {
       response = await http.post(
@@ -384,19 +382,23 @@ class APIConnect {
     return Message(message: 'Something wrong has happened!');
   }
 
+  static Future<void> vote(int pid, int voteVal) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    connectVotes(
+      'POST',
+      pid: pid,
+      uidUser: userUid,
+      voteVal: voteVal,
+    );
+  }
+
   static Future<Message> addForumPost(
     String title,
     String description,
     DateTime timestamp,
   ) async {
     final userData = await connectSharedPreferences();
-    // print(userData['uid']);
-    // print(json.encode({
-    //   'title': title,
-    //   'description': description,
-    //   'starttime': timestamp.toIso8601String(),
-    //   'uid': userData['uid'],
-    // }));
     final response = await http.post(
       "$_url/forumposts",
       body: json.encode({

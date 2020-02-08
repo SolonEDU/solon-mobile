@@ -72,14 +72,51 @@ class _EventPageState extends State<EventPage> with Screen {
               );
             }
             attendanceVal = snapshot.data;
-            return Column(
+            return ListView(
               children: <Widget>[
-                Text(widget.description),
-                Text(widget.date),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, bottom: 8, top: 8),
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      fontFamily: "Raleway",
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 8, top: 8),
+                  child: Text(
+                    'Description',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
+                  child: Text(
+                    widget.description,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
+                  child: Text(widget.date),
+                ),
                 ButtonBar(
-                  alignment: MainAxisAlignment.center,
+                  alignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(AppLocalizations.of(context).translate('attending')),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                      child: Text(AppLocalizations.of(context).translate('attending')),
+                    ),
                     Switch.adaptive(
                       value: attendanceVal,
                       onChanged: _onChanged,

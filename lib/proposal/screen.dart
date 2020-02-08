@@ -25,24 +25,24 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
       GlobalKey<RefreshIndicatorState>();
   StreamController proposalListStreamController = StreamController.broadcast();
   StreamController dropdownMenuStreamController = StreamController.broadcast();
-  String _sortOption;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
     final proposalsSortOption = prefs.getString('proposalsSortOption');
     dropdownMenuStreamController.sink.add(proposalsSortOption);
-    print(proposalsSortOption + " sharedPrefs");
-    // setState(() {
-    //   _sortOption = prefs.getString('proposalsSortOption');
-    //   print(_sortOption + " setState");
-    // });
   }
 
   @override
   void initState() {
     load();
     super.initState();
-    print(_sortOption);
+  }
+
+  @override
+  void dispose() {
+    proposalListStreamController.close();
+    dropdownMenuStreamController.close();
+    super.dispose();
   }
 
   Future<void> getStream(String query) async {
@@ -60,42 +60,45 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
             onRefresh: APIConnect.connectProposals,
             child: Column(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text("Sort by: "),
-                    DropdownButton<String>(
-                      value: optionVal.data,
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(color: Colors.black),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.pink[400],
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      DropdownButton<String>(
+                        value: optionVal.data,
+                        icon: Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 8,
+                        style: TextStyle(color: Colors.black),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.pink[400],
+                        ),
+                        onChanged: (String newValue) async {
+                          dropdownMenuStreamController.sink.add(newValue);
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString(
+                            'proposalsSortOption',
+                            newValue,
+                          );
+                        },
+                        items: <String>[
+                          'Most votes',
+                          'Least votes',
+                          'Newly created',
+                          'Oldest created',
+                          'Upcoming deadlines',
+                          'Oldest deadlines',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
-                      onChanged: (String newValue) async {
-                        dropdownMenuStreamController.sink.add(newValue);
-                        final prefs = await SharedPreferences.getInstance();
-                        prefs.setString(
-                          'proposalsSortOption',
-                          newValue,
-                        );
-                      },
-                      items: <String>[
-                        'Most votes',
-                        'Least votes',
-                        'Newly created',
-                        'Oldest created',
-                        'Upcoming deadlines',
-                        'Oldest deadlines',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: StreamBuilder(
@@ -105,7 +108,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       if (snapshot.hasError) return Text("${snapshot.error}");
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          print(snapshot.data);
                           return SizedBox(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height,
@@ -128,7 +130,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                               floatingActionButton: getFAB(
                                 context,
                                 CreateProposal(APIConnect.addProposal),
-                                getStream,
                               ),
                             ),
                           );

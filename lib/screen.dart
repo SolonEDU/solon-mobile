@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef APIFunction<T> = Future<T> Function();
+
 mixin Screen {
   void showToast(String message, GlobalKey<ScaffoldState> _scaffoldKey) {
     _scaffoldKey.currentState.showSnackBar(
@@ -9,29 +11,18 @@ mixin Screen {
     );
   }
 
-  Container getFAB(
-      BuildContext context, Widget creator, Function getStream) {
-    return Container(
-      height: 65.0,
-      width: 65.0,
-      child: FloatingActionButton(
-        heroTag: 'unq1',
-        backgroundColor: Colors.pinkAccent[400],
-        child: Icon(Icons.add),
-        onPressed: () async {
-          final received = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => creator),
-          );
-          print(received);
-          Future.delayed(
-            Duration(
-              seconds: 3,
-            ),
-            () => getStream(),
-          );
-        },
-      ),
+  FloatingActionButton getFAB(
+      BuildContext context, Widget creator) {
+    return FloatingActionButton(
+      heroTag: 'unq1',
+      backgroundColor: Colors.pinkAccent[400],
+      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => creator),
+        );
+      },
     );
   }
 

@@ -1,12 +1,20 @@
-import 'package:Solon/auth/button.dart';
+import 'package:Solon/api/message.dart';
+import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:Solon/api/api_connect.dart';
+// import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 
+typedef APIFunction<T> = Future<T> Function(
+  String,
+  String,
+  DateTime,
+  DateTime,
+  int,
+);
+
 class CreateProposal extends StatefulWidget {
-  final Function _addProposal;
+  final APIFunction<Message> _addProposal;
   CreateProposal(this._addProposal);
 
   @override
@@ -118,13 +126,17 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   ],
                 ),
               ),
-              Button(
-                color: Colors.pink[200],
-                width: 255,
-                height: 55,
-                function: createProposal,
-                margin: const EdgeInsets.only(top: 25, bottom: 10),
-                label: 'Create Proposal',
+              PreventDoubleTap(
+                body: <Map>[
+                  {
+                    "color": Colors.pink[200],
+                    "width": 255.0,
+                    "height": 55.0,
+                    "function": createProposal,
+                    "margin": const EdgeInsets.only(top: 25, bottom: 10),
+                    "label": 'Create Proposal',
+                  }
+                ],
               ),
             ],
           ),
@@ -138,20 +150,18 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      widget._addProposal(
-          _title,
-          _description,
-          _date,
-          _date.add(
-            new Duration(
-              days: _sliderValue.toInt(),
-            ),
-          ),
-          0); //dummy uid
-      FocusScope.of(context).requestFocus(FocusNode());
-      Navigator.pop(context, APIConnect.connectProposals());
-      Future.delayed(
-        const Duration(milliseconds: 500),
+      widget
+          ._addProposal(
+              _title,
+              _description,
+              _date,
+              _date.add(new Duration(days: _sliderValue.toInt())),
+              0) // 0 is a dummy uid
+          .then(
+        (message) {
+          FocusScope.of(context).requestFocus(FocusNode());
+          Navigator.pop(context);
+        },
       );
     }
   }
