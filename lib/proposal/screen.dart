@@ -33,59 +33,80 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = 'One';
+    String dropdownValue = 'Most votes';
     return RefreshIndicator(
       onRefresh: getStream,
       child: Column(
         children: <Widget>[
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            style: TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.deepPurpleAccent,
-            ),
-            onChanged: (String newValue) {
-              setState(() {
-                dropdownValue = newValue;
-              });
-            },
-            items: <String>['One', 'Two', 'Free', 'Four']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+          Row(
+            children: <Widget>[
+              Text("Sort by: "),
+              DropdownButton<String>(
+                value: dropdownValue,
+                icon: Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.pink[400],
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValue = newValue;
+                  });
+                },
+                items: <String>[
+                  'Most votes',
+                  'Least votes',
+                  'Newly created',
+                  'Oldest created',
+                  'Upcoming deadlines',
+                  'Oldest deadlines',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ],
           ),
-          StreamBuilder<List<ProposalCard>>(
-            stream: APIConnect.proposalListView,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) return Text("${snapshot.error}");
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                default:
-                  return Scaffold(
-                    body: ListView(
-                      padding: const EdgeInsets.all(4),
-                      children: snapshot.data,
-                    ),
-                    floatingActionButton: getFAB(
-                      context,
-                      CreateProposal(APIConnect.addProposal),
-                      getStream,
-                    ),
-                  );
-              }
-            },
+          Expanded(
+            child: StreamBuilder<List<ProposalCard>>(
+              stream: APIConnect.proposalListView,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) return Text("${snapshot.error}");
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Scaffold(
+                        body: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
+                  default:
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Scaffold(
+                        body: ListView(
+                          padding: const EdgeInsets.all(4),
+                          children: snapshot.data,
+                        ),
+                        floatingActionButton: getFAB(
+                          context,
+                          CreateProposal(APIConnect.addProposal),
+                          getStream,
+                        ),
+                      ),
+                    );
+                }
+              },
+            ),
           ),
         ],
       ),
