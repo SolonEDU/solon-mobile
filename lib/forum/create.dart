@@ -1,5 +1,5 @@
 import 'package:Solon/api/message.dart';
-import 'package:Solon/auth/button.dart';
+// import 'package:Solon/auth/button.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
