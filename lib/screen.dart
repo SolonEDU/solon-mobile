@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef APIFunction<T> = Future<T> Function();
+
 mixin Screen {
   void showToast(String message, GlobalKey<ScaffoldState> _scaffoldKey) {
     _scaffoldKey.currentState.showSnackBar(
@@ -15,17 +17,10 @@ mixin Screen {
       heroTag: 'unq1',
       backgroundColor: Colors.pinkAccent[400],
       child: Icon(Icons.add),
-      onPressed: () async {
-        final received = await Navigator.push(
+      onPressed: () {
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => creator),
-        );
-        print(received);
-        Future.delayed(
-          Duration(
-            seconds: 3,
-          ),
-          () => getStream(),
         );
       },
     );
