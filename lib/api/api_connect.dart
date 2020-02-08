@@ -88,7 +88,7 @@ class APIConnect {
 
   static Future<List<PostCard>> connectForumPosts() async {
     final http.Response response = await http.get(
-      "$_url/forumposts?sort_by=numcomments.desc",
+      "$_url/forumposts?sort_by=timestamp.desc",
       headers: await headers,
     );
 

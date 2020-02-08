@@ -55,7 +55,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                 floatingActionButton: getFAB(
                   context,
                   CreateProposal(APIConnect.addProposal),
-                  getStream,
                 ),
               );
           }

@@ -1,10 +1,8 @@
 import 'package:Solon/api/message.dart';
-// import 'package:Solon/auth/button.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:Solon/api/api_connect.dart';
+// import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
 
 typedef APIFunction<T> = Future<T> Function(
@@ -162,10 +160,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
           .then(
         (message) {
           FocusScope.of(context).requestFocus(FocusNode());
-          Navigator.pop(
-            context,
-            APIConnect.connectProposals(),
-          );
+          Navigator.pop(context);
         },
       );
     }

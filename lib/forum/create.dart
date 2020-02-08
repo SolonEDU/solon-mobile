@@ -1,11 +1,19 @@
+import 'package:Solon/api/message.dart';
 import 'package:Solon/auth/button.dart';
+import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Solon/app_localizations.dart';
 
+typedef APIFunction<T> = Future<T> Function(
+  String,
+  String,
+  DateTime,
+);
+
 class CreatePost extends StatefulWidget {
-  final Function _addPost;
+  final APIFunction<Message> _addPost;
   CreatePost(this._addPost);
 
   @override
@@ -78,14 +86,26 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   onSaved: (input) => _description = input,
                 ),
               ),
-              Button(
-                color: Colors.pink[200],
-                width: 155,
-                height: 55,
-                function: createPost,
-                margin: const EdgeInsets.only(top: 25, bottom: 10),
-                label: 'Create Post',
+              PreventDoubleTap(
+                body: <Map>[
+                  {
+                    "color": Colors.pink[200],
+                    "width": 185.0,
+                    "height": 55.0,
+                    "function": createPost,
+                    "margin": const EdgeInsets.only(top: 15, bottom: 10),
+                    "label": "Create Post",
+                  }
+                ],
               ),
+              // Button(
+              //   color: Colors.pink[200],
+              //   width: 185,
+              //   height: 55,
+              //   function: createPost,
+              //   margin: const EdgeInsets.only(top: 25, bottom: 10),
+              //   label: 'Create Post',
+              // ),
             ],
           ),
         ),
@@ -97,11 +117,17 @@ class _CreatePostState extends State<CreatePost> with Screen {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      widget._addPost(_title, _description, DateTime.now());
-      FocusScope.of(context).requestFocus(FocusNode());
-      Navigator.pop(context);
-      Future.delayed(
-        const Duration(milliseconds: 500),
+      widget
+          ._addPost(
+        _title,
+        _description,
+        DateTime.now(),
+      )
+          .then(
+        (message) {
+          FocusScope.of(context).requestFocus(FocusNode());
+          Navigator.pop(context);
+        },
       );
     }
   }

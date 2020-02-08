@@ -1,5 +1,3 @@
-// import 'package:Solon/auth/button.dart';
-// import 'package:Solon/auth/button.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
@@ -122,63 +120,3 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
     );
   }
 }
-
-// class PreventDoubleTap extends StatefulWidget {
-//   final int pid;
-//   final int uidUser;
-
-//   PreventDoubleTap({
-//     Key key,
-//     this.pid,
-//     this.uidUser,
-//   }) : super(key: key);
-
-//   @override
-//   PreventDoubleTapState createState() {
-//     return new PreventDoubleTapState();
-//   }
-// }
-
-// class PreventDoubleTapState extends State<PreventDoubleTap> {
-//   //boolean value to determine whether button is tapped
-//   bool _isButtonTapped = false;
-
-//   _onYeaTapped() async {
-//     setState(() => _isButtonTapped =
-//         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-//     // print('is button tapped? yea $_isButtonTapped');
-//     APIConnect.vote(widget.pid, 1);
-//   }
-
-//   _onNayTapped() async {
-//     setState(() => _isButtonTapped =
-//         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-//     // print('is button tapped? nay $_isButtonTapped');
-//     APIConnect.vote(widget.pid, 0);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ButtonBar(
-//       alignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         Button(
-//           color: Colors.green,
-//           function: _isButtonTapped ? null : _onYeaTapped,
-//           label: 'Yes',
-//           margin: const EdgeInsets.all(8),
-//           width: 155,
-//           height: 55,
-//         ),
-//         Button(
-//           color: Colors.red,
-//           function: _isButtonTapped ? null : _onNayTapped,
-//           label: 'No',
-//           margin: const EdgeInsets.all(8),
-//           width: 155,
-//           height: 55,
-//         ),
-//       ],
-//     );
-//   }
-// }
