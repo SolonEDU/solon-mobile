@@ -85,6 +85,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 ),
               ),
               Button(
+                color: Colors.pink[200],
                 height: 55,
                 width: 155,
                 function: signIn,

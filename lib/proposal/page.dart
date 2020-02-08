@@ -1,3 +1,4 @@
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,6 +79,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
               }
               return ListView(
                 children: <Widget>[
+                  Text(widget.title),
                   Text(widget.description),
                   Text('Voting on proposal ends ' + widget.endTime),
                   snapshot.data['message'] == 'Error'
@@ -131,35 +133,39 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
   _onYeaTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? yea $_isButtonTapped');
+    // print('is button tapped? yea $_isButtonTapped');
     vote(widget.pid, 1);
   }
 
   _onNayTapped() async {
     setState(() => _isButtonTapped =
         !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? nay $_isButtonTapped');
+    // print('is button tapped? nay $_isButtonTapped');
     vote(widget.pid, 0);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('is button tapped? build $_isButtonTapped');
-    return ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
-      RaisedButton(
-        color: Colors.red,
-        child: Text('Yea'),
-        onPressed: _isButtonTapped
-            ? null
-            : _onYeaTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
-      ),
-      RaisedButton(
-        color: Colors.red,
-        child: Text('Nay'),
-        onPressed: _isButtonTapped
-            ? null
-            : _onNayTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
-      ),
-    ]);
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Button(
+          color: Colors.green,
+          function: _isButtonTapped ? null : _onYeaTapped,
+          label: 'Yes',
+          margin: const EdgeInsets.all(8),
+          width: 155,
+          height: 55,
+        ),
+        Button(
+          color: Colors.red,
+          function: _isButtonTapped ? null : _onNayTapped,
+          label: 'No',
+          margin: const EdgeInsets.all(8),
+          width: 155,
+          height: 55,
+        ),
+      ],
+    );
   }
 }

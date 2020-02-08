@@ -25,7 +25,6 @@ mixin Screen {
           ),
           () => getStream(),
         );
-        print(received);
       },
     );
   }

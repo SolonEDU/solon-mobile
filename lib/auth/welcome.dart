@@ -32,6 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 margin: const EdgeInsets.only(bottom: 40),
               ),
               Button(
+                color: Colors.pink[200],
                 height: 55,
                 width: 155,
                 function: navigateToSignIn,
@@ -39,6 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 margin: const EdgeInsets.all(0),
               ),
               Button(
+                color: Colors.pink[200],
                 height: 55,
                 width: 155,
                 function: navigateToSignUp,

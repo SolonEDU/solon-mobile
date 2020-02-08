@@ -185,11 +185,11 @@ class APIConnect {
       userDataResponseJson['lang'] =
           langCodeToLang[userDataResponseJson['lang']];
       // print(json.encode(json.decode(userDataResponse.body)['user']));
-      print(userDataResponseJson);
+      // print(userDataResponseJson);
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
-      print("${prefs.getString('userData')}");
+      // print("${prefs.getString('userData')}");
       return json.decode(response.body);
     } catch (error) {
       throw error;
@@ -277,7 +277,7 @@ class APIConnect {
     );
     // print(json.decode(response.body)['user'].toString());
     Map collection = json.decode(response.body)['user'];
-    print('PRINT COLLECTION ${collection.toString()}');
+    // print('PRINT COLLECTION ${collection.toString()}');
     // User _user = User.fromJson(collection);
     return collection;
   }
@@ -324,7 +324,7 @@ class APIConnect {
       "$_url/attenders/$eid/$uid",
       headers: await headers,
     );
-    print("$_url/attenders/$eid/$uid");
+    // print("$_url/attenders/$eid/$uid");
     String responseMessage = json.decode(response.body)['message'];
     // print(responseMessage);
     return responseMessage == 'Error' ? false : true;
@@ -367,13 +367,13 @@ class APIConnect {
     DateTime timestamp,
   ) async {
     final userData = await connectSharedPreferences();
-    print(userData['uid']);
-    print(json.encode({
-      'title': title,
-      'description': description,
-      'starttime': timestamp.toIso8601String(),
-      'uid': userData['uid'],
-    }));
+    // print(userData['uid']);
+    // print(json.encode({
+    //   'title': title,
+    //   'description': description,
+    //   'starttime': timestamp.toIso8601String(),
+    //   'uid': userData['uid'],
+    // }));
     final response = await http.post(
       "$_url/forumposts",
       body: json.encode({

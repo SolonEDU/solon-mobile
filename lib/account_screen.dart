@@ -181,6 +181,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                       ),
                       Center(
                         child: Button(
+                          color: Colors.pink[200],
                           height: 55,
                           width: 155,
                           label: "Sign Out",

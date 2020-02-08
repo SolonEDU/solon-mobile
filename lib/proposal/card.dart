@@ -131,7 +131,6 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
               } else {
                 _voted = (snapshot.data['message'] == 'Error') ? false : true;
                 if (_voted) {
-                  print(widget.yesVotes / (widget.yesVotes + widget.noVotes));
                   return Column(
                     children: <Widget>[
                       Container(

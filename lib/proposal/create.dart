@@ -119,6 +119,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                 ),
               ),
               Button(
+                color: Colors.pink[200],
                 width: 255,
                 height: 55,
                 function: createProposal,

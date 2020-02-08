@@ -187,6 +187,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
               ),
             ),
             Button(
+              color: Colors.pink[200],
               height: 55,
               width: 155,
               function: signUp,

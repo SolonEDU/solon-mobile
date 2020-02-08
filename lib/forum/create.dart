@@ -79,6 +79,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
                 ),
               ),
               Button(
+                color: Colors.pink[200],
                 width: 155,
                 height: 55,
                 function: createPost,
