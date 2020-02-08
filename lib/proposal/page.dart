@@ -1,3 +1,4 @@
+import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,8 @@ class ProposalPage extends StatefulWidget {
   final String description;
   final int uidUser;
   final String endTime;
+  final int yesVotes;
+  final int noVotes;
   final DateTime date;
 
   ProposalPage({
@@ -22,6 +25,8 @@ class ProposalPage extends StatefulWidget {
     this.description,
     this.uidUser,
     this.endTime,
+    this.yesVotes,
+    this.noVotes,
     this.date,
   }) : super(key: key);
 
@@ -41,7 +46,6 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
       pid: widget.pid,
       uidUser: userUid,
     );
-    // print('HELLO $userUid $responseMessage');
     return responseMessage;
   }
 
@@ -78,17 +82,69 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
               }
               return ListView(
                 children: <Widget>[
-                  Text(widget.description),
-                  Text('Voting on proposal ends ' + widget.endTime),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        fontFamily: "Raleway",
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Description',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                    child: Text(
+                      widget.description,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text('Voting on proposal ends ' + widget.endTime),
+                  ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
-                          pid: widget.pid,
-                          uidUser: widget.uidUser,
-                          voted: snapshot.data['message'] == 'Error'
-                              ? false
-                              : true,
+                          body: <Map>[
+                            {
+                              'color': Colors.green,
+                              'width': 155.0,
+                              'height': 55.0,
+                              'function': () {
+                                APIConnect.vote(widget.pid, 1);
+                              },
+                              'margin': const EdgeInsets.all(8),
+                              'label': 'Yes',
+                            },
+                            {
+                              'color': Colors.red,
+                              'width': 155.0,
+                              'height': 55.0,
+                              'function': () {
+                                APIConnect.vote(widget.pid, 0);
+                              },
+                              'margin': const EdgeInsets.all(8),
+                              'label': 'No',
+                            }
+                          ],
                         )
                       : Text(_voteOutput),
+                  snapshot.data['message'] == 'Error'
+                      ? Text('')
+                      : getVoteBar(context, widget.yesVotes, widget.noVotes)
                 ],
               );
             },
@@ -96,70 +152,5 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
         ),
       ),
     );
-  }
-}
-
-class PreventDoubleTap extends StatefulWidget {
-  final int pid;
-  final int uidUser;
-  final bool voted;
-
-  PreventDoubleTap({
-    Key key,
-    this.pid,
-    this.uidUser,
-    this.voted,
-  }) : super(key: key);
-
-  @override
-  PreventDoubleTapState createState() {
-    return new PreventDoubleTapState();
-  }
-}
-
-class PreventDoubleTapState extends State<PreventDoubleTap> {
-  //boolean value to determine whether button is tapped
-  bool _isButtonTapped = false;
-
-  Future<void> vote(int pid, int voteVal) async {
-    final prefs = await SharedPreferences.getInstance();
-    final userUid = json.decode(prefs.getString('userData'))['uid'];
-    APIConnect.connectVotes('POST',
-        pid: pid, uidUser: userUid, voteVal: voteVal);
-  }
-
-  _onYeaTapped() async {
-    setState(() => _isButtonTapped =
-        !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? yea $_isButtonTapped');
-    vote(widget.pid, 1);
-  }
-
-  _onNayTapped() async {
-    setState(() => _isButtonTapped =
-        !_isButtonTapped); //tapping the button once, disables the button from being tapped again
-    print('is button tapped? nay $_isButtonTapped');
-    vote(widget.pid, 0);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print('is button tapped? build $_isButtonTapped');
-    return ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
-      RaisedButton(
-        color: Colors.red,
-        child: Text('Yea'),
-        onPressed: _isButtonTapped
-            ? null
-            : _onYeaTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
-      ),
-      RaisedButton(
-        color: Colors.red,
-        child: Text('Nay'),
-        onPressed: _isButtonTapped
-            ? null
-            : _onNayTapped, //if button hasnt being tapped, allow user tapped. else, dont allow
-      ),
-    ]);
   }
 }

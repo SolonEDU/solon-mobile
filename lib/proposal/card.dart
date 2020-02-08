@@ -87,6 +87,8 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
             uidUser: widget.uid,
             endTime: widget.endTime,
             date: widget.date,
+            yesVotes: widget.yesVotes,
+            noVotes: widget.noVotes,
           ),
         ),
       );
@@ -117,7 +119,8 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-                'Ends in ${widget.date.difference(DateTime.now()).inDays} days'),
+              'Ends in ${widget.date.difference(DateTime.now()).inDays} days',
+            ),
           ),
           Text(
             '${widget.yesVotes + widget.noVotes} votes',
@@ -131,52 +134,10 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
               } else {
                 _voted = (snapshot.data['message'] == 'Error') ? false : true;
                 if (_voted) {
-                  print(widget.yesVotes / (widget.yesVotes + widget.noVotes));
-                  return Column(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        width: double.infinity,
-                        child: Text(''),
-                        decoration: ShapeDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.green,
-                              Colors.green,
-                              Colors.red,
-                              Colors.red,
-                            ],
-                            stops: [
-                              0,
-                              widget.yesVotes /
-                                  (widget.yesVotes + widget.noVotes),
-                              widget.yesVotes /
-                                  (widget.yesVotes + widget.noVotes),
-                              1.0
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              '${widget.yesVotes} yes',
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${widget.noVotes} no',
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  return getVoteBar(
+                    context,
+                    widget.yesVotes,
+                    widget.noVotes,
                   );
                 } else {
                   return Center();

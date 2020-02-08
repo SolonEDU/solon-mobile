@@ -24,8 +24,9 @@ class APIConnect {
     };
   }
 
-  static Stream<List<ProposalCard>> get proposalListView async* {
-    yield await connectProposals();
+  static Stream<List<ProposalCard>> proposalListView(String query) async* {
+    print("print from proposalListView: $query");
+    yield await connectProposals(query: query);
   }
 
   static Stream<List<PostCard>> get forumListView async* {
@@ -71,23 +72,37 @@ class APIConnect {
         : throw Exception('Message for root not found.');
   }
 
-  static Future<List<ProposalCard>> connectProposals() async {
+  static Future<List<ProposalCard>> connectProposals({String query}) async {
+    if(query == null) {
+      query = 'Newly created';
+    }
+
+    Map<String, String> queryMap = {
+      'Most votes': 'numvotes.desc',
+      'Least votes': 'numvotes.asc',
+      'Newly created': 'starttime.desc',
+      'Oldest created': 'starttime.asc',
+      'Upcoming deadlines': 'endtime.desc',
+      'Oldest deadlines': 'endtime.asc',
+    };
+
     final http.Response response = await http.get(
-      "$_url/proposals?sort_by=starttime.desc",
+      "$_url/proposals?sort_by=${queryMap[query]}",
       headers: await headers,
     );
 
     final sharedPrefs = await connectSharedPreferences();
     final prefLangCode = languages[sharedPrefs['lang']];
     List collection = json.decode(response.body)['proposals'];
-    List<ProposalCard> _proposals =
-        collection.map((json) => ProposalCard.fromJson(json, prefLangCode)).toList();
+    List<ProposalCard> _proposals = collection
+        .map((json) => ProposalCard.fromJson(json, prefLangCode))
+        .toList();
     return _proposals;
   }
 
   static Future<List<PostCard>> connectForumPosts() async {
     final http.Response response = await http.get(
-      "$_url/forumposts?sort_by=numcomments.desc",
+      "$_url/forumposts?sort_by=timestamp.desc",
       headers: await headers,
     );
 
@@ -95,8 +110,9 @@ class APIConnect {
     final prefLangCode = languages[sharedPrefs['lang']];
 
     List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts =
-        collection.map((json) => PostCard.fromJson(json, prefLangCode)).toList();
+    List<PostCard> _forumposts = collection
+        .map((json) => PostCard.fromJson(json, prefLangCode))
+        .toList();
     return _forumposts;
   }
 
@@ -110,8 +126,9 @@ class APIConnect {
     final prefLangCode = languages[sharedPrefs['lang']];
 
     List collection = json.decode(response.body)['events'];
-    List<EventCard> _events =
-        collection.map((json) => EventCard.fromJson(json, uid, prefLangCode)).toList();
+    List<EventCard> _events = collection
+        .map((json) => EventCard.fromJson(json, uid, prefLangCode))
+        .toList();
     return _events;
   }
 
@@ -185,11 +202,12 @@ class APIConnect {
       userDataResponseJson['lang'] =
           langCodeToLang[userDataResponseJson['lang']];
       // print(json.encode(json.decode(userDataResponse.body)['user']));
-      print(userDataResponseJson);
+      // print(userDataResponseJson);
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
-      print("${prefs.getString('userData')}");
+      prefs.setString('proposalsSortOption', 'Latest');
+      // print("${prefs.getString('userData')}");
       return json.decode(response.body);
     } catch (error) {
       throw error;
@@ -277,7 +295,7 @@ class APIConnect {
     );
     // print(json.decode(response.body)['user'].toString());
     Map collection = json.decode(response.body)['user'];
-    print('PRINT COLLECTION ${collection.toString()}');
+    // print('PRINT COLLECTION ${collection.toString()}');
     // User _user = User.fromJson(collection);
     return collection;
   }
@@ -324,14 +342,17 @@ class APIConnect {
       "$_url/attenders/$eid/$uid",
       headers: await headers,
     );
-    print("$_url/attenders/$eid/$uid");
+    // print("$_url/attenders/$eid/$uid");
     String responseMessage = json.decode(response.body)['message'];
     // print(responseMessage);
     return responseMessage == 'Error' ? false : true;
   }
 
-  static Future<Message> changeAttendance(String httpReqType,
-      {int eid, int uid}) async {
+  static Future<Message> changeAttendance(
+    String httpReqType, {
+    int eid,
+    int uid,
+  }) async {
     http.Response response;
     if (httpReqType == "POST") {
       response = await http.post(
@@ -361,19 +382,23 @@ class APIConnect {
     return Message(message: 'Something wrong has happened!');
   }
 
+  static Future<void> vote(int pid, int voteVal) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    connectVotes(
+      'POST',
+      pid: pid,
+      uidUser: userUid,
+      voteVal: voteVal,
+    );
+  }
+
   static Future<Message> addForumPost(
     String title,
     String description,
     DateTime timestamp,
   ) async {
     final userData = await connectSharedPreferences();
-    print(userData['uid']);
-    print(json.encode({
-      'title': title,
-      'description': description,
-      'starttime': timestamp.toIso8601String(),
-      'uid': userData['uid'],
-    }));
     final response = await http.post(
       "$_url/forumposts",
       body: json.encode({

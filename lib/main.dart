@@ -158,6 +158,8 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   var _selectedIndex = 0;
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -186,6 +188,7 @@ class _MainState extends State<Main> {
       },
     ];
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
