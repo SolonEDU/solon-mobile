@@ -15,7 +15,6 @@ class PostPage extends StatefulWidget {
   final int uid;
   final String timestamp;
   final int numcomments;
-  final int attenders;
 
   PostPage({
     Key key,
@@ -25,7 +24,6 @@ class PostPage extends StatefulWidget {
     this.uid,
     this.timestamp,
     this.numcomments,
-    this.attenders,
   }) : super(key: key);
 
   _PostPageState createState() => _PostPageState();
@@ -34,8 +32,8 @@ class PostPage extends StatefulWidget {
 class _PostPageState extends State<PostPage> with Screen {
   final translator = GoogleTranslator();
   FocusNode _focusNode = FocusNode();
-  var document;
   static var commentController = TextEditingController();
+
   @override
   void dispose() {
     _focusNode.dispose();
@@ -49,22 +47,44 @@ class _PostPageState extends State<PostPage> with Screen {
         child: ListView(
           children: <Widget>[
             Container(
-                child: Card(
-                    child: ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Container(
-                          child: Text(widget.description),
-                          margin: EdgeInsets.only(top: 8.0, bottom: 4.0)),
-                      subtitle: Container(
-                          child: Text(widget.timestamp),
-                          margin: EdgeInsets.only(bottom: 4.0)),
-                    ),
-                    margin: EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0)),
-                margin: EdgeInsets.only(bottom: 8.0)),
+              child: Text(
+                widget.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
+              ),
+              margin: const EdgeInsets.only(left: 20, right: 20),
+            ),
             Container(
-                child: Text(
-                    AppLocalizations.of(context).translate('commentSection')),
-                margin: EdgeInsets.only(top: 4.0, bottom: 8.0)),
+              child: Text(
+                widget.description,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              margin: const EdgeInsets.only(left: 20, right: 20),
+            ),
+            Container(
+              child: Text(
+                widget.timestamp,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey
+                ),
+              ),
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+            ),
+            Container(
+              child: Text(
+                AppLocalizations.of(context).translate('commentSection'),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              margin: const EdgeInsets.only(left: 20, right: 20),
+            ),
             StreamBuilder(
               stream: Function.apply(
                 APIConnect.commentListView,
@@ -72,28 +92,13 @@ class _PostPageState extends State<PostPage> with Screen {
               ),
               builder: (BuildContext context,
                   AsyncSnapshot<List<Comment>> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  case ConnectionState.waiting:
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  case ConnectionState.active:
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  case ConnectionState.done:
-                    if (snapshot.hasData) {
-                      return Column(
-                        children: snapshot.data,
-                      );
-                    }
+                if (snapshot.data == null) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Column(
+                  children: snapshot.data,
                 );
               },
             ),
@@ -106,19 +111,19 @@ class _PostPageState extends State<PostPage> with Screen {
           decoration: InputDecoration(
             fillColor: Colors.white,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(32),
             ),
             hintText: AppLocalizations.of(context).translate('enterAComment'),
             suffixIcon: IconButton(
               icon: Icon(Icons.send),
-              onPressed: () async {
+              onPressed: () {
                 if (commentController.text.isNotEmpty) {
                   var commentText = commentController.text;
                   SchedulerBinding.instance.addPostFrameCallback((_) {
                     FocusScope.of(context).unfocus();
                     commentController.clear();
                   });
-                  await APIConnect.addComment(
+                  APIConnect.addComment(
                     fid: widget.fid,
                     comment: commentText,
                     timestamp: widget.timestamp,

@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
-class Comment extends StatelessWidget {
+class Comment extends StatelessWidget with Screen{
   final String date;
   final String comment;
 
@@ -22,16 +23,23 @@ class Comment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Container(
-              child: Text(comment),
-              margin: EdgeInsets.only(top: 8.0, bottom: 4.0)),
-          subtitle: Container(
-              child: Text(date), margin: EdgeInsets.only(bottom: 8.0)),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 24),
-        ),
-        margin: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0));
+    ListTile tile = ListTile(
+      contentPadding: EdgeInsets.only(
+        top: 10,
+        bottom: 10,
+        right: 15,
+        left: 15,
+      ),
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Text(comment),
+      ),
+      subtitle: Container(
+        child: Text(date),
+        margin: EdgeInsets.only(bottom: 8),
+      ),
+    );
+
+    return getCard(context, tile, () {});
   }
 }
