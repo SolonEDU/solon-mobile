@@ -46,7 +46,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   }
 
   Future<void> getStream(String query) async {
-    proposalListStreamController.sink.add(await APIConnect.connectProposals(query: query));
+    proposalListStreamController.sink
+        .add(await APIConnect.connectProposals(query: query));
   }
 
   @override
@@ -73,13 +74,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                         color: Colors.pink[400],
                       ),
                       onChanged: (String newValue) async {
-                        // Map<String, dynamic> newMap = snapshot.data;
-                        // newMap['lang'] = newValue;
                         dropdownMenuStreamController.sink.add(newValue);
                         final prefs = await SharedPreferences.getInstance();
-                        // final userData = prefs.getString('proposalsSortOption');
-                        // final userDataJson = json.decode(userData);
-                        // userDataJson['lang'] = newValue;
                         prefs.setString(
                           'proposalsSortOption',
                           newValue,
@@ -103,7 +99,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                 ),
                 Expanded(
                   child: StreamBuilder(
-                    stream: Function.apply(APIConnect.proposalListView, [optionVal.data]),
+                    stream: Function.apply(
+                        APIConnect.proposalListView, [optionVal.data]),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) return Text("${snapshot.error}");
                       switch (snapshot.connectionState) {
