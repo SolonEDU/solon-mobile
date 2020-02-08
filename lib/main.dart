@@ -158,6 +158,8 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   var _selectedIndex = 0;
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -185,7 +187,29 @@ class _MainState extends State<Main> {
         'widget': ForumScreen(uid: widget.uid),
       },
     ];
+    final riKey0 = const Key('__RIKEY0__');
+    final riKey1 = const Key('__RIKEY1__');
+    final riKey2 = const Key('__RIKEY2__');
+    final riKey3 = const Key('__RIKEY3__');
+    Key screenKey;
+    switch (_selectedIndex) {
+      case 0:
+        screenKey = riKey0;
+        break;
+      case 1:
+        screenKey = riKey1;
+        break;
+      case 2:
+        screenKey = riKey2;
+        break;
+      case 3:
+        screenKey = riKey3;
+        break;
+      default:
+        screenKey = riKey0;
+    }
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(

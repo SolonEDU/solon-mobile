@@ -24,8 +24,9 @@ class APIConnect {
     };
   }
 
-  static Stream<List<ProposalCard>> get proposalListView async* {
-    yield await connectProposals();
+  static Stream<List<ProposalCard>> proposalListView(String query) async* {
+    print("print from proposalListView: $query");
+    yield await connectProposals(query: query);
   }
 
   static Stream<List<PostCard>> get forumListView async* {
@@ -71,17 +72,36 @@ class APIConnect {
         : throw Exception('Message for root not found.');
   }
 
-  static Future<List<ProposalCard>> connectProposals() async {
+  static Future<List<ProposalCard>> connectProposals({String query}) async {
+    if(query == null) {
+      query = 'Newly created';
+    }
+
+    String sortOption;
+
+    Map<String, String> queryMap = {
+      'Most votes': 'numvotes.desc',
+      'Least votes': 'numvotes.asc',
+      'Newly created': 'starttime.desc',
+      'Oldest created': 'starttime.asc',
+      'Upcoming deadlines': 'endtime.desc',
+      'Oldest deadlines': 'endtime.asc',
+    };
+
+    sortOption = queryMap[query];
+    print(sortOption);
+
     final http.Response response = await http.get(
-      "$_url/proposals?sort_by=starttime.desc",
+      "$_url/proposals?sort_by=$sortOption",
       headers: await headers,
     );
 
     final sharedPrefs = await connectSharedPreferences();
     final prefLangCode = languages[sharedPrefs['lang']];
     List collection = json.decode(response.body)['proposals'];
-    List<ProposalCard> _proposals =
-        collection.map((json) => ProposalCard.fromJson(json, prefLangCode)).toList();
+    List<ProposalCard> _proposals = collection
+        .map((json) => ProposalCard.fromJson(json, prefLangCode))
+        .toList();
     return _proposals;
   }
 
@@ -95,8 +115,9 @@ class APIConnect {
     final prefLangCode = languages[sharedPrefs['lang']];
 
     List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts =
-        collection.map((json) => PostCard.fromJson(json, prefLangCode)).toList();
+    List<PostCard> _forumposts = collection
+        .map((json) => PostCard.fromJson(json, prefLangCode))
+        .toList();
     return _forumposts;
   }
 
@@ -110,8 +131,9 @@ class APIConnect {
     final prefLangCode = languages[sharedPrefs['lang']];
 
     List collection = json.decode(response.body)['events'];
-    List<EventCard> _events =
-        collection.map((json) => EventCard.fromJson(json, uid, prefLangCode)).toList();
+    List<EventCard> _events = collection
+        .map((json) => EventCard.fromJson(json, uid, prefLangCode))
+        .toList();
     return _events;
   }
 
@@ -189,6 +211,7 @@ class APIConnect {
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
+      prefs.setString('proposalsSortOption', 'Latest');
       // print("${prefs.getString('userData')}");
       return json.decode(response.body);
     } catch (error) {
