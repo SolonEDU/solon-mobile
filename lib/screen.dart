@@ -9,25 +9,29 @@ mixin Screen {
     );
   }
 
-  FloatingActionButton getFAB(
+  Container getFAB(
       BuildContext context, Widget creator, Function getStream) {
-    return FloatingActionButton(
-      heroTag: 'unq1',
-      backgroundColor: Colors.pinkAccent[400],
-      child: Icon(Icons.add),
-      onPressed: () async {
-        final received = await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => creator),
-        );
-        print(received);
-        Future.delayed(
-          Duration(
-            seconds: 3,
-          ),
-          () => getStream(),
-        );
-      },
+    return Container(
+      height: 65.0,
+      width: 65.0,
+      child: FloatingActionButton(
+        heroTag: 'unq1',
+        backgroundColor: Colors.pinkAccent[400],
+        child: Icon(Icons.add),
+        onPressed: () async {
+          final received = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => creator),
+          );
+          print(received);
+          Future.delayed(
+            Duration(
+              seconds: 3,
+            ),
+            () => getStream(),
+          );
+        },
+      ),
     );
   }
 
