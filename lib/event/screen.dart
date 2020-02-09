@@ -80,8 +80,8 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                           }
                         },
                         items: <String>[
-                          'Newly created',
-                          'Oldest created',
+                          'Furthest',
+                          'Upcoming',
                           'Attendees: High to Low',
                           'Attendees: Low to High',
                         ].map<DropdownMenuItem<String>>((String value) {

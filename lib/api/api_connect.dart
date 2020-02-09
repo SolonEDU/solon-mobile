@@ -139,8 +139,8 @@ class APIConnect {
     }
 
     Map<String, String> queryMap = {
-      'Newly created': 'date.desc',
-      'Oldest created': 'date.asc',
+      'Furthest': 'date.desc',
+      'Upcoming': 'date.asc',
       'Attendees: High to Low': 'numattenders.desc',
       'Attendees: Low to High': 'numattenders.asc',
     };
