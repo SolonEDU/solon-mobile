@@ -43,8 +43,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   }
 
   Future<void> getStream(String query) async {
-    proposalListStreamController.sink
-        .add(await APIConnect.connectProposals(query: query));
+    proposalListStreamController.sink.add(await APIConnect.connectProposals(
+      query: query,
+    ));
   }
 
   @override

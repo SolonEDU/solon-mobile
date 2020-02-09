@@ -31,8 +31,8 @@ class APIConnect {
     );
   }
 
-  static Stream<List<PostCard>> get forumListView async* {
-    yield await connectForumPosts();
+  static Stream<List<PostCard>> forumListView(String query) async* {
+    yield await connectForumPosts(query: query);
   }
 
   static Stream<List<Comment>> commentListView(int fid) async* {
@@ -108,9 +108,20 @@ class APIConnect {
     return _proposals;
   }
 
-  static Future<List<PostCard>> connectForumPosts() async {
+  static Future<List<PostCard>> connectForumPosts({String query}) async {
+    if (query == null) {
+      query = 'Newly created';
+    }
+
+    Map<String, String> queryMap = {
+      'Newly created': 'timestamp.desc',
+      'Oldest created': 'timestamp.asc',
+      'Comments: Greatest to Least': 'numcomments.desc',
+      'Comments: Least to Greatest': 'numcomments.asc',
+    };
+
     final http.Response response = await http.get(
-      "$_url/forumposts?sort_by=timestamp.desc",
+      "$_url/forumposts?sort_by=${queryMap[query]}",
       headers: await headers,
     );
 
