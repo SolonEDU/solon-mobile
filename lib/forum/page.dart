@@ -49,7 +49,7 @@ class _PostPageState extends State<PostPage> with Screen {
   }
 
   @override
-  void initState(){
+  void initState() {
     getStream();
     super.initState();
   }
@@ -82,10 +82,7 @@ class _PostPageState extends State<PostPage> with Screen {
             Container(
               child: Text(
                 widget.timestamp,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey
-                ),
+                style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
               margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
             ),
@@ -110,8 +107,10 @@ class _PostPageState extends State<PostPage> with Screen {
                 }
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 100.0),
-                  child: Column(
-                    children: snapshot.data,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: snapshot.data,
+                    ),
                   ),
                 );
               },
@@ -133,15 +132,18 @@ class _PostPageState extends State<PostPage> with Screen {
               onPressed: () {
                 if (commentController.text.isNotEmpty) {
                   var commentText = commentController.text;
+                  Future.delayed(const Duration(milliseconds: 50), () {
+                    commentController.clear();
+                    _focusNode.unfocus();
+                  });
                   APIConnect.addComment(
                     fid: widget.fid,
                     comment: commentText,
-                    timestamp: widget.timestamp,
+                    timestamp: DateTime.now().toIso8601String(),
                     uid: widget.uid,
                   ).then((message) {
                     getStream();
-                    commentController.clear();
-                  });
+                  },);
                 }
               },
             ),
