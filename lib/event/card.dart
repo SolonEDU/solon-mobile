@@ -114,16 +114,16 @@ class _EventCardState extends State<EventCard> with Screen {
           Text(
             '${widget.numattenders} attenders',
           ),
-          // FutureBuilder<bool>(
-          //   future: getAttendanceVal(),
-          //   builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          //     if (snapshot.data == null) {
-          //       return Center();
-          //     } else {
-          //       return Center(); //TODO: fill this in lata
-          //     }
-          //   },
-          // ),
+          FutureBuilder<bool>(
+            future: getAttendanceVal(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.data == null) {
+                return Center();
+              } else {
+                return Center(); //TODO: fill this in lata; for showing numvotes on cards on events screen
+              }
+            },
+          ),
         ],
       ),
     );
