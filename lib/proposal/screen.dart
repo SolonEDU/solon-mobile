@@ -195,6 +195,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   }
 }
 
+// TODO: move to another file after we're done experimenting
 class ProposalsSearch extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -227,4 +228,7 @@ class ProposalsSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return Text(query);
   }
+
+  @override
+  String get searchFieldLabel => 'Search proposals';
 }
