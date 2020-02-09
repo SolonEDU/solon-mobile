@@ -68,16 +68,16 @@ class _PostPageState extends State<PostPage> with Screen {
                   fontSize: 30,
                 ),
               ),
-              margin: const EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
             ),
             Container(
               child: Text(
                 widget.description,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 20.0,
                 ),
               ),
-              margin: const EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
             ),
             Container(
               child: Text(
