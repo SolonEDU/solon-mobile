@@ -75,32 +75,14 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
+                      padding: const EdgeInsets.only(left: 12.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: TextField(
-                              onChanged: (value) {},
-                              controller: editingController,
-                              decoration: InputDecoration(
-                                // labelText: "Search",
-                                hintText: "Search",
-                                prefixIcon: Icon(Icons.search),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(25.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
                           Row(
                             children: <Widget>[
                               Text("Sort by: "),
                               Container(
-                                width: MediaQuery.of(context).size.width / 2,
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
                                     // alignedDropdown: true,
@@ -146,6 +128,17 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                 ),
                               ),
                             ],
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.search),
+                            color: Colors.pinkAccent[400],
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onPressed: () {
+                              showSearch(
+                                  context: context,
+                                  delegate: ProposalsSearch());
+                            },
                           ),
                         ],
                       ),
@@ -199,5 +192,39 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
         }
       },
     );
+  }
+}
+
+class ProposalsSearch extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Text(query);
   }
 }

@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
 
-// import 'package:Solon/loader.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/app_localizations.dart';
