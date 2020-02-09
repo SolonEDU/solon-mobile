@@ -26,7 +26,9 @@ class APIConnect {
 
   static Stream<List<ProposalCard>> proposalListView(String query) async* {
     print("print from proposalListView: $query");
-    yield await connectProposals(query: query);
+    yield await connectProposals(
+      query: query,
+    );
   }
 
   static Stream<List<PostCard>> get forumListView async* {
@@ -34,11 +36,17 @@ class APIConnect {
   }
 
   static Stream<List<Comment>> commentListView(int fid) async* {
-    yield await connectComments(fid: fid);
+    yield await connectComments(
+      fid: fid,
+    );
   }
 
-  static Stream<List<EventCard>> eventListView(int uid) async* {
-    yield await connectEvents(uid: uid);
+  static Stream<List<EventCard>> eventListView(int uid, String query) async* {
+    print("print from eventListView: $query");
+    yield await connectEvents(
+      uid: uid,
+      query: query,
+    );
   }
 
   static Map<String, String> languages = {
@@ -73,7 +81,7 @@ class APIConnect {
   }
 
   static Future<List<ProposalCard>> connectProposals({String query}) async {
-    if(query == null) {
+    if (query == null) {
       query = 'Newly created';
     }
 
@@ -116,9 +124,20 @@ class APIConnect {
     return _forumposts;
   }
 
-  static Future<List<EventCard>> connectEvents({int uid}) async {
+  static Future<List<EventCard>> connectEvents({int uid, String query}) async {
+    if (query == null) {
+      query = 'Newly created';
+    }
+
+    Map<String, String> queryMap = {
+      'Newly created': 'date.desc',
+      'Oldest created': 'date.asc',
+      'Attendees: High to Low': 'numattenders.desc',
+      'Attendees: Low to High': 'numattenders.asc',
+    };
+
     final http.Response response = await http.get(
-      "$_url/events?sort_by=date.desc",
+      "$_url/events?sort_by=${queryMap[query]}",
       headers: await headers,
     );
 
@@ -206,7 +225,9 @@ class APIConnect {
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
-      prefs.setString('proposalsSortOption', 'Latest');
+      prefs.setString('proposalsSortOption', 'Newly created');
+      prefs.setString('eventsSortOption', 'Newly created');
+      prefs.setString('forumSortOption', 'Newly created');
       // print("${prefs.getString('userData')}");
       return json.decode(response.body);
     } catch (error) {

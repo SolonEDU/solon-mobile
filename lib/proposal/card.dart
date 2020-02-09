@@ -117,9 +117,13 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               'Ends in ${widget.date.difference(DateTime.now()).inDays} days',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
             ),
           ),
           Text(

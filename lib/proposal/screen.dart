@@ -18,8 +18,6 @@ class ProposalsScreen extends StatefulWidget {
 }
 
 class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
-  final translator = GoogleTranslator();
-  Stream<List<ProposalCard>> stream;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -103,7 +101,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                 Expanded(
                   child: StreamBuilder(
                     stream: Function.apply(
-                        APIConnect.proposalListView, [optionVal.data]),
+                      APIConnect.proposalListView,
+                      [
+                        optionVal.data,
+                      ],
+                    ),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) return Text("${snapshot.error}");
                       switch (snapshot.connectionState) {

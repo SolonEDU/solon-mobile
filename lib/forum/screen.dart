@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translator/translator.dart';
 
 import 'package:Solon/screen.dart';
@@ -15,14 +18,29 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> with Screen {
-  final translator = GoogleTranslator();
   Stream<List<PostCard>> stream;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+  StreamController forumPostListStreamController = StreamController.broadcast();
+  StreamController dropdownMenuStreamController = StreamController.broadcast();
+
+  Future<Null> load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final forumSortOption = prefs.getString('forumSortOption');
+    dropdownMenuStreamController.sink.add(forumSortOption);
+  }
 
   @override
   void initState() {
+    load();
     super.initState();
+  }
 
-    stream = APIConnect.forumListView;
+  @override
+  void dispose() {
+    forumPostListStreamController.close();
+    dropdownMenuStreamController.close();
+    super.dispose();
   }
 
   Future<void> getStream() async {
@@ -34,6 +52,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+      key: _refreshIndicatorKey,
       onRefresh: getStream,
       child: StreamBuilder<List<PostCard>>(
         stream: APIConnect.forumListView,
