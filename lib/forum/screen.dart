@@ -43,12 +43,6 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
     super.dispose();
   }
 
-  // Future<void> getStream(String query) async {
-  //   forumPostListStreamController.sink.add(await APIConnect.connectProposals(
-  //     query: query,
-  //   ));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -76,12 +70,14 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                           color: Colors.pink[400],
                         ),
                         onChanged: (String newValue) async {
-                          dropdownMenuStreamController.sink.add(newValue);
                           final prefs = await SharedPreferences.getInstance();
-                          prefs.setString(
-                            'forumSortOption',
-                            newValue,
-                          );
+                          if (prefs.get('forumSortOption') != newValue) {
+                            dropdownMenuStreamController.sink.add(newValue);
+                            prefs.setString(
+                              'forumSortOption',
+                              newValue,
+                            );
+                          }
                         },
                         items: <String>[
                           'Newly created',

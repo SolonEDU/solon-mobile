@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/create.dart';
 
 class ProposalsScreen extends StatefulWidget {
@@ -42,12 +41,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
     super.dispose();
   }
 
-  // Future<void> getStream(String query) async {
-  //   proposalListStreamController.sink.add(await APIConnect.connectProposals(
-  //     query: query,
-  //   ));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -55,7 +48,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
       builder: (context, optionVal) {
         switch (optionVal.connectionState) {
           case ConnectionState.waiting:
-            return SizedBox( //TODO: can be abstracted
+            return SizedBox(
+              //TODO: can be abstracted
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Scaffold(
@@ -87,12 +81,14 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                             color: Colors.pink[400],
                           ),
                           onChanged: (String newValue) async {
-                            dropdownMenuStreamController.sink.add(newValue);
                             final prefs = await SharedPreferences.getInstance();
-                            prefs.setString(
-                              'proposalsSortOption',
-                              newValue,
-                            );
+                            if (prefs.get('proposalsSortOption') != newValue) {
+                              dropdownMenuStreamController.sink.add(newValue);
+                              prefs.setString(
+                                'proposalsSortOption',
+                                newValue,
+                              );
+                            }
                           },
                           items: <String>[
                             'Most votes',

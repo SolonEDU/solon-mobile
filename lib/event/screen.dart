@@ -42,11 +42,6 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
     super.dispose();
   }
 
-  // Future<void> getStream(String query) async {
-  //   eventListStreamController.sink
-  //       .add(await APIConnect.connectEvents(uid: widget.uid, query: query));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -77,12 +72,14 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                           color: Colors.pink[400],
                         ),
                         onChanged: (String newValue) async {
-                          dropdownMenuStreamController.sink.add(newValue);
                           final prefs = await SharedPreferences.getInstance();
-                          prefs.setString(
-                            'eventsSortOption',
-                            newValue,
-                          );
+                          if (prefs.get('eventsSortOption') != newValue) {
+                            dropdownMenuStreamController.sink.add(newValue);
+                            prefs.setString(
+                              'eventsSortOption',
+                              newValue,
+                            );
+                          }
                         },
                         items: <String>[
                           'Newly created',
