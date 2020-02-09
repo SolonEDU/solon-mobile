@@ -204,14 +204,16 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
     );
   }
 
-  Future<void> signUp() async {
+  Stream<bool> signUp() async* {
     final formState = _formKey.currentState;
     if (formState.validate()) {
+      yield true;
       formState.save();
       final responseMessage = await APIConnect.registerUser(
           _nativeLanguage, _firstName, _lastName, _email, _password);
       if (responseMessage["message"] == "Error") {
         showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+        yield false;
       } else {
         Navigator.push(
           context,
@@ -220,6 +222,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
           ),
         );
       }
+    } else {
+      yield false;
     }
   }
 }
