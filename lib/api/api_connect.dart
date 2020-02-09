@@ -141,8 +141,8 @@ class APIConnect {
     Map<String, String> queryMap = {
       'Newly created': 'date.desc',
       'Oldest created': 'date.asc',
-      'Attendees: High to Low': 'numattenders.desc',
-      'Attendees: Low to High': 'numattenders.asc',
+      'Most attendees': 'numattenders.desc',
+      'Least attendees': 'numattenders.asc',
     };
 
     final http.Response response = await http.get(

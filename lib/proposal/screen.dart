@@ -75,14 +75,19 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
+                      padding: const EdgeInsets.only(
+                        left: 17.0,
+                        bottom: 10.0,
+                        right: 10.0,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
                               Text("Sort by: "),
-                              Container( // TODO: is this Container() needed here ?
+                              Container(
+                                // TODO: is this Container() needed here ?
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
                                     alignedDropdown: true,
@@ -129,18 +134,40 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                               ),
                             ],
                           ),
-                          IconButton(
-                            icon: Icon(Icons.search),
-                            color: Colors.pinkAccent[400],
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onPressed: () {
-                              showSearch(
-                                context: context,
-                                delegate: ProposalsSearch(),
-                              );
-                            },
+                          Container(
+                            width: 45.0,
+                            height: 45.0,
+                            child: RawMaterialButton(
+                              onPressed: () {
+                                showSearch(
+                                  context: context,
+                                  delegate: ProposalsSearch(),
+                                );
+                              },
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.pink[400],
+                              ),
+                              shape: CircleBorder(),
+                              elevation: 2.0,
+                              fillColor: Colors.white,
+                              // padding: const EdgeInsets.all(15.0),
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
                           ),
+                          // IconButton(
+                          //   icon: Icon(Icons.search),
+                          //   color: Colors.pinkAccent[400],
+                          //   highlightColor: Colors.transparent,
+                          //   splashColor: Colors.transparent,
+                          //   onPressed: () {
+                          //     showSearch(
+                          //       context: context,
+                          //       delegate: ProposalsSearch(),
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ),

@@ -75,7 +75,11 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
+                      padding: const EdgeInsets.only(
+                        left: 17.0,
+                        bottom: 10.0,
+                        right: 10.0,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -99,8 +103,8 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                       onChanged: (String newValue) async {
                                         dropdownMenuStreamController.sink
                                             .add(newValue);
-                                        final prefs =
-                                            await SharedPreferences.getInstance();
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
                                         prefs.setString(
                                           'forumSortOption',
                                           newValue,
@@ -124,18 +128,40 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                               ),
                             ],
                           ),
-                          IconButton(
-                            icon: Icon(Icons.search),
-                            color: Colors.pinkAccent[400],
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onPressed: () {
-                              showSearch(
-                                context: context,
-                                delegate: ForumSearch(),
-                              );
-                            },
+                          Container(
+                            width: 45.0,
+                            height: 45.0,
+                            child: RawMaterialButton(
+                              onPressed: () {
+                                showSearch(
+                                  context: context,
+                                  delegate: ForumSearch(),
+                                );
+                              },
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.pink[400],
+                              ),
+                              shape: CircleBorder(),
+                              elevation: 2.0,
+                              fillColor: Colors.white,
+                              // padding: const EdgeInsets.all(15.0),
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                            ),
                           ),
+                          // IconButton(
+                          //   icon: Icon(Icons.search),
+                          //   color: Colors.pinkAccent[400],
+                          //   highlightColor: Colors.transparent,
+                          //   splashColor: Colors.transparent,
+                          //   onPressed: () {
+                          //     showSearch(
+                          //       context: context,
+                          //       delegate: ForumSearch(),
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
