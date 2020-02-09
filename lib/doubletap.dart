@@ -1,6 +1,8 @@
 import 'package:Solon/auth/button.dart';
 import 'package:flutter/material.dart';
 
+typedef DynamicStream<T> = Stream<T> Function();
+
 class PreventDoubleTap extends StatefulWidget {
   final List<Map> body;
 
@@ -19,11 +21,12 @@ class PreventDoubleTapState extends State<PreventDoubleTap> {
   //boolean value to determine whether button is tapped
   bool _isButtonTapped = false;
 
-  _onTapped(Function function) {
-    setState(() {
-      _isButtonTapped = !_isButtonTapped;
+  _onTapped(DynamicStream<bool> function) async {
+    function().listen((boolean) {
+      setState(() {
+        _isButtonTapped = boolean;
+      });
     });
-    function();
   }
 
   List<Button> getBody() {

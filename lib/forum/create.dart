@@ -105,9 +105,10 @@ class _CreatePostState extends State<CreatePost> with Screen {
     );
   }
 
-  Future<void> createPost() async {
+  Stream<bool> createPost() async* {
     final formState = _formKey.currentState;
     if (formState.validate()) {
+      yield true;
       formState.save();
       widget
           ._addPost(
@@ -121,6 +122,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
           Navigator.pop(context);
         },
       );
+    } else {
+      yield false;
     }
   }
 }
