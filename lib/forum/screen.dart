@@ -88,7 +88,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                     alignedDropdown: true,
                                     child: DropdownButton<String>(
                                       value: optionVal.data,
-                                      icon: Icon(Icons.arrow_downward),
+                                      // icon: Icon(Icons.arrow_downward),
                                       iconSize: 24,
                                       elevation: 8,
                                       style: TextStyle(color: Colors.black),
