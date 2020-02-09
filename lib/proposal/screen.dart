@@ -202,7 +202,7 @@ class ProposalsSearch extends SearchDelegate {
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          
+          query = '';
         },
       ),
     ];
