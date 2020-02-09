@@ -42,10 +42,10 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
     super.dispose();
   }
 
-  Future<void> getStream(String query) async {
-    eventListStreamController.sink
-        .add(await APIConnect.connectEvents(uid: widget.uid, query: query));
-  }
+  // Future<void> getStream(String query) async {
+  //   eventListStreamController.sink
+  //       .add(await APIConnect.connectEvents(uid: widget.uid, query: query));
+  // }
 
   @override
   Widget build(BuildContext context) {

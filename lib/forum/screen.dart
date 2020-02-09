@@ -43,11 +43,11 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
     super.dispose();
   }
 
-  Future<void> getStream(String query) async {
-    forumPostListStreamController.sink.add(await APIConnect.connectProposals(
-      query: query,
-    ));
-  }
+  // Future<void> getStream(String query) async {
+  //   forumPostListStreamController.sink.add(await APIConnect.connectProposals(
+  //     query: query,
+  //   ));
+  // }
 
   @override
   Widget build(BuildContext context) {
