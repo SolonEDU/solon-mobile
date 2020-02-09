@@ -67,113 +67,133 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
               ),
             );
           default:
-            return RefreshIndicator(
-              key: _refreshIndicatorKey,
-              onRefresh: APIConnect.connectProposals,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            onChanged: (value) {},
-                            controller: editingController,
-                            decoration: InputDecoration(
-                                labelText: "Search",
+            return GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+              child: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: APIConnect.connectProposals,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: TextField(
+                              onChanged: (value) {},
+                              controller: editingController,
+                              decoration: InputDecoration(
+                                // labelText: "Search",
                                 hintText: "Search",
                                 prefixIcon: Icon(Icons.search),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(25.0)))),
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Text("Sort by: "),
-                            DropdownButton<String>(
-                              value: optionVal.data,
-                              icon: Icon(Icons.arrow_downward),
-                              iconSize: 24,
-                              elevation: 8,
-                              style: TextStyle(color: Colors.black),
-                              underline: Container(
-                                height: 2,
-                                color: Colors.pink[400],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(25.0),
+                                  ),
+                                ),
                               ),
-                              onChanged: (String newValue) async {
-                                dropdownMenuStreamController.sink.add(newValue);
-                                final prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setString(
-                                  'proposalsSortOption',
-                                  newValue,
-                                );
-                              },
-                              items: <String>[
-                                'Most votes',
-                                'Least votes',
-                                'Newly created',
-                                'Oldest created',
-                                'Upcoming deadlines',
-                                'Oldest deadlines',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: StreamBuilder(
-                      stream: Function.apply(
-                        APIConnect.proposalListView,
-                        [
-                          optionVal.data,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Sort by: "),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: DropdownButtonHideUnderline(
+                                  child: ButtonTheme(
+                                    // alignedDropdown: true,
+                                    child: DropdownButton<String>(
+                                      value: optionVal.data,
+                                      icon: Icon(Icons.arrow_downward),
+                                      iconSize: 24,
+                                      elevation: 8,
+                                      style: TextStyle(color: Colors.black),
+                                      underline: Container(
+                                        height: 2,
+                                        color: Colors.pink[400],
+                                      ),
+                                      onChanged: (String newValue) async {
+                                        dropdownMenuStreamController.sink
+                                            .add(newValue);
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        prefs.setString(
+                                          'proposalsSortOption',
+                                          newValue,
+                                        );
+                                      },
+                                      items: <String>[
+                                        'Most votes',
+                                        'Least votes',
+                                        'Newly created',
+                                        'Oldest created',
+                                        'Upcoming deadlines',
+                                        'Oldest deadlines',
+                                      ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) return Text("${snapshot.error}");
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: Scaffold(
-                                body: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              ),
-                            );
-                          default:
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: Scaffold(
-                                key: _scaffoldKey,
-                                body: ListView(
-                                  padding: const EdgeInsets.all(4),
-                                  children: snapshot.data,
-                                ),
-                                floatingActionButton: getFAB(
-                                  context,
-                                  CreateProposal(APIConnect.addProposal),
-                                ),
-                              ),
-                            );
-                        }
-                      },
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: StreamBuilder(
+                        stream: Function.apply(
+                          APIConnect.proposalListView,
+                          [
+                            optionVal.data,
+                          ],
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError)
+                            return Text("${snapshot.error}");
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                child: Scaffold(
+                                  body: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                              );
+                            default:
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                child: Scaffold(
+                                  key: _scaffoldKey,
+                                  body: ListView(
+                                    padding: const EdgeInsets.all(4),
+                                    children: snapshot.data,
+                                  ),
+                                  floatingActionButton: getFAB(
+                                    context,
+                                    CreateProposal(APIConnect.addProposal),
+                                  ),
+                                ),
+                              );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
         }
