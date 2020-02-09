@@ -229,15 +229,12 @@ class APIConnect {
       final userDataResponseJson = json.decode(userDataResponse.body)['user'];
       userDataResponseJson['lang'] =
           langCodeToLang[userDataResponseJson['lang']];
-      // print(json.encode(json.decode(userDataResponse.body)['user']));
-      // print(userDataResponseJson);
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('userData', userData);
       prefs.setString('proposalsSortOption', 'Newly created');
-      prefs.setString('eventsSortOption', 'Newly created');
+      prefs.setString('eventsSortOption', 'Upcoming');
       prefs.setString('forumSortOption', 'Newly created');
-      // print("${prefs.getString('userData')}");
       return json.decode(response.body);
     } catch (error) {
       throw error;
