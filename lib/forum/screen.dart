@@ -64,6 +64,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
+                      Text("Sort by: "),
                       DropdownButton<String>(
                         value: optionVal.data,
                         icon: Icon(Icons.arrow_downward),

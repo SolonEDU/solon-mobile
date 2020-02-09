@@ -65,6 +65,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
+                      Text("Sort by: "),
                       DropdownButton<String>(
                         value: optionVal.data,
                         icon: Icon(Icons.arrow_downward),
