@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/api/api_connect.dart';
-// import 'package:Solon/event/card.dart';
+import 'package:Solon/event/card.dart';
 // import 'package:Solon/loader.dart';
 
 class EventsScreen extends StatefulWidget {
@@ -20,13 +20,15 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  StreamController eventListStreamController = StreamController.broadcast();
+
   StreamController dropdownMenuStreamController = StreamController.broadcast();
+  Stream<List<EventCard>> stream;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
     final eventsSortOption = prefs.getString('eventsSortOption');
     dropdownMenuStreamController.sink.add(eventsSortOption);
+    stream = APIConnect.eventListView(widget.uid, eventsSortOption);
   }
 
   @override
@@ -37,7 +39,6 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
 
   @override
   void dispose() {
-    eventListStreamController.close();
     dropdownMenuStreamController.close();
     super.dispose();
   }
@@ -49,10 +50,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
         builder: (context, optionVal) {
           return RefreshIndicator(
             key: _refreshIndicatorKey,
-            onRefresh: () => APIConnect.connectEvents(
-              uid: widget.uid,
-              query: optionVal.data,
-            ),
+            onRefresh: load,
             child: Column(
               children: <Widget>[
                 Padding(

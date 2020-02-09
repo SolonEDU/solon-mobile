@@ -17,17 +17,18 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> with Screen {
-  Stream<List<PostCard>> stream;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  StreamController forumPostListStreamController = StreamController.broadcast();
+
   StreamController dropdownMenuStreamController = StreamController.broadcast();
+  Stream<List<PostCard>> stream;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
     final forumSortOption = prefs.getString('forumSortOption');
     dropdownMenuStreamController.sink.add(forumSortOption);
+    stream = APIConnect.forumListView(forumSortOption);
   }
 
   @override
@@ -38,7 +39,6 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
 
   @override
   void dispose() {
-    forumPostListStreamController.close();
     dropdownMenuStreamController.close();
     super.dispose();
   }
@@ -46,98 +46,99 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: dropdownMenuStreamController.stream,
-        builder: (context, optionVal) {
-          return RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: APIConnect.connectForumPosts,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text("Sort by: "),
-                      DropdownButton<String>(
-                        value: optionVal.data,
-                        icon: Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 8,
-                        style: TextStyle(color: Colors.black),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.pink[400],
-                        ),
-                        onChanged: (String newValue) async {
-                          final prefs = await SharedPreferences.getInstance();
-                          if (prefs.get('forumSortOption') != newValue) {
-                            dropdownMenuStreamController.sink.add(newValue);
-                            prefs.setString(
-                              'forumSortOption',
-                              newValue,
-                            );
-                          }
-                        },
-                        items: <String>[
-                          'Newly created',
-                          'Oldest created',
-                          'Comments: Greatest to Least',
-                          'Comments: Least to Greatest',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+      stream: dropdownMenuStreamController.stream,
+      builder: (context, optionVal) {
+        return RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: load,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text("Sort by: "),
+                    DropdownButton<String>(
+                      value: optionVal.data,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 8,
+                      style: TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.pink[400],
                       ),
+                      onChanged: (String newValue) async {
+                        final prefs = await SharedPreferences.getInstance();
+                        if (prefs.get('forumSortOption') != newValue) {
+                          dropdownMenuStreamController.sink.add(newValue);
+                          prefs.setString(
+                            'forumSortOption',
+                            newValue,
+                          );
+                        }
+                      },
+                      items: <String>[
+                        'Newly created',
+                        'Oldest created',
+                        'Comments: Greatest to Least',
+                        'Comments: Least to Greatest',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: StreamBuilder<List<PostCard>>(
+                  stream: Function.apply(
+                    APIConnect.forumListView,
+                    [
+                      optionVal.data,
                     ],
                   ),
-                ),
-                Expanded(
-                  child: StreamBuilder<List<PostCard>>(
-                    stream: Function.apply(
-                      APIConnect.forumListView,
-                      [
-                        optionVal.data,
-                      ],
-                    ),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) return Text("${snapshot.error}");
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: Scaffold(
-                              body: Center(
-                                child: CircularProgressIndicator(),
-                              ),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) return Text("${snapshot.error}");
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Scaffold(
+                            body: Center(
+                              child: CircularProgressIndicator(),
                             ),
-                          );
-                        default:
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: Scaffold(
-                              key: _scaffoldKey,
-                              body: ListView(
-                                padding: const EdgeInsets.all(4),
-                                children: snapshot.data,
-                              ),
-                              floatingActionButton: getFAB(
-                                context,
-                                CreatePost(APIConnect.addForumPost),
-                              ),
+                          ),
+                        );
+                      default:
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Scaffold(
+                            key: _scaffoldKey,
+                            body: ListView(
+                              padding: const EdgeInsets.all(4),
+                              children: snapshot.data,
                             ),
-                          );
-                      }
-                    },
-                  ),
+                            floatingActionButton: getFAB(
+                              context,
+                              CreatePost(APIConnect.addForumPost),
+                            ),
+                          ),
+                        );
+                    }
+                  },
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
