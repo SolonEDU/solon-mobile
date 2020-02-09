@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/event/card.dart';
+// import 'package:Solon/event/card.dart';
 // import 'package:Solon/loader.dart';
 
 class EventsScreen extends StatefulWidget {

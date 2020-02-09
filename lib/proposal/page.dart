@@ -123,7 +123,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'color': Colors.green,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () {
+                              'function': () async *{
+                                yield true;
                                 APIConnect.vote(widget.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
@@ -133,7 +134,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'color': Colors.red,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () {
+                              'function': () async * {
+                                yield true;
                                 APIConnect.vote(widget.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
