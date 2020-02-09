@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/event/page.dart';
 import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:Solon/app_localizations.dart';
 
 class EventCard extends StatefulWidget {
@@ -26,8 +28,7 @@ class EventCard extends StatefulWidget {
     this.numattenders,
   }) : super(key: key);
 
-  factory EventCard.fromJson(
-      Map<String, dynamic> map, int uid, String prefLangCode) {
+  factory EventCard.fromJson(Map<String, dynamic> map, int uid, String prefLangCode) {
     DateTime date = DateTime.parse(map['date']);
     String dateParsed = formatDate(
         date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
@@ -49,6 +50,16 @@ class EventCard extends StatefulWidget {
 }
 
 class _EventCardState extends State<EventCard> with Screen {
+  Future<bool> getAttendanceVal() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final responseMessage = await APIConnect.getAttendance(
+      eid: widget.eid,
+      uid: userUid,
+    );
+    return responseMessage;
+  }
+
   @override
   Widget build(BuildContext context) {
     Function function = () {
@@ -77,8 +88,8 @@ class _EventCardState extends State<EventCard> with Screen {
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
           (widget.title.length > 40)
-          ? '${widget.title.substring(0, 40)}...'
-          : widget.title,
+              ? '${widget.title.substring(0, 40)}...'
+              : widget.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -101,6 +112,16 @@ class _EventCardState extends State<EventCard> with Screen {
           ),
           Text(
             '${widget.numattenders} attenders',
+          ),
+          FutureBuilder<bool>(
+            future: getAttendanceVal(),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.data == null) {
+                return Center();
+              } else {
+                return Center(); //TODO: fill this in lata; for showing numvotes on cards on events screen
+              }
+            },
           ),
         ],
       ),

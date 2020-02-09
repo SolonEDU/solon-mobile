@@ -99,13 +99,14 @@ class _LoginPageState extends State<LoginPage> with Screen {
     );
   }
 
-  Future<void> signIn() async {
+  Future<dynamic> signIn() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
         showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+        return false;
       } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
@@ -115,6 +116,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
           ),
         );
       }
+    } else {
+      return false;
     }
   }
 }

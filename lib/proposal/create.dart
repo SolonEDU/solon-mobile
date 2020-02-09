@@ -145,11 +145,12 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
     );
   }
 
-  Future<void> createProposal() async {
-    DateTime _date = DateTime.now();
+  Stream<bool> createProposal() async* {
     final formState = _formKey.currentState;
     if (formState.validate()) {
+      yield true;
       formState.save();
+      DateTime _date = DateTime.now();
       widget
           ._addProposal(
               _title,
@@ -163,6 +164,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
           Navigator.pop(context);
         },
       );
+    } else {
+      yield false;
     }
   }
 }
