@@ -82,7 +82,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                           Row(
                             children: <Widget>[
                               Text("Sort by: "),
-                              Container(
+                              Container( // TODO: is this Container() needed here ?
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
                                     alignedDropdown: true,
