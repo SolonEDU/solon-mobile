@@ -25,7 +25,6 @@ class APIConnect {
   }
 
   static Stream<List<ProposalCard>> proposalListView(String query) async* {
-    print("print from proposalListView: $query");
     yield await connectProposals(
       query: query,
     );
@@ -42,7 +41,6 @@ class APIConnect {
   }
 
   static Stream<List<EventCard>> eventListView(int uid, String query) async* {
-    print("print from eventListView: $query");
     yield await connectEvents(
       uid: uid,
       query: query,
