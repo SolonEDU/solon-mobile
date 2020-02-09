@@ -114,8 +114,8 @@ class APIConnect {
     Map<String, String> queryMap = {
       'Newly created': 'timestamp.desc',
       'Oldest created': 'timestamp.asc',
-      'Comments: Greatest to Least': 'numcomments.desc',
-      'Comments: Least to Greatest': 'numcomments.asc',
+      'Most comments': 'numcomments.desc',
+      'Least comments': 'numcomments.asc',
     };
 
     final http.Response response = await http.get(
@@ -141,8 +141,8 @@ class APIConnect {
     Map<String, String> queryMap = {
       'Furthest': 'date.desc',
       'Upcoming': 'date.asc',
-      'Attendees: High to Low': 'numattenders.desc',
-      'Attendees: Low to High': 'numattenders.asc',
+      'Most attendees': 'numattenders.desc',
+      'Least attendees': 'numattenders.asc',
     };
 
     final http.Response response = await http.get(
