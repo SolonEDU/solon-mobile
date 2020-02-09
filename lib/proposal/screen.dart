@@ -85,7 +85,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
-                                    // alignedDropdown: true,
+                                    alignedDropdown: true,
                                     child: DropdownButton<String>(
                                       value: optionVal.data,
                                       // icon: Icon(Icons.arrow_downward),
@@ -119,7 +119,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                           value: value,
                                           child: Text(
                                             value,
-                                            textAlign: TextAlign.left,
+                                            // textAlign: TextAlign.left,
                                           ),
                                         );
                                       }).toList(),
@@ -136,8 +136,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                             splashColor: Colors.transparent,
                             onPressed: () {
                               showSearch(
-                                  context: context,
-                                  delegate: ProposalsSearch());
+                                context: context,
+                                delegate: ProposalsSearch(),
+                              );
                             },
                           ),
                         ],

@@ -65,98 +65,167 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                 ),
               );
             default:
-              return RefreshIndicator(
-                key: _refreshIndicatorKey,
-                onRefresh: () => APIConnect.connectEvents(
-                  uid: widget.uid,
-                  query: optionVal.data,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text("Sort by: "),
-                          DropdownButton<String>(
-                            value: optionVal.data,
-                            icon: Icon(Icons.arrow_downward),
-                            iconSize: 24,
-                            elevation: 8,
-                            style: TextStyle(color: Colors.black),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.pink[400],
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+                child: RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: () => APIConnect.connectEvents(
+                    uid: widget.uid,
+                    query: optionVal.data,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Text("Sort by: "),
+                                Container(
+                                  child: DropdownButtonHideUnderline(
+                                    child: ButtonTheme(
+                                      alignedDropdown: true,
+                                      child: DropdownButton<String>(
+                                        value: optionVal.data,
+                                        // icon: Icon(Icons.arrow_downward),
+                                        iconSize: 24,
+                                        elevation: 8,
+                                        style: TextStyle(color: Colors.black),
+                                        underline: Container(
+                                          height: 2,
+                                          color: Colors.pink[400],
+                                        ),
+                                        onChanged: (String newValue) async {
+                                          dropdownMenuStreamController.sink
+                                              .add(newValue);
+                                          final prefs = await SharedPreferences
+                                              .getInstance();
+                                          prefs.setString(
+                                            'eventsSortOption',
+                                            newValue,
+                                          );
+                                        },
+                                        items: <String>[
+                                          'Newly created',
+                                          'Oldest created',
+                                          'Attendees: High to Low',
+                                          'Attendees: Low to High',
+                                        ].map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              // textAlign: TextAlign.left,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            onChanged: (String newValue) async {
-                              dropdownMenuStreamController.sink.add(newValue);
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setString(
-                                'eventsSortOption',
-                                newValue,
-                              );
-                            },
-                            items: <String>[
-                              'Newly created',
-                              'Oldest created',
-                              'Attendees: High to Low',
-                              'Attendees: Low to High',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: StreamBuilder(
-                        stream: Function.apply(
-                          APIConnect.eventListView,
-                          [
-                            widget.uid,
-                            optionVal.data,
+                            IconButton(
+                              icon: Icon(Icons.search),
+                              color: Colors.pinkAccent[400],
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {
+                                showSearch(
+                                  context: context,
+                                  delegate: EventsSearch(),
+                                );
+                              },
+                            ),
                           ],
                         ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError)
-                            return Text('Error: ${snapshot.error}');
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
-                                child: Scaffold(
-                                  body: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
-                              );
-                            default:
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
-                                child: Scaffold(
-                                  key: _scaffoldKey,
-                                  body: ListView(
-                                    padding: const EdgeInsets.all(4),
-                                    children: snapshot.data,
-                                  ),
-                                ),
-                              );
-                          }
-                        },
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: StreamBuilder(
+                          stream: Function.apply(
+                            APIConnect.eventListView,
+                            [
+                              widget.uid,
+                              optionVal.data,
+                            ],
+                          ),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError)
+                              return Text('Error: ${snapshot.error}');
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: Scaffold(
+                                    body: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                );
+                              default:
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: Scaffold(
+                                    key: _scaffoldKey,
+                                    body: ListView(
+                                      padding: const EdgeInsets.all(4),
+                                      children: snapshot.data,
+                                    ),
+                                  ),
+                                );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
           }
           ;
         });
   }
+}
+
+// TODO: move to another file after we're done experimenting
+class EventsSearch extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Text(query);
+  }
+
+  @override
+  String get searchFieldLabel => 'Search events';
 }

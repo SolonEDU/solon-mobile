@@ -52,96 +52,135 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: dropdownMenuStreamController.stream,
-        builder: (context, optionVal) {
-          return RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: APIConnect.connectForumPosts,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text("Sort by: "),
-                      DropdownButton<String>(
-                        value: optionVal.data,
-                        icon: Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 8,
-                        style: TextStyle(color: Colors.black),
-                        underline: Container(
-                          height: 2,
-                          color: Colors.pink[400],
-                        ),
-                        onChanged: (String newValue) async {
-                          dropdownMenuStreamController.sink.add(newValue);
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setString(
-                            'forumSortOption',
-                            newValue,
-                          );
-                        },
-                        items: <String>[
-                          'Newly created',
-                          'Oldest created',
-                          'Comments: Greatest to Least',
-                          'Comments: Least to Greatest',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+      stream: dropdownMenuStreamController.stream,
+      builder: (context, optionVal) {
+        return RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: APIConnect.connectForumPosts,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Text("Sort by: "),
+                    DropdownButton<String>(
+                      value: optionVal.data,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 8,
+                      style: TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.pink[400],
                       ),
+                      onChanged: (String newValue) async {
+                        dropdownMenuStreamController.sink.add(newValue);
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setString(
+                          'forumSortOption',
+                          newValue,
+                        );
+                      },
+                      items: <String>[
+                        'Newly created',
+                        'Oldest created',
+                        'Comments: Greatest to Least',
+                        'Comments: Least to Greatest',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: StreamBuilder<List<PostCard>>(
+                  stream: Function.apply(
+                    APIConnect.forumListView,
+                    [
+                      optionVal.data,
                     ],
                   ),
-                ),
-                Expanded(
-                  child: StreamBuilder<List<PostCard>>(
-                    stream: Function.apply(
-                      APIConnect.forumListView,
-                      [
-                        optionVal.data,
-                      ],
-                    ),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) return Text("${snapshot.error}");
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: Scaffold(
-                              body: Center(
-                                child: CircularProgressIndicator(),
-                              ),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) return Text("${snapshot.error}");
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Scaffold(
+                            body: Center(
+                              child: CircularProgressIndicator(),
                             ),
-                          );
-                        default:
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: Scaffold(
-                              key: _scaffoldKey,
-                              body: ListView(
-                                padding: const EdgeInsets.all(4),
-                                children: snapshot.data,
-                              ),
-                              floatingActionButton: getFAB(
-                                context,
-                                CreatePost(APIConnect.addForumPost),
-                              ),
+                          ),
+                        );
+                      default:
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Scaffold(
+                            key: _scaffoldKey,
+                            body: ListView(
+                              padding: const EdgeInsets.all(4),
+                              children: snapshot.data,
                             ),
-                          );
-                      }
-                    },
-                  ),
+                            floatingActionButton: getFAB(
+                              context,
+                              CreatePost(APIConnect.addForumPost),
+                            ),
+                          ),
+                        );
+                    }
+                  },
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
+}
+
+// TODO: move to another file after we're done experimenting
+class ForumSearch extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Text(query);
+  }
+
+  @override
+  String get searchFieldLabel => 'Search forum';
 }
