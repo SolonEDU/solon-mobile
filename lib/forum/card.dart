@@ -26,7 +26,7 @@ class PostCard extends StatefulWidget {
   factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
     DateTime timestamp = DateTime.parse(map['timestamp']);
     String timestampParsed = formatDate(timestamp,
-        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];
