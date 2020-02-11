@@ -301,13 +301,14 @@ class APIConnect {
     String timestamp,
     int uid,
   }) async {
+    final userData = await connectSharedPreferences();
     final response = await http.post(
       "$_url/comments",
       body: json.encode({
         'fid': fid,
         'content': comment,
         'timestamp': timestamp,
-        'uid': uid,
+        'uid': userData['uid'],
       }),
       headers: await headers,
     );
