@@ -33,7 +33,7 @@ class ProposalCard extends StatefulWidget {
   factory ProposalCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
     DateTime endTime = DateTime.parse(map['endtime']);
     String endTimeParsed = formatDate(
-        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ':', ss, ' ', am]);
+        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];

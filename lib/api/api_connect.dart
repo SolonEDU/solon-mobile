@@ -231,7 +231,9 @@ class APIConnect {
           langCodeToLang[userDataResponseJson['lang']];
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
+      print(userData);
       prefs.setString('userData', userData);
+      print(json.decode(prefs.getString('userData')));
       prefs.setString('proposalsSortOption', 'Newly created');
       prefs.setString('eventsSortOption', 'Upcoming');
       prefs.setString('forumSortOption', 'Newly created');
@@ -299,13 +301,14 @@ class APIConnect {
     String timestamp,
     int uid,
   }) async {
+    final userData = await connectSharedPreferences();
     final response = await http.post(
       "$_url/comments",
       body: json.encode({
         'fid': fid,
         'content': comment,
         'timestamp': timestamp,
-        'uid': uid,
+        'uid': userData['uid'],
       }),
       headers: await headers,
     );
