@@ -229,6 +229,9 @@ class APIConnect {
       final userDataResponseJson = json.decode(userDataResponse.body)['user'];
       userDataResponseJson['lang'] =
           langCodeToLang[userDataResponseJson['lang']];
+      if (userDataResponseJson['lang'] == null) {
+        userDataResponseJson['lang'] = 'English';
+      }
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       print(userData);
