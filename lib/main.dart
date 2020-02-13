@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:flutter/services.dart';
 
@@ -11,7 +12,6 @@ import 'package:Solon/forum/screen.dart';
 import 'package:Solon/account_screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/app_localizations.dart';
-// import 'package:Solon/loader.dart';
 
 void main() => runApp(Solon());
 
@@ -28,6 +28,7 @@ class Solon extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0.0,
+          brightness: Brightness.light,
           textTheme: TextTheme(
             title: TextStyle(
               color: Colors.black,
@@ -158,8 +159,8 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   var _selectedIndex = 0;
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
-
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
 
   void _onItemTapped(int index) {
     setState(() {
