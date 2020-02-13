@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// import 'package:flutter/services.dart';
-
 import 'package:Solon/navbar.dart';
 import 'package:Solon/auth/welcome.dart';
 import 'package:Solon/home_screen.dart';
