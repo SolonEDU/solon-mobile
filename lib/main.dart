@@ -19,130 +19,131 @@ class Solon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
-      theme: ThemeData(
-        canvasColor: Colors.white,
-        primaryColor: Colors.pink[400],
-        appBarTheme: AppBarTheme(
-          color: Colors.white,
-          elevation: 0.0,
-          brightness: Brightness.light,
-          textTheme: TextTheme(
-            title: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Raleway',
-              fontWeight: FontWeight.bold,
-              fontSize: 32,
+        title: _title,
+        theme: ThemeData(
+          canvasColor: Colors.white,
+          primaryColor: Colors.pink[400],
+          appBarTheme: AppBarTheme(
+            color: Colors.white,
+            elevation: 0.0,
+            brightness: Brightness.light,
+            textTheme: TextTheme(
+              title: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+                fontSize: 32,
+              ),
             ),
           ),
+          cursorColor: Colors.pink[400],
+          bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
+          scaffoldBackgroundColor: Colors.white,
         ),
-        cursorColor: Colors.pink[400],
-        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: Scaffold(
-        body: FutureBuilder(
-          future: APIConnect.connectSharedPreferences(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container();
-            }
-            return snapshot.data.containsKey('errorMessage')
-                ? WelcomePage()
-                : Main(uid: snapshot.data['uid']);
-          },
+        home: Scaffold(
+          body: FutureBuilder(
+            future: APIConnect.connectSharedPreferences(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return Container();
+              }
+              return snapshot.data.containsKey('errorMessage')
+                  ? WelcomePage()
+                  : Main(uid: snapshot.data['uid']);
+            },
+          ),
         ),
-      ),
-      supportedLocales: [
-        Locale('en'),
-        Locale('af'),
-        Locale('sq'),
-        Locale('ar'),
-        Locale('az'),
-        Locale('eu'),
-        Locale('bn'),
-        Locale('be'),
-        Locale('bg'),
-        Locale('ca'),
-        Locale('chr'),
-        Locale('zh', 'CN'),
-        Locale('zh', 'TW'),
-        Locale('hr'),
-        Locale('cs'),
-        Locale('da'),
-        Locale('nl'),
-        Locale('en', 'GB'),
-        Locale('eo'),
-        Locale('et'),
-        Locale('tl'),
-        Locale('fi'),
-        Locale('fr', 'FR'),
-        Locale('gl'),
-        Locale('ka'),
-        Locale('de'),
-        Locale('el'),
-        Locale('gu'),
-        Locale('ht'),
-        Locale('iw'),
-        Locale('hi'),
-        Locale('hu'),
-        Locale('is'),
-        Locale('id'),
-        Locale('ga'),
-        Locale('it'),
-        Locale('ja'),
-        Locale('kn'),
-        Locale('ko'),
-        Locale('la'),
-        Locale('lv'),
-        Locale('lt'),
-        Locale('mk'),
-        Locale('ms'),
-        Locale('mt'),
-        Locale('no'),
-        Locale('fa'),
-        Locale('pl'),
-        Locale('pt'),
-        Locale('pt', 'PT'),
-        Locale('ro'),
-        Locale('ru'),
-        Locale('sr'),
-        Locale('sk'),
-        Locale('sl'),
-        Locale('es', 'MX'),
-        Locale('sw'),
-        Locale('sv'),
-        Locale('ta'),
-        Locale('te'),
-        Locale('th'),
-        Locale('tr'),
-        Locale('uk'),
-        Locale('ur'),
-        Locale('vi'),
-        Locale('cy'),
-        Locale('yi'),
-      ],
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        DefaultMaterialLocalizations.delegate
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (locale == null) {
-          debugPrint("*language locale is null!");
-          return supportedLocales.first;
-        }
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
+        supportedLocales: [
+          Locale('en'),
+          Locale('af'),
+          Locale('sq'),
+          Locale('ar'),
+          Locale('az'),
+          Locale('eu'),
+          Locale('bn'),
+          Locale('be'),
+          Locale('bg'),
+          Locale('ca'),
+          Locale('chr'),
+          Locale('zh', 'CN'),
+          Locale('zh', 'TW'),
+          Locale('hr'),
+          Locale('cs'),
+          Locale('da'),
+          Locale('nl'),
+          Locale('en', 'GB'),
+          Locale('eo'),
+          Locale('et'),
+          Locale('tl'),
+          Locale('fi'),
+          Locale('fr', 'FR'),
+          Locale('gl'),
+          Locale('ka'),
+          Locale('de'),
+          Locale('el'),
+          Locale('gu'),
+          Locale('ht'),
+          Locale('iw'),
+          Locale('hi'),
+          Locale('hu'),
+          Locale('is'),
+          Locale('id'),
+          Locale('ga'),
+          Locale('it'),
+          Locale('ja'),
+          Locale('kn'),
+          Locale('ko'),
+          Locale('la'),
+          Locale('lv'),
+          Locale('lt'),
+          Locale('mk'),
+          Locale('ms'),
+          Locale('mt'),
+          Locale('no'),
+          Locale('fa'),
+          Locale('pl'),
+          Locale('pt'),
+          Locale('pt', 'PT'),
+          Locale('ro'),
+          Locale('ru'),
+          Locale('sr'),
+          Locale('sk'),
+          Locale('sl'),
+          Locale('es', 'MX'),
+          Locale('sw'),
+          Locale('sv'),
+          Locale('ta'),
+          Locale('te'),
+          Locale('th'),
+          Locale('tr'),
+          Locale('uk'),
+          Locale('ur'),
+          Locale('vi'),
+          Locale('cy'),
+          Locale('yi'),
+        ],
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          DefaultMaterialLocalizations.delegate
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          if (locale == null) {
+            debugPrint("*language locale is null!");
+            return supportedLocales.first;
           }
-        }
-        print('${locale.languageCode} printed from main ${locale.countryCode}');
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
+          }
+          print(
+              '${locale.languageCode} printed from main ${locale.countryCode}');
 
-        return supportedLocales.first;
-      },
+          return supportedLocales.first;
+        },
     );
   }
 }
@@ -186,6 +187,9 @@ class _MainState extends State<Main> {
         'widget': ForumScreen(uid: widget.uid),
       },
     ];
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light,
+    );
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

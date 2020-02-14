@@ -20,6 +20,10 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: AppBar(),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
