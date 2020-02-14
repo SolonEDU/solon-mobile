@@ -30,7 +30,7 @@ class Solon extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0.0,
-          brightness: Brightness.light,
+          brightness: Brightness.light, // TODO: have yet to find a nonjanky method
           textTheme: TextTheme(
             title: TextStyle(
               color: Colors.black,
