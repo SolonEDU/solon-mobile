@@ -85,7 +85,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Name',
+                            I18n.of(context).name,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Raleway',
@@ -103,7 +103,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                             ),
                           ),
                           Text(
-                            'Email',
+                            I18n.of(context).email,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Raleway',
@@ -121,7 +121,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                             ),
                           ),
                           Text(
-                            'Language',
+                            I18n.of(context).language,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Raleway',
@@ -188,7 +188,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                               color: Colors.pink[200],
                               height: 55,
                               width: 155,
-                              label: "Sign Out",
+                              label: I18n.of(context).signOut,
                               margin: EdgeInsets.only(top: 10),
                               function: () async {
                                 final prefs =

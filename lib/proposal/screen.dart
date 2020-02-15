@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,7 +81,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                Text("Sort by: "),
+                                Text(I18n.of(context).sortBy),
                                 Container(
                                   // TODO: is this Container() needed here ?
                                   child: DropdownButtonHideUnderline(

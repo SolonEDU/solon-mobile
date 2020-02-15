@@ -91,7 +91,7 @@ class _EventPageState extends State<EventPage> with Screen {
                   padding: const EdgeInsets.only(
                       left: 16.0, right: 16.0, bottom: 8, top: 8),
                   child: Text(
-                    'Description',
+                    I18n.of(context).description,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,

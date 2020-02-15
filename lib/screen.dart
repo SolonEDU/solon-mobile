@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'generated/i18n.dart';
+
 typedef APIFunction<T> = Future<T> Function();
 
 mixin Screen {
@@ -94,13 +96,13 @@ mixin Screen {
           children: <Widget>[
             Expanded(
               child: Text(
-                '$yes yes',
+                I18n.of(context).numYes(yes),
                 textAlign: TextAlign.start,
               ),
             ),
             Expanded(
               child: Text(
-                '$no no',
+                I18n.of(context).numNo(no),
                 textAlign: TextAlign.end,
               ),
             ),

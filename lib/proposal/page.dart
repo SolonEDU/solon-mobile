@@ -1,4 +1,5 @@
 import 'package:Solon/doubletap.dart';
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,7 +97,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Description',
+                      I18n.of(context).description,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -128,7 +129,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                                 APIConnect.vote(widget.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': 'Yes',
+                              'label': I18n.of(context).yes,
                             },
                             {
                               'color': Colors.red,
@@ -139,7 +140,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                                 APIConnect.vote(widget.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': 'No',
+                              'label': I18n.of(context).no,
                             }
                           ],
                         )

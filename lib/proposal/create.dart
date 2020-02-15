@@ -31,7 +31,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, title: 'New Proposal'),
+      appBar: getPageAppBar(context, title: I18n.of(context).newProposal),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -87,7 +87,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: Text('Days Until Proposal Ends'),
+                child: Text(I18n.of(context).daysUntilProposalEnds),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 35.0),
@@ -95,8 +95,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   activeColor: Colors.pink[400],
                   divisions: 13,
                   label: _sliderValue == 1.0
-                      ? '${_sliderValue.round()} Day'
-                      : '${_sliderValue.round()} Days',
+                      ? I18n.of(context).oneDay(_sliderValue.round())
+                      : I18n.of(context).fourteenDays(_sliderValue.round()),
                   min: 1.0,
                   max: 14.0,
                   onChanged: (newRating) {
@@ -112,12 +112,12 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "1 Day",
+                      I18n.of(context).oneDay(1),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "14 Days",
+                      I18n.of(context).fourteenDays(14),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
@@ -132,7 +132,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                     "height": 55.0,
                     "function": createProposal,
                     "margin": const EdgeInsets.only(top: 25, bottom: 10),
-                    "label": 'Create Proposal',
+                    "label": I18n.of(context).createProposal,
                   }
                 ],
               ),

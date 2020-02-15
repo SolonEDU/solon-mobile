@@ -1,4 +1,5 @@
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
@@ -119,7 +120,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              'Ends in ${widget.date.difference(DateTime.now()).inDays} days',
+              I18n.of(context).endsInNumDays(widget.date.difference(DateTime.now()).inDays),
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -127,7 +128,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
             ),
           ),
           Text(
-            '${widget.yesVotes + widget.noVotes} votes',
+            I18n.of(context).numVotes(widget.yesVotes + widget.noVotes),
           ),
           FutureBuilder<Map<String, dynamic>>(
             future: _listFutureProposal,

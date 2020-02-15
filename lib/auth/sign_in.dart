@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
+// import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                   keyboardType: TextInputType.emailAddress,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Please type your email';
+                      return I18n.of(context).emailSignInFieldError;
                     }
                     return null;
                   },
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Please type your password';
+                      return I18n.of(context).passwordSignInFieldError;
                     }
                     return null;
                   },

@@ -86,7 +86,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                "Name",
+                I18n.of(context).name,
               ),
             ),
             Row(
@@ -99,12 +99,12 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return 'Please enter your first name';
+                          return I18n.of(context).fNameSignUpFieldError;
                         }
                         return null;
                       },
                       onSaved: (input) => _firstName = input,
-                      decoration: InputDecoration(labelText: 'First name'),
+                      decoration: InputDecoration(labelText: I18n.of(context).firstName),
                     ),
                   ),
                 ),
@@ -116,12 +116,12 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return 'Please enter your last name';
+                          return I18n.of(context).lNameSignUpFieldError;
                         }
                         return null;
                       },
                       onSaved: (input) => _lastName = input,
-                      decoration: InputDecoration(labelText: 'Last name'),
+                      decoration: InputDecoration(labelText: I18n.of(context).lastName),
                     ),
                   ),
                 ),
@@ -139,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.emailAddress,
                 validator: (input) {
                   if (input.isEmpty) {
-                    return 'Please enter your email address';
+                    return I18n.of(context).emailSignUpFieldError;
                   }
                   return null;
                 },
@@ -158,7 +158,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.length < 6) {
-                    return 'Your password needs to be at least 6 characters';
+                    return I18n.of(context).passwordSignUpFieldError(6);
                   } else {
                     _password = input;
                     return null;
@@ -171,7 +171,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                'Confirm Password',
+                I18n.of(context).confirmPassword,
               ),
             ),
             Container(
@@ -180,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input != _password) {
-                    return 'Your passwords do not match';
+                    return I18n.of(context).confirmPasswordSignUpFieldName;
                   }
                   return null;
                 },

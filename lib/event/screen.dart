@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,7 +80,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text("Sort by: "),
+                              Text(I18n.of(context).sortBy),
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
