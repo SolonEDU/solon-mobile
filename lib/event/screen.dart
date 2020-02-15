@@ -246,6 +246,7 @@ class EventsSearch extends SearchDelegate {
         ],
       ),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Container(
