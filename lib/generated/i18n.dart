@@ -59,7 +59,7 @@ class I18n implements WidgetsLocalizations {
   /// "Please enter your email address"
   String get emailSignUpFieldError => "Please enter your email address";
   /// "Your password needs to be at least ${numChar} characters"
-  String passwordSignUpFieldError(String numChar) => "Your password needs to be at least ${numChar} characters";
+  String passwordSignUpFieldError(int numChar) => "Your password needs to be at least ${numChar} characters";
   /// "Your passwords do not match"
   String get confirmPasswordSignUpFieldName => "Your passwords do not match";
   /// "Please type your email"
@@ -75,17 +75,17 @@ class I18n implements WidgetsLocalizations {
   /// "Proposals"
   String get proposals => "Proposals";
   /// "Ends in ${days} days"
-  String endsInNumDays(String days) => "Ends in ${days} days";
+  String endsInNumDays(int days) => "Ends in ${days} days";
   /// "Yes"
   String get yes => "Yes";
   /// "No"
   String get no => "No";
   /// "${numYes} yes"
-  String numYes(String numYes) => "${numYes} yes";
+  String numYes(int numYes) => "${numYes} yes";
   /// "${numNo} no"
-  String numNo(String numNo) => "${numNo} no";
+  String numNo(int numNo) => "${numNo} no";
   /// "${numVotes} votes"
-  String numVotes(String numVotes) => "${numVotes} votes";
+  String numVotes(int numVotes) => "${numVotes} votes";
   /// "Votes on proposal ends ${endtime}"
   String votingOnProposalEnds(String endtime) => "Votes on proposal ends ${endtime}";
   /// "You have voted ${voteVal}!"
@@ -97,9 +97,9 @@ class I18n implements WidgetsLocalizations {
   /// "Days Until Proposal Ends"
   String get daysUntilProposalEnds => "Days Until Proposal Ends";
   /// "${numLowerBoundDays} Day"
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays} Day";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays} Day";
   /// "${numUpperBoundDays} Days"
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays} Days";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays} Days";
   /// "New Proposal"
   String get newProposal => "New Proposal";
   /// "Create Proposal"
@@ -131,7 +131,7 @@ class I18n implements WidgetsLocalizations {
   /// "Least attendees"
   String get leastAttendees => "Least attendees";
   /// "${numAttenders} attenders"
-  String numAttenders(String numAttenders) => "${numAttenders} attenders";
+  String numAttenders(int numAttenders) => "${numAttenders} attenders";
   /// "Search events"
   String get searchEvents => "Search events";
   /// "Forum"
@@ -141,7 +141,7 @@ class I18n implements WidgetsLocalizations {
   /// "Least comments"
   String get leastComments => "Least comments";
   /// "${numComments} comments"
-  String numComments(String numComments) => "${numComments} comments";
+  String numComments(int numComments) => "${numComments} comments";
   /// "Attending?"
   String get attending => "Attending?";
   /// "Please enter a title"
@@ -213,7 +213,7 @@ class _I18n_zh_CN extends I18n {
   String get emailSignUpFieldError => "请输入您的电子邮件地址";
   /// "您的密码至少应为${numChar}个字符"
   @override
-  String passwordSignUpFieldError(String numChar) => "您的密码至少应为${numChar}个字符";
+  String passwordSignUpFieldError(int numChar) => "您的密码至少应为${numChar}个字符";
   /// "您的密码不匹配"
   @override
   String get confirmPasswordSignUpFieldName => "您的密码不匹配";
@@ -237,7 +237,7 @@ class _I18n_zh_CN extends I18n {
   String get proposals => "提案";
   /// "于${days}天后结束"
   @override
-  String endsInNumDays(String days) => "于${days}天后结束";
+  String endsInNumDays(int days) => "于${days}天后结束";
   /// "是"
   @override
   String get yes => "是";
@@ -246,13 +246,13 @@ class _I18n_zh_CN extends I18n {
   String get no => "没有";
   /// "${numYes}是"
   @override
-  String numYes(String numYes) => "${numYes}是";
+  String numYes(int numYes) => "${numYes}是";
   /// "${numNo}否"
   @override
-  String numNo(String numNo) => "${numNo}否";
+  String numNo(int numNo) => "${numNo}否";
   /// "${numVotes}票"
   @override
-  String numVotes(String numVotes) => "${numVotes}票";
+  String numVotes(int numVotes) => "${numVotes}票";
   /// "提案的投票结束时间${endtime}"
   @override
   String votingOnProposalEnds(String endtime) => "提案的投票结束时间${endtime}";
@@ -270,10 +270,10 @@ class _I18n_zh_CN extends I18n {
   String get daysUntilProposalEnds => "投标截止日";
   /// "${numLowerBoundDays}天"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays}天";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays}天";
   /// "${numUpperBoundDays}天"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays}天";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays}天";
   /// "新提案"
   @override
   String get newProposal => "新提案";
@@ -321,7 +321,7 @@ class _I18n_zh_CN extends I18n {
   String get leastAttendees => "参加人数最少";
   /// "${numAttenders}位参加者"
   @override
-  String numAttenders(String numAttenders) => "${numAttenders}位参加者";
+  String numAttenders(int numAttenders) => "${numAttenders}位参加者";
   /// "搜索事件"
   @override
   String get searchEvents => "搜索事件";
@@ -336,7 +336,7 @@ class _I18n_zh_CN extends I18n {
   String get leastComments => "最少的评论";
   /// "${numComments}条评论"
   @override
-  String numComments(String numComments) => "${numComments}条评论";
+  String numComments(int numComments) => "${numComments}条评论";
   /// "参加吗"
   @override
   String get attending => "参加吗";
@@ -413,7 +413,7 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   String get emailSignUpFieldError => "请输入您的电子邮件地址";
   /// "您的密码至少应为${numChar}个字符"
   @override
-  String passwordSignUpFieldError(String numChar) => "您的密码至少应为${numChar}个字符";
+  String passwordSignUpFieldError(int numChar) => "您的密码至少应为${numChar}个字符";
   /// "您的密码不匹配"
   @override
   String get confirmPasswordSignUpFieldName => "您的密码不匹配";
@@ -437,7 +437,7 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   String get proposals => "提案";
   /// "于${days}天后结束"
   @override
-  String endsInNumDays(String days) => "于${days}天后结束";
+  String endsInNumDays(int days) => "于${days}天后结束";
   /// "是"
   @override
   String get yes => "是";
@@ -446,13 +446,13 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   String get no => "没有";
   /// "${numYes}是"
   @override
-  String numYes(String numYes) => "${numYes}是";
+  String numYes(int numYes) => "${numYes}是";
   /// "${numNo}否"
   @override
-  String numNo(String numNo) => "${numNo}否";
+  String numNo(int numNo) => "${numNo}否";
   /// "${numVotes}票"
   @override
-  String numVotes(String numVotes) => "${numVotes}票";
+  String numVotes(int numVotes) => "${numVotes}票";
   /// "提案的投票结束时间${endtime}"
   @override
   String votingOnProposalEnds(String endtime) => "提案的投票结束时间${endtime}";
@@ -470,10 +470,10 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   String get daysUntilProposalEnds => "投标截止日";
   /// "${numLowerBoundDays}天"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays}天";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays}天";
   /// "${numUpperBoundDays}天"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays}天";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays}天";
   /// "新提案"
   @override
   String get newProposal => "新提案";
@@ -521,7 +521,7 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   String get leastAttendees => "参加人数最少";
   /// "${numAttenders}位参加者"
   @override
-  String numAttenders(String numAttenders) => "${numAttenders}位参加者";
+  String numAttenders(int numAttenders) => "${numAttenders}位参加者";
   /// "搜索事件"
   @override
   String get searchEvents => "搜索事件";
@@ -536,7 +536,7 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   String get leastComments => "最少的评论";
   /// "${numComments}条评论"
   @override
-  String numComments(String numComments) => "${numComments}条评论";
+  String numComments(int numComments) => "${numComments}条评论";
   /// "参加吗"
   @override
   String get attending => "参加吗";
@@ -613,7 +613,7 @@ class _I18n_bn_BN extends I18n {
   String get emailSignUpFieldError => "আপনার ইমেইল ঠিকানা লিখুন";
   /// "আপনার পাসওয়ার্ডে কমপক্ষে ${numChar} অক্ষর হওয়া দরকার"
   @override
-  String passwordSignUpFieldError(String numChar) => "আপনার পাসওয়ার্ডে কমপক্ষে ${numChar} অক্ষর হওয়া দরকার";
+  String passwordSignUpFieldError(int numChar) => "আপনার পাসওয়ার্ডে কমপক্ষে ${numChar} অক্ষর হওয়া দরকার";
   /// "আপনার পাসওয়ার্ড মেলে না"
   @override
   String get confirmPasswordSignUpFieldName => "আপনার পাসওয়ার্ড মেলে না";
@@ -637,7 +637,7 @@ class _I18n_bn_BN extends I18n {
   String get proposals => "প্রস্তাব";
   /// "{দিন} দিনগুলিতে শেষ হয়"
   @override
-  String endsInNumDays(String days) => "{দিন} দিনগুলিতে শেষ হয়";
+  String endsInNumDays(int days) => "{দিন} দিনগুলিতে শেষ হয়";
   /// "হ্যাঁ"
   @override
   String get yes => "হ্যাঁ";
@@ -646,13 +646,13 @@ class _I18n_bn_BN extends I18n {
   String get no => "না";
   /// "${numYes} হ্যাঁ"
   @override
-  String numYes(String numYes) => "${numYes} হ্যাঁ";
+  String numYes(int numYes) => "${numYes} হ্যাঁ";
   /// "${numNo} no"
   @override
-  String numNo(String numNo) => "${numNo} no";
+  String numNo(int numNo) => "${numNo} no";
   /// "${numVotes} ভোট"
   @override
-  String numVotes(String numVotes) => "${numVotes} ভোট";
+  String numVotes(int numVotes) => "${numVotes} ভোট";
   /// "প্রস্তাবনায় ভোট শেষ {শেষ সময়}"
   @override
   String votingOnProposalEnds(String endtime) => "প্রস্তাবনায় ভোট শেষ {শেষ সময়}";
@@ -670,10 +670,10 @@ class _I18n_bn_BN extends I18n {
   String get daysUntilProposalEnds => "প্রস্তাব শেষ হওয়ার দিনগুলি";
   /// "${numLowerBoundDays} দিন"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays} দিন";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays} দিন";
   /// "${numUpperBoundDays} দিন"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays} দিন";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays} দিন";
   /// "নতুন প্রস্তাব"
   @override
   String get newProposal => "নতুন প্রস্তাব";
@@ -721,7 +721,7 @@ class _I18n_bn_BN extends I18n {
   String get leastAttendees => "স্বল্প উপস্থিতি";
   /// "${numAttenders} পরিচারক"
   @override
-  String numAttenders(String numAttenders) => "${numAttenders} পরিচারক";
+  String numAttenders(int numAttenders) => "${numAttenders} পরিচারক";
   /// "ইভেন্ট অনুসন্ধান করুন"
   @override
   String get searchEvents => "ইভেন্ট অনুসন্ধান করুন";
@@ -736,7 +736,7 @@ class _I18n_bn_BN extends I18n {
   String get leastComments => "কম মন্তব্য";
   /// "${numComments} মন্তব্য"
   @override
-  String numComments(String numComments) => "${numComments} মন্তব্য";
+  String numComments(int numComments) => "${numComments} মন্তব্য";
   /// "অংশগ্রহণ করছেন?"
   @override
   String get attending => "অংশগ্রহণ করছেন?";
@@ -813,7 +813,7 @@ class _I18n_ko_KR extends I18n {
   String get emailSignUpFieldError => "당신의 이메일 주소를 입력하십시오";
   /// "비밀번호는 ${numChar} 자 이상이어야합니다."
   @override
-  String passwordSignUpFieldError(String numChar) => "비밀번호는 ${numChar} 자 이상이어야합니다.";
+  String passwordSignUpFieldError(int numChar) => "비밀번호는 ${numChar} 자 이상이어야합니다.";
   /// "비밀번호가 일치하지 않습니다"
   @override
   String get confirmPasswordSignUpFieldName => "비밀번호가 일치하지 않습니다";
@@ -837,7 +837,7 @@ class _I18n_ko_KR extends I18n {
   String get proposals => "제안서";
   /// "${days} 일 후 종료"
   @override
-  String endsInNumDays(String days) => "${days} 일 후 종료";
+  String endsInNumDays(int days) => "${days} 일 후 종료";
   /// "예"
   @override
   String get yes => "예";
@@ -846,13 +846,13 @@ class _I18n_ko_KR extends I18n {
   String get no => "아니";
   /// "${numYes} 예"
   @override
-  String numYes(String numYes) => "${numYes} 예";
+  String numYes(int numYes) => "${numYes} 예";
   /// "${numNo} 아니요"
   @override
-  String numNo(String numNo) => "${numNo} 아니요";
+  String numNo(int numNo) => "${numNo} 아니요";
   /// "${numVotes} 투표"
   @override
-  String numVotes(String numVotes) => "${numVotes} 투표";
+  String numVotes(int numVotes) => "${numVotes} 투표";
   /// "제안 종료에 대한 투표 ${endtime}"
   @override
   String votingOnProposalEnds(String endtime) => "제안 종료에 대한 투표 ${endtime}";
@@ -870,10 +870,10 @@ class _I18n_ko_KR extends I18n {
   String get daysUntilProposalEnds => "제안이 끝날 때까지의 날짜";
   /// "${numLowerBoundDays} 일"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays} 일";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays} 일";
   /// "${numUpperBoundDays} 일"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays} 일";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays} 일";
   /// "새로운 제안"
   @override
   String get newProposal => "새로운 제안";
@@ -921,7 +921,7 @@ class _I18n_ko_KR extends I18n {
   String get leastAttendees => "최소 참석자";
   /// "참석자 ${numAttenders} 명"
   @override
-  String numAttenders(String numAttenders) => "참석자 ${numAttenders} 명";
+  String numAttenders(int numAttenders) => "참석자 ${numAttenders} 명";
   /// "이벤트 검색"
   @override
   String get searchEvents => "이벤트 검색";
@@ -936,7 +936,7 @@ class _I18n_ko_KR extends I18n {
   String get leastComments => "최소 의견";
   /// "${numComments} 의견"
   @override
-  String numComments(String numComments) => "${numComments} 의견";
+  String numComments(int numComments) => "${numComments} 의견";
   /// "참석?"
   @override
   String get attending => "참석?";
@@ -1013,7 +1013,7 @@ class _I18n_ru_RU extends I18n {
   String get emailSignUpFieldError => "Пожалуйста, введите свой адрес электронной почты";
   /// "Ваш пароль должен содержать не менее ${numChar} символов"
   @override
-  String passwordSignUpFieldError(String numChar) => "Ваш пароль должен содержать не менее ${numChar} символов";
+  String passwordSignUpFieldError(int numChar) => "Ваш пароль должен содержать не менее ${numChar} символов";
   /// "Ваши пароли не совпадают"
   @override
   String get confirmPasswordSignUpFieldName => "Ваши пароли не совпадают";
@@ -1037,7 +1037,7 @@ class _I18n_ru_RU extends I18n {
   String get proposals => "Предложения";
   /// "Заканчивается через ${days} дней"
   @override
-  String endsInNumDays(String days) => "Заканчивается через ${days} дней";
+  String endsInNumDays(int days) => "Заканчивается через ${days} дней";
   /// "да"
   @override
   String get yes => "да";
@@ -1046,13 +1046,13 @@ class _I18n_ru_RU extends I18n {
   String get no => "нет";
   /// "${numYes} да"
   @override
-  String numYes(String numYes) => "${numYes} да";
+  String numYes(int numYes) => "${numYes} да";
   /// "${numNo} нет"
   @override
-  String numNo(String numNo) => "${numNo} нет";
+  String numNo(int numNo) => "${numNo} нет";
   /// "${numVotes} голосов"
   @override
-  String numVotes(String numVotes) => "${numVotes} голосов";
+  String numVotes(int numVotes) => "${numVotes} голосов";
   /// "Голосование по предложению заканчивается ${endtime}"
   @override
   String votingOnProposalEnds(String endtime) => "Голосование по предложению заканчивается ${endtime}";
@@ -1070,10 +1070,10 @@ class _I18n_ru_RU extends I18n {
   String get daysUntilProposalEnds => "Дни до окончания предложения";
   /// "${numLowerBoundDays} День"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays} День";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays} День";
   /// "${numUpperBoundDays} дней"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays} дней";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays} дней";
   /// "Новое предложение"
   @override
   String get newProposal => "Новое предложение";
@@ -1121,7 +1121,7 @@ class _I18n_ru_RU extends I18n {
   String get leastAttendees => "Наименее посещаемые";
   /// "${numAttenders} участники"
   @override
-  String numAttenders(String numAttenders) => "${numAttenders} участники";
+  String numAttenders(int numAttenders) => "${numAttenders} участники";
   /// "Поиск событий"
   @override
   String get searchEvents => "Поиск событий";
@@ -1136,7 +1136,7 @@ class _I18n_ru_RU extends I18n {
   String get leastComments => "Наименее комментарии";
   /// "${numComments} комментарии"
   @override
-  String numComments(String numComments) => "${numComments} комментарии";
+  String numComments(int numComments) => "${numComments} комментарии";
   /// "Посещение?"
   @override
   String get attending => "Посещение?";
@@ -1213,7 +1213,7 @@ class _I18n_ja_JP extends I18n {
   String get emailSignUpFieldError => "メールアドレスを入力してください";
   /// "パスワードは少なくとも${numChar}文字である必要があります"
   @override
-  String passwordSignUpFieldError(String numChar) => "パスワードは少なくとも${numChar}文字である必要があります";
+  String passwordSignUpFieldError(int numChar) => "パスワードは少なくとも${numChar}文字である必要があります";
   /// "パスワードが一致しません"
   @override
   String get confirmPasswordSignUpFieldName => "パスワードが一致しません";
@@ -1237,7 +1237,7 @@ class _I18n_ja_JP extends I18n {
   String get proposals => "提案";
   /// "${days}日で終了"
   @override
-  String endsInNumDays(String days) => "${days}日で終了";
+  String endsInNumDays(int days) => "${days}日で終了";
   /// "はい"
   @override
   String get yes => "はい";
@@ -1246,13 +1246,13 @@ class _I18n_ja_JP extends I18n {
   String get no => "番号";
   /// "${numYes}はい"
   @override
-  String numYes(String numYes) => "${numYes}はい";
+  String numYes(int numYes) => "${numYes}はい";
   /// "${numNo}いいえ"
   @override
-  String numNo(String numNo) => "${numNo}いいえ";
+  String numNo(int numNo) => "${numNo}いいえ";
   /// "${numVotes}票"
   @override
-  String numVotes(String numVotes) => "${numVotes}票";
+  String numVotes(int numVotes) => "${numVotes}票";
   /// "プロポーザルの投票終了${endtime}"
   @override
   String votingOnProposalEnds(String endtime) => "プロポーザルの投票終了${endtime}";
@@ -1270,10 +1270,10 @@ class _I18n_ja_JP extends I18n {
   String get daysUntilProposalEnds => "提案終了までの日数";
   /// "${numLowerBoundDays}日"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays}日";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays}日";
   /// "${numUpperBoundDays}日"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays}日";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays}日";
   /// "新しい提案"
   @override
   String get newProposal => "新しい提案";
@@ -1321,7 +1321,7 @@ class _I18n_ja_JP extends I18n {
   String get leastAttendees => "最小参加者";
   /// "${numAttenders}人の参加者"
   @override
-  String numAttenders(String numAttenders) => "${numAttenders}人の参加者";
+  String numAttenders(int numAttenders) => "${numAttenders}人の参加者";
   /// "イベントを検索"
   @override
   String get searchEvents => "イベントを検索";
@@ -1336,7 +1336,7 @@ class _I18n_ja_JP extends I18n {
   String get leastComments => "最小限のコメント";
   /// "${numComments}コメント"
   @override
-  String numComments(String numComments) => "${numComments}コメント";
+  String numComments(int numComments) => "${numComments}コメント";
   /// "参加しますか？"
   @override
   String get attending => "参加しますか？";
@@ -1413,7 +1413,7 @@ class _I18n_uk_UA extends I18n {
   String get emailSignUpFieldError => "Введіть свою електронну адресу";
   /// "Ваш пароль повинен містити не менше ${numChar} символів"
   @override
-  String passwordSignUpFieldError(String numChar) => "Ваш пароль повинен містити не менше ${numChar} символів";
+  String passwordSignUpFieldError(int numChar) => "Ваш пароль повинен містити не менше ${numChar} символів";
   /// "Ваші паролі не збігаються"
   @override
   String get confirmPasswordSignUpFieldName => "Ваші паролі не збігаються";
@@ -1437,7 +1437,7 @@ class _I18n_uk_UA extends I18n {
   String get proposals => "Пропозиції";
   /// "Закінчується через ${days} днів"
   @override
-  String endsInNumDays(String days) => "Закінчується через ${days} днів";
+  String endsInNumDays(int days) => "Закінчується через ${days} днів";
   /// "Так"
   @override
   String get yes => "Так";
@@ -1446,13 +1446,13 @@ class _I18n_uk_UA extends I18n {
   String get no => "Ні";
   /// "${numYes} так"
   @override
-  String numYes(String numYes) => "${numYes} так";
+  String numYes(int numYes) => "${numYes} так";
   /// "${numNo} ні"
   @override
-  String numNo(String numNo) => "${numNo} ні";
+  String numNo(int numNo) => "${numNo} ні";
   /// "${numVotes} голосів"
   @override
-  String numVotes(String numVotes) => "${numVotes} голосів";
+  String numVotes(int numVotes) => "${numVotes} голосів";
   /// "Голосування за пропозицію закінчується ${endtime}"
   @override
   String votingOnProposalEnds(String endtime) => "Голосування за пропозицію закінчується ${endtime}";
@@ -1470,10 +1470,10 @@ class _I18n_uk_UA extends I18n {
   String get daysUntilProposalEnds => "Днів, поки пропозиція закінчується";
   /// "${numLowerBoundDays} День"
   @override
-  String oneDay(String numLowerBoundDays) => "${numLowerBoundDays} День";
+  String oneDay(int numLowerBoundDays) => "${numLowerBoundDays} День";
   /// "${numUpperBoundDays} Дні"
   @override
-  String fourteenDays(String numUpperBoundDays) => "${numUpperBoundDays} Дні";
+  String fourteenDays(int numUpperBoundDays) => "${numUpperBoundDays} Дні";
   /// "Нова пропозиція"
   @override
   String get newProposal => "Нова пропозиція";
@@ -1521,7 +1521,7 @@ class _I18n_uk_UA extends I18n {
   String get leastAttendees => "Найменше відвідувачів";
   /// "${numAttenders} відвідувачів"
   @override
-  String numAttenders(String numAttenders) => "${numAttenders} відвідувачів";
+  String numAttenders(int numAttenders) => "${numAttenders} відвідувачів";
   /// "Пошук подій"
   @override
   String get searchEvents => "Пошук подій";
@@ -1536,7 +1536,7 @@ class _I18n_uk_UA extends I18n {
   String get leastComments => "Найменші коментарі";
   /// "${numComments} коментарі"
   @override
-  String numComments(String numComments) => "${numComments} коментарі";
+  String numComments(int numComments) => "${numComments} коментарі";
   /// "Відвідуєте?"
   @override
   String get attending => "Відвідуєте?";
