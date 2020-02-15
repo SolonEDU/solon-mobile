@@ -1,5 +1,6 @@
 import 'package:Solon/api/message.dart';
 import 'package:Solon/doubletap.dart';
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 // import 'package:Solon/api/api_connect.dart';
@@ -41,7 +42,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('title'),
+                  I18n.of(context).title,
                 ),
               ),
               Container(
@@ -51,8 +52,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context)
-                          .translate('pleaseEnterATitle');
+                      return I18n.of(context).pleaseEnterATitle;
                     }
                     return null;
                   },
@@ -61,8 +61,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20),
-                child:
-                    Text(AppLocalizations.of(context).translate('description')),
+                child: Text(I18n.of(context).description),
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -79,8 +78,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   maxLines: 3,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context)
-                          .translate('pleaseEnterADescription');
+                      return I18n.of(context).pleaseEnterADescription;
                     }
                     return null;
                   },

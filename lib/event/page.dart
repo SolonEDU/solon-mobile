@@ -1,3 +1,4 @@
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -115,7 +116,7 @@ class _EventPageState extends State<EventPage> with Screen {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                      child: Text(AppLocalizations.of(context).translate('attending')),
+                      child: Text(I18n.of(context).attending),
                     ),
                     Switch.adaptive(
                       value: attendanceVal,

@@ -1,6 +1,7 @@
 import 'package:Solon/api/message.dart';
 // import 'package:Solon/auth/button.dart';
 import 'package:Solon/doubletap.dart';
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('title'),
+                  I18n.of(context).title,
                 ),
               ),
               Container(
@@ -49,8 +50,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context)
-                          .translate('pleaseEnterATitle');
+                      return I18n.of(context).pleaseEnterATitle;
                     }
                     return null;
                   },
@@ -60,7 +60,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
               Container(
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('description'),
+                  I18n.of(context).description,
                 ),
               ),
               Container(
@@ -78,8 +78,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   maxLines: 5,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context)
-                          .translate('pleaseEnterADescription');
+                      return I18n.of(context).pleaseEnterADescription;
                     }
                     return null;
                   },

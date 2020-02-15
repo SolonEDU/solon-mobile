@@ -152,26 +152,27 @@ class _SolonState extends State<Solon> {
       ,
       localizationsDelegates: [
         i18n,
-        AppLocalizations.delegate,
+        // AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultMaterialLocalizations.delegate
       ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (locale == null) {
-          debugPrint("*language locale is null!");
-          return supportedLocales.first;
-        }
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
-          }
-        }
-        print('${locale.languageCode} printed from main ${locale.countryCode}');
+      localeResolutionCallback: i18n.resolution(fallback: Locale("en", "US"))
+      // (locale, supportedLocales) {
+      //   if (locale == null) {
+      //     debugPrint("*language locale is null!");
+      //     return supportedLocales.first;
+      //   }
+      //   for (var supportedLocale in supportedLocales) {
+      //     if (supportedLocale.languageCode == locale.languageCode &&
+      //         supportedLocale.countryCode == locale.countryCode) {
+      //       return supportedLocale;
+      //     }
+      //   }
+      //   print('${locale.languageCode} printed from main ${locale.countryCode}');
 
-        return supportedLocales.first;
-      },
+      //   return supportedLocales.first;
+      // },
     );
   }
 }
@@ -218,6 +219,17 @@ class _MainState extends State<Main> {
         'widget': ForumScreen(uid: widget.uid),
       },
     ];
+    String curTitle = _widgetOptions[_selectedIndex]['title'];
+    String titleText;
+    if (curTitle == 'home') {
+      titleText = I18n.of(context).home;
+    } else if (curTitle == 'proposals') {
+      titleText = I18n.of(context).proposals;
+    } else if (curTitle == 'events') {
+      titleText = I18n.of(context).events;
+    } else {
+      titleText = I18n.of(context).forum;
+    }
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light,
     );
@@ -226,8 +238,7 @@ class _MainState extends State<Main> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          AppLocalizations.of(context)
-              .translate(_widgetOptions[_selectedIndex]['title']),
+          titleText
         ),
         actions: <Widget>[
           IconButton(

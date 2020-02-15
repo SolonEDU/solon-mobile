@@ -1,3 +1,4 @@
+import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Solon/main.dart';
@@ -29,7 +30,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,
-        title: AppLocalizations.of(context).translate('signin'),
+        title: I18n.of(context).signIn,
       ),
       body: Center(
         child: Form(
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('email'),
+                  I18n.of(context).email,
                 ),
               ),
               Container(
@@ -61,7 +62,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
               Container(
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('password'),
+                  I18n.of(context).password,
                 ),
               ),
               Container(
@@ -90,7 +91,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 width: 155,
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25, bottom: 25),
-                label: AppLocalizations.of(context).translate('signin'),
+                label: I18n.of(context).signIn,
               ),
             ],
           ),

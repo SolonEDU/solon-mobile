@@ -1,4 +1,5 @@
 import 'package:Solon/auth/button.dart';
+import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
@@ -73,7 +74,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                 key: _scaffoldKey,
                 appBar: getPageAppBar(
                   context,
-                  title: AppLocalizations.of(context).translate('account'),
+                  title: I18n.of(context).account,
                 ),
                 body: Container(
                   margin: const EdgeInsets.all(20),
