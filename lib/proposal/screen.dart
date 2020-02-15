@@ -219,7 +219,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
 
 // TODO: move to another file after we're done experimenting
 class ProposalsSearch extends SearchDelegate {
-  StreamController streamController = StreamController();
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
