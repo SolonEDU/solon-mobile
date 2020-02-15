@@ -1,3 +1,4 @@
+import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,8 +14,28 @@ import 'package:Solon/app_localizations.dart';
 
 void main() => runApp(Solon());
 
-class Solon extends StatelessWidget {
+class Solon extends StatefulWidget {
+  Solon({Key key}) : super(key: key);
+
+  @override
+  _SolonState createState() => _SolonState();
+}
+
+class _SolonState extends State<Solon> {
   static const String _title = 'Home';
+  final i18n = I18n.delegate;
+
+  @override
+  void initState() {
+    super.initState();
+    I18n.onLocaleChanged = onLocaleChange;
+  }
+
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      I18n.locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +51,8 @@ class Solon extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0.0,
-          brightness: Brightness.light, // TODO: have yet to find a nonjanky method
+          brightness:
+              Brightness.light, // TODO: have yet to find a nonjanky method
           textTheme: TextTheme(
             title: TextStyle(
               color: Colors.black,
@@ -57,76 +79,79 @@ class Solon extends StatelessWidget {
           },
         ),
       ),
-      supportedLocales: [
-        Locale('en'),
-        Locale('af'),
-        Locale('sq'),
-        Locale('ar'),
-        Locale('az'),
-        Locale('eu'),
-        Locale('bn'),
-        Locale('be'),
-        Locale('bg'),
-        Locale('ca'),
-        Locale('chr'),
-        Locale('zh', 'CN'),
-        Locale('zh', 'TW'),
-        Locale('hr'),
-        Locale('cs'),
-        Locale('da'),
-        Locale('nl'),
-        Locale('en', 'GB'),
-        Locale('eo'),
-        Locale('et'),
-        Locale('tl'),
-        Locale('fi'),
-        Locale('fr', 'FR'),
-        Locale('gl'),
-        Locale('ka'),
-        Locale('de'),
-        Locale('el'),
-        Locale('gu'),
-        Locale('ht'),
-        Locale('iw'),
-        Locale('hi'),
-        Locale('hu'),
-        Locale('is'),
-        Locale('id'),
-        Locale('ga'),
-        Locale('it'),
-        Locale('ja'),
-        Locale('kn'),
-        Locale('ko'),
-        Locale('la'),
-        Locale('lv'),
-        Locale('lt'),
-        Locale('mk'),
-        Locale('ms'),
-        Locale('mt'),
-        Locale('no'),
-        Locale('fa'),
-        Locale('pl'),
-        Locale('pt'),
-        Locale('pt', 'PT'),
-        Locale('ro'),
-        Locale('ru'),
-        Locale('sr'),
-        Locale('sk'),
-        Locale('sl'),
-        Locale('es', 'MX'),
-        Locale('sw'),
-        Locale('sv'),
-        Locale('ta'),
-        Locale('te'),
-        Locale('th'),
-        Locale('tr'),
-        Locale('uk'),
-        Locale('ur'),
-        Locale('vi'),
-        Locale('cy'),
-        Locale('yi'),
-      ],
+      supportedLocales: i18n.supportedLocales
+      // [
+      // Locale('en'),
+      // Locale('af'),
+      // Locale('sq'),
+      // Locale('ar'),
+      // Locale('az'),
+      // Locale('eu'),
+      // Locale('bn'),
+      // Locale('be'),
+      // Locale('bg'),
+      // Locale('ca'),
+      // Locale('chr'),
+      // Locale('zh', 'CN'),
+      // Locale('zh', 'TW'),
+      // Locale('hr'),
+      // Locale('cs'),
+      // Locale('da'),
+      // Locale('nl'),
+      // Locale('en', 'GB'),
+      // Locale('eo'),
+      // Locale('et'),
+      // Locale('tl'),
+      // Locale('fi'),
+      // Locale('fr', 'FR'),
+      // Locale('gl'),
+      // Locale('ka'),
+      // Locale('de'),
+      // Locale('el'),
+      // Locale('gu'),
+      // Locale('ht'),
+      // Locale('iw'),
+      // Locale('hi'),
+      // Locale('hu'),
+      // Locale('is'),
+      // Locale('id'),
+      // Locale('ga'),
+      // Locale('it'),
+      // Locale('ja'),
+      // Locale('kn'),
+      // Locale('ko'),
+      // Locale('la'),
+      // Locale('lv'),
+      // Locale('lt'),
+      // Locale('mk'),
+      // Locale('ms'),
+      // Locale('mt'),
+      // Locale('no'),
+      // Locale('fa'),
+      // Locale('pl'),
+      // Locale('pt'),
+      // Locale('pt', 'PT'),
+      // Locale('ro'),
+      // Locale('ru'),
+      // Locale('sr'),
+      // Locale('sk'),
+      // Locale('sl'),
+      // Locale('es', 'MX'),
+      // Locale('sw'),
+      // Locale('sv'),
+      // Locale('ta'),
+      // Locale('te'),
+      // Locale('th'),
+      // Locale('tr'),
+      // Locale('uk'),
+      // Locale('ur'),
+      // Locale('vi'),
+      // Locale('cy'),
+      // Locale('yi'),
+      // ]
+      ,
       localizationsDelegates: [
+        i18n,
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -150,6 +175,9 @@ class Solon extends StatelessWidget {
     );
   }
 }
+// class Solon extends StatelessWidget {
+
+// }
 
 class Main extends StatefulWidget {
   final int uid;
