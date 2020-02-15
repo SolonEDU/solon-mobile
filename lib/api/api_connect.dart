@@ -30,6 +30,25 @@ class APIConnect {
     );
   }
 
+  static Stream<List<ProposalCard>> proposalSearchListView(
+      String query) async* {
+    yield await searchProposals(
+      query: query,
+    );
+  }
+
+  static Stream<List<EventCard>> eventSearchListView(String query) async* {
+    yield await searchEvents(
+      query: query,
+    );
+  }
+
+  static Stream<List<PostCard>> forumSearchListView(String query) async* {
+    yield await searchForum(
+      query: query,
+    );
+  }
+
   static Stream<List<PostCard>> forumListView(String query) async* {
     yield await connectForumPosts(query: query);
   }
@@ -447,5 +466,56 @@ class APIConnect {
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Message field in forum post object not found.');
+  }
+
+  static Future<List<ProposalCard>> searchProposals({String query}) async {
+    final http.Response response = await http.get(
+      "$_url/proposals?q=$query",
+      headers: await headers,
+    );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    List collection = json.decode(response.body)['proposals'];
+    List<ProposalCard> _proposals = collection
+        .map((json) => ProposalCard.fromJson(json, prefLangCode))
+        .toList();
+    return _proposals;
+  }
+
+  static Future<List<EventCard>> searchEvents({String query}) async {
+    final http.Response response = await http.get(
+      "$_url/events?q=$query",
+      headers: await headers,
+    );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    List collection = json.decode(response.body)['events'];
+    List<EventCard> _events = collection
+        .map(
+          (json) => EventCard.fromJson(
+            json,
+            sharedPrefs['uid'],
+            prefLangCode,
+          ),
+        )
+        .toList();
+    return _events;
+  }
+
+  static Future<List<PostCard>> searchForum({String query}) async {
+    final http.Response response = await http.get(
+      "$_url/forumposts?q=$query",
+      headers: await headers,
+    );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    List collection = json.decode(response.body)['forumposts'];
+    List<PostCard> _forumposts = collection
+        .map((json) => PostCard.fromJson(json, prefLangCode))
+        .toList();
+    return _forumposts;
   }
 }

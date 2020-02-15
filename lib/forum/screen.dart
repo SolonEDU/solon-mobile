@@ -237,12 +237,32 @@ class ForumSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    if (query == '') return Container();
+    return StreamBuilder(
+      stream: Function.apply(
+        APIConnect.forumSearchListView,
+        [
+          query,
+        ],
+      ),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Container(
+              child: CircularProgressIndicator(),
+            );
+          default:
+            return ListView(
+              children: snapshot.data,
+            );
+        }
+      },
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text(query);
+    return Container();
   }
 
   @override
