@@ -116,10 +116,25 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                           'Oldest deadlines',
                                         ].map<DropdownMenuItem<String>>(
                                             (String value) {
+                                          Map<String, String> itemsMap = {
+                                            'Most votes':
+                                                I18n.of(context).mostVotes,
+                                            'Least votes':
+                                                I18n.of(context).leastVotes,
+                                            'Newly created':
+                                                I18n.of(context).newlyCreated,
+                                            'Oldest created':
+                                                I18n.of(context).oldestCreated,
+                                            'Upcoming deadlines':
+                                                I18n.of(context)
+                                                    .upcomingDeadlines,
+                                            'Oldest deadlines': I18n.of(context)
+                                                .oldestDeadlines,
+                                          };
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(
-                                              value,
+                                              itemsMap[value],
                                               // textAlign: TextAlign.left,
                                             ),
                                           );
@@ -137,7 +152,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                 onPressed: () {
                                   showSearch(
                                     context: context,
-                                    delegate: ProposalsSearch(),
+                                    delegate: ProposalsSearch(context),
                                   );
                                 },
                                 child: Icon(
@@ -220,6 +235,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
 
 // TODO: move to another file after we're done experimenting
 class ProposalsSearch extends SearchDelegate {
+  BuildContext context;
+
+  ProposalsSearch(this.context);
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -297,5 +315,5 @@ class ProposalsSearch extends SearchDelegate {
   }
 
   @override
-  String get searchFieldLabel => 'Search proposals';
+  String get searchFieldLabel => I18n.of(context).searchProposals;
 }

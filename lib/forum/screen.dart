@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/card.dart';
@@ -112,9 +110,19 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                         'Least comments',
                                       ].map<DropdownMenuItem<String>>(
                                           (String value) {
+                                        Map<String, String> itemsMap = {
+                                          'Newly created':
+                                              I18n.of(context).newlyCreated,
+                                          'Oldest created':
+                                              I18n.of(context).oldestCreated,
+                                          'Most comments':
+                                              I18n.of(context).mostComments,
+                                          'Least comments':
+                                              I18n.of(context).leastComments,
+                                        };
                                         return DropdownMenuItem<String>(
                                           value: value,
-                                          child: Text(value),
+                                          child: Text(itemsMap[value]),
                                         );
                                       }).toList(),
                                     ),
@@ -130,7 +138,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                               onPressed: () {
                                 showSearch(
                                   context: context,
-                                  delegate: ForumSearch(),
+                                  delegate: ForumSearch(context),
                                 );
                               },
                               child: Icon(
@@ -214,6 +222,10 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
 
 // TODO: move to another file after we're done experimenting
 class ForumSearch extends SearchDelegate {
+  BuildContext context;
+
+  ForumSearch(this.context);
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -268,5 +280,5 @@ class ForumSearch extends SearchDelegate {
   }
 
   @override
-  String get searchFieldLabel => 'Search forum';
+  String get searchFieldLabel => I18n.of(context).searchForum;
 }

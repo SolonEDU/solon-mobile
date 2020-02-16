@@ -1,13 +1,10 @@
 import 'dart:async';
-
 import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/event/card.dart';
-// import 'package:Solon/loader.dart';
 
 class EventsScreen extends StatefulWidget {
   final int uid;
@@ -112,10 +109,18 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                                         'Least attendees',
                                       ].map<DropdownMenuItem<String>>(
                                           (String value) {
+                                        Map<String, String> itemsMap = {
+                                          'Furthest': I18n.of(context).furthest,
+                                          'Upcoming': I18n.of(context).upcoming,
+                                          'Most attendees':
+                                              I18n.of(context).mostAttendees,
+                                          'Least attendees':
+                                              I18n.of(context).leastAttendees,
+                                        };
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(
-                                            value,
+                                            itemsMap[value],
                                             // textAlign: TextAlign.left,
                                           ),
                                         );
@@ -133,7 +138,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                               onPressed: () {
                                 showSearch(
                                   context: context,
-                                  delegate: EventsSearch(),
+                                  delegate: EventsSearch(context),
                                 );
                               },
                               child: Icon(
@@ -214,6 +219,10 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
 
 // TODO: move to another file after we're done experimenting
 class EventsSearch extends SearchDelegate {
+  BuildContext context;
+
+  EventsSearch(this.context);
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -268,5 +277,5 @@ class EventsSearch extends SearchDelegate {
   }
 
   @override
-  String get searchFieldLabel => 'Search events';
+  String get searchFieldLabel => I18n.of(context).searchEvents;
 }
