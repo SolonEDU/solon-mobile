@@ -97,7 +97,7 @@ class _PostCardState extends State<PostCard> with Screen {
             ),
           ),
           Text(widget.timestamp),
-          Text(I18n.of(context).numComments(widget.numcomments)),
+          Text(I18n.of(context).numComments(widget.numcomments.toString())),
         ],
       ),
     );

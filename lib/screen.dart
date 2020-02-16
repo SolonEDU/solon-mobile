@@ -96,13 +96,13 @@ mixin Screen {
           children: <Widget>[
             Expanded(
               child: Text(
-                I18n.of(context).numYes(yes),
+                I18n.of(context).numYes(yes.toString()),
                 textAlign: TextAlign.start,
               ),
             ),
             Expanded(
               child: Text(
-                I18n.of(context).numNo(no),
+                I18n.of(context).numNo(no.toString()),
                 textAlign: TextAlign.end,
               ),
             ),

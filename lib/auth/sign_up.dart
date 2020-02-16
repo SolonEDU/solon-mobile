@@ -156,7 +156,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.length < 6) {
-                    return I18n.of(context).passwordSignUpFieldError(6);
+                    return I18n.of(context).passwordSignUpFieldError("6");
                   } else {
                     _password = input;
                     return null;

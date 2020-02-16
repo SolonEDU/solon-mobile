@@ -62,5 +62,9 @@
     "commentSection": "댓글 섹션",
     "enterAComment": "코멘트를 입력",
     "searchForum": "포럼 검색",
-    "signOut": "로그 아웃"
+    "signOut": "로그 아웃",
+    "userDoesNotExist": "이메일 {email}을 가진 사용자가 존재하지 않습니다",
+    "incorrectPassword": "잘못된 비밀번호",
+    "lowerBoundDays": "{numLowerBoundDays} 일",
+    "upperBoundDays": "{numUpperBoundDays} 일"
 }

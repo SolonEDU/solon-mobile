@@ -62,5 +62,9 @@
     "commentSection": "评论部分",
     "enterAComment": "输入评论",
     "searchForum": "搜索论坛",
-    "signOut": "登出"
+    "signOut": "登出",
+    "userDoesNotExist": "电子邮件为{email}的用户不存在",
+    "incorrectPassword": "密码错误",
+    "lowerBoundDays": "{numLowerBoundDays}天",
+    "upperBoundDays": "{numUpperBoundDays}天"
 }

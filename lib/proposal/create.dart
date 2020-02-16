@@ -93,8 +93,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   activeColor: Colors.pink[400],
                   divisions: 13,
                   label: _sliderValue == 1.0
-                      ? I18n.of(context).oneDay(_sliderValue.round())
-                      : I18n.of(context).fourteenDays(_sliderValue.round()),
+                      ? I18n.of(context).lowerBoundDays(_sliderValue.round().toString())
+                      : I18n.of(context).upperBoundDays(_sliderValue.round().toString()),
                   min: 1.0,
                   max: 14.0,
                   onChanged: (newRating) {
@@ -110,12 +110,12 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      I18n.of(context).oneDay(1),
+                      I18n.of(context).lowerBoundDays("1"),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      I18n.of(context).fourteenDays(14),
+                      I18n.of(context).upperBoundDays("14"),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )

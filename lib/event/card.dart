@@ -111,7 +111,7 @@ class _EventCardState extends State<EventCard> with Screen {
             ),
           ),
           Text(
-            I18n.of(context).numAttenders(widget.numattenders),
+            I18n.of(context).numAttenders(widget.numattenders.toString()),
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),

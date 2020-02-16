@@ -120,7 +120,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              I18n.of(context).endsInNumDays(widget.date.difference(DateTime.now()).inDays),
+              I18n.of(context).endsInNumDays(widget.date.difference(DateTime.now()).inDays.toString()),
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -128,7 +128,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
             ),
           ),
           Text(
-            I18n.of(context).numVotes(widget.yesVotes + widget.noVotes),
+            I18n.of(context).numVotes((widget.yesVotes + widget.noVotes).toString()),
           ),
           FutureBuilder<Map<String, dynamic>>(
             future: _listFutureProposal,

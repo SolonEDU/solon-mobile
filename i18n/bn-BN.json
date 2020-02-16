@@ -62,5 +62,9 @@
     "commentSection": "মন্তব্য বিভাগ",
     "enterAComment": "একটি মন্তব্য লিখুন",
     "searchForum": "ফোরাম অনুসন্ধান করুন",
-    "signOut": "সাইন আউট"
+    "signOut": "সাইন আউট",
+    "userDoesNotExist": "ইমেল User ইমেল with সহ ব্যবহারকারীর অস্তিত্ব নেই",
+    "incorrectPassword": "ভুল পাসওয়ার্ড৤",
+    "lowerBoundDays": "{numLowerBoundDays} দিন",
+    "upperBoundDays": "{numUpperBoundDays} দিন"
 }

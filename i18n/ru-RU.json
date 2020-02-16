@@ -62,5 +62,9 @@
     "commentSection": "Раздел комментариев",
     "enterAComment": "Введите комментарий",
     "searchForum": "Поиск по форуму",
-    "signOut": "Выход"
+    "signOut": "Выход",
+    "userDoesNotExist": "Пользователь с электронной почтой {email} не существует",
+    "incorrectPassword": "неверный пароль",
+    "lowerBoundDays": "{numLowerBoundDays} День",
+    "upperBoundDays": "{numUpperBoundDays} дней"
 }

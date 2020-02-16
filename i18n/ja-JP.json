@@ -62,5 +62,9 @@
     "commentSection": "コメントセクション",
     "enterAComment": "コメントを入力してください",
     "searchForum": "検索フォーラム",
-    "signOut": "サインアウト"
+    "signOut": "サインアウト",
+    "userDoesNotExist": "電子メール{email}を持つユーザーは存在しません",
+    "incorrectPassword": "間違ったパスワード",
+    "lowerBoundDays": "{numLowerBoundDays}日",
+    "upperBoundDays": "{numUpperBoundDays}日"
 }
