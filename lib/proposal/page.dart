@@ -4,10 +4,7 @@ import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
 import 'package:Solon/api/api_connect.dart';
-// import 'package:Solon/app_localizations.dart';
-// import 'package:Solon/loader.dart';
 
 class ProposalPage extends StatefulWidget {
   final int pid;

@@ -7,7 +7,6 @@ import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:Solon/app_localizations.dart';
 
 class EventCard extends StatefulWidget {
   final int eid;

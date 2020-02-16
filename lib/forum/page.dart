@@ -1,14 +1,10 @@
 import 'dart:async';
-
 import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
-
-import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/comment.dart';
-// import 'package:Solon/loader.dart';
 
 class PostPage extends StatefulWidget {
   final int fid;

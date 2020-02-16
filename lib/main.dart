@@ -10,7 +10,6 @@ import 'package:Solon/event/screen.dart';
 import 'package:Solon/forum/screen.dart';
 import 'package:Solon/account_screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
 
 void main() => runApp(Solon());
 
@@ -152,7 +151,6 @@ class _SolonState extends State<Solon> {
       ,
       localizationsDelegates: [
         i18n,
-        // AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultMaterialLocalizations.delegate
