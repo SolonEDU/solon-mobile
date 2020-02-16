@@ -62,5 +62,7 @@
     "commentSection": "Comment Section",
     "enterAComment": "Enter a comment",
     "searchForum": "Search forum",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "userDoesNotExist": "User with email {email} does not exist",
+    "incorrectPassword": "Incorrect password"
 }
