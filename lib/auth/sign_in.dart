@@ -100,11 +100,12 @@ class _LoginPageState extends State<LoginPage> with Screen {
 
   Future<dynamic> signIn() async {
     final formState = _formKey.currentState;
-    if (formState.validate()) {
+    if (formState.validate()) { // TODO: fix these nested if statements
       formState.save();
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
-        showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+        String message = responseMessage["error"]["errorMessage"] == "Incorrect password" ? I18n.of(context).incorrectPassword : I18n.of(context).userDoesNotExist(_email); // TODO: need a better to code for this logic
+        showToast(message, _scaffoldKey);
         return false;
       } else {
         FocusScope.of(context).requestFocus(FocusNode());
