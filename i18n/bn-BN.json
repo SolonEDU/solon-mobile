@@ -20,7 +20,7 @@
     "parentHomeScreen": "মূল হোম স্ক্রিন",
     "account": "হিসাব",
     "proposals": "প্রস্তাব",
-    "endsInNumDays": "{দিন} দিনগুলিতে শেষ হয়",
+    "endsInNumDays": "{numDays} দিনগুলিতে শেষ হয়",
     "yes": "হ্যাঁ",
     "no": "না",
     "numYes": "{numYes} হ্যাঁ",
