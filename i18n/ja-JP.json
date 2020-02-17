@@ -20,7 +20,7 @@
     "parentHomeScreen": "親ホーム画面",
     "account": "アカウント",
     "proposals": "提案",
-    "endsInNumDays": "{days}日で終了",
+    "endsInNumDays": "{numDays}日で終了",
     "yes": "はい",
     "no": "番号",
     "numYes": "{numYes}はい",

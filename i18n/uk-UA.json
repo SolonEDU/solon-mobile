@@ -20,7 +20,7 @@
     "parentHomeScreen": "Домашній екран батьків",
     "account": "Рахунок",
     "proposals": "Пропозиції",
-    "endsInNumDays": "Закінчується через {days} днів",
+    "endsInNumDays": "Закінчується через {numDays} днів",
     "yes": "Так",
     "no": "Ні",
     "numYes": "{numYes} так",

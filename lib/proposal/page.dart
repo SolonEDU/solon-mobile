@@ -75,8 +75,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                 _voteOutput = "You have not voted yet!";
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
-                    ? "You have voted Yea!"
-                    : "You have voted Nay!";
+                    ? I18n.of(context).youHaveVoted("yes")
+                    : I18n.of(context).youHaveVoted("no");
               }
               return ListView(
                 children: <Widget>[
@@ -112,7 +112,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text('Voting on proposal ends ' + widget.endTime),
+                    child: Text(I18n.of(context).votingOnProposalEnds(widget.endTime)),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(

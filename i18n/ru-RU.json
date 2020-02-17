@@ -20,7 +20,7 @@
     "parentHomeScreen": "Родительский домашний экран",
     "account": "учетная запись",
     "proposals": "Предложения",
-    "endsInNumDays": "Заканчивается через {days} дней",
+    "endsInNumDays": "Заканчивается через {numDays} дней",
     "yes": "да",
     "no": "нет",
     "numYes": "{numYes} да",

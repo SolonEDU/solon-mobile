@@ -20,7 +20,7 @@
     "parentHomeScreen": "부모 홈 화면",
     "account": "계정",
     "proposals": "제안서",
-    "endsInNumDays": "{days} 일 후 종료",
+    "endsInNumDays": "{numDays} 일 후 종료",
     "yes": "예",
     "no": "아니",
     "numYes": "{numYes} 예",

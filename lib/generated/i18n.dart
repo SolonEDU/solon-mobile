@@ -239,9 +239,9 @@ class _I18n_zh_CN extends I18n {
   /// "提案"
   @override
   String get proposals => "提案";
-  /// "于{days}天后结束"
+  /// "于${numDays}天后结束"
   @override
-  String endsInNumDays(String numDays) => "于{days}天后结束";
+  String endsInNumDays(String numDays) => "于${numDays}天后结束";
   /// "是"
   @override
   String get yes => "是";
@@ -445,9 +445,9 @@ class _I18n_zh_TW extends _I18n_zh_CN {
   /// "提案"
   @override
   String get proposals => "提案";
-  /// "于{days}天后结束"
+  /// "于${numDays}天后结束"
   @override
-  String endsInNumDays(String numDays) => "于{days}天后结束";
+  String endsInNumDays(String numDays) => "于${numDays}天后结束";
   /// "是"
   @override
   String get yes => "是";
@@ -651,9 +651,9 @@ class _I18n_bn_BN extends I18n {
   /// "প্রস্তাব"
   @override
   String get proposals => "প্রস্তাব";
-  /// "{দিন} দিনগুলিতে শেষ হয়"
+  /// "${numDays} দিনগুলিতে শেষ হয়"
   @override
-  String endsInNumDays(String numDays) => "{দিন} দিনগুলিতে শেষ হয়";
+  String endsInNumDays(String numDays) => "${numDays} দিনগুলিতে শেষ হয়";
   /// "হ্যাঁ"
   @override
   String get yes => "হ্যাঁ";
@@ -857,9 +857,9 @@ class _I18n_ko_KR extends I18n {
   /// "제안서"
   @override
   String get proposals => "제안서";
-  /// "{days} 일 후 종료"
+  /// "${numDays} 일 후 종료"
   @override
-  String endsInNumDays(String numDays) => "{days} 일 후 종료";
+  String endsInNumDays(String numDays) => "${numDays} 일 후 종료";
   /// "예"
   @override
   String get yes => "예";
@@ -1063,9 +1063,9 @@ class _I18n_ru_RU extends I18n {
   /// "Предложения"
   @override
   String get proposals => "Предложения";
-  /// "Заканчивается через {days} дней"
+  /// "Заканчивается через ${numDays} дней"
   @override
-  String endsInNumDays(String numDays) => "Заканчивается через {days} дней";
+  String endsInNumDays(String numDays) => "Заканчивается через ${numDays} дней";
   /// "да"
   @override
   String get yes => "да";
@@ -1269,9 +1269,9 @@ class _I18n_ja_JP extends I18n {
   /// "提案"
   @override
   String get proposals => "提案";
-  /// "{days}日で終了"
+  /// "${numDays}日で終了"
   @override
-  String endsInNumDays(String numDays) => "{days}日で終了";
+  String endsInNumDays(String numDays) => "${numDays}日で終了";
   /// "はい"
   @override
   String get yes => "はい";
@@ -1475,9 +1475,9 @@ class _I18n_uk_UA extends I18n {
   /// "Пропозиції"
   @override
   String get proposals => "Пропозиції";
-  /// "Закінчується через {days} днів"
+  /// "Закінчується через ${numDays} днів"
   @override
-  String endsInNumDays(String numDays) => "Закінчується через {days} днів";
+  String endsInNumDays(String numDays) => "Закінчується через ${numDays} днів";
   /// "Так"
   @override
   String get yes => "Так";

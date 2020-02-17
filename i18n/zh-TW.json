@@ -20,7 +20,7 @@
     "parentHomeScreen": "家长主屏幕",
     "account": "帐户",
     "proposals": "提案",
-    "endsInNumDays": "于{days}天后结束",
+    "endsInNumDays": "于{numDays}天后结束",
     "yes": "是",
     "no": "没有",
     "numYes": "{numYes}是",
