@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class EventCard extends StatefulWidget {
   final int eid;
-  final int uid;
   final String title;
   final String description;
   final String date;
@@ -19,7 +18,6 @@ class EventCard extends StatefulWidget {
   EventCard({
     Key key,
     this.eid,
-    this.uid,
     this.title,
     this.description,
     this.date,
@@ -27,7 +25,7 @@ class EventCard extends StatefulWidget {
     this.numattenders,
   }) : super(key: key);
 
-  factory EventCard.fromJson(Map<String, dynamic> map, int uid, String prefLangCode) {
+  factory EventCard.fromJson(Map<String, dynamic> map, int creatorUid, String prefLangCode) {
     DateTime date = DateTime.parse(map['date']);
     String dateParsed = formatDate(
         date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
@@ -35,7 +33,6 @@ class EventCard extends StatefulWidget {
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];
     return EventCard(
-      uid: uid,
       eid: map['eid'],
       title: translatedTitle,
       description: translatedDescription,
@@ -67,7 +64,6 @@ class _EventCardState extends State<EventCard> with Screen {
         MaterialPageRoute(
           builder: (context) => EventPage(
             eid: widget.eid,
-            uid: widget.uid,
             title: widget.title,
             description: widget.description,
             date: widget.date,

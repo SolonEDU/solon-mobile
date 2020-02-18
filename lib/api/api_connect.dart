@@ -58,9 +58,8 @@ class APIConnect {
     );
   }
 
-  static Stream<List<EventCard>> eventListView(int uid, String query) async* {
+  static Stream<List<EventCard>> eventListView(String query) async* {
     yield await connectEvents(
-      uid: uid,
       query: query,
     );
   }

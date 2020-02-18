@@ -21,15 +21,13 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
 
   StreamController dropdownMenuStreamController = StreamController.broadcast();
   Stream<List<EventCard>> stream;
-  int uid;
+  int userUid;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
-    uid = json.decode(prefs.getString('userData'))['uid'];
-    print(uid);
     final eventsSortOption = prefs.getString('eventsSortOption');
     dropdownMenuStreamController.sink.add(eventsSortOption);
-    stream = APIConnect.eventListView(uid, eventsSortOption);
+    stream = APIConnect.eventListView(eventsSortOption);
   }
 
   @override
@@ -175,7 +173,6 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                         stream: Function.apply(
                           APIConnect.eventListView,
                           [
-                            uid,
                             optionVal.data,
                           ],
                         ),
