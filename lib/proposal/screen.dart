@@ -8,8 +8,7 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/proposal/create.dart';
 
 class ProposalsScreen extends StatefulWidget {
-  final int uid;
-  ProposalsScreen({Key key, this.uid}) : super(key: key);
+  ProposalsScreen({Key key}) : super(key: key);
 
   @override
   _ProposalsScreenState createState() => _ProposalsScreenState();
@@ -87,7 +86,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                       alignedDropdown: true,
                                       child: DropdownButton<String>(
                                         value: optionVal.data,
-                                        // icon: Icon(Icons.arrow_downward),
                                         iconSize: 24,
                                         elevation: 8,
                                         style: TextStyle(color: Colors.black),

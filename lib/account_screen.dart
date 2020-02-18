@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
-  final int uid;
-  const AccountScreen({this.uid});
+  const AccountScreen();
 
   @override
   _AccountScreenState createState() => _AccountScreenState();

@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Main(uid: responseMessage["uid"]),
+            builder: (context) => Main(),
           ),
         );
       }

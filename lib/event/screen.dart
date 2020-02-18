@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,7 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/event/card.dart';
 
 class EventsScreen extends StatefulWidget {
-  final int uid;
-  EventsScreen({Key key, this.uid}) : super(key: key);
+  EventsScreen({Key key}) : super(key: key);
 
   @override
   _EventsScreenState createState() => _EventsScreenState();
@@ -21,12 +21,15 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
 
   StreamController dropdownMenuStreamController = StreamController.broadcast();
   Stream<List<EventCard>> stream;
+  int uid;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
+    uid = json.decode(prefs.getString('userData'))['uid'];
+    print(uid);
     final eventsSortOption = prefs.getString('eventsSortOption');
     dropdownMenuStreamController.sink.add(eventsSortOption);
-    stream = APIConnect.eventListView(widget.uid, eventsSortOption);
+    stream = APIConnect.eventListView(uid, eventsSortOption);
   }
 
   @override
@@ -84,7 +87,6 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                                     alignedDropdown: true,
                                     child: DropdownButton<String>(
                                       value: optionVal.data,
-                                      // icon: Icon(Icons.arrow_downward),
                                       iconSize: 24,
                                       elevation: 8,
                                       style: TextStyle(color: Colors.black),
@@ -173,7 +175,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                         stream: Function.apply(
                           APIConnect.eventListView,
                           [
-                            widget.uid,
+                            uid,
                             optionVal.data,
                           ],
                         ),

@@ -55,7 +55,7 @@ class Solon extends StatelessWidget {
             }
             return snapshot.data.containsKey('errorMessage')
                 ? WelcomePage()
-                : Main(uid: snapshot.data['uid']);
+                : Main();
           },
         ),
       ),
@@ -86,8 +86,7 @@ class Solon extends StatelessWidget {
 }
 
 class Main extends StatefulWidget {
-  final int uid;
-  Main({Key key, this.uid}) : super(key: key);
+  Main({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MainState();
@@ -109,19 +108,19 @@ class _MainState extends State<Main> {
     var _widgetOptions = [
       {
         'title': 'home',
-        'widget': HomeScreen(uid: widget.uid),
+        'widget': HomeScreen(),
       },
       {
         'title': 'proposals',
-        'widget': ProposalsScreen(uid: widget.uid),
+        'widget': ProposalsScreen(),
       },
       {
         'title': 'events',
-        'widget': EventsScreen(uid: widget.uid),
+        'widget': EventsScreen(),
       },
       {
         'title': 'forum',
-        'widget': ForumScreen(uid: widget.uid),
+        'widget': ForumScreen(),
       },
     ];
     String curTitle = _widgetOptions[_selectedIndex]['title'];
@@ -153,7 +152,7 @@ class _MainState extends State<Main> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AccountScreen(uid: widget.uid),
+                  builder: (context) => AccountScreen(),
                 ),
               );
             },
