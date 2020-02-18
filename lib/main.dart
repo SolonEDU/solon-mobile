@@ -13,28 +13,9 @@ import 'package:Solon/api/api_connect.dart';
 
 void main() => runApp(Solon());
 
-class Solon extends StatefulWidget {
-  Solon({Key key}) : super(key: key);
-
-  @override
-  _SolonState createState() => _SolonState();
-}
-
-class _SolonState extends State<Solon> {
+class Solon extends StatelessWidget {
   static const String _title = 'Home';
   final i18n = I18n.delegate;
-
-  @override
-  void initState() {
-    super.initState();
-    I18n.onLocaleChanged = onLocaleChange;
-  }
-
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      I18n.locale = locale;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +84,6 @@ class _SolonState extends State<Solon> {
     );
   }
 }
-// class Solon extends StatelessWidget {
-
-// }
 
 class Main extends StatefulWidget {
   final int uid;
