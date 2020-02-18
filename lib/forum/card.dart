@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Solon/forum/page.dart';
 import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';

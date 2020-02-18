@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';

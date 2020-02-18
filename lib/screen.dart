@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'generated/i18n.dart';
 
 typedef APIFunction<T> = Future<T> Function();

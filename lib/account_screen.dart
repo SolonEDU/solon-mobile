@@ -1,13 +1,13 @@
-import 'package:Solon/auth/button.dart';
-import 'package:Solon/generated/i18n.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:Solon/auth/button.dart';
+import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/api/message.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
   final int uid;
