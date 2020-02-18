@@ -1626,7 +1626,13 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
       Locale("ko", "KR"),
       Locale("ru", "RU"),
       Locale("ja", "JP"),
-      Locale("uk", "UA")
+      Locale("uk", "UA"),
+      Locale("zh", "US"),
+      Locale("bn", "US"),
+      Locale("ko", "US"),
+      Locale("ru", "US"),
+      Locale("ja", "US"),
+      Locale("uk", "US")
     ];
   }
 

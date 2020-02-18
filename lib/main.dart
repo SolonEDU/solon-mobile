@@ -155,22 +155,23 @@ class _SolonState extends State<Solon> {
         GlobalWidgetsLocalizations.delegate,
         DefaultMaterialLocalizations.delegate
       ],
-      localeResolutionCallback: i18n.resolution(fallback: Locale("en", "US"))
-      // (locale, supportedLocales) {
-      //   if (locale == null) {
-      //     debugPrint("*language locale is null!");
-      //     return supportedLocales.first;
-      //   }
-      //   for (var supportedLocale in supportedLocales) {
-      //     if (supportedLocale.languageCode == locale.languageCode &&
-      //         supportedLocale.countryCode == locale.countryCode) {
-      //       return supportedLocale;
-      //     }
-      //   }
-      //   print('${locale.languageCode} printed from main ${locale.countryCode}');
+      localeResolutionCallback: 
+      // i18n.resolution(fallback: Locale("en", "US"))
+      (locale, supportedLocales) {
+        if (locale == null) {
+          debugPrint("*language locale is null!");
+          return supportedLocales.first;
+        }
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        print('${locale.languageCode} printed from main ${locale.countryCode}');
 
-      //   return supportedLocales.first;
-      // },
+        return supportedLocales.first;
+      },
     );
   }
 }
