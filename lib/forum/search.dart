@@ -1,4 +1,3 @@
-// TODO: move to another file after we're done experimenting
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';

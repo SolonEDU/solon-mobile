@@ -2,7 +2,6 @@ import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
-// TODO: move to another file after we're done experimenting
 class EventsSearch extends SearchDelegate {
   BuildContext context;
 
