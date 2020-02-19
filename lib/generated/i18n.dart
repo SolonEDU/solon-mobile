@@ -1622,7 +1622,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
       Locale("en", "US"),
       Locale("zh", "CN"),
       Locale("zh", "TW"),
-      Locale("bn", "BN"),
+      Locale("bn", "BD"),
       Locale("ko", "KR"),
       Locale("ru", "RU"),
       Locale("ja", "JP"),
