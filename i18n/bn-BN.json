@@ -27,7 +27,7 @@
     "numNo": "{numNo} no",
     "numVotes": "{numVotes} ভোট",
     "votingOnProposalEnds": "প্রস্তাবনায় ভোট শেষ {শেষ সময়}",
-    "youHaveVoted": "আপনি {VotVal vot ভোট দিয়েছেন!",
+    "youHaveVoted": "আপনি {voteVal} ভোট দিয়েছেন!",
     "title": "শিরোনাম",
     "description": "বিবরণ",
     "daysUntilProposalEnds": "প্রস্তাব শেষ হওয়ার দিনগুলি",
@@ -63,7 +63,7 @@
     "enterAComment": "একটি মন্তব্য লিখুন",
     "searchForum": "ফোরাম অনুসন্ধান করুন",
     "signOut": "সাইন আউট",
-    "userDoesNotExist": "ইমেল User ইমেল with সহ ব্যবহারকারীর অস্তিত্ব নেই",
+    "userDoesNotExist": "এই ইমেল সহ ব্যবহারকারী বিদ্যমান নেই",
     "incorrectPassword": "ভুল গোপন নম্বর",
     "lowerBoundDays": "{numLowerBoundDays} দিন",
     "upperBoundDays": "{numUpperBoundDays} দিন"

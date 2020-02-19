@@ -671,10 +671,10 @@ class _I18n_bn_BN extends I18n {
   String numVotes(String numVotes) => "${numVotes} ভোট";
   /// "প্রস্তাবনায় ভোট শেষ {শেষ সময়}"
   @override
-  String votingOnProposalEnds(String endtime) => "প্রস্তাবনায় ভোট শেষ {শেষ সময়}";
+  String votingOnProposalEnds(String endtime) => "প্রস্তাবনায় ভোট শেষ ${endtime}";
   /// "আপনি {VotVal vot ভোট দিয়েছেন!"
   @override
-  String youHaveVoted(String voteVal) => "আপনি {VotVal vot ভোট দিয়েছেন!";
+  String youHaveVoted(String voteVal) => "আপনি ${voteVal} ভোট দিয়েছেন!";
   /// "শিরোনাম"
   @override
   String get title => "শিরোনাম";
@@ -782,7 +782,7 @@ class _I18n_bn_BN extends I18n {
   String get signOut => "সাইন আউট";
   /// "ইমেল User ইমেল with সহ ব্যবহারকারীর অস্তিত্ব নেই"
   @override
-  String userDoesNotExist(String email) => "ইমেল User ইমেল with সহ ব্যবহারকারীর অস্তিত্ব নেই";
+  String userDoesNotExist(String email) => "এই ইমেল সহ ব্যবহারকারী বিদ্যমান নেই";
   /// "ভুল পাসওয়ার্ড৤"
   @override
   String get incorrectPassword => "ভুল গোপন নম্বর";
