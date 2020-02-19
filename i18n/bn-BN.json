@@ -64,7 +64,7 @@
     "searchForum": "ফোরাম অনুসন্ধান করুন",
     "signOut": "সাইন আউট",
     "userDoesNotExist": "ইমেল User ইমেল with সহ ব্যবহারকারীর অস্তিত্ব নেই",
-    "incorrectPassword": "ভুল পাসওয়ার্ড৤",
+    "incorrectPassword": "ভুল গোপন নম্বর",
     "lowerBoundDays": "{numLowerBoundDays} দিন",
     "upperBoundDays": "{numUpperBoundDays} দিন"
 }

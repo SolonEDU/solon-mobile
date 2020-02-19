@@ -785,7 +785,7 @@ class _I18n_bn_BN extends I18n {
   String userDoesNotExist(String email) => "ইমেল User ইমেল with সহ ব্যবহারকারীর অস্তিত্ব নেই";
   /// "ভুল পাসওয়ার্ড৤"
   @override
-  String get incorrectPassword => "ভুল পাসওয়ার্ড৤";
+  String get incorrectPassword => "ভুল গোপন নম্বর";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
