@@ -1,3 +1,4 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class NavBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text(I18n.of(context).home),
+          title: Text(AppLocalizations.of(context).translate("home")),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_balance),

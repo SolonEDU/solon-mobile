@@ -1,3 +1,4 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,28 +14,21 @@ import 'package:Solon/api/api_connect.dart';
 
 void main() => runApp(Solon());
 
-class Solon extends StatefulWidget {
-  Solon({Key key}) : super(key: key);
-
-  @override
-  _SolonState createState() => _SolonState();
-}
-
-class _SolonState extends State<Solon> {
+class Solon extends StatelessWidget {
   static const String _title = 'Home';
-  final i18n = I18n.delegate;
+  // final i18n = I18n.delegate;
 
-  @override
-  void initState() {
-    super.initState();
-    I18n.onLocaleChanged = onLocaleChange;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   I18n.onLocaleChanged = onLocaleChange;
+  // }
 
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      I18n.locale = locale;
-    });
-  }
+  // void onLocaleChange(Locale locale) {
+  //   setState(() {
+  //     I18n.locale = locale;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +72,26 @@ class _SolonState extends State<Solon> {
           },
         ),
       ),
-      supportedLocales: i18n.supportedLocales,
+      supportedLocales: [
+        Locale("en", "US"),
+        Locale("zh", "CN"),
+        Locale("zh", "TW"),
+        Locale("bn", "BD"),
+        Locale("ko", "KR"),
+        Locale("ru", "RU"),
+        Locale("ja", "JP"),
+        Locale("uk", "UA"),
+        Locale("zh", "US"),
+        Locale("bn", "US"),
+        Locale("ko", "US"),
+        Locale("ru", "US"),
+        Locale("ja", "US"),
+        Locale("uk", "US"),
+      ],
+      // i18n.supportedLocales,
       localizationsDelegates: [
-        i18n,
+        // i18n,
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultMaterialLocalizations.delegate
@@ -105,6 +116,16 @@ class _SolonState extends State<Solon> {
     );
   }
 }
+// class Solon extends StatefulWidget {
+//   Solon({Key key}) : super(key: key);
+
+//   @override
+//   _SolonState createState() => _SolonState();
+// }
+
+// class _SolonState extends State<Solon> {
+
+// }
 
 class Main extends StatefulWidget {
   Main({Key key}) : super(key: key);
@@ -146,15 +167,15 @@ class _MainState extends State<Main> {
     ];
     String curTitle = _widgetOptions[_selectedIndex]['title'];
     String titleText;
-    if (curTitle == 'home') {
-      titleText = I18n.of(context).home;
-    } else if (curTitle == 'proposals') {
-      titleText = I18n.of(context).proposals;
-    } else if (curTitle == 'events') {
-      titleText = I18n.of(context).events;
-    } else {
-      titleText = I18n.of(context).forum;
-    }
+    // if (curTitle == 'home') {
+    //   titleText = I18n.of(context).home;
+    // } else if (curTitle == 'proposals') {
+    //   titleText = I18n.of(context).proposals;
+    // } else if (curTitle == 'events') {
+    //   titleText = I18n.of(context).events;
+    // } else {
+    //   titleText = I18n.of(context).forum;
+    // }
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light,
     );
@@ -162,7 +183,8 @@ class _MainState extends State<Main> {
       key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(titleText),
+        title: Text(AppLocalizations.of(context)
+            .translate(_widgetOptions[_selectedIndex]['title'])),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.account_circle),
