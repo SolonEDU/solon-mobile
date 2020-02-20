@@ -1,3 +1,4 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/auth/button.dart';
@@ -39,7 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 55,
                 width: 155,
                 function: navigateToSignIn,
-                label: I18n.of(context).signIn,
+                label: AppLocalizations.of(context).translate("signIn"),
                 margin: const EdgeInsets.all(0),
               ),
               Button(
@@ -47,7 +48,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 55,
                 width: 155,
                 function: navigateToSignUp,
-                label: I18n.of(context).signUp,
+                label: AppLocalizations.of(context).translate("signUp"),
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
               ),
             ],
