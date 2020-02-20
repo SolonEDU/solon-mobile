@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/forum/search.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/screen.dart';
@@ -78,7 +78,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(I18n.of(context).sortBy),
+                              Text(AppLocalizations.of(context).translate("sortBy")),
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
@@ -111,13 +111,13 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                           (String value) {
                                         Map<String, String> itemsMap = {
                                           'Newly created':
-                                              I18n.of(context).newlyCreated,
+                                              AppLocalizations.of(context).translate("newlyCreated"),
                                           'Oldest created':
-                                              I18n.of(context).oldestCreated,
+                                              AppLocalizations.of(context).translate("oldestCreated"),
                                           'Most comments':
-                                              I18n.of(context).mostComments,
+                                              AppLocalizations.of(context).translate("mostComments"),
                                           'Least comments':
-                                              I18n.of(context).leastComments,
+                                              AppLocalizations.of(context).translate("leastComments"),
                                         };
                                         return DropdownMenuItem<String>(
                                           value: value,

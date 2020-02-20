@@ -1,5 +1,5 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,8 +75,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                 _voteOutput = "You have not voted yet!";
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
-                    ? I18n.of(context).youHaveVoted("yes")
-                    : I18n.of(context).youHaveVoted("no");
+                    ? AppLocalizations.of(context).translate("youHaveVoted")
+                    : AppLocalizations.of(context).translate("youHaveVoted");
               }
               return ListView(
                 children: <Widget>[
@@ -94,7 +94,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      I18n.of(context).description,
+                      AppLocalizations.of(context).translate("description"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -112,7 +112,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text(I18n.of(context).votingOnProposalEnds(widget.endTime)),
+                    child: Text(AppLocalizations.of(context).translate("votingOnProposalEnds")),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
@@ -126,7 +126,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                                 APIConnect.vote(widget.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': I18n.of(context).yes,
+                              'label': AppLocalizations.of(context).translate("yes"),
                             },
                             {
                               'color': Colors.red,
@@ -137,7 +137,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                                 APIConnect.vote(widget.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': I18n.of(context).no,
+                              'label': AppLocalizations.of(context).translate("no"),
                             }
                           ],
                         )

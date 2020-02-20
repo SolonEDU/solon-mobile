@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/forum/page.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +96,7 @@ class _PostCardState extends State<PostCard> with Screen {
             ),
           ),
           Text(widget.timestamp),
-          Text(I18n.of(context).numComments(widget.numcomments.toString())),
+          Text(AppLocalizations.of(context).translate("comments")),
         ],
       ),
     );

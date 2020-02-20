@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:Solon/generated/i18n.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
@@ -85,7 +85,7 @@ class _PostPageState extends State<PostPage> with Screen {
             ),
             Container(
               child: Text(
-                I18n.of(context).commentSection,
+                AppLocalizations.of(context).translate("commentSection"),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -123,7 +123,7 @@ class _PostPageState extends State<PostPage> with Screen {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(32),
             ),
-            hintText: I18n.of(context).enterAComment,
+            hintText: AppLocalizations.of(context).translate("enterAComment"),
             suffixIcon: IconButton(
               icon: Icon(Icons.send),
               onPressed: () {

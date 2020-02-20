@@ -1,5 +1,5 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'generated/i18n.dart';
 
 typedef APIFunction<T> = Future<T> Function();
 
@@ -95,13 +95,13 @@ mixin Screen {
           children: <Widget>[
             Expanded(
               child: Text(
-                I18n.of(context).numYes(yes.toString()),
+                "$yes ${AppLocalizations.of(context).translate('yes')}",
                 textAlign: TextAlign.start,
               ),
             ),
             Expanded(
               child: Text(
-                I18n.of(context).numNo(no.toString()),
+                "$no ${AppLocalizations.of(context).translate('no')}",
                 textAlign: TextAlign.end,
               ),
             ),

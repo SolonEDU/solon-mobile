@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:Solon/generated/i18n.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/proposal/search.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +79,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(I18n.of(context).sortBy),
+                              Text(AppLocalizations.of(context)
+                                  .translate("sortBy")),
                               Container(
                                 // TODO: is this Container() needed here ?
                                 child: DropdownButtonHideUnderline(
@@ -115,17 +116,24 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                           (String value) {
                                         Map<String, String> itemsMap = {
                                           'Most votes':
-                                              I18n.of(context).mostVotes,
+                                              AppLocalizations.of(context)
+                                                  .translate("mostVotes"),
                                           'Least votes':
-                                              I18n.of(context).leastVotes,
+                                              AppLocalizations.of(context)
+                                                  .translate("leastVotes"),
                                           'Newly created':
-                                              I18n.of(context).newlyCreated,
+                                              AppLocalizations.of(context)
+                                                  .translate("newlyCreated"),
                                           'Oldest created':
-                                              I18n.of(context).oldestCreated,
-                                          'Upcoming deadlines': I18n.of(context)
-                                              .upcomingDeadlines,
+                                              AppLocalizations.of(context)
+                                                  .translate("oldestCreated"),
+                                          'Upcoming deadlines':
+                                              AppLocalizations.of(context)
+                                                  .translate(
+                                                      "upcomingDeadlines"),
                                           'Oldest deadlines':
-                                              I18n.of(context).oldestDeadlines,
+                                              AppLocalizations.of(context)
+                                                  .translate("oldestDeadlines"),
                                         };
                                         return DropdownMenuItem<String>(
                                           value: value,

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
@@ -71,7 +71,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                 key: _scaffoldKey,
                 appBar: getPageAppBar(
                   context,
-                  title: I18n.of(context).account,
+                  title: AppLocalizations.of(context).translate("account"),
                 ),
                 body: Container(
                   margin: const EdgeInsets.all(20),
@@ -82,7 +82,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            I18n.of(context).name,
+                            AppLocalizations.of(context).translate("name"),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Raleway',
@@ -100,7 +100,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                             ),
                           ),
                           Text(
-                            I18n.of(context).email,
+                            AppLocalizations.of(context).translate("email"),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Raleway',
@@ -118,7 +118,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                             ),
                           ),
                           Text(
-                            I18n.of(context).language,
+                            AppLocalizations.of(context).translate("language"),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Raleway',
@@ -185,7 +185,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                               color: Colors.pink[200],
                               height: 55,
                               width: 155,
-                              label: I18n.of(context).signOut,
+                              label: AppLocalizations.of(context).translate("signOut"),
                               margin: EdgeInsets.only(top: 10),
                               function: () async {
                                 final prefs =

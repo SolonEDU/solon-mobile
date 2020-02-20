@@ -1,5 +1,5 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
@@ -21,7 +21,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,
-        title: I18n.of(context).signUp,
+        title: AppLocalizations.of(context).translate("signUp"),
       ),
       body: Form(
         key: _formKey,
@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 10, left: 20),
               child: Text(
-                I18n.of(context).language,
+                AppLocalizations.of(context).translate("language"),
               ),
             ),
             Container(
@@ -83,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                I18n.of(context).name,
+                AppLocalizations.of(context).translate("name"),
               ),
             ),
             Row(
@@ -96,12 +96,12 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return I18n.of(context).fNameSignUpFieldError;
+                          return AppLocalizations.of(context).translate("fNameSignUpFieldError");
                         }
                         return null;
                       },
                       onSaved: (input) => _firstName = input,
-                      decoration: InputDecoration(labelText: I18n.of(context).firstName),
+                      decoration: InputDecoration(labelText: AppLocalizations.of(context).translate("firstName")),
                     ),
                   ),
                 ),
@@ -113,12 +113,12 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return I18n.of(context).lNameSignUpFieldError;
+                          return AppLocalizations.of(context).translate("lNameSignUpFieldError");
                         }
                         return null;
                       },
                       onSaved: (input) => _lastName = input,
-                      decoration: InputDecoration(labelText: I18n.of(context).lastName),
+                      decoration: InputDecoration(labelText: AppLocalizations.of(context).translate("lastName")),
                     ),
                   ),
                 ),
@@ -127,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                I18n.of(context).email,
+                AppLocalizations.of(context).translate("email"),
               ),
             ),
             Container(
@@ -136,7 +136,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.emailAddress,
                 validator: (input) {
                   if (input.isEmpty) {
-                    return I18n.of(context).emailSignUpFieldError;
+                    return AppLocalizations.of(context).translate("emailSignUpFieldError");
                   }
                   return null;
                 },
@@ -146,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                I18n.of(context).password,
+                AppLocalizations.of(context).translate("password"),
               ),
             ),
             Container(
@@ -155,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.length < 6) {
-                    return I18n.of(context).passwordSignUpFieldError("6");
+                    return AppLocalizations.of(context).translate("passwordSignUpFieldError");
                   } else {
                     _password = input;
                     return null;
@@ -168,7 +168,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                I18n.of(context).confirmPassword,
+                AppLocalizations.of(context).translate("confirmPassword"),
               ),
             ),
             Container(
@@ -177,7 +177,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input != _password) {
-                    return I18n.of(context).confirmPasswordSignUpFieldName;
+                    return AppLocalizations.of(context).translate("confirmPasswordSignUpFieldName");
                   }
                   return null;
                 },
@@ -192,7 +192,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                   "width": 155.0,
                   "function": signUp,
                   "margin": const EdgeInsets.only(top: 25, bottom: 10),
-                  "label": I18n.of(context).signUp,
+                  "label": AppLocalizations.of(context).translate("signUp"),
                 }
               ],
             ),

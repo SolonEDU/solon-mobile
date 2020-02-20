@@ -1,5 +1,4 @@
 import 'package:Solon/app_localizations.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -165,26 +164,16 @@ class _MainState extends State<Main> {
         'widget': ForumScreen(),
       },
     ];
-    String curTitle = _widgetOptions[_selectedIndex]['title'];
-    String titleText;
-    // if (curTitle == 'home') {
-    //   titleText = I18n.of(context).home;
-    // } else if (curTitle == 'proposals') {
-    //   titleText = I18n.of(context).proposals;
-    // } else if (curTitle == 'events') {
-    //   titleText = I18n.of(context).events;
-    // } else {
-    //   titleText = I18n.of(context).forum;
-    // }
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light,
     );
+    
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(AppLocalizations.of(context)
-            .translate(_widgetOptions[_selectedIndex]['title'])),
+        title: Text(AppLocalizations.of(context).translate(_widgetOptions[_selectedIndex]['title'])),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.account_circle),

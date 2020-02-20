@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/event/page.dart';
-import 'package:Solon/generated/i18n.dart';
 import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +106,7 @@ class _EventCardState extends State<EventCard> with Screen {
             ),
           ),
           Text(
-            I18n.of(context).numAttenders(widget.numattenders.toString()),
+            AppLocalizations.of(context).translate("attenders"),
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),
