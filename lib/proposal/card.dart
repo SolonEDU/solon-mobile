@@ -118,7 +118,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              AppLocalizations.of(context).translate("endsInNumDays"),
+              "${AppLocalizations.of(context).translate('numDaysUntilVotingEnds')} ${widget.date.difference(DateTime.now()).inDays.toString()}",
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,

@@ -15,19 +15,6 @@ void main() => runApp(Solon());
 
 class Solon extends StatelessWidget {
   static const String _title = 'Home';
-  // final i18n = I18n.delegate;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   I18n.onLocaleChanged = onLocaleChange;
-  // }
-
-  // void onLocaleChange(Locale locale) {
-  //   setState(() {
-  //     I18n.locale = locale;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -87,17 +74,13 @@ class Solon extends StatelessWidget {
         Locale("ja", "US"),
         Locale("uk", "US"),
       ],
-      // i18n.supportedLocales,
       localizationsDelegates: [
-        // i18n,
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         DefaultMaterialLocalizations.delegate
       ],
-      localeResolutionCallback:
-          // i18n.resolution(fallback: Locale("en", "US"))
-          (locale, supportedLocales) {
+      localeResolutionCallback: (locale, supportedLocales) {
         if (locale == null) {
           debugPrint("*language locale is null!");
           return supportedLocales.first;
@@ -115,16 +98,6 @@ class Solon extends StatelessWidget {
     );
   }
 }
-// class Solon extends StatefulWidget {
-//   Solon({Key key}) : super(key: key);
-
-//   @override
-//   _SolonState createState() => _SolonState();
-// }
-
-// class _SolonState extends State<Solon> {
-
-// }
 
 class Main extends StatefulWidget {
   Main({Key key}) : super(key: key);
@@ -168,12 +141,13 @@ class _MainState extends State<Main> {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light,
     );
-    
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(AppLocalizations.of(context).translate(_widgetOptions[_selectedIndex]['title'])),
+        title: Text(AppLocalizations.of(context)
+            .translate(_widgetOptions[_selectedIndex]['title'])),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.account_circle),

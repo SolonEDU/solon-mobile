@@ -1,6 +1,6 @@
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:Solon/generated/i18n.dart';
 
 class ProposalsSearch extends SearchDelegate {
   BuildContext context;
@@ -83,5 +83,5 @@ class ProposalsSearch extends SearchDelegate {
   }
 
   @override
-  String get searchFieldLabel => I18n.of(context).searchProposals;
+  String get searchFieldLabel => AppLocalizations.of(context).translate("searchProposals");
 }

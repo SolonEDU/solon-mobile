@@ -78,7 +78,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(AppLocalizations.of(context).translate(".sortBy")),
+                              Text(AppLocalizations.of(context).translate("sortBy")),
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(

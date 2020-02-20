@@ -75,8 +75,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                 _voteOutput = "You have not voted yet!";
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
-                    ? AppLocalizations.of(context).translate("youHaveVoted")
-                    : AppLocalizations.of(context).translate("youHaveVoted");
+                    ? AppLocalizations.of(context).translate("youHaveVotedYes")
+                    : AppLocalizations.of(context).translate("youHaveVotedNo");
               }
               return ListView(
                 children: <Widget>[
@@ -112,7 +112,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text(AppLocalizations.of(context).translate("votingOnProposalEnds")),
+                    child: Text("${AppLocalizations.of(context).translate('numDaysUntilVotingEnds')} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
