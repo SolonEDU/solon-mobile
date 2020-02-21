@@ -4,6 +4,7 @@ import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/util/forum_util.dart';
 import 'package:Solon/widgets/create_button.dart';
+import 'package:Solon/widgets/search_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/util/screen.dart';
@@ -138,27 +139,8 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                               ),
                             ],
                           ),
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            child: RawMaterialButton(
-                              onPressed: () {
-                                showSearch(
-                                  context: context,
-                                  delegate: ForumSearch(context),
-                                );
-                              },
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.pink[400],
-                              ),
-                              shape: CircleBorder(),
-                              elevation: 2.0,
-                              fillColor: Colors.white,
-                              // padding: const EdgeInsets.all(15.0),
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                            ),
+                          SearchButton(
+                            delegate: ForumSearch(context),
                           ),
                         ],
                       ),

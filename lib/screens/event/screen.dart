@@ -5,6 +5,7 @@ import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/event/search.dart';
 import 'package:Solon/util/event_util.dart';
 import 'package:Solon/util/screen.dart';
+import 'package:Solon/widgets/search_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -129,7 +130,6 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                                           value: value,
                                           child: Text(
                                             itemsMap[value],
-                                            // textAlign: TextAlign.left,
                                           ),
                                         );
                                       }).toList(),
@@ -139,27 +139,8 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                               ),
                             ],
                           ),
-                          Container(
-                            width: 45.0,
-                            height: 45.0,
-                            child: RawMaterialButton(
-                              onPressed: () {
-                                showSearch(
-                                  context: context,
-                                  delegate: EventsSearch(context),
-                                );
-                              },
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.pink[400],
-                              ),
-                              shape: CircleBorder(),
-                              elevation: 2.0,
-                              fillColor: Colors.white,
-                              // padding: const EdgeInsets.all(15.0),
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                            ),
+                          SearchButton(
+                            delegate: EventsSearch(context),
                           ),
                         ],
                       ),

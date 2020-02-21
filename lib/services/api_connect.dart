@@ -57,33 +57,6 @@ class APIConnect {
         : throw Exception('Message for root not found.');
   }
 
-  // static Future<List<PostCard>> connectForumPosts({String query}) async {
-  //   if (query == null) {
-  //     query = 'Newly created';
-  //   }
-
-  //   Map<String, String> queryMap = {
-  //     'Newly created': 'timestamp.desc',
-  //     'Oldest created': 'timestamp.asc',
-  //     'Most comments': 'numcomments.desc',
-  //     'Least comments': 'numcomments.asc',
-  //   };
-
-  //   final http.Response response = await http.get(
-  //     "$url/forumposts?sort_by=${queryMap[query]}",
-  //     headers: await headers,
-  //   );
-
-  //   final sharedPrefs = await connectSharedPreferences();
-  //   final prefLangCode = languages[sharedPrefs['lang']];
-
-  //   List collection = json.decode(response.body)['forumposts'];
-  //   List<PostCard> _forumposts = collection
-  //       .map((json) => PostCard.fromJson(json, prefLangCode))
-  //       .toList();
-  //   return _forumposts;
-  // }
-
   static Future<Message> addProposal(
     String title,
     String description,
@@ -250,11 +223,7 @@ class APIConnect {
       "$url/users/$uid",
       headers: await headers,
     );
-    // print(json.decode(response.body)['user'].toString());
-    Map collection = json.decode(response.body)['user'];
-    // print('PRINT COLLECTION ${collection.toString()}');
-    // User _user = User.fromJson(collection);
-    return collection;
+    return json.decode(response.body)['user'];
   }
 
   static Future<Message> changeLanguage({int uid, String updatedLang}) async {
@@ -299,9 +268,7 @@ class APIConnect {
       "$url/attenders/$eid/$uid",
       headers: await headers,
     );
-    // print("$url/attenders/$eid/$uid");
     String responseMessage = json.decode(response.body)['message'];
-    // print(responseMessage);
     return responseMessage == 'Error' ? false : true;
   }
 
