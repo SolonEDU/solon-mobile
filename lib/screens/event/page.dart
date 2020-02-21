@@ -1,13 +1,12 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/event.dart';
 import 'package:Solon/services/event_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/widgets/page_app_bar.dart';
-import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:Solon/widgets/bars/page_app_bar.dart';
 
 class EventPage extends StatefulWidget {
   final Event event;

@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'package:Solon/models/event.dart';
-import 'package:Solon/services/event_connect.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +6,8 @@ import 'package:Solon/screens/event/page.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
+import 'package:Solon/models/event.dart';
+import 'package:Solon/services/event_connect.dart';
 
 class EventCard extends StatefulWidget {
   final Event event;

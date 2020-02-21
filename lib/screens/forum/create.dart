@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:Solon/models/message.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/widgets/page_app_bar.dart';
+import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/preventable_button.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:flutter/material.dart';
 
 typedef APIFunction<T> = Future<T> Function(
   String,

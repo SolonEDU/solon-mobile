@@ -1,9 +1,9 @@
-import 'package:Solon/services/user_connect.dart';
-import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/widgets/page_app_bar.dart';
-import 'package:Solon/widgets/buttons/preventable_button.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/services/user_connect.dart';
+import 'package:Solon/widgets/bars/page_app_bar.dart';
+import 'package:Solon/widgets/buttons/preventable_button.dart';
 import 'package:Solon/util/screen.dart';
+import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/sign_in.dart';
 
 class SignUpPage extends StatefulWidget {

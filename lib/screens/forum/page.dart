@@ -5,7 +5,7 @@ import 'package:Solon/services/forum_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/forum_util.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/widgets/page_app_bar.dart';
+import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
 import 'package:Solon/screens/forum/comment_card.dart';

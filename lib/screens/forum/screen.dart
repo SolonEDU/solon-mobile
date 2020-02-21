@@ -1,17 +1,19 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:Solon/models/forum_post.dart';
+import 'package:Solon/screens/forum/card.dart';
+import 'package:Solon/screens/forum/create.dart';
+import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/services/forum_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/util/forum_util.dart';
+import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:Solon/util/screen.dart';
-import 'package:Solon/screens/forum/card.dart';
-import 'package:Solon/screens/forum/create.dart';
+
 
 class ForumScreen extends StatefulWidget {
   ForumScreen({Key key}) : super(key: key);

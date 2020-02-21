@@ -9,7 +9,7 @@ import 'package:Solon/screens/proposal/screen.dart';
 import 'package:Solon/screens/event/screen.dart';
 import 'package:Solon/screens/forum/screen.dart';
 import 'package:Solon/screens/account_screen.dart';
-import 'package:Solon/widgets/nav_bar.dart';
+import 'package:Solon/widgets/bars/nav_bar.dart';
 import 'package:Solon/util/app_localizations.dart';
 
 void main() => runApp(Solon());
