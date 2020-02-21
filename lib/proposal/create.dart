@@ -98,9 +98,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   activeColor: Colors.pink[400],
                   divisions: 13,
                   label: _sliderValue == 1.0
-                      ? AppLocalizations.of(context).translate("lowerBoundDays")
-                      : AppLocalizations.of(context)
-                          .translate("upperBoundDays"),
+                      ? "${_sliderValue.floor()} ${AppLocalizations.of(context).translate('day')}"
+                      : "${_sliderValue.floor()} ${AppLocalizations.of(context).translate('days')}",
                   min: 1.0,
                   max: 14.0,
                   onChanged: (newRating) {
@@ -116,12 +115,12 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context).translate("lowerBoundDays"),
+                      "1 ${AppLocalizations.of(context).translate('day')}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      AppLocalizations.of(context).translate("upperBoundDays"),
+                      "14 ${AppLocalizations.of(context).translate('days')}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
