@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/api/message.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/models/message.dart';
 
 class HomeScreen extends StatelessWidget {
   final int uid;

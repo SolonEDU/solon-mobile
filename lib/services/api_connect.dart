@@ -443,7 +443,7 @@ class APIConnect {
     );
   }
 
-  static Future<dynamic> addForumPost(
+  static Future<Message> addForumPost(
     String title,
     String description,
     DateTime timestamp,

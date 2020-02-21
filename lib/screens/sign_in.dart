@@ -1,9 +1,10 @@
 import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/auth/button.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/widgets/button.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -26,8 +27,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: getPageAppBar(
-        context,
+      appBar: PageAppBar(
         title: AppLocalizations.of(context).translate("signIn"),
       ),
       body: Center(

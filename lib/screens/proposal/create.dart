@@ -1,6 +1,7 @@
-import 'package:Solon/api/message.dart';
+import 'package:Solon/models/message.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/doubletap.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
+import 'package:Solon/widgets/preventable_button.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context,
+      appBar: PageAppBar(
           title: AppLocalizations.of(context).translate("newProposal")),
       key: _scaffoldKey,
       body: Center(
@@ -127,7 +128,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   ],
                 ),
               ),
-              PreventDoubleTap(
+              PreventableButton(
                 body: <Map>[
                   {
                     "color": Colors.pink[200],

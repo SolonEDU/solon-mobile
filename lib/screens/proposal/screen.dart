@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/proposal/card.dart';
-import 'package:Solon/proposal/search.dart';
+import 'package:Solon/screens/proposal/card.dart';
+import 'package:Solon/screens/proposal/search.dart';
+import 'package:Solon/widgets/create_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/proposal/create.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/screens/proposal/create.dart';
 
 class ProposalsScreen extends StatefulWidget {
   ProposalsScreen({Key key}) : super(key: key);
@@ -218,9 +219,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                     padding: const EdgeInsets.all(4),
                                     children: snapshot.data,
                                   ),
-                                  floatingActionButton: getFAB(
-                                    context,
-                                    CreateProposal(APIConnect.addProposal),
+                                  floatingActionButton: CreateButton(
+                                    creator:
+                                        CreateProposal(APIConnect.addProposal),
                                   ),
                                 ),
                               );

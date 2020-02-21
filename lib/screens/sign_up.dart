@@ -1,9 +1,10 @@
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/doubletap.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
+import 'package:Solon/widgets/preventable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/auth/sign_in.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/screens/sign_in.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -19,8 +20,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: getPageAppBar(
-        context,
+      appBar: PageAppBar(
         title: AppLocalizations.of(context).translate("signUp"),
       ),
       body: Form(
@@ -193,7 +193,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 obscureText: true,
               ),
             ),
-            PreventDoubleTap(
+            PreventableButton(
               body: <Map>[
                 {
                   "color": Colors.pink[200],

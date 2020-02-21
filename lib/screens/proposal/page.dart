@@ -1,10 +1,12 @@
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/doubletap.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
+import 'package:Solon/widgets/preventable_button.dart';
 import 'package:Solon/util/screen.dart';
+import 'package:Solon/widgets/vote_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/services/api_connect.dart';
 
 class ProposalPage extends StatefulWidget {
   final int pid;
@@ -57,7 +59,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context),
+      appBar: PageAppBar(),
       body: Container(
         width: double.infinity,
         child: Padding(
@@ -116,7 +118,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                         "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
                   ),
                   snapshot.data['message'] == 'Error'
-                      ? PreventDoubleTap(
+                      ? PreventableButton(
                           body: <Map>[
                             {
                               'color': Colors.green,
@@ -147,7 +149,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                       : Text(_voteOutput),
                   snapshot.data['message'] == 'Error'
                       ? Text('')
-                      : getVoteBar(context, widget.yesVotes, widget.noVotes)
+                      : VoteBar(yes: widget.yesVotes, no: widget.noVotes)
                 ],
               );
             },
