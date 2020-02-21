@@ -81,7 +81,7 @@ class Solon extends StatelessWidget {
         DefaultMaterialLocalizations.delegate
       ],
       localeResolutionCallback: (locale, supportedLocales) {
-        if (locale == null) {
+        if (locale == null) { // TODO: used to be a fix to iOS error; maybe fixed bc of CFBundleLocalizations in iOS/Runner/info.plist
           debugPrint("*language locale is null!");
           return supportedLocales.first;
         }
