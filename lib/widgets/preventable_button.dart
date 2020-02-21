@@ -1,23 +1,23 @@
-import 'package:Solon/auth/button.dart';
+import 'package:Solon/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 typedef DynamicStream<T> = Stream<T> Function();
 
-class PreventDoubleTap extends StatefulWidget {
+class PreventableButton extends StatefulWidget {
   final List<Map> body;
 
-  PreventDoubleTap({
+  PreventableButton({
     Key key,
     this.body,
   }) : super(key: key);
 
   @override
-  PreventDoubleTapState createState() {
-    return new PreventDoubleTapState();
+  PreventableButtonState createState() {
+    return new PreventableButtonState();
   }
 }
 
-class PreventDoubleTapState extends State<PreventDoubleTap> {
+class PreventableButtonState extends State<PreventableButton> {
   //boolean value to determine whether button is tapped
   bool _isButtonTapped = false;
 
