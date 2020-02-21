@@ -19,7 +19,8 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
-      appBar: PreferredSize( // TODO: have yet to find a nonjanky method
+      appBar: PreferredSize(
+        // TODO: have yet to find a nonjanky method
         preferredSize: Size.fromHeight(0),
         child: AppBar(),
       ),

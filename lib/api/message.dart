@@ -4,8 +4,6 @@ class Message {
   Message({this.message});
 
   factory Message.fromJson(String message) {
-    return Message(
-      message: message
-    );
+    return Message(message: message);
   }
 }

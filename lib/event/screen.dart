@@ -78,7 +78,8 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(AppLocalizations.of(context).translate("sortBy")),
+                              Text(AppLocalizations.of(context)
+                                  .translate("sortBy")),
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
@@ -110,12 +111,18 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                                       ].map<DropdownMenuItem<String>>(
                                           (String value) {
                                         Map<String, String> itemsMap = {
-                                          'Furthest': AppLocalizations.of(context).translate("furthest"),
-                                          'Upcoming': AppLocalizations.of(context).translate("upcoming"),
+                                          'Furthest':
+                                              AppLocalizations.of(context)
+                                                  .translate("furthest"),
+                                          'Upcoming':
+                                              AppLocalizations.of(context)
+                                                  .translate("upcoming"),
                                           'Most attendees':
-                                              AppLocalizations.of(context).translate("mostAttendees"),
+                                              AppLocalizations.of(context)
+                                                  .translate("mostAttendees"),
                                           'Least attendees':
-                                              AppLocalizations.of(context).translate("leastAttendees"),
+                                              AppLocalizations.of(context)
+                                                  .translate("leastAttendees"),
                                         };
                                         return DropdownMenuItem<String>(
                                           value: value,

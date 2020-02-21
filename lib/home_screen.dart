@@ -11,16 +11,15 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder<Message>(
-          future: APIConnect.connectRoot(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Text("${snapshot.data.message} Your uid is: $uid");
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-            return CircularProgressIndicator();
-          }
-        ),
+            future: APIConnect.connectRoot(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text("${snapshot.data.message} Your uid is: $uid");
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return CircularProgressIndicator();
+            }),
       ),
     );
   }

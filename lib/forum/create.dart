@@ -26,7 +26,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, title: AppLocalizations.of(context).translate("newPost")),
+      appBar: getPageAppBar(context,
+          title: AppLocalizations.of(context).translate("newPost")),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -47,7 +48,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context).translate("pleaseEnterATitle");
+                      return AppLocalizations.of(context)
+                          .translate("pleaseEnterATitle");
                     }
                     return null;
                   },
@@ -75,7 +77,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   maxLines: 5,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context).translate("pleaseEnterADescription");
+                      return AppLocalizations.of(context)
+                          .translate("pleaseEnterADescription");
                     }
                     return null;
                   },
@@ -90,7 +93,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
                     "height": 55.0,
                     "function": createPost,
                     "margin": const EdgeInsets.only(top: 15, bottom: 10),
-                    "label": AppLocalizations.of(context).translate("createPost"),
+                    "label":
+                        AppLocalizations.of(context).translate("createPost"),
                   }
                 ],
               ),

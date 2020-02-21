@@ -61,5 +61,6 @@ class EventsSearch extends SearchDelegate {
   }
 
   @override
-  String get searchFieldLabel => AppLocalizations.of(context).translate("searchEvents");
+  String get searchFieldLabel =>
+      AppLocalizations.of(context).translate("searchEvents");
 }

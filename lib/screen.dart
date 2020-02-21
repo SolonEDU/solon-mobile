@@ -12,8 +12,7 @@ mixin Screen {
     );
   }
 
-  FloatingActionButton getFAB(
-      BuildContext context, Widget creator) {
+  FloatingActionButton getFAB(BuildContext context, Widget creator) {
     return FloatingActionButton(
       heroTag: 'unq1',
       backgroundColor: Colors.pinkAccent[400],

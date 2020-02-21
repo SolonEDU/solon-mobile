@@ -96,12 +96,15 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return AppLocalizations.of(context).translate("fNameSignUpFieldError");
+                          return AppLocalizations.of(context)
+                              .translate("fNameSignUpFieldError");
                         }
                         return null;
                       },
                       onSaved: (input) => _firstName = input,
-                      decoration: InputDecoration(labelText: AppLocalizations.of(context).translate("firstName")),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)
+                              .translate("firstName")),
                     ),
                   ),
                 ),
@@ -113,12 +116,15 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return AppLocalizations.of(context).translate("lNameSignUpFieldError");
+                          return AppLocalizations.of(context)
+                              .translate("lNameSignUpFieldError");
                         }
                         return null;
                       },
                       onSaved: (input) => _lastName = input,
-                      decoration: InputDecoration(labelText: AppLocalizations.of(context).translate("lastName")),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)
+                              .translate("lastName")),
                     ),
                   ),
                 ),
@@ -136,7 +142,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.emailAddress,
                 validator: (input) {
                   if (input.isEmpty) {
-                    return AppLocalizations.of(context).translate("emailSignUpFieldError");
+                    return AppLocalizations.of(context)
+                        .translate("emailSignUpFieldError");
                   }
                   return null;
                 },
@@ -155,7 +162,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.length < 6) {
-                    return AppLocalizations.of(context).translate("passwordSignUpFieldError");
+                    return AppLocalizations.of(context)
+                        .translate("passwordSignUpFieldError");
                   } else {
                     _password = input;
                     return null;
@@ -177,7 +185,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input != _password) {
-                    return AppLocalizations.of(context).translate("confirmPasswordSignUpFieldName");
+                    return AppLocalizations.of(context)
+                        .translate("confirmPasswordSignUpFieldName");
                   }
                   return null;
                 },

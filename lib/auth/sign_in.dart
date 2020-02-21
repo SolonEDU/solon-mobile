@@ -50,7 +50,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
                   keyboardType: TextInputType.emailAddress,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context).translate("emailSignInFieldError");
+                      return AppLocalizations.of(context)
+                          .translate("emailSignInFieldError");
                     }
                     return null;
                   },
@@ -70,7 +71,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context).translate("passwordSignInFieldError");
+                      return AppLocalizations.of(context)
+                          .translate("passwordSignInFieldError");
                     }
                     return null;
                   },
@@ -104,7 +106,11 @@ class _LoginPageState extends State<LoginPage> with Screen {
       formState.save();
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
-        String message = responseMessage["error"]["errorMessage"] == "Incorrect password" ? AppLocalizations.of(context).translate("incorrectPassword") : AppLocalizations.of(context).translate("userDoesNotExist"); // TODO: need a better to code for this logic; be wary of this line when we add in more errors to sign in
+        String message = responseMessage["error"]["errorMessage"] ==
+                "Incorrect password"
+            ? AppLocalizations.of(context).translate("incorrectPassword")
+            : AppLocalizations.of(context).translate(
+                "userDoesNotExist"); // TODO: need a better to code for this logic; be wary of this line when we add in more errors to sign in
         showToast(message, _scaffoldKey);
         return false;
       } else {

@@ -3,7 +3,7 @@ import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
-class Comment extends StatelessWidget with Screen{
+class Comment extends StatelessWidget with Screen {
   final String date;
   final String comment;
 
@@ -11,8 +11,8 @@ class Comment extends StatelessWidget with Screen{
 
   factory Comment.fromJson(Map<String, dynamic> map, String prefLangCode) {
     DateTime timestamp = DateTime.parse(map['timestamp']);
-    String timestampParsed = formatDate(timestamp,
-        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String timestampParsed = formatDate(
+        timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedComment = json.decode(map['content'])[prefLangCode];
     return Comment(
       date: timestampParsed,

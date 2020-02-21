@@ -29,7 +29,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, title: AppLocalizations.of(context).translate("newProposal")),
+      appBar: getPageAppBar(context,
+          title: AppLocalizations.of(context).translate("newProposal")),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -50,7 +51,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context).translate("pleaseEnterATitle");
+                      return AppLocalizations.of(context)
+                          .translate("pleaseEnterATitle");
                     }
                     return null;
                   },
@@ -59,7 +61,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: Text(AppLocalizations.of(context).translate("description")),
+                child:
+                    Text(AppLocalizations.of(context).translate("description")),
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -76,7 +79,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   maxLines: 3,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return AppLocalizations.of(context).translate("pleaseEnterADescription");
+                      return AppLocalizations.of(context)
+                          .translate("pleaseEnterADescription");
                     }
                     return null;
                   },
@@ -85,7 +89,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: Text(AppLocalizations.of(context).translate("daysUntilProposalEnds")),
+                child: Text(AppLocalizations.of(context)
+                    .translate("daysUntilProposalEnds")),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 35.0),
@@ -94,7 +99,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   divisions: 13,
                   label: _sliderValue == 1.0
                       ? AppLocalizations.of(context).translate("lowerBoundDays")
-                      : AppLocalizations.of(context).translate("upperBoundDays"),
+                      : AppLocalizations.of(context)
+                          .translate("upperBoundDays"),
                   min: 1.0,
                   max: 14.0,
                   onChanged: (newRating) {
@@ -130,7 +136,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                     "height": 55.0,
                     "function": createProposal,
                     "margin": const EdgeInsets.only(top: 25, bottom: 10),
-                    "label": AppLocalizations.of(context).translate("createProposal"),
+                    "label": AppLocalizations.of(context)
+                        .translate("createProposal"),
                   }
                 ],
               ),

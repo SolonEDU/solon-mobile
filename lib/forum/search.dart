@@ -61,5 +61,6 @@ class ForumSearch extends SearchDelegate {
   }
 
   @override
-  String get searchFieldLabel => AppLocalizations.of(context).translate("searchForum");
+  String get searchFieldLabel =>
+      AppLocalizations.of(context).translate("searchForum");
 }

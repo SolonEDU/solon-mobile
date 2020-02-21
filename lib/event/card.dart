@@ -25,10 +25,11 @@ class EventCard extends StatefulWidget {
     this.numattenders,
   }) : super(key: key);
 
-  factory EventCard.fromJson(Map<String, dynamic> map, int creatorUid, String prefLangCode) {
+  factory EventCard.fromJson(
+      Map<String, dynamic> map, int creatorUid, String prefLangCode) {
     DateTime date = DateTime.parse(map['date']);
-    String dateParsed = formatDate(
-        date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String dateParsed =
+        formatDate(date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];

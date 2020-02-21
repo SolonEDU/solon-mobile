@@ -112,7 +112,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text("${AppLocalizations.of(context).translate('numDaysUntilVotingEnds')} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
+                    child: Text(
+                        "${AppLocalizations.of(context).translate('numDaysUntilVotingEnds')} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
@@ -121,23 +122,25 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'color': Colors.green,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () async *{
+                              'function': () async* {
                                 yield true;
                                 APIConnect.vote(widget.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': AppLocalizations.of(context).translate("yes"),
+                              'label':
+                                  AppLocalizations.of(context).translate("yes"),
                             },
                             {
                               'color': Colors.red,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () async * {
+                              'function': () async* {
                                 yield true;
                                 APIConnect.vote(widget.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': AppLocalizations.of(context).translate("no"),
+                              'label':
+                                  AppLocalizations.of(context).translate("no"),
                             }
                           ],
                         )

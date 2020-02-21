@@ -117,7 +117,8 @@ class _EventPageState extends State<EventPage> with Screen {
                     Padding(
                       padding:
                           const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                      child: Text(AppLocalizations.of(context).translate("attending")),
+                      child: Text(
+                          AppLocalizations.of(context).translate("attending")),
                     ),
                     Switch.adaptive(
                       value: attendanceVal,

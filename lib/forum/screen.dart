@@ -78,7 +78,8 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(AppLocalizations.of(context).translate("sortBy")),
+                              Text(AppLocalizations.of(context)
+                                  .translate("sortBy")),
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
@@ -111,13 +112,17 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                           (String value) {
                                         Map<String, String> itemsMap = {
                                           'Newly created':
-                                              AppLocalizations.of(context).translate("newlyCreated"),
+                                              AppLocalizations.of(context)
+                                                  .translate("newlyCreated"),
                                           'Oldest created':
-                                              AppLocalizations.of(context).translate("oldestCreated"),
+                                              AppLocalizations.of(context)
+                                                  .translate("oldestCreated"),
                                           'Most comments':
-                                              AppLocalizations.of(context).translate("mostComments"),
+                                              AppLocalizations.of(context)
+                                                  .translate("mostComments"),
                                           'Least comments':
-                                              AppLocalizations.of(context).translate("leastComments"),
+                                              AppLocalizations.of(context)
+                                                  .translate("leastComments"),
                                         };
                                         return DropdownMenuItem<String>(
                                           value: value,

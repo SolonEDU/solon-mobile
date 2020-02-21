@@ -185,7 +185,8 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                               color: Colors.pink[200],
                               height: 55,
                               width: 155,
-                              label: AppLocalizations.of(context).translate("signOut"),
+                              label: AppLocalizations.of(context)
+                                  .translate("signOut"),
                               margin: EdgeInsets.only(top: 10),
                               function: () async {
                                 final prefs =

@@ -57,31 +57,9 @@ class ProposalsSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return Container();
-    // StreamBuilder(
-    //   stream: Function.apply(
-    //     APIConnect.proposalSearchListView,
-    //     [
-    //       query,
-    //     ],
-    //   ),
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.waiting:
-    //         return Center();
-    //       default:
-    //         if (query == '') {
-    //           return Center();
-    //         } else if (snapshot.hasError) {
-    //           return Center();
-    //         }
-    //         return ListView(
-    //           children: snapshot.data,
-    //         );
-    //     }
-    //   },
-    // );
   }
 
   @override
-  String get searchFieldLabel => AppLocalizations.of(context).translate("searchProposals");
+  String get searchFieldLabel =>
+      AppLocalizations.of(context).translate("searchProposals");
 }

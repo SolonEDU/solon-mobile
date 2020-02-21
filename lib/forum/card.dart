@@ -25,8 +25,8 @@ class PostCard extends StatefulWidget {
 
   factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
     DateTime timestamp = DateTime.parse(map['timestamp']);
-    String timestampParsed = formatDate(timestamp,
-        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String timestampParsed = formatDate(
+        timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];
@@ -73,8 +73,8 @@ class _PostCardState extends State<PostCard> with Screen {
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(
           (widget.title.length > 40)
-          ? '${widget.title.substring(0, 40)}...'
-          : widget.title,
+              ? '${widget.title.substring(0, 40)}...'
+              : widget.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
