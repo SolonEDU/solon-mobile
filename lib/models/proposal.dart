@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:date_format/date_format.dart';
 
-class Proposal{
+class Proposal {
   final int pid;
   final String title;
   final String description;
@@ -23,7 +23,10 @@ class Proposal{
     this.date,
   });
 
-  factory Proposal.fromJson({Map<String, dynamic> map, String prefLangCode}) {
+  factory Proposal.fromJson({
+    Map<String, dynamic> map,
+    String prefLangCode,
+  }) {
     DateTime endTime = DateTime.parse(map['endtime']);
     String endTimeParsed = formatDate(
         endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);

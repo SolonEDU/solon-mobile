@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Solon/models/event.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,39 +11,9 @@ import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
 
 class EventCard extends StatefulWidget {
-  final int eid;
-  final String title;
-  final String description;
-  final String date;
-  final bool attending;
-  final int numattenders;
+  final Event event;
 
-  EventCard({
-    Key key,
-    this.eid,
-    this.title,
-    this.description,
-    this.date,
-    this.attending,
-    this.numattenders,
-  }) : super(key: key);
-
-  factory EventCard.fromJson(
-      Map<String, dynamic> map, int creatorUid, String prefLangCode) {
-    DateTime date = DateTime.parse(map['date']);
-    String dateParsed =
-        formatDate(date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
-    String translatedTitle = json.decode(map['title'])[prefLangCode];
-    String translatedDescription =
-        json.decode(map['description'])[prefLangCode];
-    return EventCard(
-      eid: map['eid'],
-      title: translatedTitle,
-      description: translatedDescription,
-      date: dateParsed,
-      numattenders: map['numattenders'],
-    );
-  }
+  EventCard({Key key, this.event}) : super(key: key);
 
   @override
   _EventCardState createState() => _EventCardState();
@@ -53,7 +24,7 @@ class _EventCardState extends State<EventCard> with Screen {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
     final responseMessage = await APIConnect.getAttendance(
-      eid: widget.eid,
+      eid: widget.event.eid,
       uid: userUid,
     );
     return responseMessage;
@@ -66,11 +37,7 @@ class _EventCardState extends State<EventCard> with Screen {
         context,
         MaterialPageRoute(
           builder: (context) => EventPage(
-            eid: widget.eid,
-            title: widget.title,
-            description: widget.description,
-            date: widget.date,
-            numattenders: widget.numattenders,
+            event: widget.event,
           ),
         ),
       );
@@ -85,9 +52,9 @@ class _EventCardState extends State<EventCard> with Screen {
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
-          (widget.title.length > 40)
-              ? '${widget.title.substring(0, 40)}...'
-              : widget.title,
+          (widget.event.title.length > 40)
+              ? '${widget.event.title.substring(0, 40)}...'
+              : widget.event.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -101,7 +68,7 @@ class _EventCardState extends State<EventCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              '${widget.date}',
+              '${widget.event.date}',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -109,7 +76,7 @@ class _EventCardState extends State<EventCard> with Screen {
             ),
           ),
           Text(
-            "${widget.numattenders} ${AppLocalizations.of(context).translate("attenders")}",
+            "${widget.event.numattenders} ${AppLocalizations.of(context).translate("attenders")}",
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),

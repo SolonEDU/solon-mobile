@@ -158,18 +158,6 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                               splashColor: Colors.transparent,
                             ),
                           ),
-                          // IconButton(
-                          //   icon: Icon(Icons.search),
-                          //   color: Colors.pinkAccent[400],
-                          //   highlightColor: Colors.transparent,
-                          //   splashColor: Colors.transparent,
-                          //   onPressed: () {
-                          //     showSearch(
-                          //       context: context,
-                          //       delegate: ForumSearch(),
-                          //     );
-                          //   },
-                          // ),
                         ],
                       ),
                     ),

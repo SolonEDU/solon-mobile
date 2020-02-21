@@ -48,9 +48,7 @@ class ProposalsSearch extends SearchDelegate {
           default:
             return ListView(
               children: snapshot.data
-                  .map((json) => ProposalCard(
-                        proposal: json,
-                      ))
+                  .map((json) => ProposalCard(proposal: json))
                   .toList(),
             );
         }

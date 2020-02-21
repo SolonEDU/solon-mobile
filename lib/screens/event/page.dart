@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Solon/models/event.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
@@ -9,18 +10,10 @@ import 'package:Solon/services/api_connect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EventPage extends StatefulWidget {
-  final int eid;
-  final String title;
-  final String description;
-  final String date;
-  final int numattenders;
+  final Event event;
 
   EventPage({
-    this.eid,
-    this.title,
-    this.description,
-    this.date,
-    this.numattenders,
+    this.event,
   });
 
   @override
@@ -34,9 +27,9 @@ class _EventPageState extends State<EventPage> with Screen {
 
   void _onChanged(bool value) async {
     if (value) {
-      APIConnect.changeAttendance('POST', eid: widget.eid, uid: userUid);
+      APIConnect.changeAttendance('POST', eid: widget.event.eid, uid: userUid);
     } else {
-      APIConnect.changeAttendance('DELETE', eid: widget.eid, uid: userUid);
+      APIConnect.changeAttendance('DELETE', eid: widget.event.eid, uid: userUid);
     }
     streamController.sink.add(value);
   }
@@ -45,7 +38,7 @@ class _EventPageState extends State<EventPage> with Screen {
     final prefs = await SharedPreferences.getInstance();
     userUid = json.decode(prefs.getString('userData'))['uid'];
     streamController
-        .add(await APIConnect.getAttendance(eid: widget.eid, uid: userUid));
+        .add(await APIConnect.getAttendance(eid: widget.event.eid, uid: userUid));
   }
 
   @override
@@ -80,7 +73,7 @@ class _EventPageState extends State<EventPage> with Screen {
                   padding: const EdgeInsets.only(
                       left: 16, right: 16, bottom: 8, top: 8),
                   child: Text(
-                    widget.title,
+                    widget.event.title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -102,7 +95,7 @@ class _EventPageState extends State<EventPage> with Screen {
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, bottom: 8.0),
                   child: Text(
-                    widget.description,
+                    widget.event.description,
                     style: TextStyle(
                       fontSize: 18,
                     ),
@@ -110,7 +103,7 @@ class _EventPageState extends State<EventPage> with Screen {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-                  child: Text(widget.date),
+                  child: Text(widget.event.date),
                 ),
                 ButtonBar(
                   alignment: MainAxisAlignment.start,

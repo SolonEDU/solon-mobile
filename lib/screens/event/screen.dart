@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'package:Solon/models/event.dart';
+import 'package:Solon/screens/event/card.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/event/search.dart';
+import 'package:Solon/util/event_util.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:Solon/services/api_connect.dart';
-import 'package:Solon/screens/event/card.dart';
 
 class EventsScreen extends StatefulWidget {
   EventsScreen({Key key}) : super(key: key);
@@ -20,14 +21,14 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
       GlobalKey<RefreshIndicatorState>();
 
   StreamController dropdownMenuStreamController = StreamController.broadcast();
-  Stream<List<EventCard>> stream;
+  Stream<List<Event>> stream;
   int userUid;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
     final eventsSortOption = prefs.getString('eventsSortOption');
     dropdownMenuStreamController.sink.add(eventsSortOption);
-    stream = APIConnect.eventListView(eventsSortOption);
+    stream = EventUtil.screenView(eventsSortOption);
   }
 
   @override
@@ -160,30 +161,15 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                               splashColor: Colors.transparent,
                             ),
                           ),
-                          // IconButton(
-                          //   icon: Icon(Icons.search),
-                          //   color: Colors.pinkAccent[400],
-                          //   highlightColor: Colors.transparent,
-                          //   splashColor: Colors.transparent,
-                          //   onPressed: () {
-                          //     showSearch(
-                          //       context: context,
-                          //       delegate: EventsSearch(),
-                          //     );
-                          //   },
-                          // ),
                         ],
                       ),
                     ),
                     Expanded(
                       child: StreamBuilder(
                         stream: Function.apply(
-                          APIConnect.eventListView,
-                          [
-                            optionVal.data,
-                          ],
-                        ),
-                        builder: (context, snapshot) {
+                            EventUtil.screenView, [optionVal.data]),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<Event>> snapshot) {
                           if (snapshot.hasError)
                             return Text('Error: ${snapshot.error}');
                           switch (snapshot.connectionState) {
@@ -205,7 +191,9 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                                   key: _scaffoldKey,
                                   body: ListView(
                                     padding: const EdgeInsets.all(4),
-                                    children: snapshot.data,
+                                    children: snapshot.data
+                                        .map((json) => EventCard(event: json))
+                                        .toList(),
                                   ),
                                 ),
                               );

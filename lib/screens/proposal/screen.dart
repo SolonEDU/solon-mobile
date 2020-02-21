@@ -179,17 +179,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                     ),
                     Expanded(
                       child: StreamBuilder(
-                        stream: Function.apply(ProposalUtil.screenView, [
-                          optionVal.data,
-                        ]),
-                        // stream: Function.apply(
-                        //   ProposalUtil.getListView,
-                        //   null, // no positional arguments
-                        //   {
-                        //     #function: ProposalConnect.connectProposals,
-                        //     #query: optionVal.data,
-                        //   },
-                        // ),
+                        stream: Function.apply(
+                            ProposalUtil.screenView, [optionVal.data]),
                         builder: (
                           BuildContext context,
                           AsyncSnapshot<List<Proposal>> snapshot,

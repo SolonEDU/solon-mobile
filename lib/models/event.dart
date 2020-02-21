@@ -1,25 +1,41 @@
+import 'dart:convert';
+
+import 'package:date_format/date_format.dart';
+
 class Event {
   final int eid;
-  final Map<String, String> title;
-  final Map<String, String> description;
-  final DateTime date;
-  final DateTime datecreated;
+  final String title;
+  final String description;
+  final String date;
+  final bool attending;
   final int numattenders;
-  final String entitle;
-  final String endescription;
 
   Event({
     this.eid,
     this.title,
     this.description,
     this.date,
-    this.datecreated,
+    this.attending,
     this.numattenders,
-    this.entitle,
-    this.endescription,
   });
 
-  factory Event.fromJson() {
-    return Event();
+  factory Event.fromJson({
+    Map<String, dynamic> map,
+    int creatorUid,
+    String prefLangCode,
+  }) {
+    DateTime date = DateTime.parse(map['date']);
+    String dateParsed =
+        formatDate(date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String translatedTitle = json.decode(map['title'])[prefLangCode];
+    String translatedDescription =
+        json.decode(map['description'])[prefLangCode];
+    return Event(
+      eid: map['eid'],
+      title: translatedTitle,
+      description: translatedDescription,
+      date: dateParsed,
+      numattenders: map['numattenders'],
+    );
   }
 }
