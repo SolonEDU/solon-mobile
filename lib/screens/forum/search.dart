@@ -37,9 +37,7 @@ class ForumSearch extends SearchDelegate {
     return StreamBuilder<List<ForumPost>>(
       stream: Function.apply(
         ForumUtil.searchView,
-        [
-          query,
-        ],
+        [query],
       ),
       builder: (BuildContext context, AsyncSnapshot<List<ForumPost>> snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');

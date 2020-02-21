@@ -1,5 +1,5 @@
-import 'package:Solon/util/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/util/app_localizations.dart';
 
 class NavBar extends StatelessWidget {
   final int selectedIndex;

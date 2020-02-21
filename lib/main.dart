@@ -113,9 +113,11 @@ class _MainState extends State<Main> {
       GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (_selectedIndex != index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override

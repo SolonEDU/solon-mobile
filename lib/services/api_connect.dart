@@ -19,12 +19,6 @@ class APIConnect {
     };
   }
 
-  // static Stream<List<Comment>> commentListView(int fid) async* {
-  //   yield await connectComments(
-  //     fid: fid,
-  //   );
-  // }
-
   static Map<String, String> languages = {
     'English': 'en',
     'Chinese (Simplified)': 'zhcn',
@@ -106,9 +100,7 @@ class APIConnect {
       }
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
-      print(userData);
       prefs.setString('userData', userData);
-      print(json.decode(prefs.getString('userData')));
       prefs.setString('proposalsSortOption', 'Newly created');
       prefs.setString('eventsSortOption', 'Upcoming');
       prefs.setString('forumSortOption', 'Newly created');

@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
     );
   }
 
-  Future<dynamic> signIn() async {
+  void signIn() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
@@ -112,7 +112,6 @@ class _LoginPageState extends State<LoginPage> with Screen {
             : AppLocalizations.of(context).translate(
                 "userDoesNotExist"); // TODO: need a better to code for this logic; be wary of this line when we add in more errors to sign in
         showToast(message, _scaffoldKey);
-        return false;
       } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
@@ -122,8 +121,6 @@ class _LoginPageState extends State<LoginPage> with Screen {
           ),
         );
       }
-    } else {
-      return false;
     }
   }
 }

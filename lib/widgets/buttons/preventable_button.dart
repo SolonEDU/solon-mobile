@@ -1,5 +1,5 @@
-import 'package:Solon/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/widgets/buttons/button.dart';
 
 typedef DynamicStream<T> = Stream<T> Function();
 
