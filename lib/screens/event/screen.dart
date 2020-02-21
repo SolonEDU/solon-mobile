@@ -6,6 +6,7 @@ import 'package:Solon/screens/event/search.dart';
 import 'package:Solon/util/event_util.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/search_button.dart';
+import 'package:Solon/widgets/sort_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,66 +79,33 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(AppLocalizations.of(context)
-                                  .translate("sortBy")),
-                              Container(
-                                child: DropdownButtonHideUnderline(
-                                  child: ButtonTheme(
-                                    alignedDropdown: true,
-                                    child: DropdownButton<String>(
-                                      value: optionVal.data,
-                                      iconSize: 24,
-                                      elevation: 8,
-                                      style: TextStyle(color: Colors.black),
-                                      underline: Container(
-                                        height: 2,
-                                        color: Colors.pink[400],
-                                      ),
-                                      onChanged: (String newValue) async {
-                                        dropdownMenuStreamController.sink
-                                            .add(newValue);
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        prefs.setString(
-                                          'eventsSortOption',
-                                          newValue,
-                                        );
-                                      },
-                                      items: <String>[
-                                        'Furthest',
-                                        'Upcoming',
-                                        'Most attendees',
-                                        'Least attendees',
-                                      ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                        Map<String, String> itemsMap = {
-                                          'Furthest':
-                                              AppLocalizations.of(context)
-                                                  .translate("furthest"),
-                                          'Upcoming':
-                                              AppLocalizations.of(context)
-                                                  .translate("upcoming"),
-                                          'Most attendees':
-                                              AppLocalizations.of(context)
-                                                  .translate("mostAttendees"),
-                                          'Least attendees':
-                                              AppLocalizations.of(context)
-                                                  .translate("leastAttendees"),
-                                        };
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            itemsMap[value],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
+                          SortDropdown(
+                            preferences: 'eventsSortOption',
+                            streamController: dropdownMenuStreamController,
+                            value: optionVal.data,
+                            items: <String>[
+                              'Furthest',
+                              'Upcoming',
+                              'Most attendees',
+                              'Least attendees',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              Map<String, String> itemsMap = {
+                                'Furthest': AppLocalizations.of(context)
+                                    .translate("furthest"),
+                                'Upcoming': AppLocalizations.of(context)
+                                    .translate("upcoming"),
+                                'Most attendees': AppLocalizations.of(context)
+                                    .translate("mostAttendees"),
+                                'Least attendees': AppLocalizations.of(context)
+                                    .translate("leastAttendees"),
+                              };
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  itemsMap[value],
                                 ),
-                              ),
-                            ],
+                              );
+                            }).toList(),
                           ),
                           SearchButton(
                             delegate: EventsSearch(context),

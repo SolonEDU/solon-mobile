@@ -5,6 +5,7 @@ import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/util/forum_util.dart';
 import 'package:Solon/widgets/create_button.dart';
 import 'package:Solon/widgets/search_button.dart';
+import 'package:Solon/widgets/sort_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/util/screen.dart';
@@ -80,64 +81,31 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(AppLocalizations.of(context)
-                                  .translate("sortBy")),
-                              Container(
-                                child: DropdownButtonHideUnderline(
-                                  child: ButtonTheme(
-                                    alignedDropdown: true,
-                                    child: DropdownButton<String>(
-                                      value: optionVal.data,
-                                      iconSize: 24,
-                                      elevation: 8,
-                                      style: TextStyle(color: Colors.black),
-                                      underline: Container(
-                                        height: 2,
-                                        color: Colors.pink[400],
-                                      ),
-                                      onChanged: (String newValue) async {
-                                        dropdownMenuStreamController.sink
-                                            .add(newValue);
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        prefs.setString(
-                                          'forumSortOption',
-                                          newValue,
-                                        );
-                                      },
-                                      items: <String>[
-                                        'Newly created',
-                                        'Oldest created',
-                                        'Most comments',
-                                        'Least comments',
-                                      ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                        Map<String, String> itemsMap = {
-                                          'Newly created':
-                                              AppLocalizations.of(context)
-                                                  .translate("newlyCreated"),
-                                          'Oldest created':
-                                              AppLocalizations.of(context)
-                                                  .translate("oldestCreated"),
-                                          'Most comments':
-                                              AppLocalizations.of(context)
-                                                  .translate("mostComments"),
-                                          'Least comments':
-                                              AppLocalizations.of(context)
-                                                  .translate("leastComments"),
-                                        };
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(itemsMap[value]),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          SortDropdown(
+                            streamController: dropdownMenuStreamController,
+                            value: optionVal.data,
+                            preferences: 'forumSortOption',
+                            items: <String>[
+                              'Newly created',
+                              'Oldest created',
+                              'Most comments',
+                              'Least comments',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              Map<String, String> itemsMap = {
+                                'Newly created': AppLocalizations.of(context)
+                                    .translate("newlyCreated"),
+                                'Oldest created': AppLocalizations.of(context)
+                                    .translate("oldestCreated"),
+                                'Most comments': AppLocalizations.of(context)
+                                    .translate("mostComments"),
+                                'Least comments': AppLocalizations.of(context)
+                                    .translate("leastComments"),
+                              };
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(itemsMap[value]),
+                              );
+                            }).toList(),
                           ),
                           SearchButton(
                             delegate: ForumSearch(context),

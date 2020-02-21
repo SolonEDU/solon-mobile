@@ -6,6 +6,7 @@ import 'package:Solon/screens/proposal/search.dart';
 import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/create_button.dart';
 import 'package:Solon/widgets/search_button.dart';
+import 'package:Solon/widgets/sort_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/util/screen.dart';
@@ -81,77 +82,40 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(AppLocalizations.of(context)
-                                  .translate("sortBy")),
-                              Container(
-                                // TODO: is this Container() needed here ?
-                                child: DropdownButtonHideUnderline(
-                                  child: ButtonTheme(
-                                    alignedDropdown: true,
-                                    child: DropdownButton<String>(
-                                      value: optionVal.data,
-                                      iconSize: 24,
-                                      elevation: 8,
-                                      style: TextStyle(color: Colors.black),
-                                      underline: Container(
-                                        height: 2,
-                                        color: Colors.pink[400],
-                                      ),
-                                      onChanged: (String newValue) async {
-                                        dropdownMenuStreamController.sink
-                                            .add(newValue);
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        prefs.setString(
-                                          'proposalsSortOption',
-                                          newValue,
-                                        );
-                                      },
-                                      items: <String>[
-                                        'Most votes',
-                                        'Least votes',
-                                        'Newly created',
-                                        'Oldest created',
-                                        'Upcoming deadlines',
-                                        'Oldest deadlines',
-                                      ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                        Map<String, String> itemsMap = {
-                                          'Most votes':
-                                              AppLocalizations.of(context)
-                                                  .translate("mostVotes"),
-                                          'Least votes':
-                                              AppLocalizations.of(context)
-                                                  .translate("leastVotes"),
-                                          'Newly created':
-                                              AppLocalizations.of(context)
-                                                  .translate("newlyCreated"),
-                                          'Oldest created':
-                                              AppLocalizations.of(context)
-                                                  .translate("oldestCreated"),
-                                          'Upcoming deadlines':
-                                              AppLocalizations.of(context)
-                                                  .translate(
-                                                      "upcomingDeadlines"),
-                                          'Oldest deadlines':
-                                              AppLocalizations.of(context)
-                                                  .translate("oldestDeadlines"),
-                                        };
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            itemsMap[value],
-                                            // textAlign: TextAlign.left,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
+                          SortDropdown(
+                            streamController: dropdownMenuStreamController,
+                            value: optionVal.data,
+                            preferences: 'proposalsSortOption',
+                            items: <String>[
+                              'Most votes',
+                              'Least votes',
+                              'Newly created',
+                              'Oldest created',
+                              'Upcoming deadlines',
+                              'Oldest deadlines',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              Map<String, String> itemsMap = {
+                                'Most votes': AppLocalizations.of(context)
+                                    .translate("mostVotes"),
+                                'Least votes': AppLocalizations.of(context)
+                                    .translate("leastVotes"),
+                                'Newly created': AppLocalizations.of(context)
+                                    .translate("newlyCreated"),
+                                'Oldest created': AppLocalizations.of(context)
+                                    .translate("oldestCreated"),
+                                'Upcoming deadlines':
+                                    AppLocalizations.of(context)
+                                        .translate("upcomingDeadlines"),
+                                'Oldest deadlines': AppLocalizations.of(context)
+                                    .translate("oldestDeadlines"),
+                              };
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  itemsMap[value],
                                 ),
-                              ),
-                            ],
+                              );
+                            }).toList(),
                           ),
                           SearchButton(
                             delegate: ProposalsSearch(context),
