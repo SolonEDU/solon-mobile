@@ -22,6 +22,7 @@
 	"numDaysUntilVotingEnds": "Number of days until voting ends:",
 	"yes": "Yes",
 	"no": "No",
+	"vote": "vote",
 	"votes": "votes",
 	"votingOnProposalEnds": "Votes on proposal ends on",
 	"youHaveVotedYes": "You have voted yes!",
