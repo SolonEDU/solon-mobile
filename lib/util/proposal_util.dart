@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:Solon/models/proposal.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/proposal_connect.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProposalUtil {
   static Stream<List<Proposal>> _getList(
       {Function function, String query}) async* {
     http.Response response = await function(query: query);
-    final sharedPrefs = await APIConnect.connectSharedPreferences();
+    final sharedPrefs = await UserUtil.connectSharedPreferences();
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<Proposal> _proposals;
     List collection;
@@ -36,4 +38,16 @@ class ProposalUtil {
       query: query,
     );
   }
+
+  static Future<void> vote(int pid, int voteVal) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    ProposalConnect.connectVotes(
+      'POST',
+      pid: pid,
+      uidUser: userUid,
+      voteVal: voteVal,
+    );
+  }
+
 }

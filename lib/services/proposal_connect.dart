@@ -55,4 +55,31 @@ class ProposalConnect {
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Message field in proposal object not found.');
   }
+
+  static Future<Map<String, dynamic>> connectVotes(String httpReqType,
+      {int pid, int uidUser, int voteVal}) async {
+    Map vote = {
+      'pid': pid,
+      'uid': uidUser,
+      'value': voteVal,
+    };
+    var response = (httpReqType == 'POST') // need pid, uid, and voteVal
+        ? await http.post(
+            "${APIConnect.url}/votes",
+            body: json.encode(vote),
+            headers: await APIConnect.headers,
+          )
+        : (httpReqType == 'GET') // need pid and uidUser
+            ? await http.get(
+                "${APIConnect.url}/votes/$pid/$uidUser",
+                headers: await APIConnect.headers,
+              )
+            : await http.patch(
+                // need pid, uid, and voteVal
+                "${APIConnect.url}/votes",
+                body: json.encode(vote),
+                headers: await APIConnect.headers,
+              );
+    return json.decode(response.body);
+  }
 }

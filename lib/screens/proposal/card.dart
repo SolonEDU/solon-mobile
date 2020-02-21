@@ -1,5 +1,5 @@
 import 'package:Solon/models/proposal.dart';
-import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
@@ -28,7 +28,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    final responseMessage = await APIConnect.connectVotes(
+    final responseMessage = await ProposalConnect.connectVotes(
       'GET',
       pid: widget.proposal.pid,
       uidUser: userUid,

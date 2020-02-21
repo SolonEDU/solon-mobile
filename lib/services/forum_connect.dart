@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 
 class ForumConnect {
@@ -35,7 +36,7 @@ class ForumConnect {
     String description,
     DateTime timestamp,
   ) async {
-    final userData = await APIConnect.connectSharedPreferences();
+    final userData = await UserUtil.connectSharedPreferences();
     final response = await http.post(
       "${APIConnect.url}/forumposts",
       body: json.encode({
@@ -66,7 +67,7 @@ class ForumConnect {
     String timestamp,
     int uid,
   }) async {
-    final userData = await APIConnect.connectSharedPreferences();
+    final userData = await UserUtil.connectSharedPreferences();
     final response = await http.post(
       "${APIConnect.url}/comments",
       body: json.encode({

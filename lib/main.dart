@@ -1,3 +1,4 @@
+import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,7 +10,6 @@ import 'package:Solon/screens/event/screen.dart';
 import 'package:Solon/screens/forum/screen.dart';
 import 'package:Solon/screens/account_screen.dart';
 import 'package:Solon/widgets/nav_bar.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 
 void main() => runApp(Solon());
@@ -47,7 +47,7 @@ class Solon extends StatelessWidget {
       ),
       home: Scaffold(
         body: FutureBuilder(
-          future: APIConnect.connectSharedPreferences(),
+          future: UserUtil.connectSharedPreferences(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Container();

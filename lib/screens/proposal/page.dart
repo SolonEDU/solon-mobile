@@ -1,5 +1,7 @@
 import 'package:Solon/models/proposal.dart';
+import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/preventable_button.dart';
 import 'package:Solon/util/screen.dart';
@@ -7,7 +9,6 @@ import 'package:Solon/widgets/vote_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:Solon/services/api_connect.dart';
 
 class ProposalPage extends StatefulWidget {
   final Proposal proposal;
@@ -28,7 +29,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    final responseMessage = await APIConnect.connectVotes(
+    final responseMessage = await ProposalConnect.connectVotes(
       'GET',
       pid: widget.proposal.pid,
       uidUser: userUid,
@@ -113,7 +114,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'height': 55.0,
                               'function': () async* {
                                 yield true;
-                                APIConnect.vote(widget.proposal.pid, 1);
+                                ProposalUtil.vote(widget.proposal.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
                               'label':
@@ -125,7 +126,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'height': 55.0,
                               'function': () async* {
                                 yield true;
-                                APIConnect.vote(widget.proposal.pid, 0);
+                                ProposalUtil.vote(widget.proposal.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
                               'label':

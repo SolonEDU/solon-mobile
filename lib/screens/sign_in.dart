@@ -1,9 +1,9 @@
+import 'package:Solon/services/user_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/widgets/buttons/button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      final responseMessage = await APIConnect.loginUser(_email, _password);
+      final responseMessage = await UserConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
         String message = responseMessage["error"]["errorMessage"] ==
                 "Incorrect password"

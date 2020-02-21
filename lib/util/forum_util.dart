@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 import 'package:Solon/models/comment.dart';
 import 'package:Solon/models/forum_post.dart';
@@ -9,7 +10,7 @@ class ForumUtil {
   static Stream<List<ForumPost>> _getList(
       {Function function, String query}) async* {
     http.Response response = await function(query: query);
-    final sharedPrefs = await APIConnect.connectSharedPreferences();
+    final sharedPrefs = await UserUtil.connectSharedPreferences();
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<ForumPost> _posts;
     List collection;
@@ -25,7 +26,7 @@ class ForumUtil {
 
   static Stream<List<Comment>> getComments({int fid}) async* {
     http.Response response = await ForumConnect.connectComments(fid: fid);
-    final sharedPrefs = await APIConnect.connectSharedPreferences();
+    final sharedPrefs = await UserUtil.connectSharedPreferences();
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<Comment> _comments;
     List collection;

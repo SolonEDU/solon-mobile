@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:Solon/services/user_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:Solon/widgets/buttons/button.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/models/message.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
   }
 
   Future<Null> load() async {
-    streamController.add(await APIConnect.connectSharedPreferences());
+    streamController.add(await UserUtil.connectSharedPreferences());
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _userUid = json.decode(prefs.getString('userData'))['uid'];
@@ -40,7 +41,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
   }
 
   Future<Null> _refresh() async {
-    final dbUserData = await APIConnect.connectUser(uid: _userUid);
+    final dbUserData = await UserConnect.connectUser(uid: _userUid);
     streamController.add(dbUserData);
   }
 
@@ -141,7 +142,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                                 json.encode(userDataJson),
                               );
                               Message responseMessage =
-                                  await APIConnect.changeLanguage(
+                                  await UserConnect.changeLanguage(
                                 uid: snapshot.data['uid'],
                                 updatedLang: json.decode(
                                     prefs.getString('userData'))['lang'],
