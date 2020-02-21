@@ -113,7 +113,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text(
-                        "${AppLocalizations.of(context).translate('numDaysUntilVotingEnds')} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
+                        "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(

@@ -107,7 +107,7 @@ class _EventCardState extends State<EventCard> with Screen {
             ),
           ),
           Text(
-            AppLocalizations.of(context).translate("attenders"),
+            "${widget.numattenders} ${AppLocalizations.of(context).translate("attenders")}",
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),
