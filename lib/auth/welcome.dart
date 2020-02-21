@@ -1,9 +1,8 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
-
 import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 import 'package:Solon/auth/sign_up.dart';
-import 'package:Solon/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -20,7 +19,8 @@ class _WelcomePageState extends State<WelcomePage> {
     );
 
     return Scaffold(
-      appBar: PreferredSize( // TODO: have yet to find a nonjanky method
+      appBar: PreferredSize(
+        // TODO: have yet to find a nonjanky method
         preferredSize: Size.fromHeight(0),
         child: AppBar(),
       ),
@@ -40,7 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 55,
                 width: 155,
                 function: navigateToSignIn,
-                label: AppLocalizations.of(context).translate('signin'),
+                label: AppLocalizations.of(context).translate("signIn"),
                 margin: const EdgeInsets.all(0),
               ),
               Button(
@@ -48,7 +48,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: 55,
                 width: 155,
                 function: navigateToSignUp,
-                label: AppLocalizations.of(context).translate('signup'),
+                label: AppLocalizations.of(context).translate("signUp"),
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
               ),
             ],

@@ -1,18 +1,16 @@
-import 'package:Solon/auth/button.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:Solon/app_localizations.dart';
+import 'package:Solon/auth/button.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
-import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/api/message.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
-  final int uid;
-  const AccountScreen({this.uid});
+  const AccountScreen();
 
   @override
   _AccountScreenState createState() => _AccountScreenState();
@@ -73,7 +71,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                 key: _scaffoldKey,
                 appBar: getPageAppBar(
                   context,
-                  title: AppLocalizations.of(context).translate('account'),
+                  title: AppLocalizations.of(context).translate("account"),
                 ),
                 body: Container(
                   margin: const EdgeInsets.all(20),
@@ -84,7 +82,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Name',
+                            AppLocalizations.of(context).translate("name"),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Raleway',
@@ -102,7 +100,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                             ),
                           ),
                           Text(
-                            'Email',
+                            AppLocalizations.of(context).translate("email"),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Raleway',
@@ -120,7 +118,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                             ),
                           ),
                           Text(
-                            'Language',
+                            AppLocalizations.of(context).translate("language"),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Raleway',
@@ -187,7 +185,8 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                               color: Colors.pink[200],
                               height: 55,
                               width: 155,
-                              label: "Sign Out",
+                              label: AppLocalizations.of(context)
+                                  .translate("signOut"),
                               margin: EdgeInsets.only(top: 10),
                               function: () async {
                                 final prefs =

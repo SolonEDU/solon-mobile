@@ -1,15 +1,14 @@
+import 'dart:convert';
+
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-// import 'package:intl/intl.dart';
-
-import 'package:Solon/app_localizations.dart';
 import 'package:Solon/api/api_connect.dart';
-// import 'package:Solon/loader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EventPage extends StatefulWidget {
   final int eid;
-  final int uid;
   final String title;
   final String description;
   final String date;
@@ -17,7 +16,6 @@ class EventPage extends StatefulWidget {
 
   EventPage({
     this.eid,
-    this.uid,
     this.title,
     this.description,
     this.date,
@@ -31,25 +29,28 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> with Screen {
   bool attendanceVal;
   StreamController streamController = StreamController();
+  int userUid;
 
   void _onChanged(bool value) async {
     if (value) {
-      APIConnect.changeAttendance('POST', eid: widget.eid, uid: widget.uid);
+      APIConnect.changeAttendance('POST', eid: widget.eid, uid: userUid);
     } else {
-      APIConnect.changeAttendance('DELETE', eid: widget.eid, uid: widget.uid);
+      APIConnect.changeAttendance('DELETE', eid: widget.eid, uid: userUid);
     }
     streamController.sink.add(value);
+  }
+
+  void load() async {
+    final prefs = await SharedPreferences.getInstance();
+    userUid = json.decode(prefs.getString('userData'))['uid'];
+    streamController
+        .add(await APIConnect.getAttendance(eid: widget.eid, uid: userUid));
   }
 
   @override
   void initState() {
     load();
     super.initState();
-  }
-
-  void load() async {
-    streamController
-        .add(await APIConnect.getAttendance(eid: widget.eid, uid: widget.uid));
   }
 
   @override
@@ -90,7 +91,7 @@ class _EventPageState extends State<EventPage> with Screen {
                   padding: const EdgeInsets.only(
                       left: 16.0, right: 16.0, bottom: 8, top: 8),
                   child: Text(
-                    'Description',
+                    AppLocalizations.of(context).translate("description"),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
@@ -114,8 +115,10 @@ class _EventPageState extends State<EventPage> with Screen {
                   alignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                      child: Text(AppLocalizations.of(context).translate('attending')),
+                      padding:
+                          const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                      child: Text(
+                          AppLocalizations.of(context).translate("attending")),
                     ),
                     Switch.adaptive(
                       value: attendanceVal,

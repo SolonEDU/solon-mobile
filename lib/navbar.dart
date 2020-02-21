@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:Solon/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   final int selectedIndex;
@@ -15,19 +15,19 @@ class NavBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text(AppLocalizations.of(context).translate('home')),
+          title: Text(AppLocalizations.of(context).translate("home")),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_balance),
-          title: Text(AppLocalizations.of(context).translate('proposals')),
+          title: Text(AppLocalizations.of(context).translate("proposals")),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.event),
-          title: Text(AppLocalizations.of(context).translate('events')),
+          title: Text(AppLocalizations.of(context).translate("events")),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.forum),
-          title: Text(AppLocalizations.of(context).translate('forum')),
+          title: Text(AppLocalizations.of(context).translate("forum")),
         )
       ],
       currentIndex: selectedIndex,

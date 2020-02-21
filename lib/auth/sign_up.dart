@@ -1,10 +1,8 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:flutter/material.dart';
-
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
-// import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -23,7 +21,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,
-        title: AppLocalizations.of(context).translate('signup'),
+        title: AppLocalizations.of(context).translate("signUp"),
       ),
       body: Form(
         key: _formKey,
@@ -34,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 10, left: 20),
               child: Text(
-                AppLocalizations.of(context).translate('language'),
+                AppLocalizations.of(context).translate("language"),
               ),
             ),
             Container(
@@ -85,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                "Name",
+                AppLocalizations.of(context).translate("name"),
               ),
             ),
             Row(
@@ -98,12 +96,15 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return 'Please enter your first name';
+                          return AppLocalizations.of(context)
+                              .translate("fNameSignUpFieldError");
                         }
                         return null;
                       },
                       onSaved: (input) => _firstName = input,
-                      decoration: InputDecoration(labelText: 'First name'),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)
+                              .translate("firstName")),
                     ),
                   ),
                 ),
@@ -115,12 +116,15 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                       keyboardType: TextInputType.text,
                       validator: (input) {
                         if (input.isEmpty || input.trim().isEmpty) {
-                          return 'Please enter your last name';
+                          return AppLocalizations.of(context)
+                              .translate("lNameSignUpFieldError");
                         }
                         return null;
                       },
                       onSaved: (input) => _lastName = input,
-                      decoration: InputDecoration(labelText: 'Last name'),
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)
+                              .translate("lastName")),
                     ),
                   ),
                 ),
@@ -129,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                AppLocalizations.of(context).translate('email'),
+                AppLocalizations.of(context).translate("email"),
               ),
             ),
             Container(
@@ -138,7 +142,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.emailAddress,
                 validator: (input) {
                   if (input.isEmpty) {
-                    return 'Please enter your email address';
+                    return AppLocalizations.of(context)
+                        .translate("emailSignUpFieldError");
                   }
                   return null;
                 },
@@ -148,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                AppLocalizations.of(context).translate('password'),
+                AppLocalizations.of(context).translate("password"),
               ),
             ),
             Container(
@@ -157,7 +162,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input.length < 6) {
-                    return 'Your password needs to be at least 6 characters';
+                    return AppLocalizations.of(context)
+                        .translate("passwordSignUpFieldError");
                   } else {
                     _password = input;
                     return null;
@@ -170,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
             Container(
               margin: const EdgeInsets.only(top: 20, left: 20),
               child: Text(
-                'Confirm Password',
+                AppLocalizations.of(context).translate("confirmPassword"),
               ),
             ),
             Container(
@@ -179,7 +185,8 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                 keyboardType: TextInputType.text,
                 validator: (input) {
                   if (input != _password) {
-                    return 'Your passwords do not match';
+                    return AppLocalizations.of(context)
+                        .translate("confirmPasswordSignUpFieldName");
                   }
                   return null;
                 },
@@ -194,7 +201,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
                   "width": 155.0,
                   "function": signUp,
                   "margin": const EdgeInsets.only(top: 25, bottom: 10),
-                  "label": AppLocalizations.of(context).translate('signup'),
+                  "label": AppLocalizations.of(context).translate("signUp"),
                 }
               ],
             ),

@@ -1,11 +1,10 @@
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
-
 import 'package:Solon/proposal/page.dart';
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProposalCard extends StatefulWidget {
@@ -119,7 +118,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              'Ends in ${widget.date.difference(DateTime.now()).inDays} days',
+              "${AppLocalizations.of(context).translate('numDaysUntilVotingEnds')} ${widget.date.difference(DateTime.now()).inDays.toString()}",
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -127,7 +126,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
             ),
           ),
           Text(
-            '${widget.yesVotes + widget.noVotes} votes',
+            AppLocalizations.of(context).translate("votes"),
           ),
           FutureBuilder<Map<String, dynamic>>(
             future: _listFutureProposal,

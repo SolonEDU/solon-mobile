@@ -1,16 +1,15 @@
 import 'dart:async';
-
+import 'package:Solon/app_localizations.dart';
+import 'package:Solon/forum/search.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
 import 'package:Solon/forum/card.dart';
 import 'package:Solon/forum/create.dart';
 
 class ForumScreen extends StatefulWidget {
-  final int uid;
-  ForumScreen({Key key, this.uid}) : super(key: key);
+  ForumScreen({Key key}) : super(key: key);
 
   @override
   _ForumScreenState createState() => _ForumScreenState();
@@ -79,14 +78,14 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text("Sort by: "),
+                              Text(AppLocalizations.of(context)
+                                  .translate("sortBy")),
                               Container(
                                 child: DropdownButtonHideUnderline(
                                   child: ButtonTheme(
                                     alignedDropdown: true,
                                     child: DropdownButton<String>(
                                       value: optionVal.data,
-                                      // icon: Icon(Icons.arrow_downward),
                                       iconSize: 24,
                                       elevation: 8,
                                       style: TextStyle(color: Colors.black),
@@ -111,9 +110,23 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                         'Least comments',
                                       ].map<DropdownMenuItem<String>>(
                                           (String value) {
+                                        Map<String, String> itemsMap = {
+                                          'Newly created':
+                                              AppLocalizations.of(context)
+                                                  .translate("newlyCreated"),
+                                          'Oldest created':
+                                              AppLocalizations.of(context)
+                                                  .translate("oldestCreated"),
+                                          'Most comments':
+                                              AppLocalizations.of(context)
+                                                  .translate("mostComments"),
+                                          'Least comments':
+                                              AppLocalizations.of(context)
+                                                  .translate("leastComments"),
+                                        };
                                         return DropdownMenuItem<String>(
                                           value: value,
-                                          child: Text(value),
+                                          child: Text(itemsMap[value]),
                                         );
                                       }).toList(),
                                     ),
@@ -129,7 +142,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                               onPressed: () {
                                 showSearch(
                                   context: context,
-                                  delegate: ForumSearch(),
+                                  delegate: ForumSearch(context),
                                 );
                               },
                               child: Icon(
@@ -209,63 +222,4 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
       },
     );
   }
-}
-
-// TODO: move to another file after we're done experimenting
-class ForumSearch extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    if (query == '') return Container();
-    return StreamBuilder(
-      stream: Function.apply(
-        APIConnect.forumSearchListView,
-        [
-          query,
-        ],
-      ),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Container(
-              child: CircularProgressIndicator(),
-            );
-          default:
-            return ListView(
-              children: snapshot.data,
-            );
-        }
-      },
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return Container();
-  }
-
-  @override
-  String get searchFieldLabel => 'Search forum';
 }

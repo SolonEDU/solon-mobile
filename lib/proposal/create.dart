@@ -1,9 +1,8 @@
 import 'package:Solon/api/message.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
-// import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
 
 typedef APIFunction<T> = Future<T> Function(
   String,
@@ -30,7 +29,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, title: 'New Proposal'),
+      appBar: getPageAppBar(context,
+          title: AppLocalizations.of(context).translate("newProposal")),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -41,7 +41,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('title'),
+                  AppLocalizations.of(context).translate("title"),
                 ),
               ),
               Container(
@@ -52,7 +52,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   validator: (input) {
                     if (input.isEmpty) {
                       return AppLocalizations.of(context)
-                          .translate('pleaseEnterATitle');
+                          .translate("pleaseEnterATitle");
                     }
                     return null;
                   },
@@ -62,7 +62,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               Container(
                 margin: const EdgeInsets.only(left: 20),
                 child:
-                    Text(AppLocalizations.of(context).translate('description')),
+                    Text(AppLocalizations.of(context).translate("description")),
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -80,7 +80,7 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   validator: (input) {
                     if (input.isEmpty) {
                       return AppLocalizations.of(context)
-                          .translate('pleaseEnterADescription');
+                          .translate("pleaseEnterADescription");
                     }
                     return null;
                   },
@@ -89,7 +89,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: Text('Days Until Proposal Ends'),
+                child: Text(AppLocalizations.of(context)
+                    .translate("daysUntilProposalEnds")),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 35.0),
@@ -97,8 +98,9 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   activeColor: Colors.pink[400],
                   divisions: 13,
                   label: _sliderValue == 1.0
-                      ? '${_sliderValue.round()} Day'
-                      : '${_sliderValue.round()} Days',
+                      ? AppLocalizations.of(context).translate("lowerBoundDays")
+                      : AppLocalizations.of(context)
+                          .translate("upperBoundDays"),
                   min: 1.0,
                   max: 14.0,
                   onChanged: (newRating) {
@@ -114,12 +116,12 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "1 Day",
+                      AppLocalizations.of(context).translate("lowerBoundDays"),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "14 Days",
+                      AppLocalizations.of(context).translate("upperBoundDays"),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
@@ -134,7 +136,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                     "height": 55.0,
                     "function": createProposal,
                     "margin": const EdgeInsets.only(top: 25, bottom: 10),
-                    "label": 'Create Proposal',
+                    "label": AppLocalizations.of(context)
+                        .translate("createProposal"),
                   }
                 ],
               ),

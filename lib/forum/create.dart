@@ -1,10 +1,8 @@
 import 'package:Solon/api/message.dart';
-// import 'package:Solon/auth/button.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
-
-import 'package:Solon/app_localizations.dart';
 
 typedef APIFunction<T> = Future<T> Function(
   String,
@@ -28,7 +26,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context, title: 'New Post'),
+      appBar: getPageAppBar(context,
+          title: AppLocalizations.of(context).translate("newPost")),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -39,7 +38,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('title'),
+                  AppLocalizations.of(context).translate("title"),
                 ),
               ),
               Container(
@@ -50,7 +49,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   validator: (input) {
                     if (input.isEmpty) {
                       return AppLocalizations.of(context)
-                          .translate('pleaseEnterATitle');
+                          .translate("pleaseEnterATitle");
                     }
                     return null;
                   },
@@ -60,7 +59,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
               Container(
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('description'),
+                  AppLocalizations.of(context).translate("description"),
                 ),
               ),
               Container(
@@ -79,7 +78,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   validator: (input) {
                     if (input.isEmpty) {
                       return AppLocalizations.of(context)
-                          .translate('pleaseEnterADescription');
+                          .translate("pleaseEnterADescription");
                     }
                     return null;
                   },
@@ -94,7 +93,8 @@ class _CreatePostState extends State<CreatePost> with Screen {
                     "height": 55.0,
                     "function": createPost,
                     "margin": const EdgeInsets.only(top: 15, bottom: 10),
-                    "label": "Create Post",
+                    "label":
+                        AppLocalizations.of(context).translate("createPost"),
                   }
                 ],
               ),

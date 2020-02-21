@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:Solon/api/message.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/event/card.dart';
@@ -59,9 +58,8 @@ class APIConnect {
     );
   }
 
-  static Stream<List<EventCard>> eventListView(int uid, String query) async* {
+  static Stream<List<EventCard>> eventListView(String query) async* {
     yield await connectEvents(
-      uid: uid,
       query: query,
     );
   }
