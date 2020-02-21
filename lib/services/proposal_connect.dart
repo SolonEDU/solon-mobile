@@ -25,4 +25,13 @@ class ProposalConnect {
     );
     return response;
   }
+
+  static Future<http.Response> searchProposals({String query}) async {
+    final http.Response response = await http.get(
+      "${APIConnect.url}/proposals?q=$query",
+      headers: await APIConnect.headers,
+    );
+
+    return response;
+  }
 }

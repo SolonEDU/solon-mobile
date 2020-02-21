@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:date_format/date_format.dart';
 
-class Proposal {
+class Proposal{
   final int pid;
   final String title;
   final String description;

@@ -6,9 +6,9 @@ import 'package:Solon/services/proposal_connect.dart';
 import 'package:http/http.dart' as http;
 
 class ProposalUtil {
-  static Stream<List<Proposal>> proposalListView(String query) async* {
-    http.Response response =
-        await ProposalConnect.connectProposals(query: query);
+  static Stream<List<Proposal>> _getList(
+      {Function function, String query}) async* {
+    http.Response response = await function(query: query);
     final sharedPrefs = await APIConnect.connectSharedPreferences();
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<Proposal> _proposals;
@@ -21,5 +21,19 @@ class ProposalUtil {
           .toList();
     }
     yield _proposals;
+  }
+
+  static Stream<List<Proposal>> screenView(String query) {
+    return _getList(
+      function: ProposalConnect.connectProposals,
+      query: query,
+    );
+  }
+
+  static Stream<List<Proposal>> searchView(String query) {
+    return _getList(
+      function: ProposalConnect.searchProposals,
+      query: query,
+    );
   }
 }

@@ -1,5 +1,7 @@
-import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/models/proposal.dart';
+import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/proposal_util.dart';
 import 'package:flutter/material.dart';
 
 class ProposalsSearch extends SearchDelegate {
@@ -33,21 +35,23 @@ class ProposalsSearch extends SearchDelegate {
     if (query == '') return Container();
     return StreamBuilder(
       stream: Function.apply(
-        APIConnect.proposalSearchListView,
-        [
-          query,
-        ],
+        ProposalUtil.searchView,
+        [query],
       ),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Container(
+            return Center(
               child: CircularProgressIndicator(),
             );
           default:
             return ListView(
-              children: snapshot.data,
+              children: snapshot.data
+                  .map((json) => ProposalCard(
+                        proposal: json,
+                      ))
+                  .toList(),
             );
         }
       },

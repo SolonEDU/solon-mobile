@@ -1,4 +1,3 @@
-import 'package:Solon/models/proposal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -21,13 +20,6 @@ class APIConnect {
           await rootBundle.loadString('assets/secret'),
       HttpHeaders.contentTypeHeader: "application/json"
     };
-  }
-
-  static Stream<List<Proposal>> proposalSearchListView(
-      String query) async* {
-    yield await searchProposals(
-      query: query,
-    );
   }
 
   static Stream<List<EventCard>> eventSearchListView(String query) async* {
@@ -430,21 +422,6 @@ class APIConnect {
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Message field in forum post object not found.');
-  }
-
-  static Future<List<Proposal>> searchProposals({String query}) async {
-    final http.Response response = await http.get(
-      "$url/proposals?q=$query",
-      headers: await headers,
-    );
-
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
-    List collection = json.decode(response.body)['proposals'];
-    List<Proposal> _proposals = collection
-        .map((json) => Proposal.fromJson(map: json, prefLangCode: prefLangCode))
-        .toList();
-    return _proposals;
   }
 
   static Future<List<EventCard>> searchEvents({String query}) async {

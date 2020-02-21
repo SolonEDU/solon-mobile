@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:Solon/models/proposal.dart';
 import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/util/app_localizations.dart';
-// import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/screens/proposal/search.dart';
 import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/create_button.dart';
@@ -32,7 +31,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
     final prefs = await SharedPreferences.getInstance();
     final proposalsSortOption = prefs.getString('proposalsSortOption');
     dropdownMenuStreamController.sink.add(proposalsSortOption);
-    stream = ProposalUtil.proposalListView(proposalsSortOption);
+    stream = ProposalUtil.screenView(proposalsSortOption);
   }
 
   @override
@@ -180,18 +179,25 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                     ),
                     Expanded(
                       child: StreamBuilder(
-                        stream: Function.apply(
-                          ProposalUtil.proposalListView,
-                          [
-                            optionVal.data,
-                          ],
-                        ),
+                        stream: Function.apply(ProposalUtil.screenView, [
+                          optionVal.data,
+                        ]),
+                        // stream: Function.apply(
+                        //   ProposalUtil.getListView,
+                        //   null, // no positional arguments
+                        //   {
+                        //     #function: ProposalConnect.connectProposals,
+                        //     #query: optionVal.data,
+                        //   },
+                        // ),
                         builder: (
                           BuildContext context,
                           AsyncSnapshot<List<Proposal>> snapshot,
                         ) {
                           if (snapshot.hasError)
-                            return Text("${snapshot.error}");
+                            return Text(
+                              "${snapshot.error}",
+                            );
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return SizedBox(
@@ -216,8 +222,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                               ProposalCard(proposal: json))
                                           .toList()),
                                   floatingActionButton: CreateButton(
-                                    creator:
-                                        CreateProposal(APIConnect.addProposal),
+                                    creator: CreateProposal(
+                                      APIConnect.addProposal,
+                                    ),
                                   ),
                                 ),
                               );
