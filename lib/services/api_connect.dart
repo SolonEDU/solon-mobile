@@ -22,21 +22,21 @@ class APIConnect {
     };
   }
 
-  static Stream<List<EventCard>> eventSearchListView(String query) async* {
-    yield await searchEvents(
-      query: query,
-    );
-  }
+  // static Stream<List<EventCard>> eventSearchListView(String query) async* {
+  //   yield await searchEvents(
+  //     query: query,
+  //   );
+  // }
 
-  static Stream<List<PostCard>> forumSearchListView(String query) async* {
-    yield await searchForum(
-      query: query,
-    );
-  }
+  // static Stream<List<PostCard>> forumSearchListView(String query) async* {
+  //   yield await searchForum(
+  //     query: query,
+  //   );
+  // }
 
-  static Stream<List<PostCard>> forumListView(String query) async* {
-    yield await connectForumPosts(query: query);
-  }
+  // static Stream<List<PostCard>> forumListView(String query) async* {
+  //   yield await connectForumPosts(query: query);
+  // }
 
   static Stream<List<Comment>> commentListView(int fid) async* {
     yield await connectComments(
@@ -44,11 +44,11 @@ class APIConnect {
     );
   }
 
-  static Stream<List<EventCard>> eventListView(String query) async* {
-    yield await connectEvents(
-      query: query,
-    );
-  }
+  // static Stream<List<EventCard>> eventListView(String query) async* {
+  //   yield await connectEvents(
+  //     query: query,
+  //   );
+  // }
 
   static Map<String, String> languages = {
     'English': 'en',
@@ -81,59 +81,59 @@ class APIConnect {
         : throw Exception('Message for root not found.');
   }
 
-  static Future<List<PostCard>> connectForumPosts({String query}) async {
-    if (query == null) {
-      query = 'Newly created';
-    }
+  // static Future<List<PostCard>> connectForumPosts({String query}) async {
+  //   if (query == null) {
+  //     query = 'Newly created';
+  //   }
 
-    Map<String, String> queryMap = {
-      'Newly created': 'timestamp.desc',
-      'Oldest created': 'timestamp.asc',
-      'Most comments': 'numcomments.desc',
-      'Least comments': 'numcomments.asc',
-    };
+  //   Map<String, String> queryMap = {
+  //     'Newly created': 'timestamp.desc',
+  //     'Oldest created': 'timestamp.asc',
+  //     'Most comments': 'numcomments.desc',
+  //     'Least comments': 'numcomments.asc',
+  //   };
 
-    final http.Response response = await http.get(
-      "$url/forumposts?sort_by=${queryMap[query]}",
-      headers: await headers,
-    );
+  //   final http.Response response = await http.get(
+  //     "$url/forumposts?sort_by=${queryMap[query]}",
+  //     headers: await headers,
+  //   );
 
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
+  //   final sharedPrefs = await connectSharedPreferences();
+  //   final prefLangCode = languages[sharedPrefs['lang']];
 
-    List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts = collection
-        .map((json) => PostCard.fromJson(json, prefLangCode))
-        .toList();
-    return _forumposts;
-  }
+  //   List collection = json.decode(response.body)['forumposts'];
+  //   List<PostCard> _forumposts = collection
+  //       .map((json) => PostCard.fromJson(json, prefLangCode))
+  //       .toList();
+  //   return _forumposts;
+  // }
 
-  static Future<List<EventCard>> connectEvents({int uid, String query}) async {
-    if (query == null) {
-      query = 'Newly created';
-    }
+  // static Future<List<EventCard>> connectEvents({int uid, String query}) async {
+  //   if (query == null) {
+  //     query = 'Newly created';
+  //   }
 
-    Map<String, String> queryMap = {
-      'Furthest': 'date.desc',
-      'Upcoming': 'date.asc',
-      'Most attendees': 'numattenders.desc',
-      'Least attendees': 'numattenders.asc',
-    };
+  //   Map<String, String> queryMap = {
+  //     'Furthest': 'date.desc',
+  //     'Upcoming': 'date.asc',
+  //     'Most attendees': 'numattenders.desc',
+  //     'Least attendees': 'numattenders.asc',
+  //   };
 
-    final http.Response response = await http.get(
-      "$url/events?sort_by=${queryMap[query]}",
-      headers: await headers,
-    );
+  //   final http.Response response = await http.get(
+  //     "$url/events?sort_by=${queryMap[query]}",
+  //     headers: await headers,
+  //   );
 
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
+  //   final sharedPrefs = await connectSharedPreferences();
+  //   final prefLangCode = languages[sharedPrefs['lang']];
 
-    List collection = json.decode(response.body)['events'];
-    List<EventCard> _events = collection
-        .map((json) => EventCard.fromJson(json, uid, prefLangCode))
-        .toList();
-    return _events;
-  }
+  //   List collection = json.decode(response.body)['events'];
+  //   List<EventCard> _events = collection
+  //       .map((json) => EventCard.fromJson(json, uid, prefLangCode))
+  //       .toList();
+  //   return _events;
+  // }
 
   static Future<Message> addProposal(
     String title,
@@ -424,39 +424,39 @@ class APIConnect {
         : throw Exception('Message field in forum post object not found.');
   }
 
-  static Future<List<EventCard>> searchEvents({String query}) async {
-    final http.Response response = await http.get(
-      "$url/events?q=$query",
-      headers: await headers,
-    );
+  // static Future<List<EventCard>> searchEvents({String query}) async {
+  //   final http.Response response = await http.get(
+  //     "$url/events?q=$query",
+  //     headers: await headers,
+  //   );
 
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
-    List collection = json.decode(response.body)['events'];
-    List<EventCard> _events = collection
-        .map(
-          (json) => EventCard.fromJson(
-            json,
-            sharedPrefs['uid'],
-            prefLangCode,
-          ),
-        )
-        .toList();
-    return _events;
-  }
+  //   final sharedPrefs = await connectSharedPreferences();
+  //   final prefLangCode = languages[sharedPrefs['lang']];
+  //   List collection = json.decode(response.body)['events'];
+  //   List<EventCard> _events = collection
+  //       .map(
+  //         (json) => EventCard.fromJson(
+  //           json,
+  //           sharedPrefs['uid'],
+  //           prefLangCode,
+  //         ),
+  //       )
+  //       .toList();
+  //   return _events;
+  // }
 
-  static Future<List<PostCard>> searchForum({String query}) async {
-    final http.Response response = await http.get(
-      "$url/forumposts?q=$query",
-      headers: await headers,
-    );
+  // static Future<List<PostCard>> searchForum({String query}) async {
+  //   final http.Response response = await http.get(
+  //     "$url/forumposts?q=$query",
+  //     headers: await headers,
+  //   );
 
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
-    List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts = collection
-        .map((json) => PostCard.fromJson(json, prefLangCode))
-        .toList();
-    return _forumposts;
-  }
+  //   final sharedPrefs = await connectSharedPreferences();
+  //   final prefLangCode = languages[sharedPrefs['lang']];
+  //   List collection = json.decode(response.body)['forumposts'];
+  //   List<PostCard> _forumposts = collection
+  //       .map((json) => PostCard.fromJson(json, prefLangCode))
+  //       .toList();
+  //   return _forumposts;
+  // }
 }

@@ -1,6 +1,3 @@
-// import 'dart:convert';
-
-// import 'package:Solon/models/proposal.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,19 +16,16 @@ class ProposalConnect {
       'Oldest deadlines': 'endtime.asc',
     };
 
-    final http.Response response = await http.get(
+    return await http.get(
       "${APIConnect.url}/proposals?sort_by=${queryMap[query]}",
       headers: await APIConnect.headers,
     );
-    return response;
   }
 
   static Future<http.Response> searchProposals({String query}) async {
-    final http.Response response = await http.get(
+    return await http.get(
       "${APIConnect.url}/proposals?q=$query",
       headers: await APIConnect.headers,
     );
-
-    return response;
   }
 }
