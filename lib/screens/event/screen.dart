@@ -5,7 +5,7 @@ import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/event/search.dart';
 import 'package:Solon/util/event_util.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/widgets/search_button.dart';
+import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

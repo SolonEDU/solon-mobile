@@ -1,6 +1,6 @@
 import 'package:Solon/util/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:Solon/widgets/button.dart';
+import 'package:Solon/widgets/buttons/button.dart';
 import 'package:Solon/screens/sign_in.dart';
 import 'package:Solon/screens/sign_up.dart';
 

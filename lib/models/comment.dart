@@ -1,19 +1,21 @@
+import 'dart:convert';
+
+import 'package:date_format/date_format.dart';
+
 class Comment {
-  final int cid;
-  final int fid;
-  final String content;
-  final DateTime timestamp;
-  final int uid;
+  final String date;
+  final String comment;
 
-  Comment({
-    this.cid,
-    this.fid,
-    this.content,
-    this.timestamp,
-    this.uid,
-  });
+  Comment({this.date, this.comment});
 
-  factory Comment.fromJson() {
-    return Comment();
+  factory Comment.fromJson({Map<String, dynamic> map, String prefLangCode}) {
+    DateTime timestamp = DateTime.parse(map['timestamp']);
+    String timestampParsed = formatDate(
+        timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String translatedComment = json.decode(map['content'])[prefLangCode];
+    return Comment(
+      date: timestampParsed,
+      comment: translatedComment,
+    );
   }
 }

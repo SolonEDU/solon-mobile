@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:Solon/models/comment.dart';
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:http/http.dart' as http;
 
 class ForumConnect {
-
   static Future<http.Response> connectForumPosts({String query}) async {
     if (query == null) {
       query = 'Newly created';
@@ -55,19 +53,11 @@ class ForumConnect {
         : throw Exception('Message field in forum post object not found.');
   }
 
-    static Future<List<Comment>> connectComments({int fid}) async {
-    final http.Response response = await http.get(
+  static Future<http.Response> connectComments({int fid}) async {
+    return await http.get(
       "${APIConnect.url}/comments/forumpost/$fid",
       headers: await APIConnect.headers,
     );
-
-    final sharedPrefs = await APIConnect.connectSharedPreferences();
-    final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
-
-    List collection = json.decode(response.body)['comments'];
-    // List<Comment> _comments =
-    //     collection.map((json) => Comment.fromJson(json, prefLangCode)).toList();
-    // return _comments;
   }
 
   static Future<Message> addComment({

@@ -32,7 +32,7 @@ class ProposalConnect {
     );
   }
 
-    static Future<Message> addProposal(
+  static Future<Message> addProposal(
     String title,
     String description,
     DateTime startTime,
@@ -40,7 +40,7 @@ class ProposalConnect {
     int uid,
   ) async {
     final response = await http.post(
-    "${APIConnect.url}/proposals",
+      "${APIConnect.url}/proposals",
       body: json.encode({
         'title': title,
         'description': description,

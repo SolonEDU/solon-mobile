@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/message.dart';
-import 'package:Solon/screens/forum/comment.dart';
 
 class APIConnect {
   static final String url = "https://api.solonedu.com";

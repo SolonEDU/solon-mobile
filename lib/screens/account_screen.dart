@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/widgets/button.dart';
+import 'package:Solon/widgets/buttons/button.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/services/api_connect.dart';

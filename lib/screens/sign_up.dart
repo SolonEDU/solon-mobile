@@ -1,6 +1,6 @@
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
-import 'package:Solon/widgets/preventable_button.dart';
+import 'package:Solon/widgets/buttons/preventable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/services/api_connect.dart';

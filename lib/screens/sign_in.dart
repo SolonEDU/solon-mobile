@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:Solon/main.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/services/api_connect.dart';
-import 'package:Solon/widgets/button.dart';
+import 'package:Solon/widgets/buttons/button.dart';
 
 class LoginPage extends StatefulWidget {
   @override
