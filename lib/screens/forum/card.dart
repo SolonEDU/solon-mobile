@@ -1,45 +1,17 @@
-import 'dart:convert';
+import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/forum/page.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
 class PostCard extends StatefulWidget {
-  final int fid;
-  final String title;
-  final String description;
-  final int uid;
-  final String timestamp;
-  final int numcomments;
+  final ForumPost post;
 
   PostCard({
     Key key,
-    this.fid,
-    this.title,
-    this.description,
-    this.uid,
-    this.timestamp,
-    this.numcomments,
+    this.post
   }) : super(key: key);
-
-  factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
-    DateTime timestamp = DateTime.parse(map['timestamp']);
-    String timestampParsed = formatDate(
-        timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
-    String translatedTitle = json.decode(map['title'])[prefLangCode];
-    String translatedDescription =
-        json.decode(map['description'])[prefLangCode];
-    return PostCard(
-      fid: map['fid'],
-      title: translatedTitle,
-      description: translatedDescription,
-      timestamp: timestampParsed,
-      uid: map['uid'],
-      numcomments: map['numcomments'],
-    );
-  }
 
   @override
   _PostCardState createState() => _PostCardState();
@@ -53,12 +25,7 @@ class _PostCardState extends State<PostCard> with Screen {
         context,
         MaterialPageRoute(
           builder: (context) => PostPage(
-            fid: widget.fid,
-            title: widget.title,
-            description: widget.description,
-            uid: widget.uid,
-            timestamp: widget.timestamp,
-            numcomments: widget.numcomments,
+            post: widget.post
           ),
         ),
       );
@@ -73,9 +40,9 @@ class _PostCardState extends State<PostCard> with Screen {
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(
-          (widget.title.length > 40)
-              ? '${widget.title.substring(0, 40)}...'
-              : widget.title,
+          (widget.post.title.length > 40)
+              ? '${widget.post.title.substring(0, 40)}...'
+              : widget.post.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -89,16 +56,16 @@ class _PostCardState extends State<PostCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              '${widget.description}',
+              '${widget.post.description}',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
               ),
             ),
           ),
-          Text(widget.timestamp),
+          Text(widget.post.timestamp),
           Text(
-              "${widget.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
+              "${widget.post.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
         ],
       ),
     );

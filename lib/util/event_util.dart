@@ -5,7 +5,6 @@ import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/event_connect.dart';
 import 'package:http/http.dart' as http;
 
-
 class EventUtil {
   static Stream<List<Event>> _getList(
       {Function function, String query}) async* {

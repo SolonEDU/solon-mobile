@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/forum/search.dart';
+import 'package:Solon/util/forum_util.dart';
 import 'package:Solon/widgets/create_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,13 +24,13 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
       GlobalKey<RefreshIndicatorState>();
 
   StreamController dropdownMenuStreamController = StreamController.broadcast();
-  Stream<List<PostCard>> stream;
+  Stream<List<ForumPost>> stream;
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
     final forumSortOption = prefs.getString('forumSortOption');
     dropdownMenuStreamController.sink.add(forumSortOption);
-    stream = APIConnect.forumListView(forumSortOption);
+    stream = ForumUtil.screenView(forumSortOption);
   }
 
   @override
@@ -162,14 +164,15 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                       ),
                     ),
                     Expanded(
-                      child: StreamBuilder<List<PostCard>>(
+                      child: StreamBuilder(
                         stream: Function.apply(
-                          APIConnect.forumListView,
+                          ForumUtil.screenView,
                           [
                             optionVal.data,
                           ],
                         ),
-                        builder: (context, snapshot) {
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<ForumPost>> snapshot) {
                           if (snapshot.hasError)
                             return Text("${snapshot.error}");
                           switch (snapshot.connectionState) {
@@ -191,10 +194,13 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                   key: _scaffoldKey,
                                   body: ListView(
                                     padding: const EdgeInsets.all(4),
-                                    children: snapshot.data,
+                                    children: snapshot.data
+                                        .map((json) => PostCard(post: json))
+                                        .toList(),
                                   ),
                                   floatingActionButton: CreateButton(
-                                    creator: CreatePost(APIConnect.addForumPost),
+                                    creator:
+                                        CreatePost(APIConnect.addForumPost),
                                   ),
                                 ),
                               );

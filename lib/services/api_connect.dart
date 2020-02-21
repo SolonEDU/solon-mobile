@@ -1,4 +1,3 @@
-import 'package:Solon/screens/forum/card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -19,16 +18,6 @@ class APIConnect {
           await rootBundle.loadString('assets/secret'),
       HttpHeaders.contentTypeHeader: "application/json"
     };
-  }
-
-  static Stream<List<PostCard>> forumSearchListView(String query) async* {
-    yield await searchForum(
-      query: query,
-    );
-  }
-
-  static Stream<List<PostCard>> forumListView(String query) async* {
-    yield await connectForumPosts(query: query);
   }
 
   static Stream<List<Comment>> commentListView(int fid) async* {
@@ -68,32 +57,32 @@ class APIConnect {
         : throw Exception('Message for root not found.');
   }
 
-  static Future<List<PostCard>> connectForumPosts({String query}) async {
-    if (query == null) {
-      query = 'Newly created';
-    }
+  // static Future<List<PostCard>> connectForumPosts({String query}) async {
+  //   if (query == null) {
+  //     query = 'Newly created';
+  //   }
 
-    Map<String, String> queryMap = {
-      'Newly created': 'timestamp.desc',
-      'Oldest created': 'timestamp.asc',
-      'Most comments': 'numcomments.desc',
-      'Least comments': 'numcomments.asc',
-    };
+  //   Map<String, String> queryMap = {
+  //     'Newly created': 'timestamp.desc',
+  //     'Oldest created': 'timestamp.asc',
+  //     'Most comments': 'numcomments.desc',
+  //     'Least comments': 'numcomments.asc',
+  //   };
 
-    final http.Response response = await http.get(
-      "$url/forumposts?sort_by=${queryMap[query]}",
-      headers: await headers,
-    );
+  //   final http.Response response = await http.get(
+  //     "$url/forumposts?sort_by=${queryMap[query]}",
+  //     headers: await headers,
+  //   );
 
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
+  //   final sharedPrefs = await connectSharedPreferences();
+  //   final prefLangCode = languages[sharedPrefs['lang']];
 
-    List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts = collection
-        .map((json) => PostCard.fromJson(json, prefLangCode))
-        .toList();
-    return _forumposts;
-  }
+  //   List collection = json.decode(response.body)['forumposts'];
+  //   List<PostCard> _forumposts = collection
+  //       .map((json) => PostCard.fromJson(json, prefLangCode))
+  //       .toList();
+  //   return _forumposts;
+  // }
 
   static Future<Message> addProposal(
     String title,
@@ -382,20 +371,5 @@ class APIConnect {
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Message field in forum post object not found.');
-  }
-
-  static Future<List<PostCard>> searchForum({String query}) async {
-    final http.Response response = await http.get(
-      "$url/forumposts?q=$query",
-      headers: await headers,
-    );
-
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
-    List collection = json.decode(response.body)['forumposts'];
-    List<PostCard> _forumposts = collection
-        .map((json) => PostCard.fromJson(json, prefLangCode))
-        .toList();
-    return _forumposts;
   }
 }

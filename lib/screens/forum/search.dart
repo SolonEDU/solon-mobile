@@ -1,5 +1,7 @@
-import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/models/forum_post.dart';
+import 'package:Solon/screens/forum/card.dart';
 import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/forum_util.dart';
 import 'package:flutter/material.dart';
 
 class ForumSearch extends SearchDelegate {
@@ -34,21 +36,22 @@ class ForumSearch extends SearchDelegate {
     if (query == '') return Container();
     return StreamBuilder(
       stream: Function.apply(
-        APIConnect.forumSearchListView,
+        ForumUtil.searchView,
         [
           query,
         ],
       ),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<ForumPost>> snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Container(
+            return Center(
               child: CircularProgressIndicator(),
             );
           default:
             return ListView(
-              children: snapshot.data,
+              children:
+                  snapshot.data.map((json) => PostCard(post: json)).toList(),
             );
         }
       },

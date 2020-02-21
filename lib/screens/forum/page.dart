@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
@@ -8,21 +9,11 @@ import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/screens/forum/comment.dart';
 
 class PostPage extends StatefulWidget {
-  final int fid;
-  final String title;
-  final String description;
-  final int uid;
-  final String timestamp;
-  final int numcomments;
+  final ForumPost post;
 
   PostPage({
     Key key,
-    this.fid,
-    this.title,
-    this.description,
-    this.uid,
-    this.timestamp,
-    this.numcomments,
+    this.post
   }) : super(key: key);
 
   _PostPageState createState() => _PostPageState();
@@ -42,7 +33,7 @@ class _PostPageState extends State<PostPage> with Screen {
 
   Future<void> getStream() async {
     setState(() {
-      stream = APIConnect.commentListView(widget.fid);
+      stream = APIConnect.commentListView(widget.post.fid);
     });
   }
 
@@ -60,7 +51,7 @@ class _PostPageState extends State<PostPage> with Screen {
           children: <Widget>[
             Container(
               child: Text(
-                widget.title,
+                widget.post.title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
@@ -70,7 +61,7 @@ class _PostPageState extends State<PostPage> with Screen {
             ),
             Container(
               child: Text(
-                widget.description,
+                widget.post.description,
                 style: TextStyle(
                   fontSize: 20.0,
                 ),
@@ -79,7 +70,7 @@ class _PostPageState extends State<PostPage> with Screen {
             ),
             Container(
               child: Text(
-                widget.timestamp,
+                widget.post.timestamp,
                 style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
               margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
@@ -135,10 +126,10 @@ class _PostPageState extends State<PostPage> with Screen {
                     _focusNode.unfocus();
                   });
                   APIConnect.addComment(
-                    fid: widget.fid,
+                    fid: widget.post.fid,
                     comment: commentText,
                     timestamp: DateTime.now().toIso8601String(),
-                    uid: widget.uid,
+                    uid: widget.post.uid,
                   ).then(
                     (message) {
                       getStream();

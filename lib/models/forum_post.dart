@@ -1,25 +1,38 @@
+import 'dart:convert';
+
+import 'package:date_format/date_format.dart';
+
 class ForumPost {
   final int fid;
-  final Map<String, String> title;
-  final Map<String, String> description;
-  final int numcomments;
-  final DateTime timestamp;
+  final String title;
+  final String description;
   final int uid;
-  final String entitle;
-  final String endescription;
+  final String timestamp;
+  final int numcomments;
 
   ForumPost({
     this.fid,
     this.title,
     this.description,
-    this.numcomments,
-    this.timestamp,
     this.uid,
-    this.entitle,
-    this.endescription,
+    this.timestamp,
+    this.numcomments,
   });
 
-  factory ForumPost.fromJson() {
-    return ForumPost();
+  factory ForumPost.fromJson({Map<String, dynamic> map, String prefLangCode}) {
+    DateTime timestamp = DateTime.parse(map['timestamp']);
+    String timestampParsed = formatDate(
+        timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String translatedTitle = json.decode(map['title'])[prefLangCode];
+    String translatedDescription =
+        json.decode(map['description'])[prefLangCode];
+    return ForumPost(
+      fid: map['fid'],
+      title: translatedTitle,
+      description: translatedDescription,
+      timestamp: timestampParsed,
+      uid: map['uid'],
+      numcomments: map['numcomments'],
+    );
   }
 }

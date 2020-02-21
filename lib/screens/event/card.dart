@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:Solon/models/event.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
