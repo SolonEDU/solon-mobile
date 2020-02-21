@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,5 +30,29 @@ class ProposalConnect {
       "${APIConnect.url}/proposals?q=$query",
       headers: await APIConnect.headers,
     );
+  }
+
+    static Future<Message> addProposal(
+    String title,
+    String description,
+    DateTime startTime,
+    DateTime endTime,
+    int uid,
+  ) async {
+    final response = await http.post(
+    "${APIConnect.url}/proposals",
+      body: json.encode({
+        'title': title,
+        'description': description,
+        'starttime': startTime.toIso8601String(),
+        'endtime': endTime.toIso8601String(),
+        'uid': uid,
+      }),
+      headers: await APIConnect.headers,
+    );
+    int status = response.statusCode;
+    return status == 201
+        ? Message.fromJson(json.decode(response.body)['message'])
+        : throw Exception('Message field in proposal object not found.');
   }
 }

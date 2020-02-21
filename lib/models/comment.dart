@@ -12,4 +12,8 @@ class Comment {
     this.timestamp,
     this.uid,
   });
+
+  factory Comment.fromJson() {
+    return Comment();
+  }
 }

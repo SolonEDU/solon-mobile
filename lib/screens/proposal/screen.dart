@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:Solon/models/proposal.dart';
 import 'package:Solon/screens/proposal/card.dart';
+import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/proposal/search.dart';
 import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/create_button.dart';
 import 'package:Solon/widgets/search_button.dart';
-import 'package:Solon/widgets/sort_dropdown.dart';
+import 'package:Solon/widgets/sort_dropdown_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/screens/proposal/create.dart';
 
 class ProposalsScreen extends StatefulWidget {
@@ -76,7 +76,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SortDropdown(
+                          SortDropdownMenu(
                             streamController: dropdownMenuStreamController,
                             value: optionVal.data,
                             preferences: 'proposalsSortOption',
@@ -131,14 +131,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                             );
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
-                                child: Scaffold(
-                                  body: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
+                              return Center(
+                                child: CircularProgressIndicator(),
                               );
                             default:
                               return SizedBox(
@@ -154,7 +148,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                           .toList()),
                                   floatingActionButton: CreateButton(
                                     creator: CreateProposal(
-                                      APIConnect.addProposal,
+                                      ProposalConnect.addProposal,
                                     ),
                                   ),
                                 ),

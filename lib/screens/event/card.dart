@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:Solon/models/event.dart';
+import 'package:Solon/services/event_connect.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/screens/event/page.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
@@ -22,7 +22,7 @@ class _EventCardState extends State<EventCard> with Screen {
   Future<bool> getAttendanceVal() async {
     final prefs = await SharedPreferences.getInstance();
     final userUid = json.decode(prefs.getString('userData'))['uid'];
-    final responseMessage = await APIConnect.getAttendance(
+    final responseMessage = await EventConnect.getAttendance(
       eid: widget.event.eid,
       uid: userUid,
     );

@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'package:Solon/models/forum_post.dart';
+import 'package:Solon/services/forum_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/util/forum_util.dart';
 import 'package:Solon/widgets/create_button.dart';
 import 'package:Solon/widgets/search_button.dart';
-import 'package:Solon/widgets/sort_dropdown.dart';
+import 'package:Solon/widgets/sort_dropdown_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/util/screen.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/screens/forum/card.dart';
 import 'package:Solon/screens/forum/create.dart';
 
@@ -75,7 +75,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SortDropdown(
+                          SortDropdownMenu(
                             streamController: dropdownMenuStreamController,
                             value: optionVal.data,
                             preferences: 'forumSortOption',
@@ -121,14 +121,8 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                             return Text("${snapshot.error}");
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
-                                child: Scaffold(
-                                  body: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
+                              return Center(
+                                child: CircularProgressIndicator(),
                               );
                             default:
                               return SizedBox(
@@ -144,7 +138,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                   ),
                                   floatingActionButton: CreateButton(
                                     creator:
-                                        CreatePost(APIConnect.addForumPost),
+                                        CreatePost(ForumConnect.addForumPost),
                                   ),
                                 ),
                               );

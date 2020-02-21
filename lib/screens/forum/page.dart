@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:Solon/models/forum_post.dart';
+import 'package:Solon/services/forum_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
@@ -31,15 +32,15 @@ class _PostPageState extends State<PostPage> with Screen {
     super.dispose();
   }
 
-  Future<void> getStream() async {
-    setState(() {
-      stream = APIConnect.commentListView(widget.post.fid);
-    });
-  }
+  // Future<void> getStream() async {
+  //   setState(() {
+  //     stream = APIConnect.commentListView(widget.post.fid);
+  //   });
+  // }
 
   @override
   void initState() {
-    getStream();
+    // getStream();
     super.initState();
   }
 
@@ -125,14 +126,14 @@ class _PostPageState extends State<PostPage> with Screen {
                     commentController.clear();
                     _focusNode.unfocus();
                   });
-                  APIConnect.addComment(
+                  ForumConnect.addComment(
                     fid: widget.post.fid,
                     comment: commentText,
                     timestamp: DateTime.now().toIso8601String(),
                     uid: widget.post.uid,
                   ).then(
                     (message) {
-                      getStream();
+                      // getStream();
                     },
                   );
                 }

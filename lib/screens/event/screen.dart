@@ -6,7 +6,7 @@ import 'package:Solon/screens/event/search.dart';
 import 'package:Solon/util/event_util.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/search_button.dart';
-import 'package:Solon/widgets/sort_dropdown.dart';
+import 'package:Solon/widgets/sort_dropdown_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -73,7 +73,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SortDropdown(
+                          SortDropdownMenu(
                             preferences: 'eventsSortOption',
                             streamController: dropdownMenuStreamController,
                             value: optionVal.data,
@@ -117,14 +117,8 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                             return Text('Error: ${snapshot.error}');
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
-                                child: Scaffold(
-                                  body: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
+                              return Center(
+                                child: CircularProgressIndicator(),
                               );
                             default:
                               return SizedBox(

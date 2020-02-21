@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,5 +29,48 @@ class EventConnect {
       "${APIConnect.url}/events?q=$query",
       headers: await APIConnect.headers,
     );
+  }
+
+    static Future<bool> getAttendance({int eid, int uid}) async {
+    final response = await http.get(
+      "${APIConnect.url}/attenders/$eid/$uid",
+      headers: await APIConnect.headers,
+    );
+    String responseMessage = json.decode(response.body)['message'];
+    return responseMessage == 'Error' ? false : true;
+  }
+
+  static Future<Message> changeAttendance(
+    String httpReqType, {
+    int eid,
+    int uid,
+  }) async {
+    http.Response response;
+    if (httpReqType == "POST") {
+      response = await http.post(
+        "${APIConnect.url}/attenders",
+        body: json.encode({
+          'eid': eid,
+          'uid': uid,
+        }),
+        headers: await APIConnect.headers,
+      );
+      int status = response.statusCode;
+      return status == 201
+          ? Message.fromJson(json.decode(response.body)['message'])
+          : throw Exception(
+              'Attendance value of user $uid could not be created for proposal $eid.');
+    } else if (httpReqType == "DELETE") {
+      response = await http.delete(
+        "${APIConnect.url}/attenders/$eid/$uid",
+        headers: await APIConnect.headers,
+      );
+      int status = response.statusCode;
+      return status == 201
+          ? Message.fromJson(json.decode(response.body)['message'])
+          : throw Exception(
+              'Attendance value of user $uid could not be deleted for proposal $eid.');
+    }
+    return Message(message: 'Something wrong has happened!');
   }
 }
