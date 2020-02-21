@@ -98,8 +98,8 @@ class _CreateProposalState extends State<CreateProposal> with Screen {
                   activeColor: Colors.pink[400],
                   divisions: 13,
                   label: _sliderValue == 1.0
-                      ? "${_sliderValue.floor()} ${AppLocalizations.of(context).translate('day')}"
-                      : "${_sliderValue.floor()} ${AppLocalizations.of(context).translate('days')}",
+                      ? "${_sliderValue.floor()} ${AppLocalizations.of(context).translate("day")}"
+                      : "${_sliderValue.floor()} ${AppLocalizations.of(context).translate("days")}",
                   min: 1.0,
                   max: 14.0,
                   onChanged: (newRating) {

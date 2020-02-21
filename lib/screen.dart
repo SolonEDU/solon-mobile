@@ -94,13 +94,13 @@ mixin Screen {
           children: <Widget>[
             Expanded(
               child: Text(
-                "$yes ${AppLocalizations.of(context).translate('yes')}",
+                "$yes ${AppLocalizations.of(context).translate("yes")}",
                 textAlign: TextAlign.start,
               ),
             ),
             Expanded(
               child: Text(
-                "$no ${AppLocalizations.of(context).translate('no')}",
+                "$no ${AppLocalizations.of(context).translate("no")}",
                 textAlign: TextAlign.end,
               ),
             ),
