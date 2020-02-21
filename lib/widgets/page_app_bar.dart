@@ -27,5 +27,5 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => null;
+  Size get preferredSize => Size.fromHeight(56);
 }
