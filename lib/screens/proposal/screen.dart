@@ -1,7 +1,10 @@
 import 'dart:async';
-import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/models/proposal.dart';
 import 'package:Solon/screens/proposal/card.dart';
+import 'package:Solon/util/app_localizations.dart';
+// import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/screens/proposal/search.dart';
+import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/create_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,14 +25,14 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
       GlobalKey<RefreshIndicatorState>();
 
   StreamController dropdownMenuStreamController = StreamController.broadcast();
-  Stream<List<ProposalCard>> stream;
+  Stream<List<Proposal>> stream;
   TextEditingController editingController = TextEditingController();
 
   Future<Null> load() async {
     final prefs = await SharedPreferences.getInstance();
     final proposalsSortOption = prefs.getString('proposalsSortOption');
     dropdownMenuStreamController.sink.add(proposalsSortOption);
-    stream = APIConnect.proposalListView(proposalsSortOption);
+    stream = ProposalUtil.proposalListView(proposalsSortOption);
   }
 
   @override
@@ -172,30 +175,21 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                               splashColor: Colors.transparent,
                             ),
                           ),
-                          // IconButton(
-                          //   icon: Icon(Icons.search),
-                          //   color: Colors.pinkAccent[400],
-                          //   highlightColor: Colors.transparent,
-                          //   splashColor: Colors.transparent,
-                          //   onPressed: () {
-                          //     showSearch(
-                          //       context: context,
-                          //       delegate: ProposalsSearch(),
-                          //     );
-                          //   },
-                          // ),
                         ],
                       ),
                     ),
                     Expanded(
                       child: StreamBuilder(
                         stream: Function.apply(
-                          APIConnect.proposalListView,
+                          ProposalUtil.proposalListView,
                           [
                             optionVal.data,
                           ],
                         ),
-                        builder: (context, snapshot) {
+                        builder: (
+                          BuildContext context,
+                          AsyncSnapshot<List<Proposal>> snapshot,
+                        ) {
                           if (snapshot.hasError)
                             return Text("${snapshot.error}");
                           switch (snapshot.connectionState) {
@@ -216,9 +210,11 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                                 child: Scaffold(
                                   key: _scaffoldKey,
                                   body: ListView(
-                                    padding: const EdgeInsets.all(4),
-                                    children: snapshot.data,
-                                  ),
+                                      padding: const EdgeInsets.all(4),
+                                      children: snapshot.data
+                                          .map((json) =>
+                                              ProposalCard(proposal: json))
+                                          .toList()),
                                   floatingActionButton: CreateButton(
                                     creator:
                                         CreateProposal(APIConnect.addProposal),

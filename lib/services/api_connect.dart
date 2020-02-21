@@ -1,3 +1,4 @@
+import 'package:Solon/models/proposal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -5,13 +6,12 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/message.dart';
-import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/screens/event/card.dart';
 import 'package:Solon/screens/forum/card.dart';
 import 'package:Solon/screens/forum/comment.dart';
 
 class APIConnect {
-  static final String _url = "https://api.solonedu.com";
+  static final String url = "https://api.solonedu.com";
 
   static final Future<Map<String, String>> headers = getHeaders();
 
@@ -23,13 +23,7 @@ class APIConnect {
     };
   }
 
-  static Stream<List<ProposalCard>> proposalListView(String query) async* {
-    yield await connectProposals(
-      query: query,
-    );
-  }
-
-  static Stream<List<ProposalCard>> proposalSearchListView(
+  static Stream<List<Proposal>> proposalSearchListView(
       String query) async* {
     yield await searchProposals(
       query: query,
@@ -88,39 +82,11 @@ class APIConnect {
   };
 
   static Future<Message> connectRoot() async {
-    final response = await http.get(_url);
+    final response = await http.get(url);
     int status = response.statusCode;
     return status == 200
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Message for root not found.');
-  }
-
-  static Future<List<ProposalCard>> connectProposals({String query}) async {
-    if (query == null) {
-      query = 'Newly created';
-    }
-
-    Map<String, String> queryMap = {
-      'Most votes': 'numvotes.desc',
-      'Least votes': 'numvotes.asc',
-      'Newly created': 'starttime.desc',
-      'Oldest created': 'starttime.asc',
-      'Upcoming deadlines': 'endtime.desc',
-      'Oldest deadlines': 'endtime.asc',
-    };
-
-    final http.Response response = await http.get(
-      "$_url/proposals?sort_by=${queryMap[query]}",
-      headers: await headers,
-    );
-
-    final sharedPrefs = await connectSharedPreferences();
-    final prefLangCode = languages[sharedPrefs['lang']];
-    List collection = json.decode(response.body)['proposals'];
-    List<ProposalCard> _proposals = collection
-        .map((json) => ProposalCard.fromJson(json, prefLangCode))
-        .toList();
-    return _proposals;
   }
 
   static Future<List<PostCard>> connectForumPosts({String query}) async {
@@ -136,7 +102,7 @@ class APIConnect {
     };
 
     final http.Response response = await http.get(
-      "$_url/forumposts?sort_by=${queryMap[query]}",
+      "$url/forumposts?sort_by=${queryMap[query]}",
       headers: await headers,
     );
 
@@ -163,7 +129,7 @@ class APIConnect {
     };
 
     final http.Response response = await http.get(
-      "$_url/events?sort_by=${queryMap[query]}",
+      "$url/events?sort_by=${queryMap[query]}",
       headers: await headers,
     );
 
@@ -185,7 +151,7 @@ class APIConnect {
     int uid,
   ) async {
     final response = await http.post(
-      "$_url/proposals",
+      "$url/proposals",
       body: json.encode({
         'title': title,
         'description': description,
@@ -209,7 +175,7 @@ class APIConnect {
     String password,
   ) async {
     final response = await http.post(
-      "$_url/users/register",
+      "$url/users/register",
       body: json.encode({
         'lang': languages[lang],
         'firstname': firstName,
@@ -228,7 +194,7 @@ class APIConnect {
   ) async {
     try {
       final http.Response response = await http.post(
-        "$_url/users/login",
+        "$url/users/login",
         body: json.encode({'email': email, 'password': password}),
         headers: await headers,
       );
@@ -240,7 +206,7 @@ class APIConnect {
       final userUid = json.decode(response.body)["uid"];
 
       final http.Response userDataResponse = await http.get(
-        "$_url/users/$userUid",
+        "$url/users/$userUid",
         headers: await headers,
       );
       final userDataResponseJson = json.decode(userDataResponse.body)['user'];
@@ -282,18 +248,18 @@ class APIConnect {
     };
     var response = (httpReqType == 'POST') // need pid, uid, and voteVal
         ? await http.post(
-            "$_url/votes",
+            "$url/votes",
             body: json.encode(vote),
             headers: await headers,
           )
         : (httpReqType == 'GET') // need pid and uidUser
             ? await http.get(
-                "$_url/votes/$pid/$uidUser",
+                "$url/votes/$pid/$uidUser",
                 headers: await headers,
               )
             : await http.patch(
                 // need pid, uid, and voteVal
-                "$_url/votes",
+                "$url/votes",
                 body: json.encode(vote),
                 headers: await headers,
               );
@@ -302,7 +268,7 @@ class APIConnect {
 
   static Future<List<Comment>> connectComments({int fid}) async {
     final http.Response response = await http.get(
-      "$_url/comments/forumpost/$fid",
+      "$url/comments/forumpost/$fid",
       headers: await headers,
     );
 
@@ -323,7 +289,7 @@ class APIConnect {
   }) async {
     final userData = await connectSharedPreferences();
     final response = await http.post(
-      "$_url/comments",
+      "$url/comments",
       body: json.encode({
         'fid': fid,
         'content': comment,
@@ -340,7 +306,7 @@ class APIConnect {
 
   static Future<Map<String, dynamic>> connectUser({int uid}) async {
     final http.Response response = await http.get(
-      "$_url/users/$uid",
+      "$url/users/$uid",
       headers: await headers,
     );
     // print(json.decode(response.body)['user'].toString());
@@ -353,7 +319,7 @@ class APIConnect {
   static Future<Message> changeLanguage({int uid, String updatedLang}) async {
     String updatedLangISO6391Code = languages[updatedLang];
     final response = await http.patch(
-      "$_url/users/language",
+      "$url/users/language",
       body: json.encode({
         'uid': uid,
         'lang': updatedLangISO6391Code,
@@ -373,7 +339,7 @@ class APIConnect {
     DateTime date,
   }) async {
     final response = await http.post(
-      "$_url/events",
+      "$url/events",
       body: json.encode({
         'title': title,
         'description': description,
@@ -389,10 +355,10 @@ class APIConnect {
 
   static Future<bool> getAttendance({int eid, int uid}) async {
     final response = await http.get(
-      "$_url/attenders/$eid/$uid",
+      "$url/attenders/$eid/$uid",
       headers: await headers,
     );
-    // print("$_url/attenders/$eid/$uid");
+    // print("$url/attenders/$eid/$uid");
     String responseMessage = json.decode(response.body)['message'];
     // print(responseMessage);
     return responseMessage == 'Error' ? false : true;
@@ -406,7 +372,7 @@ class APIConnect {
     http.Response response;
     if (httpReqType == "POST") {
       response = await http.post(
-        "$_url/attenders",
+        "$url/attenders",
         body: json.encode({
           'eid': eid,
           'uid': uid,
@@ -420,7 +386,7 @@ class APIConnect {
               'Attendance value of user $uid could not be created for proposal $eid.');
     } else if (httpReqType == "DELETE") {
       response = await http.delete(
-        "$_url/attenders/$eid/$uid",
+        "$url/attenders/$eid/$uid",
         headers: await headers,
       );
       int status = response.statusCode;
@@ -450,7 +416,7 @@ class APIConnect {
   ) async {
     final userData = await connectSharedPreferences();
     final response = await http.post(
-      "$_url/forumposts",
+      "$url/forumposts",
       body: json.encode({
         'title': title,
         'description': description,
@@ -466,24 +432,24 @@ class APIConnect {
         : throw Exception('Message field in forum post object not found.');
   }
 
-  static Future<List<ProposalCard>> searchProposals({String query}) async {
+  static Future<List<Proposal>> searchProposals({String query}) async {
     final http.Response response = await http.get(
-      "$_url/proposals?q=$query",
+      "$url/proposals?q=$query",
       headers: await headers,
     );
 
     final sharedPrefs = await connectSharedPreferences();
     final prefLangCode = languages[sharedPrefs['lang']];
     List collection = json.decode(response.body)['proposals'];
-    List<ProposalCard> _proposals = collection
-        .map((json) => ProposalCard.fromJson(json, prefLangCode))
+    List<Proposal> _proposals = collection
+        .map((json) => Proposal.fromJson(map: json, prefLangCode: prefLangCode))
         .toList();
     return _proposals;
   }
 
   static Future<List<EventCard>> searchEvents({String query}) async {
     final http.Response response = await http.get(
-      "$_url/events?q=$query",
+      "$url/events?q=$query",
       headers: await headers,
     );
 
@@ -504,7 +470,7 @@ class APIConnect {
 
   static Future<List<PostCard>> searchForum({String query}) async {
     final http.Response response = await http.get(
-      "$_url/forumposts?q=$query",
+      "$url/forumposts?q=$query",
       headers: await headers,
     );
 

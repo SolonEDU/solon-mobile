@@ -1,31 +1,44 @@
+import 'dart:convert';
+
+import 'package:date_format/date_format.dart';
+
 class Proposal {
   final int pid;
-  final Map<String, String> title;
-  final Map<String, String> description;
-  final DateTime starttime;
-  final DateTime endtime;
+  final String title;
+  final String description;
+  final String endTime;
   final int uid;
-  final int numyes;
-  final int numno;
-  final int numvotes;
-  final String entitle;
-  final String endescription;
+  final int yesVotes;
+  final int noVotes;
+  final DateTime date;
 
   Proposal({
     this.pid,
     this.title,
     this.description,
-    this.starttime,
-    this.endtime,
+    this.endTime,
     this.uid,
-    this.numyes,
-    this.numno,
-    this.numvotes,
-    this.entitle,
-    this.endescription,
+    this.yesVotes,
+    this.noVotes,
+    this.date,
   });
 
-  factory Proposal.fromJson() {
-    return Proposal();
+  factory Proposal.fromJson({Map<String, dynamic> map, String prefLangCode}) {
+    DateTime endTime = DateTime.parse(map['endtime']);
+    String endTimeParsed = formatDate(
+        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String translatedTitle = json.decode(map['title'])[prefLangCode];
+    String translatedDescription =
+        json.decode(map['description'])[prefLangCode];
+    return Proposal(
+      pid: map['pid'],
+      title: translatedTitle,
+      description: translatedDescription,
+      endTime: endTimeParsed,
+      uid: map['uid'],
+      yesVotes: map['numyes'],
+      noVotes: map['numno'],
+      date: endTime,
+    );
   }
 }

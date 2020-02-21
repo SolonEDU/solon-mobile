@@ -1,3 +1,4 @@
+import 'package:Solon/models/proposal.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:Solon/widgets/preventable_button.dart';
@@ -9,25 +10,11 @@ import 'dart:convert';
 import 'package:Solon/services/api_connect.dart';
 
 class ProposalPage extends StatefulWidget {
-  final int pid;
-  final String title;
-  final String description;
-  final int uidUser;
-  final String endTime;
-  final int yesVotes;
-  final int noVotes;
-  final DateTime date;
+  final Proposal proposal;
 
   ProposalPage({
     Key key,
-    this.pid,
-    this.title,
-    this.description,
-    this.uidUser,
-    this.endTime,
-    this.yesVotes,
-    this.noVotes,
-    this.date,
+    this.proposal,
   }) : super(key: key);
 
   @override
@@ -43,7 +30,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
     final userUid = json.decode(prefs.getString('userData'))['uid'];
     final responseMessage = await APIConnect.connectVotes(
       'GET',
-      pid: widget.pid,
+      pid: widget.proposal.pid,
       uidUser: userUid,
     );
     return responseMessage;
@@ -85,7 +72,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      widget.title,
+                      widget.proposal.title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -106,7 +93,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
                     child: Text(
-                      widget.description,
+                      widget.proposal.description,
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -115,7 +102,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text(
-                        "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
+                        "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}"),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventableButton(
@@ -126,7 +113,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'height': 55.0,
                               'function': () async* {
                                 yield true;
-                                APIConnect.vote(widget.pid, 1);
+                                APIConnect.vote(widget.proposal.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
                               'label':
@@ -138,7 +125,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'height': 55.0,
                               'function': () async* {
                                 yield true;
-                                APIConnect.vote(widget.pid, 0);
+                                APIConnect.vote(widget.proposal.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
                               'label':
@@ -149,7 +136,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                       : Text(_voteOutput),
                   snapshot.data['message'] == 'Error'
                       ? Text('')
-                      : VoteBar(yes: widget.yesVotes, no: widget.noVotes)
+                      : VoteBar(yes: widget.proposal.yesVotes, no: widget.proposal.noVotes)
                 ],
               );
             },

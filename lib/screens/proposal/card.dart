@@ -1,54 +1,21 @@
+import 'package:Solon/models/proposal.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
 import 'package:Solon/widgets/vote_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:date_format/date_format.dart';
 import 'package:Solon/screens/proposal/page.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProposalCard extends StatefulWidget {
-  final int pid;
-  final String title;
-  final String description;
-  final String endTime;
-  final int uid;
-  final int yesVotes;
-  final int noVotes;
-  final DateTime date;
+  final Proposal proposal;
 
   ProposalCard({
     Key key,
-    this.pid,
-    this.title,
-    this.description,
-    this.endTime,
-    this.uid,
-    this.yesVotes,
-    this.noVotes,
-    this.date,
+    this.proposal,
   }) : super(key: key);
-
-  factory ProposalCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
-    DateTime endTime = DateTime.parse(map['endtime']);
-    String endTimeParsed = formatDate(
-        endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
-    String translatedTitle = json.decode(map['title'])[prefLangCode];
-    String translatedDescription =
-        json.decode(map['description'])[prefLangCode];
-    return ProposalCard(
-      pid: map['pid'],
-      title: translatedTitle,
-      description: translatedDescription,
-      endTime: endTimeParsed,
-      uid: map['uid'],
-      yesVotes: map['numyes'],
-      noVotes: map['numno'],
-      date: endTime,
-    );
-  }
 
   @override
   _ProposalCardState createState() => _ProposalCardState();
@@ -63,7 +30,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
     final userUid = json.decode(prefs.getString('userData'))['uid'];
     final responseMessage = await APIConnect.connectVotes(
       'GET',
-      pid: widget.pid,
+      pid: widget.proposal.pid,
       uidUser: userUid,
     );
     return responseMessage;
@@ -82,14 +49,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
         context,
         MaterialPageRoute(
           builder: (context) => ProposalPage(
-            pid: widget.pid,
-            title: widget.title,
-            description: widget.description,
-            uidUser: widget.uid,
-            endTime: widget.endTime,
-            date: widget.date,
-            yesVotes: widget.yesVotes,
-            noVotes: widget.noVotes,
+            proposal: widget.proposal,
           ),
         ),
       );
@@ -104,9 +64,9 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
-          (widget.title.length > 40)
-              ? '${widget.title.substring(0, 40)}...'
-              : widget.title,
+          (widget.proposal.title.length > 40)
+              ? '${widget.proposal.title.substring(0, 40)}...'
+              : widget.proposal.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -120,7 +80,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.date.difference(DateTime.now()).inDays.toString()}",
+              "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -128,7 +88,7 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
             ),
           ),
           Text(
-            "${widget.yesVotes + widget.noVotes} ${AppLocalizations.of(context).translate("votes")}",
+            "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
           ),
           FutureBuilder<Map<String, dynamic>>(
             future: _listFutureProposal,
@@ -140,8 +100,8 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
                 _voted = (snapshot.data['message'] == 'Error') ? false : true;
                 if (_voted) {
                   return VoteBar(
-                    yes: widget.yesVotes,
-                    no: widget.noVotes,
+                    yes: widget.proposal.yesVotes,
+                    no: widget.proposal.noVotes,
                   );
                 } else {
                   return Center();
