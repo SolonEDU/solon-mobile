@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/event.dart';
 import 'package:Solon/services/event_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 
 class EventPage extends StatefulWidget {
@@ -19,7 +18,7 @@ class EventPage extends StatefulWidget {
   _EventPageState createState() => _EventPageState();
 }
 
-class _EventPageState extends State<EventPage> with Screen {
+class _EventPageState extends State<EventPage> {
   bool attendanceVal;
   StreamController<bool> streamController = StreamController();
   int userUid;

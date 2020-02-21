@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/models/message.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/preventable_button.dart';
 
@@ -21,7 +20,7 @@ class CreateProposal extends StatefulWidget {
   _CreateProposalState createState() => _CreateProposalState();
 }
 
-class _CreateProposalState extends State<CreateProposal> with Screen {
+class _CreateProposalState extends State<CreateProposal> {
   String _title, _description;
   double _sliderValue = 7.0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

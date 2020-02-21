@@ -5,7 +5,6 @@ import 'package:Solon/models/proposal.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/proposal_util.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/preventable_button.dart';
 import 'package:Solon/widgets/bars/vote_bar.dart';
@@ -22,7 +21,7 @@ class ProposalPage extends StatefulWidget {
   _ProposalPageState createState() => _ProposalPageState();
 }
 
-class _ProposalPageState extends State<ProposalPage> with Screen {
+class _ProposalPageState extends State<ProposalPage> {
   String _voteOutput;
   Future<Map<String, dynamic>> _listFutureProposal;
 

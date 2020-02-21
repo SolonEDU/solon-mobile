@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/services/user_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/user_util.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/models/message.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/button.dart';
@@ -19,7 +18,7 @@ class AccountScreen extends StatefulWidget {
   _AccountScreenState createState() => _AccountScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> with Screen {
+class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -148,7 +147,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
                                 updatedLang: json.decode(
                                     prefs.getString('userData'))['lang'],
                               );
-                              showToast(
+                              UserUtil.showToast(
                                   responseMessage.message == 'Error'
                                       ? 'Language could not be changed to $newValue'
                                       : "Language was successfully changed to $newValue",

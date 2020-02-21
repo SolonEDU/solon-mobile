@@ -1,9 +1,9 @@
+import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/services/user_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/main.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/buttons/button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with Screen {
+class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
 
   void _toggle() {
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
             ? AppLocalizations.of(context).translate("incorrectPassword")
             : AppLocalizations.of(context).translate(
                 "userDoesNotExist"); // TODO: need a better to code for this logic; be wary of this line when we add in more errors to sign in
-        showToast(message, _scaffoldKey);
+        UserUtil.showToast(message, _scaffoldKey);
       } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(

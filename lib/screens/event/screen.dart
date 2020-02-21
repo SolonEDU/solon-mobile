@@ -6,7 +6,6 @@ import 'package:Solon/screens/event/card.dart';
 import 'package:Solon/screens/event/search.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/event_util.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
 
@@ -17,7 +16,7 @@ class EventsScreen extends StatefulWidget {
   _EventsScreenState createState() => _EventsScreenState();
 }
 
-class _EventsScreenState extends State<EventsScreen> with Screen {
+class _EventsScreenState extends State<EventsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();

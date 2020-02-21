@@ -8,7 +8,6 @@ import 'package:Solon/screens/proposal/create.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/proposal_util.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
@@ -20,7 +19,7 @@ class ProposalsScreen extends StatefulWidget {
   _ProposalsScreenState createState() => _ProposalsScreenState();
 }
 
-class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
+class _ProposalsScreenState extends State<ProposalsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/models/comment.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
 
-class CommentCard extends StatelessWidget with Screen {
+class CommentCard extends StatelessWidget {
   final Comment comment;
 
   CommentCard({this.comment});

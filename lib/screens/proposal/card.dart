@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:Solon/models/proposal.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/screen_card.dart';
 import 'package:Solon/widgets/bars/vote_bar.dart';
 import 'package:Solon/screens/proposal/page.dart';
@@ -23,7 +22,7 @@ class ProposalCard extends StatefulWidget {
   _ProposalCardState createState() => _ProposalCardState();
 }
 
-class _ProposalCardState extends State<ProposalCard> with Screen {
+class _ProposalCardState extends State<ProposalCard> {
   bool _voted;
   Future<Map<String, dynamic>> _listFutureProposal;
 

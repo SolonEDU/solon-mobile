@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/screens/forum/page.dart';
 import 'package:Solon/widgets/screen_card.dart';
 
@@ -17,7 +16,7 @@ class PostCard extends StatefulWidget {
   _PostCardState createState() => _PostCardState();
 }
 
-class _PostCardState extends State<PostCard> with Screen {
+class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     Function function = () {

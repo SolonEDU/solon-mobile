@@ -1,8 +1,8 @@
+import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/services/user_connect.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/preventable_button.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/sign_in.dart';
 
@@ -11,7 +11,7 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => new _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with Screen {
+class _SignUpPageState extends State<SignUpPage> {
   String _firstName, _lastName, _email, _password;
   String _nativeLanguage = 'English';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -219,7 +219,7 @@ class _SignUpPageState extends State<SignUpPage> with Screen {
       final responseMessage = await UserConnect.registerUser(
           _nativeLanguage, _firstName, _lastName, _email, _password);
       if (responseMessage["message"] == "Error") {
-        showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+        UserUtil.showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
         yield false;
       } else {
         Navigator.push(

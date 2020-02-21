@@ -9,7 +9,6 @@ import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/services/forum_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/forum_util.dart';
-import 'package:Solon/util/screen.dart';
 import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
@@ -22,7 +21,7 @@ class ForumScreen extends StatefulWidget {
   _ForumScreenState createState() => _ForumScreenState();
 }
 
-class _ForumScreenState extends State<ForumScreen> with Screen {
+class _ForumScreenState extends State<ForumScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();

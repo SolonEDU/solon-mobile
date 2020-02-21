@@ -3,7 +3,6 @@ import 'package:Solon/models/message.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/buttons/preventable_button.dart';
-import 'package:Solon/util/screen.dart';
 
 typedef APIFunction<T> = Future<T> Function(
   String,
@@ -19,7 +18,7 @@ class CreatePost extends StatefulWidget {
   _CreatePostState createState() => _CreatePostState();
 }
 
-class _CreatePostState extends State<CreatePost> with Screen {
+class _CreatePostState extends State<CreatePost> {
   String _title, _description;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
