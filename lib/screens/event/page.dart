@@ -22,7 +22,7 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> with Screen {
   bool attendanceVal;
-  StreamController streamController = StreamController();
+  StreamController<bool> streamController = StreamController();
   int userUid;
 
   void _onChanged(bool value) async {
@@ -58,9 +58,9 @@ class _EventPageState extends State<EventPage> with Screen {
     return Scaffold(
       appBar: PageAppBar(),
       body: Container(
-        child: StreamBuilder(
+        child: StreamBuilder<bool>(
           stream: streamController.stream,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.data == null) {
               return Center(
                 child: CircularProgressIndicator(),

@@ -33,7 +33,7 @@ class ProposalsSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     if (query == '') return Container();
-    return StreamBuilder(
+    return StreamBuilder<List<Proposal>>(
       stream: Function.apply(
         ProposalUtil.searchView,
         [query],

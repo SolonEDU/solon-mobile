@@ -25,7 +25,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  StreamController dropdownMenuStreamController = StreamController.broadcast();
+  StreamController<String> dropdownMenuStreamController = StreamController.broadcast();
   Stream<List<Proposal>> stream;
   TextEditingController editingController = TextEditingController();
 
@@ -52,7 +52,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: dropdownMenuStreamController.stream,
-      builder: (context, optionVal) {
+      builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
         switch (optionVal.connectionState) {
           case ConnectionState.waiting:
             return SizedBox(
@@ -124,7 +124,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> with Screen {
                       ),
                     ),
                     Expanded(
-                      child: StreamBuilder(
+                      child: StreamBuilder<List<Proposal>>(
                         stream: Function.apply(
                             ProposalUtil.screenView, [optionVal.data]),
                         builder: (

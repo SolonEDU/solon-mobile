@@ -85,7 +85,7 @@ class _PostPageState extends State<PostPage> with Screen {
               ),
               margin: const EdgeInsets.only(left: 20, right: 20),
             ),
-            StreamBuilder(
+            StreamBuilder<List<Comment>>(
               stream: stream,
               builder: (BuildContext context,
                   AsyncSnapshot<List<Comment>> snapshot) {

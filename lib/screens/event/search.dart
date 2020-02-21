@@ -34,7 +34,7 @@ class EventsSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     if (query == '') return Container();
-    return StreamBuilder(
+    return StreamBuilder<List<Event>>(
       stream: Function.apply(
         EventUtil.searchView,
         [

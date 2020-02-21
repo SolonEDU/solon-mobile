@@ -34,7 +34,7 @@ class ForumSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     if (query == '') return Container();
-    return StreamBuilder(
+    return StreamBuilder<List<ForumPost>>(
       stream: Function.apply(
         ForumUtil.searchView,
         [

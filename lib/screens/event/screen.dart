@@ -22,7 +22,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  StreamController dropdownMenuStreamController = StreamController.broadcast();
+  StreamController<String> dropdownMenuStreamController = StreamController.broadcast();
   Stream<List<Event>> stream;
   int userUid;
 
@@ -47,9 +47,9 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<String>(
       stream: dropdownMenuStreamController.stream,
-      builder: (context, optionVal) {
+      builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
         switch (optionVal.connectionState) {
           case ConnectionState.waiting:
             return SizedBox(
@@ -114,7 +114,7 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
                       ),
                     ),
                     Expanded(
-                      child: StreamBuilder(
+                      child: StreamBuilder<List<Event>>(
                         stream: Function.apply(
                             EventUtil.screenView, [optionVal.data]),
                         builder: (BuildContext context,

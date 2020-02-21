@@ -25,7 +25,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  StreamController dropdownMenuStreamController = StreamController.broadcast();
+  StreamController<String> dropdownMenuStreamController = StreamController.broadcast();
   Stream<List<ForumPost>> stream;
 
   Future<Null> load() async {
@@ -51,7 +51,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: dropdownMenuStreamController.stream,
-      builder: (context, optionVal) {
+      builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
         switch (optionVal.connectionState) {
           case ConnectionState.waiting:
             return SizedBox(
@@ -114,7 +114,7 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                       ),
                     ),
                     Expanded(
-                      child: StreamBuilder(
+                      child: StreamBuilder<List<ForumPost>>(
                         stream: Function.apply(
                           ForumUtil.screenView,
                           [
