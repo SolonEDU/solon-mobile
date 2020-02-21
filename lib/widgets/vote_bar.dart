@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:Solon/util/app_localizations.dart';
 
 class VoteBar extends StatelessWidget {
-  final int yes;
-  final int no;
+  final int numyes;
+  final int numno;
 
-  VoteBar({this.yes, this.no});
+  VoteBar({this.numyes, this.numno});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class VoteBar extends StatelessWidget {
                 Colors.red,
                 Colors.red,
               ],
-              stops: [0, yes / (yes + no), yes / (yes + no), 1.0],
+              stops: [0, numyes / (numyes + numno), numyes / (numyes + numno), 1.0],
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
@@ -34,13 +34,13 @@ class VoteBar extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                "$yes ${AppLocalizations.of(context).translate("yes")}",
+                "$numyes ${AppLocalizations.of(context).translate("yes")}",
                 textAlign: TextAlign.start,
               ),
             ),
             Expanded(
               child: Text(
-                "$no ${AppLocalizations.of(context).translate("no")}",
+                "$numno ${AppLocalizations.of(context).translate("no")}",
                 textAlign: TextAlign.end,
               ),
             ),

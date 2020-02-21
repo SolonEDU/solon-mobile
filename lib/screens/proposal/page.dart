@@ -136,7 +136,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                       : Text(_voteOutput),
                   snapshot.data['message'] == 'Error'
                       ? Text('')
-                      : VoteBar(yes: widget.proposal.yesVotes, no: widget.proposal.noVotes)
+                      : VoteBar(numyes: widget.proposal.yesVotes, numno: widget.proposal.noVotes)
                 ],
               );
             },

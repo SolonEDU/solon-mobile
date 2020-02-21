@@ -100,8 +100,8 @@ class _ProposalCardState extends State<ProposalCard> with Screen {
                 _voted = (snapshot.data['message'] == 'Error') ? false : true;
                 if (_voted) {
                   return VoteBar(
-                    yes: widget.proposal.yesVotes,
-                    no: widget.proposal.noVotes,
+                    numyes: widget.proposal.yesVotes,
+                    numno: widget.proposal.noVotes,
                   );
                 } else {
                   return Center();

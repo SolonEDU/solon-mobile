@@ -22,7 +22,8 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  StreamController<String> dropdownMenuStreamController = StreamController.broadcast();
+  StreamController<String> dropdownMenuStreamController =
+      StreamController.broadcast();
   Stream<List<Event>> stream;
   int userUid;
 
@@ -52,15 +53,8 @@ class _EventsScreenState extends State<EventsScreen> with Screen {
       builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
         switch (optionVal.connectionState) {
           case ConnectionState.waiting:
-            return SizedBox(
-              //TODO: can be abstracted
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+            return Center(
+              child: CircularProgressIndicator(),
             );
           default:
             return GestureDetector(
