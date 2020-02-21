@@ -4,11 +4,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:Solon/api/message.dart';
-import 'package:Solon/proposal/card.dart';
-import 'package:Solon/event/card.dart';
-import 'package:Solon/forum/card.dart';
-import 'package:Solon/forum/comment.dart';
+import 'package:Solon/models/message.dart';
+import 'package:Solon/screens/proposal/card.dart';
+import 'package:Solon/screens/event/card.dart';
+import 'package:Solon/screens/forum/card.dart';
+import 'package:Solon/screens/forum/comment.dart';
 
 class APIConnect {
   static final String _url = "https://api.solonedu.com";
@@ -443,7 +443,7 @@ class APIConnect {
     );
   }
 
-  static Future<Message> addForumPost(
+  static Future<dynamic> addForumPost(
     String title,
     String description,
     DateTime timestamp,

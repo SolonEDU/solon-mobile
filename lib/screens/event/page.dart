@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/screen.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/services/api_connect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EventPage extends StatefulWidget {
@@ -62,7 +63,7 @@ class _EventPageState extends State<EventPage> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context),
+      appBar: PageAppBar(),
       body: Container(
         child: StreamBuilder(
           stream: streamController.stream,

@@ -1,7 +1,7 @@
 import 'package:Solon/api/message.dart';
-import 'package:Solon/app_localizations.dart';
+import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/screen.dart';
 import 'package:flutter/material.dart';
 
 typedef APIFunction<T> = Future<T> Function(

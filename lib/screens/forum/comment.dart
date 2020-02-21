@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/screen.dart';
+import 'package:Solon/widgets/screen_card.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,6 @@ class Comment extends StatelessWidget with Screen {
       ),
     );
 
-    return getCard(context, tile, () {});
+    return ScreenCard(tile: tile, function: () {});
   }
 }

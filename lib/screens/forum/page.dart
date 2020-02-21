@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/screen.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/forum/comment.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/screens/forum/comment.dart';
 
 class PostPage extends StatefulWidget {
   final int fid;
@@ -53,7 +54,7 @@ class _PostPageState extends State<PostPage> with Screen {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context),
+      appBar: PageAppBar(),
       body: Center(
         child: ListView(
           children: <Widget>[

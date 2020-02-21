@@ -1,11 +1,11 @@
-import 'package:Solon/app_localizations.dart';
+import 'package:Solon/util/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   final int selectedIndex;
   final Function onItemTapped;
 
-  NavBar(this.selectedIndex, this.onItemTapped);
+  NavBar({this.selectedIndex, this.onItemTapped});
 
   @override
   Widget build(BuildContext context) {

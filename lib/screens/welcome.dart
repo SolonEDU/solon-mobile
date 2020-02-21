@@ -1,4 +1,4 @@
-import 'package:Solon/app_localizations.dart';
+import 'package:Solon/util/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/auth/button.dart';
 import 'package:Solon/auth/sign_in.dart';

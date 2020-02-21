@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/event/search.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/screens/event/search.dart';
+import 'package:Solon/util/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/event/card.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/screens/event/card.dart';
 
 class EventsScreen extends StatefulWidget {
   EventsScreen({Key key}) : super(key: key);

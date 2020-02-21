@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/forum/search.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/screens/forum/search.dart';
+import 'package:Solon/widgets/create_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:Solon/screen.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/forum/card.dart';
-import 'package:Solon/forum/create.dart';
+import 'package:Solon/util/screen.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/screens/forum/card.dart';
+import 'package:Solon/screens/forum/create.dart';
 
 class ForumScreen extends StatefulWidget {
   ForumScreen({Key key}) : super(key: key);
@@ -204,9 +205,8 @@ class _ForumScreenState extends State<ForumScreen> with Screen {
                                     padding: const EdgeInsets.all(4),
                                     children: snapshot.data,
                                   ),
-                                  floatingActionButton: getFAB(
-                                    context,
-                                    CreatePost(APIConnect.addForumPost),
+                                  floatingActionButton: CreateButton(
+                                    creator: CreatePost(APIConnect.addForumPost),
                                   ),
                                 ),
                               );

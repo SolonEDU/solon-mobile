@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Card extends StatelessWidget {
+class ScreenCard extends StatelessWidget {
   final Function function;
   final ListTile tile;
 
-  Card(this.function, this.tile);
+  ScreenCard({this.function, this.tile});
 
   @override
   Widget build(BuildContext context) {

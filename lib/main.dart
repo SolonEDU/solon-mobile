@@ -1,15 +1,16 @@
-import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:Solon/navbar.dart';
-import 'package:Solon/auth/welcome.dart';
-import 'package:Solon/home_screen.dart';
-import 'package:Solon/proposal/screen.dart';
-import 'package:Solon/event/screen.dart';
-import 'package:Solon/forum/screen.dart';
-import 'package:Solon/account_screen.dart';
-import 'package:Solon/api/api_connect.dart';
+
+import 'package:Solon/screens/welcome.dart';
+import 'package:Solon/screens/home_screen.dart';
+import 'package:Solon/screens/proposal/screen.dart';
+import 'package:Solon/screens/event/screen.dart';
+import 'package:Solon/screens/forum/screen.dart';
+import 'package:Solon/screens/account_screen.dart';
+import 'package:Solon/widgets/nav_bar.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/util/app_localizations.dart';
 
 void main() => runApp(Solon());
 
@@ -18,9 +19,8 @@ class Solon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // disable landscape
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitUp, // disable landscape
     ]);
     return MaterialApp(
       title: _title,
@@ -170,8 +170,8 @@ class _MainState extends State<Main> {
         child: _widgetOptions[_selectedIndex]['widget'],
       ),
       bottomNavigationBar: NavBar(
-        _selectedIndex,
-        _onItemTapped,
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

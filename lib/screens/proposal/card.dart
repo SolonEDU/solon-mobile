@@ -1,6 +1,6 @@
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/util/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 import 'package:Solon/proposal/page.dart';

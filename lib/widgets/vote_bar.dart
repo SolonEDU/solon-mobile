@@ -1,11 +1,11 @@
-import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:Solon/util/app_localizations.dart';
 
 class VoteBar extends StatelessWidget {
   final int yes;
   final int no;
 
-  VoteBar(this.yes, this.no);
+  VoteBar({this.yes, this.no});
 
   @override
   Widget build(BuildContext context) {

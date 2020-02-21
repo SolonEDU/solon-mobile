@@ -1,4 +1,3 @@
-import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 mixin Screen {

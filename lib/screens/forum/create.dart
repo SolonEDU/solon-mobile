@@ -1,7 +1,8 @@
-import 'package:Solon/api/message.dart';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/doubletap.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/models/message.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
+import 'package:Solon/widgets/preventable_button.dart';
+import 'package:Solon/util/screen.dart';
 import 'package:flutter/material.dart';
 
 typedef APIFunction<T> = Future<T> Function(
@@ -26,8 +27,9 @@ class _CreatePostState extends State<CreatePost> with Screen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getPageAppBar(context,
-          title: AppLocalizations.of(context).translate("newPost")),
+      appBar: PageAppBar(
+        title: AppLocalizations.of(context).translate("newPost"),
+      ),
       key: _scaffoldKey,
       body: Center(
         child: Form(
@@ -85,7 +87,7 @@ class _CreatePostState extends State<CreatePost> with Screen {
                   onSaved: (input) => _description = input,
                 ),
               ),
-              PreventDoubleTap(
+              PreventableButton(
                 body: <Map>[
                   {
                     "color": Colors.pink[200],

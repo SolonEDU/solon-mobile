@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/auth/button.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/widgets/button.dart';
 import 'package:Solon/main.dart';
-import 'package:Solon/screen.dart';
-import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/api/message.dart';
+import 'package:Solon/util/screen.dart';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/models/message.dart';
+import 'package:Solon/widgets/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -69,8 +70,7 @@ class _AccountScreenState extends State<AccountScreen> with Screen {
               onRefresh: _refresh,
               child: Scaffold(
                 key: _scaffoldKey,
-                appBar: getPageAppBar(
-                  context,
+                appBar: PageAppBar(
                   title: AppLocalizations.of(context).translate("account"),
                 ),
                 body: Container(

@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:Solon/app_localizations.dart';
-import 'package:Solon/forum/page.dart';
-import 'package:Solon/screen.dart';
+import 'package:Solon/util/app_localizations.dart';
+import 'package:Solon/screens/forum/page.dart';
+import 'package:Solon/util/screen.dart';
+import 'package:Solon/widgets/screen_card.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -96,10 +97,11 @@ class _PostCardState extends State<PostCard> with Screen {
             ),
           ),
           Text(widget.timestamp),
-          Text("${widget.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
+          Text(
+              "${widget.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
         ],
       ),
     );
-    return getCard(context, tile, function);
+    return ScreenCard(tile: tile, function: function);
   }
 }
