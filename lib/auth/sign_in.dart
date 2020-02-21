@@ -1,9 +1,8 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
-
 import 'package:Solon/main.dart';
 import 'package:Solon/screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
 import 'package:Solon/auth/button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,7 +28,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
       key: _scaffoldKey,
       appBar: getPageAppBar(
         context,
-        title: AppLocalizations.of(context).translate('signin'),
+        title: AppLocalizations.of(context).translate("signIn"),
       ),
       body: Center(
         child: Form(
@@ -41,7 +40,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('email'),
+                  AppLocalizations.of(context).translate("email"),
                 ),
               ),
               Container(
@@ -51,7 +50,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
                   keyboardType: TextInputType.emailAddress,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Please type your email';
+                      return AppLocalizations.of(context)
+                          .translate("emailSignInFieldError");
                     }
                     return null;
                   },
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
               Container(
                 margin: const EdgeInsets.only(left: 20),
                 child: Text(
-                  AppLocalizations.of(context).translate('password'),
+                  AppLocalizations.of(context).translate("password"),
                 ),
               ),
               Container(
@@ -71,7 +71,8 @@ class _LoginPageState extends State<LoginPage> with Screen {
                   keyboardType: TextInputType.text,
                   validator: (input) {
                     if (input.isEmpty) {
-                      return 'Please type your password';
+                      return AppLocalizations.of(context)
+                          .translate("passwordSignInFieldError");
                     }
                     return null;
                   },
@@ -90,7 +91,7 @@ class _LoginPageState extends State<LoginPage> with Screen {
                 width: 155,
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25, bottom: 25),
-                label: AppLocalizations.of(context).translate('signin'),
+                label: AppLocalizations.of(context).translate("signIn"),
               ),
             ],
           ),
@@ -105,14 +106,19 @@ class _LoginPageState extends State<LoginPage> with Screen {
       formState.save();
       final responseMessage = await APIConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
-        showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+        String message = responseMessage["error"]["errorMessage"] ==
+                "Incorrect password"
+            ? AppLocalizations.of(context).translate("incorrectPassword")
+            : AppLocalizations.of(context).translate(
+                "userDoesNotExist"); // TODO: need a better to code for this logic; be wary of this line when we add in more errors to sign in
+        showToast(message, _scaffoldKey);
         return false;
       } else {
         FocusScope.of(context).requestFocus(FocusNode());
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Main(uid: responseMessage["uid"]),
+            builder: (context) => Main(),
           ),
         );
       }

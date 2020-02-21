@@ -1,7 +1,7 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// import 'package:flutter/services.dart';
-
 import 'package:Solon/navbar.dart';
 import 'package:Solon/auth/welcome.dart';
 import 'package:Solon/home_screen.dart';
@@ -10,8 +10,6 @@ import 'package:Solon/event/screen.dart';
 import 'package:Solon/forum/screen.dart';
 import 'package:Solon/account_screen.dart';
 import 'package:Solon/api/api_connect.dart';
-import 'package:Solon/app_localizations.dart';
-// import 'package:Solon/loader.dart';
 
 void main() => runApp(Solon());
 
@@ -20,6 +18,10 @@ class Solon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // disable landscape
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       title: _title,
       theme: ThemeData(
@@ -28,6 +30,8 @@ class Solon extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0.0,
+          brightness:
+              Brightness.light, // TODO: have yet to find a nonjanky method
           textTheme: TextTheme(
             title: TextStyle(
               color: Colors.black,
@@ -50,78 +54,25 @@ class Solon extends StatelessWidget {
             }
             return snapshot.data.containsKey('errorMessage')
                 ? WelcomePage()
-                : Main(uid: snapshot.data['uid']);
+                : Main();
           },
         ),
       ),
       supportedLocales: [
-        Locale('en'),
-        Locale('af'),
-        Locale('sq'),
-        Locale('ar'),
-        Locale('az'),
-        Locale('eu'),
-        Locale('bn'),
-        Locale('be'),
-        Locale('bg'),
-        Locale('ca'),
-        Locale('chr'),
-        Locale('zh', 'CN'),
-        Locale('zh', 'TW'),
-        Locale('hr'),
-        Locale('cs'),
-        Locale('da'),
-        Locale('nl'),
-        Locale('en', 'GB'),
-        Locale('eo'),
-        Locale('et'),
-        Locale('tl'),
-        Locale('fi'),
-        Locale('fr', 'FR'),
-        Locale('gl'),
-        Locale('ka'),
-        Locale('de'),
-        Locale('el'),
-        Locale('gu'),
-        Locale('ht'),
-        Locale('iw'),
-        Locale('hi'),
-        Locale('hu'),
-        Locale('is'),
-        Locale('id'),
-        Locale('ga'),
-        Locale('it'),
-        Locale('ja'),
-        Locale('kn'),
-        Locale('ko'),
-        Locale('la'),
-        Locale('lv'),
-        Locale('lt'),
-        Locale('mk'),
-        Locale('ms'),
-        Locale('mt'),
-        Locale('no'),
-        Locale('fa'),
-        Locale('pl'),
-        Locale('pt'),
-        Locale('pt', 'PT'),
-        Locale('ro'),
-        Locale('ru'),
-        Locale('sr'),
-        Locale('sk'),
-        Locale('sl'),
-        Locale('es', 'MX'),
-        Locale('sw'),
-        Locale('sv'),
-        Locale('ta'),
-        Locale('te'),
-        Locale('th'),
-        Locale('tr'),
-        Locale('uk'),
-        Locale('ur'),
-        Locale('vi'),
-        Locale('cy'),
-        Locale('yi'),
+        Locale("en", "US"),
+        Locale("zh", "CN"),
+        Locale("zh", "TW"),
+        Locale("bn", "BD"),
+        Locale("ko", "KR"),
+        Locale("ru", "RU"),
+        Locale("ja", "JP"),
+        Locale("uk", "UA"),
+        Locale("zh", "US"),
+        Locale("bn", "US"),
+        Locale("ko", "US"),
+        Locale("ru", "US"),
+        Locale("ja", "US"),
+        Locale("uk", "US"),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -131,6 +82,7 @@ class Solon extends StatelessWidget {
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         if (locale == null) {
+          // TODO: used to be a fix to iOS error; maybe fixed bc of CFBundleLocalizations in iOS/Runner/info.plist
           debugPrint("*language locale is null!");
           return supportedLocales.first;
         }
@@ -149,8 +101,7 @@ class Solon extends StatelessWidget {
 }
 
 class Main extends StatefulWidget {
-  final int uid;
-  Main({Key key, this.uid}) : super(key: key);
+  Main({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MainState();
@@ -158,8 +109,8 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   var _selectedIndex = 0;
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
-
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
 
   void _onItemTapped(int index) {
     setState(() {
@@ -172,29 +123,32 @@ class _MainState extends State<Main> {
     var _widgetOptions = [
       {
         'title': 'home',
-        'widget': HomeScreen(uid: widget.uid),
+        'widget': HomeScreen(),
       },
       {
         'title': 'proposals',
-        'widget': ProposalsScreen(uid: widget.uid),
+        'widget': ProposalsScreen(),
       },
       {
         'title': 'events',
-        'widget': EventsScreen(uid: widget.uid),
+        'widget': EventsScreen(),
       },
       {
         'title': 'forum',
-        'widget': ForumScreen(uid: widget.uid),
+        'widget': ForumScreen(),
       },
     ];
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light,
+    );
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
-          AppLocalizations.of(context)
-              .translate(_widgetOptions[_selectedIndex]['title']),
-        ),
+        title: Text(AppLocalizations.of(context)
+            .translate(_widgetOptions[_selectedIndex]['title'])),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.account_circle),
@@ -205,7 +159,7 @@ class _MainState extends State<Main> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AccountScreen(uid: widget.uid),
+                  builder: (context) => AccountScreen(),
                 ),
               );
             },

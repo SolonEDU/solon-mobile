@@ -1,16 +1,14 @@
 import 'dart:convert';
-
 import 'package:Solon/api/api_connect.dart';
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/event/page.dart';
 import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:Solon/app_localizations.dart';
 
 class EventCard extends StatefulWidget {
   final int eid;
-  final int uid;
   final String title;
   final String description;
   final String date;
@@ -20,7 +18,6 @@ class EventCard extends StatefulWidget {
   EventCard({
     Key key,
     this.eid,
-    this.uid,
     this.title,
     this.description,
     this.date,
@@ -28,15 +25,15 @@ class EventCard extends StatefulWidget {
     this.numattenders,
   }) : super(key: key);
 
-  factory EventCard.fromJson(Map<String, dynamic> map, int uid, String prefLangCode) {
+  factory EventCard.fromJson(
+      Map<String, dynamic> map, int creatorUid, String prefLangCode) {
     DateTime date = DateTime.parse(map['date']);
-    String dateParsed = formatDate(
-        date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String dateParsed =
+        formatDate(date, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];
     return EventCard(
-      uid: uid,
       eid: map['eid'],
       title: translatedTitle,
       description: translatedDescription,
@@ -68,7 +65,6 @@ class _EventCardState extends State<EventCard> with Screen {
         MaterialPageRoute(
           builder: (context) => EventPage(
             eid: widget.eid,
-            uid: widget.uid,
             title: widget.title,
             description: widget.description,
             date: widget.date,
@@ -111,7 +107,7 @@ class _EventCardState extends State<EventCard> with Screen {
             ),
           ),
           Text(
-            '${widget.numattenders} attenders',
+            "${widget.numattenders} ${AppLocalizations.of(context).translate("attenders")}",
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),

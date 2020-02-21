@@ -13,15 +13,16 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = 
-    _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
     String jsonString =
         await rootBundle.loadString('lang/${locale.languageCode}.json');
-    print('${locale.languageCode} printed from app localizations ${locale.countryCode}');
+    print(
+        '${locale.languageCode} printed from app localizations ${locale.countryCode}');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map(
@@ -45,70 +46,13 @@ class _AppLocalizationsDelegate
   @override
   bool isSupported(Locale locale) {
     return [
-      'af',
-      'sq',
-      'ar',
-      'az',
-      'eu',
-      'bn',
-      'be',
-      'bg',
-      'ca',
-      'chr',
-      'zh',
-      'hr',
-      'cs',
-      'da',
-      'nl',
-      'en',
-      'eo',
-      'et',
-      'tl',
-      'fi',
-      'fr',
-      'gl',
-      'ka',
-      'de',
-      'el',
-      'gu',
-      'ht',
-      'iw',
-      'hi',
-      'hu',
-      'is',
-      'id',
-      'ga',
-      'it',
-      'ja',
-      'kn',
-      'ko',
-      'la',
-      'lv',
-      'lt',
-      'mk',
-      'ms',
-      'mt',
-      'no',
-      'fa',
-      'pl',
-      'pt',
-      'ro',
-      'ru',
-      'sr',
-      'sk',
-      'sl',
-      'es',
-      'sw',
-      'sv',
-      'ta',
-      'te',
-      'th',
-      'tr',
-      'uk',
-      'ur',
-      'vi',
-      'cy',
-      'yi',
+      "en",
+      "zh",
+      "bn",
+      "ko",
+      "ru",
+      "ja",
+      "uk",
     ].contains(locale.languageCode);
   }
 

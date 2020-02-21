@@ -1,12 +1,10 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/doubletap.dart';
 import 'package:Solon/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
 import 'package:Solon/api/api_connect.dart';
-// import 'package:Solon/app_localizations.dart';
-// import 'package:Solon/loader.dart';
 
 class ProposalPage extends StatefulWidget {
   final int pid;
@@ -77,8 +75,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                 _voteOutput = "You have not voted yet!";
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
-                    ? "You have voted Yea!"
-                    : "You have voted Nay!";
+                    ? AppLocalizations.of(context).translate("youHaveVotedYes")
+                    : AppLocalizations.of(context).translate("youHaveVotedNo");
               }
               return ListView(
                 children: <Widget>[
@@ -96,7 +94,7 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Description',
+                      AppLocalizations.of(context).translate("description"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -114,7 +112,8 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text('Voting on proposal ends ' + widget.endTime),
+                    child: Text(
+                        "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.date.difference(DateTime.now()).inDays.toString()}"),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventDoubleTap(
@@ -123,23 +122,25 @@ class _ProposalPageState extends State<ProposalPage> with Screen {
                               'color': Colors.green,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () async *{
+                              'function': () async* {
                                 yield true;
                                 APIConnect.vote(widget.pid, 1);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': 'Yes',
+                              'label':
+                                  AppLocalizations.of(context).translate("yes"),
                             },
                             {
                               'color': Colors.red,
                               'width': 155.0,
                               'height': 55.0,
-                              'function': () async * {
+                              'function': () async* {
                                 yield true;
                                 APIConnect.vote(widget.pid, 0);
                               },
                               'margin': const EdgeInsets.all(8),
-                              'label': 'No',
+                              'label':
+                                  AppLocalizations.of(context).translate("no"),
                             }
                           ],
                         )

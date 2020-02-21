@@ -1,3 +1,4 @@
+import 'package:Solon/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 typedef APIFunction<T> = Future<T> Function();
@@ -11,8 +12,7 @@ mixin Screen {
     );
   }
 
-  FloatingActionButton getFAB(
-      BuildContext context, Widget creator) {
+  FloatingActionButton getFAB(BuildContext context, Widget creator) {
     return FloatingActionButton(
       heroTag: 'unq1',
       backgroundColor: Colors.pinkAccent[400],
@@ -94,13 +94,13 @@ mixin Screen {
           children: <Widget>[
             Expanded(
               child: Text(
-                '$yes yes',
+                "$yes ${AppLocalizations.of(context).translate("yes")}",
                 textAlign: TextAlign.start,
               ),
             ),
             Expanded(
               child: Text(
-                '$no no',
+                "$no ${AppLocalizations.of(context).translate("no")}",
                 textAlign: TextAlign.end,
               ),
             ),

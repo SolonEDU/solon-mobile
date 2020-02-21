@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:Solon/app_localizations.dart';
 import 'package:Solon/forum/page.dart';
 import 'package:Solon/screen.dart';
 import 'package:date_format/date_format.dart';
@@ -25,8 +25,8 @@ class PostCard extends StatefulWidget {
 
   factory PostCard.fromJson(Map<String, dynamic> map, String prefLangCode) {
     DateTime timestamp = DateTime.parse(map['timestamp']);
-    String timestampParsed = formatDate(timestamp,
-        [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
+    String timestampParsed = formatDate(
+        timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];
     String translatedDescription =
         json.decode(map['description'])[prefLangCode];
@@ -73,8 +73,8 @@ class _PostCardState extends State<PostCard> with Screen {
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(
           (widget.title.length > 40)
-          ? '${widget.title.substring(0, 40)}...'
-          : widget.title,
+              ? '${widget.title.substring(0, 40)}...'
+              : widget.title,
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class _PostCardState extends State<PostCard> with Screen {
             ),
           ),
           Text(widget.timestamp),
-          Text('${widget.numcomments} comments'),
+          Text("${widget.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
         ],
       ),
     );

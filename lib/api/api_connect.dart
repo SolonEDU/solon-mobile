@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:Solon/api/message.dart';
 import 'package:Solon/proposal/card.dart';
 import 'package:Solon/event/card.dart';
@@ -30,6 +29,25 @@ class APIConnect {
     );
   }
 
+  static Stream<List<ProposalCard>> proposalSearchListView(
+      String query) async* {
+    yield await searchProposals(
+      query: query,
+    );
+  }
+
+  static Stream<List<EventCard>> eventSearchListView(String query) async* {
+    yield await searchEvents(
+      query: query,
+    );
+  }
+
+  static Stream<List<PostCard>> forumSearchListView(String query) async* {
+    yield await searchForum(
+      query: query,
+    );
+  }
+
   static Stream<List<PostCard>> forumListView(String query) async* {
     yield await connectForumPosts(query: query);
   }
@@ -40,9 +58,8 @@ class APIConnect {
     );
   }
 
-  static Stream<List<EventCard>> eventListView(int uid, String query) async* {
+  static Stream<List<EventCard>> eventListView(String query) async* {
     yield await connectEvents(
-      uid: uid,
       query: query,
     );
   }
@@ -229,6 +246,9 @@ class APIConnect {
       final userDataResponseJson = json.decode(userDataResponse.body)['user'];
       userDataResponseJson['lang'] =
           langCodeToLang[userDataResponseJson['lang']];
+      if (userDataResponseJson['lang'] == null) {
+        userDataResponseJson['lang'] = 'English';
+      }
       final userData = json.encode(userDataResponseJson);
       final prefs = await SharedPreferences.getInstance();
       print(userData);
@@ -444,5 +464,56 @@ class APIConnect {
     return status == 201
         ? Message.fromJson(json.decode(response.body)['message'])
         : throw Exception('Message field in forum post object not found.');
+  }
+
+  static Future<List<ProposalCard>> searchProposals({String query}) async {
+    final http.Response response = await http.get(
+      "$_url/proposals?q=$query",
+      headers: await headers,
+    );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    List collection = json.decode(response.body)['proposals'];
+    List<ProposalCard> _proposals = collection
+        .map((json) => ProposalCard.fromJson(json, prefLangCode))
+        .toList();
+    return _proposals;
+  }
+
+  static Future<List<EventCard>> searchEvents({String query}) async {
+    final http.Response response = await http.get(
+      "$_url/events?q=$query",
+      headers: await headers,
+    );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    List collection = json.decode(response.body)['events'];
+    List<EventCard> _events = collection
+        .map(
+          (json) => EventCard.fromJson(
+            json,
+            sharedPrefs['uid'],
+            prefLangCode,
+          ),
+        )
+        .toList();
+    return _events;
+  }
+
+  static Future<List<PostCard>> searchForum({String query}) async {
+    final http.Response response = await http.get(
+      "$_url/forumposts?q=$query",
+      headers: await headers,
+    );
+
+    final sharedPrefs = await connectSharedPreferences();
+    final prefLangCode = languages[sharedPrefs['lang']];
+    List collection = json.decode(response.body)['forumposts'];
+    List<PostCard> _forumposts = collection
+        .map((json) => PostCard.fromJson(json, prefLangCode))
+        .toList();
+    return _forumposts;
   }
 }
