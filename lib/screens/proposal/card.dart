@@ -24,6 +24,8 @@ class ProposalCard extends StatefulWidget {
 class _ProposalCardState extends State<ProposalCard> {
   bool _voted;
   Future<Map<String, dynamic>> _listFutureProposal;
+  final GlobalKey _textKey = GlobalKey();
+  double textWidth;
 
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
@@ -39,7 +41,14 @@ class _ProposalCardState extends State<ProposalCard> {
   @override
   void initState() {
     _listFutureProposal = getVote();
+    // WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
     super.initState();
+  }
+
+  getSize() {
+    RenderBox _textBox = _textKey.currentContext.findRenderObject();
+    textWidth = _textBox.size.width;
+    print(textWidth);
   }
 
   @override
@@ -63,15 +72,44 @@ class _ProposalCardState extends State<ProposalCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
-        child: Text(
-          (widget.proposal.title.length > 40)
-              ? '${MediaQuery.of(context).size.width}...'
-              : widget.proposal.title,
-          style: TextStyle(
-            fontFamily: 'Raleway',
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final String proposalTitle = widget.proposal.title;
+            final int proposalTitleLength = proposalTitle.length;
+            TextStyle textStyle = TextStyle(
+              fontFamily: 'Raleway',
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            );
+            final span = TextSpan(
+              text: widget.proposal.title,
+              style: textStyle,
+            );
+            final tp = TextPainter(text: span, textDirection: TextDirection.ltr);
+            tp.layout(maxWidth: constraints.maxWidth);
+            final tpLineMetrics = tp.computeLineMetrics();
+            print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
+            if (tpLineMetrics.length == 1) {
+              // The text only has 1 line.
+              // TODO: display the one-line text
+              return Text(
+                widget.proposal.title,
+                style: textStyle,
+              );
+            } else if (tpLineMetrics.length > 1) {
+              int totalTextWidth = (tpLineMetrics[0].width * (tpLineMetrics.length - 1) + tpLineMetrics[tpLineMetrics.length - 1].width).ceil();
+              double avgCharPixelWidth = (totalTextWidth / proposalTitleLength);
+              int lastLineCharDiff = (tpLineMetrics[tpLineMetrics.length - 1].width / avgCharPixelWidth).ceil();
+              print(avgCharPixelWidth);
+              String titleText = proposalTitle.substring(0, proposalTitleLength - lastLineCharDiff - 3) + '...'; 
+              print(titleText);
+              return Text(
+                titleText,
+                style: textStyle,
+                // maxLines: tpLineMetrics.length - 1,
+              );
+            }
+          },
         ),
       ),
       subtitle: Column(
