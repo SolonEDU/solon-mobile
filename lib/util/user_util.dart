@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserUtil {
-  static Future<Map<String, dynamic>> connectSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userData')) {
+  static Future<dynamic> connectSharedPreferences({
+    @required String key,
+  }) async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    if (!sharedPrefs.containsKey(key)) {
       return {"errorMessage": "Error"};
     }
-    final userData = prefs.getString('userData');
+    final userData = sharedPrefs.getString(key);
     final userDataMap = json.decode(userData);
     return userDataMap;
   }

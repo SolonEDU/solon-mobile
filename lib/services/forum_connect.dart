@@ -36,7 +36,9 @@ class ForumConnect {
     String description,
     DateTime timestamp,
   ) async {
-    final userData = await UserUtil.connectSharedPreferences();
+    final userData = await UserUtil.connectSharedPreferences(
+      key: 'userData',
+    );
     final response = await http.post(
       "${APIConnect.url}/forumposts",
       body: json.encode({
@@ -67,7 +69,9 @@ class ForumConnect {
     String timestamp,
     int uid,
   }) async {
-    final userData = await UserUtil.connectSharedPreferences();
+    final userData = await UserUtil.connectSharedPreferences(
+      key: 'userData',
+    );
     final response = await http.post(
       "${APIConnect.url}/comments",
       body: json.encode({

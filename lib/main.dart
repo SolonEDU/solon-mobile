@@ -47,7 +47,9 @@ class Solon extends StatelessWidget {
       ),
       home: Scaffold(
         body: FutureBuilder(
-          future: UserUtil.connectSharedPreferences(),
+          future: UserUtil.connectSharedPreferences(
+            key: 'userData',
+          ),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Container();

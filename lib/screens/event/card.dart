@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,8 +22,8 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   Future<bool> getAttendanceVal() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    final userUid = sharedPrefs['uid'];
     final responseMessage = await EventConnect.getAttendance(
       eid: widget.event.eid,
       uid: userUid,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:Solon/services/api_connect.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,10 +35,10 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Future<Null> load() async {
-    streamController.add(await UserUtil.connectSharedPreferences());
-    final prefs = await SharedPreferences.getInstance();
+    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    streamController.add(sharedPrefs);
     setState(() {
-      _userUid = json.decode(prefs.getString('userData'))['uid'];
+      _userUid = sharedPrefs['uid'];
     });
   }
 
@@ -134,12 +135,10 @@ class _AccountScreenState extends State<AccountScreen> {
                               Map<String, dynamic> newMap = snapshot.data;
                               newMap['lang'] = newValue;
                               streamController.sink.add(newMap);
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              final userData = prefs.getString('userData');
-                              final userDataJson = json.decode(userData);
+                              final sharedPrefs = await SharedPreferences.getInstance();
+                              final userDataJson = await UserUtil.connectSharedPreferences(key: 'userData');
                               userDataJson['lang'] = newValue;
-                              prefs.setString(
+                              sharedPrefs.setString(
                                 'userData',
                                 json.encode(userDataJson),
                               );
@@ -147,7 +146,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   await UserConnect.changeLanguage(
                                 uid: snapshot.data['uid'],
                                 updatedLang: json.decode(
-                                    prefs.getString('userData'))['lang'],
+                                    sharedPrefs.getString('userData'))['lang'],
                               );
                               UserUtil.showToast(
                                   responseMessage.message == 'Error'
@@ -192,9 +191,9 @@ class _AccountScreenState extends State<AccountScreen> {
                                   .translate("signOut"),
                               margin: EdgeInsets.only(top: 10),
                               function: () async {
-                                final prefs =
+                                final sharedPrefs =
                                     await SharedPreferences.getInstance();
-                                prefs.clear();
+                                sharedPrefs.clear();
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   PageRouteBuilder(

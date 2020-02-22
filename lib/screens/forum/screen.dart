@@ -30,8 +30,8 @@ class _ForumScreenState extends State<ForumScreen> {
   Stream<List<ForumPost>> stream;
 
   Future<Null> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final forumSortOption = prefs.getString('forumSortOption');
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final forumSortOption = sharedPrefs.getString('forumSortOption');
     dropdownMenuStreamController.sink.add(forumSortOption);
     stream = ForumUtil.screenView(forumSortOption);
   }

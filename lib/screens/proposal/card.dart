@@ -27,8 +27,8 @@ class _ProposalCardState extends State<ProposalCard> {
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(sharedPrefs.getString('userData'))['uid'];
     final responseMessage = await ProposalConnect.connectVotes(
       'GET',
       pid: widget.proposal.pid,

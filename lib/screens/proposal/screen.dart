@@ -30,8 +30,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
   TextEditingController editingController = TextEditingController();
 
   Future<Null> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final proposalsSortOption = prefs.getString('proposalsSortOption');
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final proposalsSortOption = sharedPrefs.getString('proposalsSortOption');
     dropdownMenuStreamController.sink.add(proposalsSortOption);
     stream = ProposalUtil.screenView(proposalsSortOption);
   }

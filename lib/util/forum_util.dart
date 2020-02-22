@@ -10,7 +10,7 @@ class ForumUtil {
   static Stream<List<ForumPost>> _getList(
       {Function function, String query}) async* {
     http.Response response = await function(query: query);
-    final sharedPrefs = await UserUtil.connectSharedPreferences();
+    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<ForumPost> _posts;
     List collection;
@@ -26,7 +26,9 @@ class ForumUtil {
 
   static Stream<List<Comment>> getComments({int fid}) async* {
     http.Response response = await ForumConnect.connectComments(fid: fid);
-    final sharedPrefs = await UserUtil.connectSharedPreferences();
+    final sharedPrefs = await UserUtil.connectSharedPreferences(
+      key: 'userData',
+    );
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<Comment> _comments;
     List collection;

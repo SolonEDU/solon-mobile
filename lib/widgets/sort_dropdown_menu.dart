@@ -35,8 +35,8 @@ class SortDropdownMenu extends StatelessWidget {
                 ),
                 onChanged: (String newValue) async {
                   streamController.sink.add(newValue);
-                  final prefs = await SharedPreferences.getInstance();
-                  prefs.setString(
+                  final sharedPrefs = await SharedPreferences.getInstance();
+                  sharedPrefs.setString(
                     preferences,
                     newValue,
                   );
