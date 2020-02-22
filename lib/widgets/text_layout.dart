@@ -18,7 +18,6 @@ class TextLayout {
           return Text(rawText); // trivial case: empty rawText string
 
         final String text = rawText;
-        final int textLength = text.length;
         final span = TextSpan(
           text: rawText,
           style: textStyle,
@@ -28,8 +27,8 @@ class TextLayout {
           textDirection: TextDirection.ltr,
         ); // TODO: watch out for locale text direction
         tp.layout(maxWidth: constraints.maxWidth);
-        final tpLineMetrics = tp.computeLineMetrics();
-        print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
+        // final tpLineMetrics = tp.computeLineMetrics();
+        // print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
 
         // TODO: This doesn't handle right-to-left text yet.; maybe textAffinity can fix.
         // select everything
@@ -64,25 +63,13 @@ class TextLayout {
         // get the last substring
         final extra = text.substring(start);
         lineTexts.add(extra);
-        print('line texts: $lineTexts');
+        // print('line texts: $lineTexts');
 
         // avoid RangeError where actual number of lines is less than default lines argument
         lines = lines >= lineTexts.length ? lineTexts.length : lines;
-        print('lines: $lines');
+        // print('lines: $lines');
 
-        // estimate the average width of a character, in pixels
-        int totalTextWidth =
-            (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
-                    tpLineMetrics[tpLineMetrics.length - 1].width)
-                .ceil();
-        double avgCharPixelWidth = (totalTextWidth / textLength);
-        int lastLineCharDiff = lineTexts[lineTexts.length - 1]
-            .length; // length of the last line of raw text
-        int lastRenderedLineLength =
-            lineTexts[lines - 1].length; // length of the last RENDERED line
-        print(avgCharPixelWidth);
-
-        if (tpLineMetrics.length == 1) {
+        if (lineTexts.length == 1) {
           // The text only has 1 line.
           return Text(
             text,
@@ -94,35 +81,13 @@ class TextLayout {
         String renderedText = lineTexts.sublist(0, lines).join();
         int renderedTextLength = renderedText.length;
 
-        // if (!keepLastLine) {
-        //   return Text(
-        //     '${renderedText.substring(0, renderedTextLength - 3)}...',
-        //     style: textStyle,
-        //   );
-        // }
         if (lineTexts.length <= lines) {
           // if there are less lines of raw text than lines to render
           renderedText = '${renderedText.substring(0, renderedTextLength)}';
-          print('FIRST CONDITIONAL::${lineTexts.length}');
-        } else if (lastRenderedLineLength // at this point of logic flow, there are more lines of raw text than lines to render
-                        .toDouble() * // double conversion needed to yield all double values within condition
-                    avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width
-                3 * avgCharPixelWidth >
-            constraints.maxWidth) {
+        } else {
+          // if there are more lines of raw text than lines to render
           renderedText =
               '${renderedText.substring(0, renderedTextLength - 3)}...';
-          print(lastRenderedLineLength
-                          .toDouble() * // double conversion needed to yield all double values within condition
-                      avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width
-                  3 * avgCharPixelWidth >
-              constraints.maxWidth);
-          print(renderedText);
-        } else if (lastRenderedLineLength
-                        .toDouble() * // double conversion needed to yield all double values within condition
-                    avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to fit within the screen width
-                3 * avgCharPixelWidth <=
-            constraints.maxWidth) {
-          renderedText = '${renderedText.substring(0, renderedTextLength)}';
         }
 
         return Text(
