@@ -12,6 +12,7 @@ class NavBar extends StatelessWidget {
     return SafeArea(
       child: BottomNavigationBar(
         backgroundColor: Colors.white,
+        elevation: 0.0,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
