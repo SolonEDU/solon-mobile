@@ -65,7 +65,7 @@ class _ProposalCardState extends State<ProposalCard> {
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
           (widget.proposal.title.length > 40)
-              ? '${widget.proposal.title.substring(0, 50)}...'
+              ? '${MediaQuery.of(context).size.width}...'
               : widget.proposal.title,
           style: TextStyle(
             fontFamily: 'Raleway',

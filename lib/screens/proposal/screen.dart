@@ -140,11 +140,14 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                                 child: Scaffold(
                                   key: _scaffoldKey,
                                   body: ListView(
-                                      padding: const EdgeInsets.all(4),
-                                      children: snapshot.data
-                                          .map((json) =>
-                                              ProposalCard(proposal: json))
-                                          .toList()),
+                                    padding: const EdgeInsets.all(4),
+                                    children: snapshot.data
+                                        .map(
+                                          (json) =>
+                                              ProposalCard(proposal: json),
+                                        )
+                                        .toList(),
+                                  ),
                                   floatingActionButton: CreateButton(
                                     creator: CreateProposal(
                                       ProposalConnect.addProposal,
