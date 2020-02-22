@@ -74,7 +74,13 @@ class _ProposalCardState extends State<ProposalCard> {
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: TextLayout.fillLinesWithTextAndAppendEllipses(
-            rawText: widget.proposal.title),
+          rawText: widget.proposal.title,
+          textStyle: TextStyle(
+            fontFamily: 'Raleway',
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +88,8 @@ class _ProposalCardState extends State<ProposalCard> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: widget.proposal.date.difference(DateTime.now()).inDays > 0
-                ? Text( // TODO: needa translate "Voting is over!"
+                ? Text(
+                    // TODO: needa translate "Voting is over!"
                     "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
                     style: TextStyle(
                       fontSize: 15,

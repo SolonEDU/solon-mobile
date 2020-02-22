@@ -1,10 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 class TextLayout {
   static LayoutBuilder fillLinesWithTextAndAppendEllipses({
     // this function is always assumed to render AT LEAST one line of text
-    String rawText,
+    @required String rawText,
+    TextStyle textStyle,
     int lines =
         3, // initialize number of lines to render to 3 if the argument was not specified; keep in mind that the raw text may not reach up to 3 lines, in which the lines variable value will be adjusted accordingly below
     bool keepLastLine =
@@ -17,11 +19,6 @@ class TextLayout {
 
         final String text = rawText;
         final int textLength = text.length;
-        TextStyle textStyle = TextStyle(
-          fontFamily: 'Raleway',
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        );
         final span = TextSpan(
           text: rawText,
           style: textStyle,
@@ -103,7 +100,7 @@ class TextLayout {
         //   );
         // }
 
-        if (lineTexts.length > lines ||
+        if (lineTexts.length > lines || // if there are more lines of raw text than lines to render
             lastRenderedLineLength
                             .toDouble() * // double conversion needed to yield all double values within condition
                         avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width

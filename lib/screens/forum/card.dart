@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/forum/page.dart';
 import 'package:Solon/widgets/screen_card.dart';
+import 'package:Solon/widgets/text_layout.dart';
 
 class PostCard extends StatefulWidget {
   final ForumPost post;
@@ -33,11 +35,9 @@ class _PostCardState extends State<PostCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: Text(
-          (widget.post.title.length > 40)
-              ? '${widget.post.title.substring(0, 50)}...'
-              : widget.post.title,
-          style: TextStyle(
+        child: TextLayout.fillLinesWithTextAndAppendEllipses(
+          rawText: widget.post.title,
+          textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -49,9 +49,9 @@ class _PostCardState extends State<PostCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              '${widget.post.description}',
-              style: TextStyle(
+            child: TextLayout.fillLinesWithTextAndAppendEllipses(
+              rawText: widget.post.description,
+              textStyle: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
               ),
