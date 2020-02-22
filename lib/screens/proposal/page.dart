@@ -105,7 +105,7 @@ class _ProposalPageState extends State<ProposalPage> {
                                 .difference(DateTime.now())
                                 .inDays >
                             0
-                        ? Text(
+                        ? Text( // TODO: needa translate "Voting is over!"
                             "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
                         : Text("Voting is over!"),
                   ),
