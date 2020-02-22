@@ -7,10 +7,7 @@ import 'package:Solon/widgets/screen_card.dart';
 class PostCard extends StatefulWidget {
   final ForumPost post;
 
-  PostCard({
-    Key key,
-    this.post
-  }) : super(key: key);
+  PostCard({Key key, this.post}) : super(key: key);
 
   @override
   _PostCardState createState() => _PostCardState();
@@ -23,9 +20,7 @@ class _PostCardState extends State<PostCard> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PostPage(
-            post: widget.post
-          ),
+          builder: (context) => PostPage(post: widget.post),
         ),
       );
     };

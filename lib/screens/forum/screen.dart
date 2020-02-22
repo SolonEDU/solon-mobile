@@ -13,7 +13,6 @@ import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
 
-
 class ForumScreen extends StatefulWidget {
   ForumScreen({Key key}) : super(key: key);
 

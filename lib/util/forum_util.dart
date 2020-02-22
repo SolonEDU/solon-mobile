@@ -32,7 +32,10 @@ class ForumUtil {
     List collection;
     if (response.statusCode == 200) {
       collection = json.decode(response.body)['comments'];
-      _comments = collection.map((json) => Comment.fromJson(map: json, prefLangCode: prefLangCode)).toList();
+      _comments = collection
+          .map(
+              (json) => Comment.fromJson(map: json, prefLangCode: prefLangCode))
+          .toList();
     }
     yield _comments;
   }

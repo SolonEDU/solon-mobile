@@ -23,7 +23,6 @@ class EventConnect {
     );
   }
 
-
   static Future<http.Response> searchEvents({String query}) async {
     return await http.get(
       "${APIConnect.url}/events?q=$query",
@@ -31,7 +30,7 @@ class EventConnect {
     );
   }
 
-    static Future<bool> getAttendance({int eid, int uid}) async {
+  static Future<bool> getAttendance({int eid, int uid}) async {
     final response = await http.get(
       "${APIConnect.url}/attenders/$eid/$uid",
       headers: await APIConnect.headers,

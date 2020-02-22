@@ -9,7 +9,6 @@ import 'package:Solon/widgets/screen_card.dart';
 import 'package:Solon/widgets/bars/vote_bar.dart';
 import 'package:Solon/screens/proposal/page.dart';
 
-
 class ProposalCard extends StatefulWidget {
   final Proposal proposal;
 
@@ -101,8 +100,8 @@ class _ProposalCardState extends State<ProposalCard> {
                 _voted = (snapshot.data['message'] == 'Error') ? false : true;
                 if (_voted) {
                   return VoteBar(
-                    numyes: widget.proposal.yesVotes,
-                    numno: widget.proposal.noVotes,
+                    numYes: widget.proposal.yesVotes,
+                    numNo: widget.proposal.noVotes,
                   );
                 } else {
                   return Center();

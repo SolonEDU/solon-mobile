@@ -49,5 +49,4 @@ class ProposalUtil {
       voteVal: voteVal,
     );
   }
-
 }

@@ -22,7 +22,8 @@ class _AccountScreenState extends State<AccountScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  StreamController<Map<String, dynamic>> streamController = StreamController.broadcast();
+  StreamController<Map<String, dynamic>> streamController =
+      StreamController.broadcast();
   var _language;
   int _userUid;
 
@@ -55,7 +56,8 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return StreamBuilder<Map<String, dynamic>>(
       stream: streamController.stream,
-      builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

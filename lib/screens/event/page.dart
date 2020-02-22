@@ -25,9 +25,11 @@ class _EventPageState extends State<EventPage> {
 
   void _onChanged(bool value) async {
     if (value) {
-      EventConnect.changeAttendance('POST', eid: widget.event.eid, uid: userUid);
+      EventConnect.changeAttendance('POST',
+          eid: widget.event.eid, uid: userUid);
     } else {
-      EventConnect.changeAttendance('DELETE', eid: widget.event.eid, uid: userUid);
+      EventConnect.changeAttendance('DELETE',
+          eid: widget.event.eid, uid: userUid);
     }
     streamController.sink.add(value);
   }
@@ -35,8 +37,8 @@ class _EventPageState extends State<EventPage> {
   void load() async {
     final prefs = await SharedPreferences.getInstance();
     userUid = json.decode(prefs.getString('userData'))['uid'];
-    streamController
-        .add(await EventConnect.getAttendance(eid: widget.event.eid, uid: userUid));
+    streamController.add(
+        await EventConnect.getAttendance(eid: widget.event.eid, uid: userUid));
   }
 
   @override

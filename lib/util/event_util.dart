@@ -16,8 +16,7 @@ class EventUtil {
     if (response.statusCode == 200) {
       collection = json.decode(response.body)['events'];
       _events = collection
-          .map((json) =>
-              Event.fromJson(map: json, prefLangCode: prefLangCode))
+          .map((json) => Event.fromJson(map: json, prefLangCode: prefLangCode))
           .toList();
     }
     yield _events;

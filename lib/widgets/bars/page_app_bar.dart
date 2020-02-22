@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PageAppBar extends StatelessWidget implements PreferredSizeWidget{
+class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   PageAppBar({this.title});
