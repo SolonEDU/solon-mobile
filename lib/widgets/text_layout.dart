@@ -103,6 +103,7 @@ class TextLayout {
         if (lineTexts.length <= lines) {
           // if there are less lines of raw text than lines to render
           renderedText = '${renderedText.substring(0, renderedTextLength)}';
+          print('FIRST CONDITIONAL::${lineTexts.length}');
         } else if (lastRenderedLineLength // at this point of logic flow, there are more lines of raw text than lines to render
                         .toDouble() * // double conversion needed to yield all double values within condition
                     avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width
