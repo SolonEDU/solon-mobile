@@ -129,34 +129,46 @@ class _ProposalCardState extends State<ProposalCard> {
             lineTexts.add(extra);
             print(lineTexts);
 
+            int totalTextWidth =
+                (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
+                        tpLineMetrics[tpLineMetrics.length - 1].width)
+                    .ceil();
+            double avgCharPixelWidth = (totalTextWidth / proposalTitleLength);
+            int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
+            print(avgCharPixelWidth);
+            String titleText;
+
             if (tpLineMetrics.length == 1) {
               // The text only has 1 line.
               // TODO: display the one-line text
-              return Text(
-                widget.proposal.title,
-                style: textStyle,
-              );
-            } else if (tpLineMetrics.length > 1) {
-              int totalTextWidth =
-                  (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
-                          tpLineMetrics[tpLineMetrics.length - 1].width)
-                      .ceil();
-              double avgCharPixelWidth = (totalTextWidth / proposalTitleLength);
-              int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
+              // return Text(
+              //   widget.proposal.title,
+              //   style: textStyle,
+              // );
+              titleText = proposalTitle; 
+            } else if (lineTexts[lineTexts.length - 1].length +
+                    (3 * avgCharPixelWidth) >
+                constraints.maxWidth) {
               // (tpLineMetrics[tpLineMetrics.length - 1].width /
               //         avgCharPixelWidth)
               //     .ceil();
-              print(avgCharPixelWidth);
-              String titleText = proposalTitle.substring(
+
+              titleText = proposalTitle.substring(
                       0, proposalTitleLength - lastLineCharDiff - 3) +
                   '...';
               print(titleText);
-              return Text(
+              
+            } else if (lineTexts[lineTexts.length - 1].length +
+                    (3 * avgCharPixelWidth) <=
+                constraints.maxWidth) {
+              titleText =
+                  proposalTitle.substring(0, proposalTitleLength) + '...';
+            }
+            return Text(
                 titleText,
                 style: textStyle,
                 // maxLines: tpLineMetrics.length - 1,
               );
-            }
           },
         ),
       ),
