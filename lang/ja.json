@@ -26,6 +26,7 @@
 	"votingOnProposalEnds": "提案に対する投票の終了日",
 	"youHaveVotedYes": "はい、投票しました！",
 	"youHaveVotedNo": "投票しませんでした！",
+	"votingIsOver": "投票は終わりました！",
 	"title": "題名",
 	"description": "説明",
 	"daysUntilProposalEnds": "提案終了までの日数",

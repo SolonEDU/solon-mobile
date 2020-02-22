@@ -105,9 +105,16 @@ class _ProposalPageState extends State<ProposalPage> {
                                 .difference(DateTime.now())
                                 .inDays >
                             0
-                        ? Text( // TODO: needa translate "Voting is over!"
+                        ? Text(// TODO: needa translate "Voting is over!"
                             "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
-                        : Text("Voting is over!"),
+                        : Text(
+                            AppLocalizations.of(context)
+                                .translate("votingIsOver"),
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventableButton(

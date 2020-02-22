@@ -88,7 +88,13 @@ class _ProposalCardState extends State<ProposalCard> {
                       color: Colors.black,
                     ),
                   )
-                : Text("Voting is over!"),
+                : Text(
+                    AppLocalizations.of(context).translate("votingIsOver"),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
           ),
           Text(
             "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
