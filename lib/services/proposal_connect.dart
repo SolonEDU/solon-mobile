@@ -63,23 +63,30 @@ class ProposalConnect {
       'uid': uidUser,
       'value': voteVal,
     };
-    var response = (httpReqType == 'POST') // need pid, uid, and voteVal
-        ? await http.post(
-            "${APIConnect.url}/votes",
-            body: json.encode(vote),
-            headers: await APIConnect.headers,
-          )
-        : (httpReqType == 'GET') // need pid and uidUser
-            ? await http.get(
-                "${APIConnect.url}/votes/$pid/$uidUser",
-                headers: await APIConnect.headers,
-              )
-            : await http.patch(
-                // need pid, uid, and voteVal
-                "${APIConnect.url}/votes",
-                body: json.encode(vote),
-                headers: await APIConnect.headers,
-              );
+
+    var response;
+    if (httpReqType == 'POST') {
+      // need pid, uid, and voteVal
+      response = await http.post(
+        "${APIConnect.url}/votes",
+        body: json.encode(vote),
+        headers: await APIConnect.headers,
+      );
+    } else if (httpReqType == 'GET') {
+      // need pid and uidUser
+      response = await http.get(
+        "${APIConnect.url}/votes/$pid/$uidUser",
+        headers: await APIConnect.headers,
+      );
+    } else if (httpReqType == 'PATCH') { // TODO: this is only valid if we decide that votes can be changed
+      // need pid, uid, and voteVal
+      response = await http.patch(
+        "${APIConnect.url}/votes",
+        body: json.encode(vote),
+        headers: await APIConnect.headers,
+      );
+    }
+
     return json.decode(response.body);
   }
 }
