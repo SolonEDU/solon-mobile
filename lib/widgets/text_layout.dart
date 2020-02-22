@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 class TextLayout {
-  static LayoutBuilder fillLinesWithTextAndAppendEllipses({
+  static LayoutBuilder fillLinesWithTextAndAppendTrail({
     // this function is always assumed to render AT LEAST one line of text
     @required String rawText,
+    String trail,
     TextStyle textStyle,
     int lines =
         3, // initialize number of lines to render to 3 if the argument was not specified; keep in mind that the raw text may not reach up to 3 lines, in which the lines variable value will be adjusted accordingly below
-    bool keepLastLine =
-        false, // initialize keepLastLine to false if the argument was not specified
   }) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -87,7 +86,7 @@ class TextLayout {
         } else {
           // if there are more lines of raw text than lines to render
           renderedText =
-              '${renderedText.substring(0, renderedTextLength - 3)}...';
+              '${renderedText.substring(0, renderedTextLength - 3)}$trail';
         }
 
         return Text(

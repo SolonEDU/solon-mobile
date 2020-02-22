@@ -35,8 +35,9 @@ class _PostCardState extends State<PostCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: TextLayout.fillLinesWithTextAndAppendEllipses(
+        child: TextLayout.fillLinesWithTextAndAppendTrail(
           rawText: widget.post.title,
+          trail: '...',
           textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
@@ -49,8 +50,9 @@ class _PostCardState extends State<PostCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: TextLayout.fillLinesWithTextAndAppendEllipses(
+            child: TextLayout.fillLinesWithTextAndAppendTrail(
               rawText: widget.post.description,
+              trail: '...',
               textStyle: TextStyle(
                 fontSize: 15,
                 color: Colors.black,

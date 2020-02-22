@@ -50,8 +50,9 @@ class _EventCardState extends State<EventCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
-        child: TextLayout.fillLinesWithTextAndAppendEllipses(
+        child: TextLayout.fillLinesWithTextAndAppendTrail(
           rawText: widget.event.title,
+          trail: '...',
           textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,

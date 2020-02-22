@@ -73,8 +73,9 @@ class _ProposalCardState extends State<ProposalCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
-        child: TextLayout.fillLinesWithTextAndAppendEllipses(
+        child: TextLayout.fillLinesWithTextAndAppendTrail(
           rawText: widget.proposal.title,
+          trail: '...',
           textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
