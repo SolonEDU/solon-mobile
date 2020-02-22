@@ -25,8 +25,6 @@ class ProposalCard extends StatefulWidget {
 class _ProposalCardState extends State<ProposalCard> {
   bool _voted;
   Future<Map<String, dynamic>> _listFutureProposal;
-  final GlobalKey _textKey = GlobalKey();
-  double textWidth;
 
   Future<Map<String, dynamic>> getVote() async {
     final prefs = await SharedPreferences.getInstance();
@@ -42,14 +40,7 @@ class _ProposalCardState extends State<ProposalCard> {
   @override
   void initState() {
     _listFutureProposal = getVote();
-    // WidgetsBinding.instance.addPostFrameCallback((_) => getSize());
     super.initState();
-  }
-
-  getSize() {
-    RenderBox _textBox = _textKey.currentContext.findRenderObject();
-    textWidth = _textBox.size.width;
-    print(textWidth);
   }
 
   @override

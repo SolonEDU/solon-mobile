@@ -141,10 +141,6 @@ class _MainState extends State<Main> {
       },
     ];
 
-    SystemChrome.setSystemUIOverlayStyle( // TODO: is this needed ? is it part of our status bar jank solution ?
-      SystemUiOverlayStyle.light,
-    );
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
