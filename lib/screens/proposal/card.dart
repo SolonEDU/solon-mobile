@@ -85,10 +85,52 @@ class _ProposalCardState extends State<ProposalCard> {
               text: widget.proposal.title,
               style: textStyle,
             );
-            final tp = TextPainter(text: span, textDirection: TextDirection.ltr);
+            final tp = TextPainter(
+                text: span,
+                textDirection: TextDirection
+                    .ltr); // TODO: watch out for locale text direction
             tp.layout(maxWidth: constraints.maxWidth);
             final tpLineMetrics = tp.computeLineMetrics();
             print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
+
+            // The TextPaint has already been laid out
+
+// select everything
+            TextSelection selection = TextSelection(
+                baseOffset: 0, extentOffset: span.text.length);
+
+// get a list of TextBoxes (Rects)
+            List<TextBox> boxes = tp.getBoxesForSelection(selection);
+
+// Loop through each text box
+            List<String> lineTexts = [];
+            int start = 0;
+            int end;
+            int index = -1;
+            for (TextBox box in boxes) {
+              index += 1;
+
+              // Uncomment this if you want to only get the whole line of text
+              // (sometimes a single line may have multiple TextBoxes)
+              if (box.left != 0.0)
+               continue;
+
+              if (index == 0) continue;
+              // Go one logical pixel within the box and get the position
+              // of the character in the string.
+              end = tp
+                  .getPositionForOffset(Offset(box.left + 1, box.top + 1))
+                  .offset;
+              // add the substring to the list of lines
+              final line = proposalTitle.substring(start, end);
+              lineTexts.add(line);
+              start = end;
+            }
+// get the last substring
+            final extra = proposalTitle.substring(start);
+            lineTexts.add(extra);
+            print(lineTexts);
+
             if (tpLineMetrics.length == 1) {
               // The text only has 1 line.
               // TODO: display the one-line text
@@ -97,11 +139,18 @@ class _ProposalCardState extends State<ProposalCard> {
                 style: textStyle,
               );
             } else if (tpLineMetrics.length > 1) {
-              int totalTextWidth = (tpLineMetrics[0].width * (tpLineMetrics.length - 1) + tpLineMetrics[tpLineMetrics.length - 1].width).ceil();
+              int totalTextWidth =
+                  (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
+                          tpLineMetrics[tpLineMetrics.length - 1].width)
+                      .ceil();
               double avgCharPixelWidth = (totalTextWidth / proposalTitleLength);
-              int lastLineCharDiff = (tpLineMetrics[tpLineMetrics.length - 1].width / avgCharPixelWidth).ceil();
+              int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
+                  // (tpLineMetrics[tpLineMetrics.length - 1].width /
+                  //         avgCharPixelWidth)
+                  //     .ceil();
               print(avgCharPixelWidth);
-              String titleText = proposalTitle.substring(0, proposalTitleLength - lastLineCharDiff - 3) + '...'; 
+              String titleText = proposalTitle.substring(
+                      0, proposalTitleLength - lastLineCharDiff - 3) + '...';
               print(titleText);
               return Text(
                 titleText,
