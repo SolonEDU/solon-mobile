@@ -35,7 +35,7 @@ class _PostCardState extends State<PostCard> {
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(
           (widget.post.title.length > 40)
-              ? '${widget.post.title.substring(0, 40)}...'
+              ? '${widget.post.title.substring(0, 50)}...'
               : widget.post.title,
           style: TextStyle(
             fontFamily: 'Raleway',

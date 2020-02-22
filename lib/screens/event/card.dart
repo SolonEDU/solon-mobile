@@ -51,7 +51,7 @@ class _EventCardState extends State<EventCard> {
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
           (widget.event.title.length > 40)
-              ? '${widget.event.title.substring(0, 40)}...'
+              ? '${widget.event.title.substring(0, 50)}...'
               : widget.event.title,
           style: TextStyle(
             fontFamily: 'Raleway',
