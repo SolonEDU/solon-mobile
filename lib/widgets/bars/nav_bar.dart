@@ -10,6 +10,9 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
+      left: false,
+      right: false,
       child: BottomNavigationBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
