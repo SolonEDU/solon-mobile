@@ -2,7 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class TextLayout {
-  static LayoutBuilder fillLinesWithTextAndAppendEllipses({String rawText}) {
+  static LayoutBuilder fillLinesWithTextAndAppendEllipses(
+      {String rawText, int lines, bool renderLastLine}) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final String text = rawText;
@@ -66,33 +67,56 @@ class TextLayout {
         double avgCharPixelWidth = (totalTextWidth / textLength);
         int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
         print(avgCharPixelWidth);
-        String titleText;
+        String renderText;
 
-        if (tpLineMetrics.length == 1) {
-          // The text only has 1 line.
-          // TODO: display the one-line text
-          // return Text(
-          //   widget.proposal.title,
-          //   style: textStyle,
-          // );
-          titleText = text;
-        } else if (lineTexts[lineTexts.length - 1].length +
-                (3 * avgCharPixelWidth) >
-            constraints.maxWidth) {
-          // (tpLineMetrics[tpLineMetrics.length - 1].width /
-          //         avgCharPixelWidth)
-          //     .ceil();
+        if (renderLastLine != null && renderLastLine) {
+          if (tpLineMetrics.length == 1) {
+            // The text only has 1 line.
+            // TODO: display the one-line text
+            // return Text(
+            //   widget.proposal.title,
+            //   style: textStyle,
+            // );
+            renderText = text;
+          } else if (lineTexts[lineTexts.length - 1].length +
+                  (3 * avgCharPixelWidth) >
+              constraints.maxWidth) {
+            // (tpLineMetrics[tpLineMetrics.length - 1].width /
+            //         avgCharPixelWidth)
+            //     .ceil();
 
-          titleText =
-              text.substring(0, textLength - lastLineCharDiff - 3) + '...';
-          print(titleText);
-        } else if (lineTexts[lineTexts.length - 1].length +
-                (3 * avgCharPixelWidth) <=
-            constraints.maxWidth) {
-          titleText = text.substring(0, textLength) + '...';
+            renderText =
+                text.substring(0, textLength - lastLineCharDiff - 3) + '...';
+            print(renderText);
+          } else if (lineTexts[lineTexts.length - 1].length +
+                  (3 * avgCharPixelWidth) <=
+              constraints.maxWidth) {
+            renderText = text.substring(0, textLength) + '...';
+          }
+        } else {
+          if (tpLineMetrics.length == 1) {
+            // The text only has 1 line.
+            // TODO: display the one-line text
+            renderText = rawText;
+          } else if (tpLineMetrics.length > 1) {
+            int totalTextWidth =
+                (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
+                        tpLineMetrics[tpLineMetrics.length - 1].width)
+                    .ceil();
+            double avgCharPixelWidth = (totalTextWidth / textLength);
+            int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
+            // (tpLineMetrics[tpLineMetrics.length - 1].width /
+            //         avgCharPixelWidth)
+            //     .ceil();
+            print(avgCharPixelWidth);
+            renderText =
+                text.substring(0, textLength - lastLineCharDiff - 3) + '...';
+            print(renderText);
+          }
         }
+
         return Text(
-          titleText,
+          renderText,
           style: textStyle,
           // maxLines: tpLineMetrics.length - 1,
         );

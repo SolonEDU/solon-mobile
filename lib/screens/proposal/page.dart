@@ -101,8 +101,13 @@ class _ProposalPageState extends State<ProposalPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text(
-                        "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}"),
+                    child: widget.proposal.date
+                                .difference(DateTime.now())
+                                .inDays >
+                            0
+                        ? Text(
+                            "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
+                        : Text("Voting is over!"),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventableButton(
