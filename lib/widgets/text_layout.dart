@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 class TextLayout {
   static LayoutBuilder fillLinesWithTextAndAppendEllipses(
       {String rawText, int lines, bool renderLastLine}) {
+    // initialize lines to 0 if the argument was not specified
+    if (lines == null) {
+      lines = 0;
+    }
+
+    // initialize renderLastLine to false if the argument was not specified
+    if (renderLastLine == null) {
+      renderLastLine = false;
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final String text = rawText;
@@ -18,14 +28,14 @@ class TextLayout {
           style: textStyle,
         );
         final tp = TextPainter(
-            text: span,
-            textDirection:
-                TextDirection.ltr); // TODO: watch out for locale text direction
+          text: span,
+          textDirection: TextDirection.ltr,
+        ); // TODO: watch out for locale text direction
         tp.layout(maxWidth: constraints.maxWidth);
         final tpLineMetrics = tp.computeLineMetrics();
         print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
 
-        // TODO: This doesn't handle right-to-left text yet.
+        // TODO: This doesn't handle right-to-left text yet.; maybe textAffinity can fix.
         // select everything
         TextSelection selection =
             TextSelection(baseOffset: 0, extentOffset: span.text.length);
@@ -60,6 +70,7 @@ class TextLayout {
         lineTexts.add(extra);
         print(lineTexts);
 
+        // estimate the average width of a character, in pixels
         int totalTextWidth =
             (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
                     tpLineMetrics[tpLineMetrics.length - 1].width)
@@ -67,50 +78,32 @@ class TextLayout {
         double avgCharPixelWidth = (totalTextWidth / textLength);
         int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
         print(avgCharPixelWidth);
+
+        // text to be rendered onto the Text widget
         String renderText;
 
-        if (renderLastLine != null && renderLastLine) {
+        if (renderLastLine) {
           if (tpLineMetrics.length == 1) {
             // The text only has 1 line.
-            // TODO: display the one-line text
-            // return Text(
-            //   widget.proposal.title,
-            //   style: textStyle,
-            // );
             renderText = text;
-          } else if (lineTexts[lineTexts.length - 1].length +
+          } else if (lastLineCharDiff + // if appending 3 ellipses to the last line is expected to overflow screen width
                   (3 * avgCharPixelWidth) >
               constraints.maxWidth) {
-            // (tpLineMetrics[tpLineMetrics.length - 1].width /
-            //         avgCharPixelWidth)
-            //     .ceil();
-
             renderText =
-                text.substring(0, textLength - lastLineCharDiff - 3) + '...';
+                '${text.substring(0, textLength - lastLineCharDiff - 3)}...';
             print(renderText);
-          } else if (lineTexts[lineTexts.length - 1].length +
+          } else if (lastLineCharDiff + // if appending 3 ellipses to the last line is expected to fit within the screen width
                   (3 * avgCharPixelWidth) <=
               constraints.maxWidth) {
-            renderText = text.substring(0, textLength) + '...';
+            renderText = '${text.substring(0, textLength)}...';
           }
         } else {
           if (tpLineMetrics.length == 1) {
             // The text only has 1 line.
-            // TODO: display the one-line text
             renderText = rawText;
           } else if (tpLineMetrics.length > 1) {
-            int totalTextWidth =
-                (tpLineMetrics[0].width * (tpLineMetrics.length - 1) +
-                        tpLineMetrics[tpLineMetrics.length - 1].width)
-                    .ceil();
-            double avgCharPixelWidth = (totalTextWidth / textLength);
-            int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
-            // (tpLineMetrics[tpLineMetrics.length - 1].width /
-            //         avgCharPixelWidth)
-            //     .ceil();
-            print(avgCharPixelWidth);
             renderText =
-                text.substring(0, textLength - lastLineCharDiff - 3) + '...';
+                '${text.substring(0, textLength - lastLineCharDiff - 3)}...';
             print(renderText);
           }
         }
@@ -118,7 +111,6 @@ class TextLayout {
         return Text(
           renderText,
           style: textStyle,
-          // maxLines: tpLineMetrics.length - 1,
         );
       },
     );
