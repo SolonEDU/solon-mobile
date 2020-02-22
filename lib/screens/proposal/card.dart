@@ -93,16 +93,15 @@ class _ProposalCardState extends State<ProposalCard> {
             final tpLineMetrics = tp.computeLineMetrics();
             print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
 
-            // The TextPaint has already been laid out
+            // TODO: This doesn't handle right-to-left text yet.
+            // select everything
+            TextSelection selection =
+                TextSelection(baseOffset: 0, extentOffset: span.text.length);
 
-// select everything
-            TextSelection selection = TextSelection(
-                baseOffset: 0, extentOffset: span.text.length);
-
-// get a list of TextBoxes (Rects)
+            // get a list of TextBoxes (Rects)
             List<TextBox> boxes = tp.getBoxesForSelection(selection);
 
-// Loop through each text box
+            // Loop through each text box
             List<String> lineTexts = [];
             int start = 0;
             int end;
@@ -112,8 +111,7 @@ class _ProposalCardState extends State<ProposalCard> {
 
               // Uncomment this if you want to only get the whole line of text
               // (sometimes a single line may have multiple TextBoxes)
-              if (box.left != 0.0)
-               continue;
+              if (box.left != 0.0) continue;
 
               if (index == 0) continue;
               // Go one logical pixel within the box and get the position
@@ -126,7 +124,7 @@ class _ProposalCardState extends State<ProposalCard> {
               lineTexts.add(line);
               start = end;
             }
-// get the last substring
+            // get the last substring
             final extra = proposalTitle.substring(start);
             lineTexts.add(extra);
             print(lineTexts);
@@ -145,12 +143,13 @@ class _ProposalCardState extends State<ProposalCard> {
                       .ceil();
               double avgCharPixelWidth = (totalTextWidth / proposalTitleLength);
               int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
-                  // (tpLineMetrics[tpLineMetrics.length - 1].width /
-                  //         avgCharPixelWidth)
-                  //     .ceil();
+              // (tpLineMetrics[tpLineMetrics.length - 1].width /
+              //         avgCharPixelWidth)
+              //     .ceil();
               print(avgCharPixelWidth);
               String titleText = proposalTitle.substring(
-                      0, proposalTitleLength - lastLineCharDiff - 3) + '...';
+                      0, proposalTitleLength - lastLineCharDiff - 3) +
+                  '...';
               print(titleText);
               return Text(
                 titleText,
