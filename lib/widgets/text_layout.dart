@@ -6,7 +6,7 @@ class TextLayout {
     // this function is always assumed to render AT LEAST one line of text
     String rawText,
     int lines =
-        3, // initialize number of lines to render to 3 if the argument was not specified
+        3, // initialize number of lines to render to 3 if the argument was not specified; keep in mind that the raw text may not reach up to 3 lines, in which the lines variable value will be adjusted accordingly below
     bool keepLastLine =
         false, // initialize keepLastLine to false if the argument was not specified
   }) {
@@ -78,8 +78,10 @@ class TextLayout {
                     tpLineMetrics[tpLineMetrics.length - 1].width)
                 .ceil();
         double avgCharPixelWidth = (totalTextWidth / textLength);
-        int lastLineCharDiff = lineTexts[lineTexts.length - 1].length; // length of the last line of raw text 
-        int lastRenderedLineLength = lineTexts[lines - 1].length; // length of the last RENDERED line
+        int lastLineCharDiff = lineTexts[lineTexts.length - 1]
+            .length; // length of the last line of raw text
+        int lastRenderedLineLength =
+            lineTexts[lines - 1].length; // length of the last RENDERED line
         print(avgCharPixelWidth);
 
         if (tpLineMetrics.length == 1) {
@@ -101,18 +103,21 @@ class TextLayout {
         //   );
         // }
 
-        if (lastRenderedLineLength.toDouble() * // double conversion needed to yield all double values within condition
-                    avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width
-                3 * avgCharPixelWidth >
-            constraints.maxWidth) {
+        if (lineTexts.length > lines ||
+            lastRenderedLineLength
+                            .toDouble() * // double conversion needed to yield all double values within condition
+                        avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width
+                    3 * avgCharPixelWidth >
+                constraints.maxWidth) {
           renderedText =
               '${renderedText.substring(0, renderedTextLength - 3)}...';
           print(renderedText);
-        } else if (lastRenderedLineLength.toDouble() * // double conversion needed to yield all double values within condition
+        } else if (lastRenderedLineLength
+                        .toDouble() * // double conversion needed to yield all double values within condition
                     avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to fit within the screen width
                 3 * avgCharPixelWidth <=
             constraints.maxWidth) {
-          renderedText = '${renderedText.substring(0, renderedTextLength)}...';
+          renderedText = '${renderedText.substring(0, renderedTextLength)}';
         }
 
         return Text(
