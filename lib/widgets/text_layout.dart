@@ -78,8 +78,8 @@ class TextLayout {
                     tpLineMetrics[tpLineMetrics.length - 1].width)
                 .ceil();
         double avgCharPixelWidth = (totalTextWidth / textLength);
-        int lastLineCharDiff = lineTexts[lineTexts.length - 1].length;
-        int lastRenderedLineLength = lineTexts[lines - 1].length;
+        int lastLineCharDiff = lineTexts[lineTexts.length - 1].length; // length of the last line of raw text 
+        int lastRenderedLineLength = lineTexts[lines - 1].length; // length of the last RENDERED line
         print(avgCharPixelWidth);
 
         if (tpLineMetrics.length == 1) {
@@ -101,14 +101,14 @@ class TextLayout {
         //   );
         // }
 
-        if (lastRenderedLineLength.toDouble() *
+        if (lastRenderedLineLength.toDouble() * // double conversion needed to yield all double values within condition
                     avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to overflow screen width
                 3 * avgCharPixelWidth >
             constraints.maxWidth) {
           renderedText =
               '${renderedText.substring(0, renderedTextLength - 3)}...';
           print(renderedText);
-        } else if (lastRenderedLineLength.toDouble() *
+        } else if (lastRenderedLineLength.toDouble() * // double conversion needed to yield all double values within condition
                     avgCharPixelWidth + // if appending 3 ellipses to the last line is expected to fit within the screen width
                 3 * avgCharPixelWidth <=
             constraints.maxWidth) {
