@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
 
-class Proposal {
+class Proposal extends Model {
   final int pid;
   final String title;
   final String description;

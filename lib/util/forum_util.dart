@@ -1,53 +1,33 @@
-import 'dart:convert';
-import 'package:Solon/util/user_util.dart';
-import 'package:http/http.dart' as http;
+import 'package:Solon/util/utility.dart';
 import 'package:Solon/models/comment.dart';
 import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/services/forum_connect.dart';
 
 class ForumUtil {
-  static Stream<List<ForumPost>> _getList(
-      {Function function, String query}) async* {
-    http.Response response = await function(query: query);
-    String prefLangCode = await UserUtil.getPrefLangCode();
-    List<ForumPost> _posts;
-    List collection;
-    if (response.statusCode == 200) {
-      collection = json.decode(response.body)['forumposts'];
-      _posts = collection
-          .map((json) =>
-              ForumPost.fromJson(map: json, prefLangCode: prefLangCode))
-          .toList();
-    }
-    yield _posts;
-  }
-
-  static Stream<List<Comment>> getComments({int fid}) async* {
-    http.Response response = await ForumConnect.connectComments(fid: fid);
-    String prefLangCode = await UserUtil.getPrefLangCode();
-    List<Comment> _comments;
-    List collection;
-    if (response.statusCode == 200) {
-      collection = json.decode(response.body)['comments'];
-      _comments = collection
-          .map(
-              (json) => Comment.fromJson(map: json, prefLangCode: prefLangCode))
-          .toList();
-    }
-    yield _comments;
+  static Stream<List<Comment>> getComments({int fid}) {
+    return Utility.getList(
+      function: ForumConnect.connectComments,
+      fid: fid,
+      body: 'comments',
+      type: Comment,
+    );
   }
 
   static Stream<List<ForumPost>> screenView(String query) {
-    return _getList(
+    return Utility.getList(
       function: ForumConnect.connectForumPosts,
       query: query,
+      body: 'forumposts',
+      type: ForumPost,
     );
   }
 
   static Stream<List<ForumPost>> searchView(String query) {
-    return _getList(
+    return Utility.getList(
       function: ForumConnect.searchForum,
       query: query,
+      body: 'forumposts',
+      type: ForumPost,
     );
   }
 }

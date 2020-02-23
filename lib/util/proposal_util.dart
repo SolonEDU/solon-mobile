@@ -1,40 +1,25 @@
-import 'dart:convert';
-
 import 'package:Solon/models/proposal.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/user_util.dart';
-import 'package:http/http.dart' as http;
+import 'package:Solon/util/utility.dart';
 
 class ProposalUtil {
-  static Stream<List<Proposal>> _getList({
-    Function function,
-    String query,
-  }) async* {
-    http.Response response = await function(query: query);
-    String prefLangCode = await UserUtil.getPrefLangCode();
-    List<Proposal> _proposals;
-    List collection;
-    if (response.statusCode == 200) {
-      collection = json.decode(response.body)['proposals'];
-      _proposals = collection
-          .map((json) =>
-              Proposal.fromJson(map: json, prefLangCode: prefLangCode))
-          .toList();
-    }
-    yield _proposals;
-  }
 
   static Stream<List<Proposal>> screenView(String query) {
-    return _getList(
+    return Utility.getList<Proposal>(
       function: ProposalConnect.connectProposals,
       query: query,
+      type: Proposal,
+      body: 'proposals',
     );
   }
 
   static Stream<List<Proposal>> searchView(String query) {
-    return _getList(
+    return Utility.getList(
       function: ProposalConnect.searchProposals,
       query: query,
+      type: Proposal,
+      body: 'proposals',
     );
   }
 
