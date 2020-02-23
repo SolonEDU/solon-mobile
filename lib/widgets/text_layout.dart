@@ -32,7 +32,6 @@ class TextLayout {
 
         // TODO: This doesn't handle right-to-left text yet.; maybe textAffinity can fix.
         // select everything
-        print(span.text);
         TextSelection selection =
             TextSelection(baseOffset: 0, extentOffset: span.text.length);
 

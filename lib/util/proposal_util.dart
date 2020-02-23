@@ -5,7 +5,6 @@ import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProposalUtil {
   static Stream<List<Proposal>> _getList(

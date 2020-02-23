@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/screens/event/page.dart';
 import 'package:Solon/util/app_localizations.dart';
