@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
 
-class ForumPost {
+class ForumPost extends Model{
   final int fid;
   final String title;
   final String description;
