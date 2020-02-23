@@ -13,7 +13,6 @@ class Utility {
   static Stream<List<T>> getList<T extends Model>({
     @required Function function,
     @required String body,
-    @required Type type,
     String query,
     int fid,
   }) async* {
@@ -23,7 +22,7 @@ class Utility {
     List<Model> collection;
     if (response.statusCode == 200) {
       temp = json.decode(response.body)[body];
-      switch (type) {
+      switch (T) {
         case Proposal:
           collection = temp
               .map((json) =>

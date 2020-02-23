@@ -9,7 +9,6 @@ class EventUtil {
       function: EventConnect.connectEvents,
       query: query,
       body: 'events',
-      type: Event,
     );
   }
 
@@ -18,7 +17,6 @@ class EventUtil {
       function: EventConnect.searchEvents,
       query: query,
       body: 'events',
-      type: Event,
     );
   }
 }

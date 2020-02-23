@@ -4,12 +4,10 @@ import 'package:Solon/util/user_util.dart';
 import 'package:Solon/util/utility.dart';
 
 class ProposalUtil {
-
   static Stream<List<Proposal>> screenView(String query) {
     return Utility.getList<Proposal>(
       function: ProposalConnect.connectProposals,
       query: query,
-      type: Proposal,
       body: 'proposals',
     );
   }
@@ -18,7 +16,6 @@ class ProposalUtil {
     return Utility.getList(
       function: ProposalConnect.searchProposals,
       query: query,
-      type: Proposal,
       body: 'proposals',
     );
   }
