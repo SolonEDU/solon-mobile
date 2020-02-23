@@ -72,36 +72,43 @@ class _EventsScreenState extends State<EventsScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SortDropdownMenu(
-                            preferences: 'eventsSortOption',
-                            streamController: dropdownMenuStreamController,
-                            value: optionVal.data,
-                            items: <String>[
-                              'Furthest',
-                              'Upcoming',
-                              'Most attendees',
-                              'Least attendees',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              Map<String, String> itemsMap = {
-                                'Furthest': AppLocalizations.of(context)
-                                    .translate("furthest"),
-                                'Upcoming': AppLocalizations.of(context)
-                                    .translate("upcoming"),
-                                'Most attendees': AppLocalizations.of(context)
-                                    .translate("mostAttendees"),
-                                'Least attendees': AppLocalizations.of(context)
-                                    .translate("leastAttendees"),
-                              };
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  itemsMap[value],
-                                ),
-                              );
-                            }).toList(),
+                          Flexible(
+                            flex: 9,
+                            child: SortDropdownMenu(
+                              preferences: 'eventsSortOption',
+                              streamController: dropdownMenuStreamController,
+                              value: optionVal.data,
+                              items: <String>[
+                                'Furthest',
+                                'Upcoming',
+                                'Most attendees',
+                                'Least attendees',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                Map<String, String> itemsMap = {
+                                  'Furthest': AppLocalizations.of(context)
+                                      .translate("furthest"),
+                                  'Upcoming': AppLocalizations.of(context)
+                                      .translate("upcoming"),
+                                  'Most attendees': AppLocalizations.of(context)
+                                      .translate("mostAttendees"),
+                                  'Least attendees':
+                                      AppLocalizations.of(context)
+                                          .translate("leastAttendees"),
+                                };
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    itemsMap[value],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
-                          SearchButton(
-                            delegate: EventsSearch(context),
+                          Flexible(
+                            flex: 1,
+                            child: SearchButton(
+                              delegate: EventsSearch(context),
+                            ),
                           ),
                         ],
                       ),

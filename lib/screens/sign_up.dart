@@ -219,7 +219,8 @@ class _SignUpPageState extends State<SignUpPage> {
       final responseMessage = await UserConnect.registerUser(
           _nativeLanguage, _firstName, _lastName, _email, _password);
       if (responseMessage["message"] == "Error") {
-        UserUtil.showToast(responseMessage["error"]["errorMessage"], _scaffoldKey);
+        UserUtil.showToast(
+            responseMessage["error"]["errorMessage"], _scaffoldKey);
         yield false;
       } else {
         Navigator.push(

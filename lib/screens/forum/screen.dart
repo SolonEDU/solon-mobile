@@ -13,7 +13,6 @@ import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
 
-
 class ForumScreen extends StatefulWidget {
   ForumScreen({Key key}) : super(key: key);
 
@@ -31,8 +30,8 @@ class _ForumScreenState extends State<ForumScreen> {
   Stream<List<ForumPost>> stream;
 
   Future<Null> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final forumSortOption = prefs.getString('forumSortOption');
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final forumSortOption = sharedPrefs.getString('forumSortOption');
     dropdownMenuStreamController.sink.add(forumSortOption);
     stream = ForumUtil.screenView(forumSortOption);
   }
@@ -76,34 +75,40 @@ class _ForumScreenState extends State<ForumScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SortDropdownMenu(
-                            streamController: dropdownMenuStreamController,
-                            value: optionVal.data,
-                            preferences: 'forumSortOption',
-                            items: <String>[
-                              'Newly created',
-                              'Oldest created',
-                              'Most comments',
-                              'Least comments',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              Map<String, String> itemsMap = {
-                                'Newly created': AppLocalizations.of(context)
-                                    .translate("newlyCreated"),
-                                'Oldest created': AppLocalizations.of(context)
-                                    .translate("oldestCreated"),
-                                'Most comments': AppLocalizations.of(context)
-                                    .translate("mostComments"),
-                                'Least comments': AppLocalizations.of(context)
-                                    .translate("leastComments"),
-                              };
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(itemsMap[value]),
-                              );
-                            }).toList(),
+                          Flexible(
+                            flex: 9,
+                            child: SortDropdownMenu(
+                              streamController: dropdownMenuStreamController,
+                              value: optionVal.data,
+                              preferences: 'forumSortOption',
+                              items: <String>[
+                                'Newly created',
+                                'Oldest created',
+                                'Most comments',
+                                'Least comments',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                Map<String, String> itemsMap = {
+                                  'Newly created': AppLocalizations.of(context)
+                                      .translate("newlyCreated"),
+                                  'Oldest created': AppLocalizations.of(context)
+                                      .translate("oldestCreated"),
+                                  'Most comments': AppLocalizations.of(context)
+                                      .translate("mostComments"),
+                                  'Least comments': AppLocalizations.of(context)
+                                      .translate("leastComments"),
+                                };
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(itemsMap[value]),
+                                );
+                              }).toList(),
+                            ),
                           ),
-                          SearchButton(
-                            delegate: ForumSearch(context),
+                          Flexible(
+                            flex: 1,
+                            child: SearchButton(
+                              delegate: ForumSearch(context),
+                            ),
                           ),
                         ],
                       ),

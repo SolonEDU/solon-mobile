@@ -53,13 +53,15 @@ class UserConnect {
           APIConnect.langCodeToLang[userDataResponseJson['lang']];
       if (userDataResponseJson['lang'] == null) {
         userDataResponseJson['lang'] = 'English';
+        print('NULL LANG'); // TODO: lang resets to English when user signs out and signs back in
+        print(userDataResponseJson);
       }
       final userData = json.encode(userDataResponseJson);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('userData', userData);
-      prefs.setString('proposalsSortOption', 'Newly created');
-      prefs.setString('eventsSortOption', 'Upcoming');
-      prefs.setString('forumSortOption', 'Newly created');
+      final sharedPrefs = await SharedPreferences.getInstance();
+      sharedPrefs.setString('userData', userData);
+      sharedPrefs.setString('proposalsSortOption', 'Newly created');
+      sharedPrefs.setString('eventsSortOption', 'Upcoming');
+      sharedPrefs.setString('forumSortOption', 'Newly created');
       return json.decode(response.body);
     } catch (error) {
       throw error;

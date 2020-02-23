@@ -22,22 +22,46 @@ class Button extends StatelessWidget {
     return Container(
       margin: margin,
       child: Align(
-        child: SizedBox(
-          height: height,
-          width: width,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30),
-            ),
-            color: color,
-            onPressed: function,
-            child: Text(
-              label,
-              textScaleFactor: 1.5,
-              style:
-                  TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.bold),
-            ),
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // print(constraints.maxWidth);
+            final String text = label;
+            final span = TextSpan(
+              text: text,
+              style: TextStyle(
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+              ),
+            );
+            final tp = TextPainter(
+              text: span,
+              textDirection: TextDirection.ltr,
+              maxLines: 1,
+            ); // TODO: watch out for locale text direction
+            tp.layout(maxWidth: constraints.maxWidth);
+            final tpSizeWidth = tp.size.width;
+            // print('painter size width: ${tpSizeWidth}');
+            // print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
+            return SizedBox(
+              height: height,
+              width: tpSizeWidth * 1.5 + 60,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30),
+                ),
+                color: color,
+                onPressed: function,
+                child: Text(
+                  label,
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

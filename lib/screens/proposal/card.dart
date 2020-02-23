@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Solon/widgets/text_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,6 @@ import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/screen_card.dart';
 import 'package:Solon/widgets/bars/vote_bar.dart';
 import 'package:Solon/screens/proposal/page.dart';
-
 
 class ProposalCard extends StatefulWidget {
   final Proposal proposal;
@@ -27,8 +27,8 @@ class _ProposalCardState extends State<ProposalCard> {
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(sharedPrefs.getString('userData'))['uid'];
     final responseMessage = await ProposalConnect.connectVotes(
       'GET',
       pid: widget.proposal.pid,
@@ -64,11 +64,10 @@ class _ProposalCardState extends State<ProposalCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
-        child: Text(
-          (widget.proposal.title.length > 40)
-              ? '${widget.proposal.title.substring(0, 40)}...'
-              : widget.proposal.title,
-          style: TextStyle(
+        child: TextLayout.fillLinesWithTextAndAppendTrail(
+          rawText: widget.proposal.title,
+          trail: '...',
+          textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -80,13 +79,21 @@ class _ProposalCardState extends State<ProposalCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-              ),
-            ),
+            child: widget.proposal.date.difference(DateTime.now()).inDays > 0
+                ? Text(
+                    "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  )
+                : Text(
+                    AppLocalizations.of(context).translate("votingIsOver"),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
           ),
           Text(
             "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
@@ -101,8 +108,8 @@ class _ProposalCardState extends State<ProposalCard> {
                 _voted = (snapshot.data['message'] == 'Error') ? false : true;
                 if (_voted) {
                   return VoteBar(
-                    numyes: widget.proposal.yesVotes,
-                    numno: widget.proposal.noVotes,
+                    numYes: widget.proposal.yesVotes,
+                    numNo: widget.proposal.noVotes,
                   );
                 } else {
                   return Center();

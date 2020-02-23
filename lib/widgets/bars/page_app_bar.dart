@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 
-class PageAppBar extends StatelessWidget implements PreferredSizeWidget{
+class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   PageAppBar({this.title});
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        icon: Icon(
-          Icons.arrow_back_ios,
+    return SafeArea(
+      child: AppBar(
+        leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+          color: Colors.black,
+          onPressed: () => {
+            FocusScope.of(context).unfocus(),
+            Navigator.pop(context),
+          },
         ),
-        color: Colors.black,
-        onPressed: () => {
-          FocusScope.of(context).unfocus(),
-          Navigator.pop(context),
-        },
-      ),
-      title: Text(
-        (title != null) ? title : '',
+        title: Text(
+          (title != null) ? title : '',
+        ),
       ),
     );
   }

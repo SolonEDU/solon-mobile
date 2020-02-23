@@ -26,8 +26,8 @@ class _ProposalPageState extends State<ProposalPage> {
   Future<Map<String, dynamic>> _listFutureProposal;
 
   Future<Map<String, dynamic>> getVote() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final userUid = json.decode(sharedPrefs.getString('userData'))['uid'];
     final responseMessage = await ProposalConnect.connectVotes(
       'GET',
       pid: widget.proposal.pid,
@@ -101,8 +101,20 @@ class _ProposalPageState extends State<ProposalPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text(
-                        "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}"),
+                    child: widget.proposal.date
+                                .difference(DateTime.now())
+                                .inDays >
+                            0
+                        ? Text(
+                            "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
+                        : Text(
+                            AppLocalizations.of(context)
+                                .translate("votingIsOver"),
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
                   snapshot.data['message'] == 'Error'
                       ? PreventableButton(
@@ -136,7 +148,9 @@ class _ProposalPageState extends State<ProposalPage> {
                       : Text(_voteOutput),
                   snapshot.data['message'] == 'Error'
                       ? Text('')
-                      : VoteBar(numyes: widget.proposal.yesVotes, numno: widget.proposal.noVotes)
+                      : VoteBar(
+                          numYes: widget.proposal.yesVotes,
+                          numNo: widget.proposal.noVotes)
                 ],
               );
             },

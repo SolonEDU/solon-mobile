@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/screens/forum/page.dart';
 import 'package:Solon/widgets/screen_card.dart';
+import 'package:Solon/widgets/text_layout.dart';
 
 class PostCard extends StatefulWidget {
   final ForumPost post;
 
-  PostCard({
-    Key key,
-    this.post
-  }) : super(key: key);
+  PostCard({Key key, this.post}) : super(key: key);
 
   @override
   _PostCardState createState() => _PostCardState();
@@ -23,9 +22,7 @@ class _PostCardState extends State<PostCard> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PostPage(
-            post: widget.post
-          ),
+          builder: (context) => PostPage(post: widget.post),
         ),
       );
     };
@@ -38,11 +35,10 @@ class _PostCardState extends State<PostCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: Text(
-          (widget.post.title.length > 40)
-              ? '${widget.post.title.substring(0, 40)}...'
-              : widget.post.title,
-          style: TextStyle(
+        child: TextLayout.fillLinesWithTextAndAppendTrail(
+          rawText: widget.post.title,
+          trail: '...',
+          textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -54,9 +50,10 @@ class _PostCardState extends State<PostCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              '${widget.post.description}',
-              style: TextStyle(
+            child: TextLayout.fillLinesWithTextAndAppendTrail(
+              rawText: widget.post.description,
+              trail: '...',
+              textStyle: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
               ),

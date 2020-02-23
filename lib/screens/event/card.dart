@@ -1,12 +1,12 @@
-import 'dart:convert';
+import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/screens/event/page.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/screen_card.dart';
 import 'package:Solon/models/event.dart';
 import 'package:Solon/services/event_connect.dart';
+import 'package:Solon/widgets/text_layout.dart';
 
 class EventCard extends StatefulWidget {
   final Event event;
@@ -19,8 +19,8 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   Future<bool> getAttendanceVal() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userUid = json.decode(prefs.getString('userData'))['uid'];
+    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    final userUid = sharedPrefs['uid'];
     final responseMessage = await EventConnect.getAttendance(
       eid: widget.event.eid,
       uid: userUid,
@@ -49,11 +49,10 @@ class _EventCardState extends State<EventCard> {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8),
-        child: Text(
-          (widget.event.title.length > 40)
-              ? '${widget.event.title.substring(0, 40)}...'
-              : widget.event.title,
-          style: TextStyle(
+        child: TextLayout.fillLinesWithTextAndAppendTrail(
+          rawText: widget.event.title,
+          trail: '...',
+          textStyle: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
             fontSize: 22,

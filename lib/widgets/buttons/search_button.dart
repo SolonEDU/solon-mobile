@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 class SearchButton extends StatelessWidget {
   final SearchDelegate delegate;
 
-  SearchButton({
-    this.delegate
-  });
+  SearchButton({this.delegate});
 
   @override
   Widget build(BuildContext context) {

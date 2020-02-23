@@ -6,18 +6,23 @@ import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/event_connect.dart';
 
 class EventUtil {
-  static Stream<List<Event>> _getList(
-      {Function function, String query}) async* {
-    http.Response response = await function(query: query);
-    final sharedPrefs = await UserUtil.connectSharedPreferences();
+  static Stream<List<Event>> _getList({
+    Function function,
+    String query,
+  }) async* {
+    http.Response response = await function(
+      query: query,
+    );
+    final sharedPrefs = await UserUtil.connectSharedPreferences(
+      key: 'userData',
+    );
     final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
     List<Event> _events;
     List collection;
     if (response.statusCode == 200) {
       collection = json.decode(response.body)['events'];
       _events = collection
-          .map((json) =>
-              Event.fromJson(map: json, prefLangCode: prefLangCode))
+          .map((json) => Event.fromJson(map: json, prefLangCode: prefLangCode))
           .toList();
     }
     yield _events;
