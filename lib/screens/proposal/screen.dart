@@ -75,43 +75,50 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SortDropdownMenu(
-                            streamController: dropdownMenuStreamController,
-                            value: optionVal.data,
-                            preferences: 'proposalsSortOption',
-                            items: <String>[
-                              'Most votes',
-                              'Least votes',
-                              'Newly created',
-                              'Oldest created',
-                              'Upcoming deadlines',
-                              'Oldest deadlines',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              Map<String, String> itemsMap = {
-                                'Most votes': AppLocalizations.of(context)
-                                    .translate("mostVotes"),
-                                'Least votes': AppLocalizations.of(context)
-                                    .translate("leastVotes"),
-                                'Newly created': AppLocalizations.of(context)
-                                    .translate("newlyCreated"),
-                                'Oldest created': AppLocalizations.of(context)
-                                    .translate("oldestCreated"),
-                                'Upcoming deadlines':
-                                    AppLocalizations.of(context)
-                                        .translate("upcomingDeadlines"),
-                                'Oldest deadlines': AppLocalizations.of(context)
-                                    .translate("oldestDeadlines"),
-                              };
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  itemsMap[value],
-                                ),
-                              );
-                            }).toList(),
+                          Flexible(
+                            flex: 9,
+                            child: SortDropdownMenu(
+                              streamController: dropdownMenuStreamController,
+                              value: optionVal.data,
+                              preferences: 'proposalsSortOption',
+                              items: <String>[
+                                'Most votes',
+                                'Least votes',
+                                'Newly created',
+                                'Oldest created',
+                                'Upcoming deadlines',
+                                'Oldest deadlines',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                Map<String, String> itemsMap = {
+                                  'Most votes': AppLocalizations.of(context)
+                                      .translate("mostVotes"),
+                                  'Least votes': AppLocalizations.of(context)
+                                      .translate("leastVotes"),
+                                  'Newly created': AppLocalizations.of(context)
+                                      .translate("newlyCreated"),
+                                  'Oldest created': AppLocalizations.of(context)
+                                      .translate("oldestCreated"),
+                                  'Upcoming deadlines':
+                                      AppLocalizations.of(context)
+                                          .translate("upcomingDeadlines"),
+                                  'Oldest deadlines':
+                                      AppLocalizations.of(context)
+                                          .translate("oldestDeadlines"),
+                                };
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    itemsMap[value],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
-                          SearchButton(
-                            delegate: ProposalsSearch(context),
+                          Flexible(
+                            flex: 1,
+                            child: SearchButton(
+                              delegate: ProposalsSearch(context),
+                            ),
                           ),
                         ],
                       ),
