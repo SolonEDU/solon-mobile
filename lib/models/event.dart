@@ -21,7 +21,6 @@ class Event {
 
   factory Event.fromJson({
     Map<String, dynamic> map,
-    int creatorUid,
     String prefLangCode,
   }) {
     DateTime date = DateTime.parse(map['date']);

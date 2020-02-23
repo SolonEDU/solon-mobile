@@ -47,6 +47,9 @@ class ForumSearch extends SearchDelegate {
               child: CircularProgressIndicator(),
             );
           default:
+            if (snapshot.data == null) {
+              return Text('An error occured');
+            }
             return ListView(
               children:
                   snapshot.data.map((json) => PostCard(post: json)).toList(),

@@ -127,6 +127,9 @@ class _EventsScreenState extends State<EventsScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             default:
+                              if (snapshot.data == null) {
+                                return Text('An error occured');
+                              }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
