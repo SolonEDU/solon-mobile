@@ -186,7 +186,6 @@ class _AccountScreenState extends State<AccountScreen> {
                             child: Button(
                               color: Colors.pink[200],
                               height: 55,
-                              width: 155,
                               label: AppLocalizations.of(context)
                                   .translate("signOut"),
                               margin: EdgeInsets.only(top: 10),

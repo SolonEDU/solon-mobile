@@ -38,7 +38,6 @@ class _WelcomePageState extends State<WelcomePage> {
               Button(
                 color: Colors.pink[200],
                 height: 55,
-                width: 155,
                 function: navigateToSignIn,
                 label: AppLocalizations.of(context).translate("signIn"),
                 margin: const EdgeInsets.all(0),
@@ -46,7 +45,6 @@ class _WelcomePageState extends State<WelcomePage> {
               Button(
                 color: Colors.pink[200],
                 height: 55,
-                width: 155,
                 function: navigateToSignUp,
                 label: AppLocalizations.of(context).translate("signUp"),
                 margin: const EdgeInsets.only(top: 20, bottom: 20),

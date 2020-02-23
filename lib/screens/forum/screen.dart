@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/widgets/cards/forum_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/models/forum_post.dart';
-import 'package:Solon/screens/forum/card.dart';
 import 'package:Solon/screens/forum/create.dart';
 import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/services/forum_connect.dart';
@@ -131,6 +132,9 @@ class _ForumScreenState extends State<ForumScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             default:
+                              if (snapshot.data == null) {
+                                return ErrorScreen();
+                              }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
@@ -139,7 +143,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                   body: ListView(
                                     padding: const EdgeInsets.all(4),
                                     children: snapshot.data
-                                        .map((json) => PostCard(post: json))
+                                        .map((json) => ForumCard(post: json))
                                         .toList(),
                                   ),
                                   floatingActionButton: CreateButton(

@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/proposal.dart';
-import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/screens/proposal/search.dart';
 import 'package:Solon/screens/proposal/create.dart';
 import 'package:Solon/services/proposal_connect.dart';
@@ -132,15 +133,16 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                           AsyncSnapshot<List<Proposal>> snapshot,
                         ) {
                           if (snapshot.hasError)
-                            return Text(
-                              "${snapshot.error}",
-                            );
+                            return Text("${snapshot.error}");
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
                             default:
+                              if (snapshot.data == null) {
+                                return ErrorScreen();
+                              }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,

@@ -1,6 +1,7 @@
+import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/widgets/cards/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/models/event.dart';
-import 'package:Solon/screens/event/card.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/event_util.dart';
 
@@ -49,6 +50,9 @@ class EventsSearch extends SearchDelegate {
               child: CircularProgressIndicator(),
             );
           default:
+            if (snapshot.data == null) {
+              return ErrorScreen();
+            }
             return ListView(
                 children: snapshot.data
                     .map((json) => EventCard(event: json))

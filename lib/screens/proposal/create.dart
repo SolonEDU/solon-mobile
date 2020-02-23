@@ -131,7 +131,6 @@ class _CreateProposalState extends State<CreateProposal> {
                 body: <Map>[
                   {
                     "color": Colors.pink[200],
-                    "width": 255.0,
                     "height": 55.0,
                     "function": createProposal,
                     "margin": const EdgeInsets.only(top: 25, bottom: 10),

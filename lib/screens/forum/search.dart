@@ -1,6 +1,7 @@
+import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/widgets/cards/forum_card.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/models/forum_post.dart';
-import 'package:Solon/screens/forum/card.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/forum_util.dart';
 
@@ -47,9 +48,12 @@ class ForumSearch extends SearchDelegate {
               child: CircularProgressIndicator(),
             );
           default:
+            if (snapshot.data == null) {
+              return ErrorScreen();
+            }
             return ListView(
               children:
-                  snapshot.data.map((json) => PostCard(post: json)).toList(),
+                  snapshot.data.map((json) => ForumCard(post: json)).toList(),
             );
         }
       },
