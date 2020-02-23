@@ -121,7 +121,6 @@ class _ProposalPageState extends State<ProposalPage> {
                           body: <Map>[
                             {
                               'color': Colors.green,
-                              'width': 155.0,
                               'height': 55.0,
                               'function': () async* {
                                 yield true;
@@ -133,7 +132,6 @@ class _ProposalPageState extends State<ProposalPage> {
                             },
                             {
                               'color': Colors.red,
-                              'width': 155.0,
                               'height': 55.0,
                               'function': () async* {
                                 yield true;

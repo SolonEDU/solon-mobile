@@ -42,7 +42,6 @@ class PreventableButtonState extends State<PreventableButton> {
                 },
           label: map['label'],
           margin: map['margin'],
-          width: map['width'],
           height: map['height'],
         ),
       );

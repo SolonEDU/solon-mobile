@@ -90,7 +90,6 @@ class _CreatePostState extends State<CreatePost> {
                 body: <Map>[
                   {
                     "color": Colors.pink[200],
-                    "width": 185.0,
                     "height": 55.0,
                     "function": createPost,
                     "margin": const EdgeInsets.only(top: 15, bottom: 10),

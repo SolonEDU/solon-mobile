@@ -198,7 +198,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 {
                   "color": Colors.pink[200],
                   "height": 55.0,
-                  "width": 155.0,
                   "function": signUp,
                   "margin": const EdgeInsets.only(top: 25, bottom: 10),
                   "label": AppLocalizations.of(context).translate("signUp"),

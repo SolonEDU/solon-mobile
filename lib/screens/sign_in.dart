@@ -88,7 +88,6 @@ class _LoginPageState extends State<LoginPage> {
               Button(
                 color: Colors.pink[200],
                 height: 55.0,
-                width: 155.0,
                 function: signIn,
                 margin: const EdgeInsets.only(top: 25, bottom: 25),
                 label: AppLocalizations.of(context).translate("signIn"),

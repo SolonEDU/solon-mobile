@@ -4,7 +4,6 @@ class Button extends StatelessWidget {
   final Function function;
   final String label;
   final EdgeInsets margin;
-  final double width;
   final double height;
   final Color color;
 
@@ -12,7 +11,6 @@ class Button extends StatelessWidget {
     this.function,
     this.label,
     this.margin,
-    this.width,
     this.height,
     this.color,
   });
