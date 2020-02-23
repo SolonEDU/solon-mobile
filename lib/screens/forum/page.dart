@@ -7,7 +7,6 @@ import 'package:Solon/util/forum_util.dart';
 import 'package:Solon/widgets/bars/page_app_bar.dart';
 import 'package:Solon/widgets/cards/comment_card.dart';
 import 'package:flutter/material.dart';
-import 'package:translator/translator.dart';
 
 class PostPage extends StatefulWidget {
   final ForumPost post;
@@ -18,9 +17,8 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  final translator = GoogleTranslator();
   FocusNode _focusNode = FocusNode();
-  static var commentController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   Stream<List<Comment>> stream;
 
   @override

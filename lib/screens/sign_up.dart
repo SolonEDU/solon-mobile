@@ -227,7 +227,10 @@ class _SignUpPageState extends State<SignUpPage> {
           MaterialPageRoute(
             builder: (context) => LoginPage(),
           ),
-        );
+        ).then((value) {
+          _formKey.currentState.reset();
+        });
+        yield false;
       }
     } else {
       yield false;

@@ -18,7 +18,6 @@ class PreventableButton extends StatefulWidget {
 }
 
 class PreventableButtonState extends State<PreventableButton> {
-  //boolean value to determine whether button is tapped
   bool _isButtonTapped = false;
 
   _onTapped(DynamicStream<bool> function) async {
