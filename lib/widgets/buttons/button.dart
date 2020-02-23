@@ -34,7 +34,7 @@ class Button extends StatelessWidget {
               text: span,
               textDirection: TextDirection.ltr,
               maxLines: 1,
-            ); // TODO: watch out for locale text direction
+            ); // TODO: watch out for locale text direction; i remember smthg abt locale direction in the new way of app locales
             tp.layout(maxWidth: constraints.maxWidth);
             final tpSizeWidth = tp.size.width;
             return SizedBox(
