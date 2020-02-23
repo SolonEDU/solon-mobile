@@ -64,12 +64,13 @@ class TextLayout {
         final extra = text.substring(start);
         lineTexts.add(extra);
         // print('line texts: $lineTexts');
+        final int lineTextsLength = lineTexts.length; 
 
         // avoid RangeError where actual number of lines is less than default lines argument
-        lines = lines >= lineTexts.length ? lineTexts.length : lines;
+        lines = lines >= lineTextsLength ? lineTextsLength : lines;
         // print('lines: $lines');
 
-        if (lineTexts.length == 1) {
+        if (lineTextsLength == 1) {
           // The text only has 1 line.
           return Text(
             text,
@@ -81,7 +82,7 @@ class TextLayout {
         String renderedText = lineTexts.sublist(0, lines).join();
         int renderedTextLength = renderedText.length;
 
-        if (lineTexts.length <= lines) {
+        if (lineTextsLength <= lines) {
           // if there are less or equal number of lines of raw text than number of lines to render
           renderedText = '${renderedText.substring(0, renderedTextLength)}';
         } else {
