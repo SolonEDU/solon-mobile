@@ -106,11 +106,13 @@ class _LoginPageState extends State<LoginPage> {
       formState.save();
       final responseMessage = await UserConnect.loginUser(_email, _password);
       if (responseMessage["message"] == "Error") {
-        String message = responseMessage["error"]["errorMessage"] ==
-                "Incorrect password"
-            ? AppLocalizations.of(context).translate("incorrectPassword")
-            : AppLocalizations.of(context).translate(
-                "userDoesNotExist"); // TODO: need a better to code for this logic; be wary of this line when we add in more errors to sign in
+        String message;
+        if (responseMessage["error"]["errorMessage"] == "Incorrect password") {
+          message = AppLocalizations.of(context).translate("incorrectPassword");
+        } else {
+          message = AppLocalizations.of(context).translate(
+              "userDoesNotExist"); // TODO: need a better way to code for this logic; be wary of this line when we add in more errors to sign in
+        }
         UserUtil.showToast(message, _scaffoldKey);
       } else {
         FocusScope.of(context).requestFocus(FocusNode());

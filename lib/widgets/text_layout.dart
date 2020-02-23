@@ -82,7 +82,7 @@ class TextLayout {
         int renderedTextLength = renderedText.length;
 
         if (lineTexts.length <= lines) {
-          // if there are less lines of raw text than lines to render
+          // if there are less or equal number of lines of raw text than number of lines to render
           renderedText = '${renderedText.substring(0, renderedTextLength)}';
         } else {
           // if there are more lines of raw text than lines to render
