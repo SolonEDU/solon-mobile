@@ -6,16 +6,16 @@ import 'package:Solon/screens/forum/page.dart';
 import 'package:Solon/widgets/screen_card.dart';
 import 'package:Solon/widgets/text_layout.dart';
 
-class PostCard extends StatefulWidget {
+class ForumCard extends StatefulWidget {
   final ForumPost post;
 
-  PostCard({Key key, this.post}) : super(key: key);
+  ForumCard({Key key, this.post}) : super(key: key);
 
   @override
-  _PostCardState createState() => _PostCardState();
+  _ForumCardState createState() => _ForumCardState();
 }
 
-class _PostCardState extends State<PostCard> {
+class _ForumCardState extends State<ForumCard> {
   @override
   Widget build(BuildContext context) {
     Function function = () {

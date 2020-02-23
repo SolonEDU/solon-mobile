@@ -24,7 +24,6 @@ class Button extends StatelessWidget {
       child: Align(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // print(constraints.maxWidth);
             final String text = label;
             final span = TextSpan(
               text: text,
@@ -40,8 +39,6 @@ class Button extends StatelessWidget {
             ); // TODO: watch out for locale text direction
             tp.layout(maxWidth: constraints.maxWidth);
             final tpSizeWidth = tp.size.width;
-            // print('painter size width: ${tpSizeWidth}');
-            // print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
             return SizedBox(
               height: height,
               width: tpSizeWidth * 1.5 + 60,
@@ -53,10 +50,10 @@ class Button extends StatelessWidget {
                 onPressed: function,
                 child: Text(
                   label,
-                  textScaleFactor: 1.5,
                   style: TextStyle(
                     fontFamily: 'Raleway',
                     fontWeight: FontWeight.bold,
+                    fontSize: 22,
                   ),
                 ),
               ),

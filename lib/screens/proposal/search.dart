@@ -1,6 +1,7 @@
+import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/models/proposal.dart';
-import 'package:Solon/screens/proposal/card.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/proposal_util.dart';
 
@@ -47,7 +48,7 @@ class ProposalsSearch extends SearchDelegate {
             );
           default:
             if (snapshot.data == null) {
-              return Text('An error occured');
+              return ErrorScreen();
             }
             return ListView(
               children: snapshot.data
