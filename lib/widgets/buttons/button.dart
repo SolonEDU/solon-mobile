@@ -32,7 +32,7 @@ class Button extends StatelessWidget {
             );
             final tp = TextPainter(
               text: span,
-              textDirection: TextDirection.ltr,
+              textDirection: TextDirection.ltr, // UPDATE: it appears that button dynamic width renders independently of text direction; prob bc the same text takes up the same width no matter which textdirection, but test to make sure.
               maxLines: 1,
             ); // TODO: watch out for locale text direction; i remember smthg abt locale direction in the new way of app locales
             tp.layout(maxWidth: constraints.maxWidth);

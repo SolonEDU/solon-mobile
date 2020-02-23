@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:Solon/services/user_connect.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -64,7 +66,7 @@ class TextLayout {
         final extra = text.substring(start);
         lineTexts.add(extra);
         // print('line texts: $lineTexts');
-        final int lineTextsLength = lineTexts.length; 
+        final int lineTextsLength = lineTexts.length;
 
         // avoid RangeError where actual number of lines is less than default lines argument
         lines = lines >= lineTextsLength ? lineTextsLength : lines;
@@ -91,9 +93,24 @@ class TextLayout {
               '${renderedText.substring(0, renderedTextLength - 3)}$trail';
         }
 
+        TextDirection renderTextDirection;
+        UserUtil.getPrefLangCode().then((langCode) {
+          renderTextDirection = [
+            'ar',
+            'fa',
+            'he',
+            'ps',
+            'ur',
+          ].contains(langCode)
+              ? TextDirection.rtl
+              : TextDirection.ltr;
+        });
+
         return Text(
           renderedText,
           style: textStyle,
+          textDirection:
+              renderTextDirection, // TODO: map lang code to correct text direction here; rtl lang codes: ['ar', 'fa', 'he', 'ps', 'ur']
         );
       },
     );
