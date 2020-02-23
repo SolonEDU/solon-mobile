@@ -18,10 +18,9 @@ class Utility {
   }) async* {
     http.Response response = (fid != null) ? await function(fid: fid) : await function(query: query);
     String prefLangCode = await UserUtil.getPrefLangCode();
-    List temp;
     List<Model> collection;
     if (response.statusCode == 200) {
-      temp = json.decode(response.body)[body];
+      List temp = json.decode(response.body)[body];
       switch (T) {
         case Proposal:
           collection = temp

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:Solon/screens/error_screen.dart';
 import 'package:Solon/util/proposal_util.dart';
-import 'package:Solon/util/utility.dart';
 import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +9,6 @@ import 'package:Solon/screens/proposal/search.dart';
 import 'package:Solon/screens/proposal/create.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
-// import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
