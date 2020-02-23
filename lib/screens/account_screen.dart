@@ -40,11 +40,14 @@ class _AccountScreenState extends State<AccountScreen> {
     setState(() {
       _userUid = sharedPrefs['uid'];
     });
+    final apiUserData = await UserConnect.connectUser(uid: _userUid);
+    final userPrefLang = apiUserData['lang'];
+    print(userPrefLang);
   }
 
   Future<Null> _refresh() async {
-    final dbUserData = await UserConnect.connectUser(uid: _userUid);
-    streamController.add(dbUserData);
+    final sharedPrefsUserData = await UserConnect.connectUser(uid: _userUid);
+    streamController.add(sharedPrefsUserData);
   }
 
   @override

@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:Solon/services/user_connect.dart';
-import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -10,14 +8,29 @@ class TextLayout {
     // this function is always assumed to render AT LEAST one line of text
     @required String rawText,
     String trail,
+    String langCode,
     TextStyle textStyle,
     int lines =
         3, // initialize number of lines to render to 3 if the argument was not specified; keep in mind that the raw text may not reach up to 3 lines, in which the lines variable value will be adjusted accordingly below
   }) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        TextDirection renderTextDirection;
+        renderTextDirection = [
+          'ar',
+          'fa',
+          'he',
+          'ps',
+          'ur',
+        ].contains(langCode)
+            ? TextDirection.rtl
+            : TextDirection.ltr;
+
         if (rawText == '')
-          return Text(rawText); // trivial case: empty rawText string
+          return Text(
+            rawText,
+            textDirection: renderTextDirection,
+          ); // trivial case: empty rawText string
 
         final String text = rawText;
         final span = TextSpan(
@@ -77,6 +90,7 @@ class TextLayout {
           return Text(
             text,
             style: textStyle,
+            textDirection: renderTextDirection,
           );
         }
 
@@ -92,19 +106,6 @@ class TextLayout {
           renderedText =
               '${renderedText.substring(0, renderedTextLength - 3)}$trail';
         }
-
-        TextDirection renderTextDirection;
-        UserUtil.getPrefLangCode().then((langCode) {
-          renderTextDirection = [
-            'ar',
-            'fa',
-            'he',
-            'ps',
-            'ur',
-          ].contains(langCode)
-              ? TextDirection.rtl
-              : TextDirection.ltr;
-        });
 
         return Text(
           renderedText,
