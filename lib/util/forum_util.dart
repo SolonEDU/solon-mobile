@@ -9,7 +9,6 @@ class ForumUtil {
       function: ForumConnect.connectComments,
       fid: fid,
       body: 'comments',
-      type: Comment,
     );
   }
 
@@ -18,7 +17,6 @@ class ForumUtil {
       function: ForumConnect.connectForumPosts,
       query: query,
       body: 'forumposts',
-      type: ForumPost,
     );
   }
 
@@ -27,7 +25,6 @@ class ForumUtil {
       function: ForumConnect.searchForum,
       query: query,
       body: 'forumposts',
-      type: ForumPost,
     );
   }
 }

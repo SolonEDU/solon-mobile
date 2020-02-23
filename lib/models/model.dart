@@ -1,3 +1,1 @@
-class Model {
-
-}
+class Model {}
