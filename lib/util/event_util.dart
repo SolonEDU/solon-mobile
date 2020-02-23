@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 import 'package:Solon/models/event.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/event_connect.dart';
 
 class EventUtil {
@@ -13,10 +12,7 @@ class EventUtil {
     http.Response response = await function(
       query: query,
     );
-    final sharedPrefs = await UserUtil.connectSharedPreferences(
-      key: 'userData',
-    );
-    final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
+    String prefLangCode = await UserUtil.getPrefLangCode();
     List<Event> _events;
     List collection;
     if (response.statusCode == 200) {

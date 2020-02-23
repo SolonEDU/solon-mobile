@@ -4,6 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserUtil {
+  static Map<String, String> languages = {
+    'English': 'en',
+    'Chinese (Simplified)': 'zhcn',
+    'Chinese (Traditional)': 'zhtw',
+    'Bengali': 'bn',
+    'Korean': 'ko',
+    'Russian': 'ru',
+    'Japanese': 'ja',
+    'Ukrainian': 'uk',
+  };
+
+  static Map<String, String> langCodeToLang = {
+    'en': 'English',
+    'zh': 'Chinese (Simplified)',
+    'zh-CN': 'Chinese (Simplified)',
+    'zh-TW': 'Chinese (Traditional)',
+    'bn': 'Bengali',
+    'ko': 'Korean',
+    'ru': 'Russian',
+    'ja': 'Japanese',
+    'uk': 'Ukrainian',
+  };
+
+  static Future<String> getPrefLangCode() async {
+    final sharedPref = await connectSharedPreferences(key: 'userData');
+    return languages[sharedPref['lang']];
+  }
+
   static Future<dynamic> connectSharedPreferences({
     @required String key,
   }) async {

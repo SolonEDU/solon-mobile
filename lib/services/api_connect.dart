@@ -18,29 +18,6 @@ class APIConnect {
     };
   }
 
-  static Map<String, String> languages = {
-    'English': 'en',
-    'Chinese (Simplified)': 'zhcn',
-    'Chinese (Traditional)': 'zhtw',
-    'Bengali': 'bn',
-    'Korean': 'ko',
-    'Russian': 'ru',
-    'Japanese': 'ja',
-    'Ukrainian': 'uk',
-  };
-
-  static Map<String, String> langCodeToLang = {
-    'en': 'English',
-    'zh': 'Chinese (Simplified)',
-    'zh-CN': 'Chinese (Simplified)',
-    'zh-TW': 'Chinese (Traditional)',
-    'bn': 'Bengali',
-    'ko': 'Korean',
-    'ru': 'Russian',
-    'ja': 'Japanese',
-    'uk': 'Ukrainian',
-  };
-
   static Future<Message> connectRoot() async {
     final response = await http.get(url);
     int status = response.statusCode;
