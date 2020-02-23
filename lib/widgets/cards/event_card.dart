@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:Solon/screens/event/page.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/widgets/screen_card.dart';
+import 'package:Solon/widgets/cards/screen_card.dart';
 import 'package:Solon/models/event.dart';
 import 'package:Solon/services/event_connect.dart';
 import 'package:Solon/widgets/text_layout.dart';

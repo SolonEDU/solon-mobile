@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +17,7 @@ class UserConnect {
     final response = await http.post(
       "${APIConnect.url}/users/register",
       body: json.encode({
-        'lang': APIConnect.languages[lang],
+        'lang': UserUtil.languages[lang],
         'firstname': firstName,
         'lastname': lastName,
         'email': email,
@@ -50,7 +51,7 @@ class UserConnect {
       );
       final userDataResponseJson = json.decode(userDataResponse.body)['user'];
       userDataResponseJson['lang'] =
-          APIConnect.langCodeToLang[userDataResponseJson['lang']];
+          UserUtil.langCodeToLang[userDataResponseJson['lang']];
       if (userDataResponseJson['lang'] == null) {
         userDataResponseJson['lang'] = 'English';
         print('NULL LANG'); // TODO: lang resets to English when user signs out and signs back in
@@ -77,7 +78,7 @@ class UserConnect {
   }
 
   static Future<Message> changeLanguage({int uid, String updatedLang}) async {
-    String updatedLangISO6391Code = APIConnect.languages[updatedLang];
+    String updatedLangISO6391Code = UserUtil.languages[updatedLang];
     final response = await http.patch(
       "${APIConnect.url}/users/language",
       body: json.encode({

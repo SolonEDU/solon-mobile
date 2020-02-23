@@ -3,15 +3,13 @@ import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 import 'package:Solon/models/comment.dart';
 import 'package:Solon/models/forum_post.dart';
-import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/forum_connect.dart';
 
 class ForumUtil {
   static Stream<List<ForumPost>> _getList(
       {Function function, String query}) async* {
     http.Response response = await function(query: query);
-    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
-    final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
+    String prefLangCode = await UserUtil.getPrefLangCode();
     List<ForumPost> _posts;
     List collection;
     if (response.statusCode == 200) {
@@ -26,10 +24,7 @@ class ForumUtil {
 
   static Stream<List<Comment>> getComments({int fid}) async* {
     http.Response response = await ForumConnect.connectComments(fid: fid);
-    final sharedPrefs = await UserUtil.connectSharedPreferences(
-      key: 'userData',
-    );
-    final prefLangCode = APIConnect.languages[sharedPrefs['lang']];
+    String prefLangCode = await UserUtil.getPrefLangCode();
     List<Comment> _comments;
     List collection;
     if (response.statusCode == 200) {
