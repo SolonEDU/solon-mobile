@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserUtil {
   static Map<String, String> languages = {
     'English': 'en',
-    'Chinese (Simplified)': 'zh-CN',
-    'Chinese (Traditional)': 'zh-TW',
+    'Chinese (Simplified)': 'zhcn',
+    'Chinese (Traditional)': 'zhtw',
     'Bengali': 'bn',
     'Korean': 'ko',
     'Russian': 'ru',
@@ -18,8 +18,8 @@ class UserUtil {
   static Map<String, String> langCodeToLang = {
     'en': 'English',
     'zh': 'Chinese (Simplified)',
-    'zh-CN': 'Chinese (Simplified)',
-    'zh-TW': 'Chinese (Traditional)',
+    'zhcn': 'Chinese (Simplified)',
+    'zhtw': 'Chinese (Traditional)',
     'bn': 'Bengali',
     'ko': 'Korean',
     'ru': 'Russian',
