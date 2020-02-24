@@ -148,8 +148,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               Message responseMessage =
                                   await UserConnect.changeLanguage(
                                 uid: snapshot.data['uid'],
-                                updatedLang: json.decode(
-                                    sharedPrefs.getString('userData'))['lang'],
+                                updatedLang: userDataJson['lang'],
                               );
                               UserUtil.showToast(
                                   responseMessage.message == 'Error'

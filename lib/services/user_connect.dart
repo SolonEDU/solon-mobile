@@ -54,8 +54,6 @@ class UserConnect {
           UserUtil.langCodeToLang[userDataResponseJson['lang']];
       if (userDataResponseJson['lang'] == null) {
         userDataResponseJson['lang'] = 'English';
-        print('NULL LANG'); // TODO: lang resets to English when user signs out and signs back in
-        print(userDataResponseJson);
       }
       final userData = json.encode(userDataResponseJson);
       final sharedPrefs = await SharedPreferences.getInstance();
