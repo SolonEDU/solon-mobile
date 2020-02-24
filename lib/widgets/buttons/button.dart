@@ -48,10 +48,11 @@ class Button extends StatelessWidget {
                 onPressed: function,
                 child: Text(
                   label,
+                  // textScaleFactor: 1.5,
                   style: TextStyle(
                     fontFamily: 'Raleway',
                     fontWeight: FontWeight.bold,
-                    fontSize: 22,
+                    fontSize: 22, // TODO: the dynamic width formula supposedly depends on textScaleFactor, will formula still work ?
                   ),
                 ),
               ),
