@@ -7,8 +7,8 @@ class TextLayout {
   static LayoutBuilder fillLinesWithTextAndAppendTrail({
     // this function is always assumed to render AT LEAST one line of text
     @required String rawText,
-    String trail,
-    String langCode,
+    String trail, // trailing string to append
+    String langCode = 'en', // English by default
     TextStyle textStyle,
     int lines =
         3, // initialize number of lines to render to 3 if the argument was not specified; keep in mind that the raw text may not reach up to 3 lines, in which the lines variable value will be adjusted accordingly below
