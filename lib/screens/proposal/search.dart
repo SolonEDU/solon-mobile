@@ -71,41 +71,45 @@ class ProposalsSearch extends SearchDelegate {
     return FutureBuilder(
       future: UserUtil.getCachedSearches(Proposal), // TODO: can be abstracted
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
-            snapshot.hasData == null) {
-          return Container();
-        }
-        return ListView.builder(
-          itemCount: snapshot.data.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: IconButton(
-                icon: Icon(Icons.restore),
-                onPressed: () => {
-                  query = snapshot.data[index],
-                  showResults(context),
-                },
-              ),
-              trailing: Transform.rotate(
-                angle: 270 * pi / 180,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.call_made,
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Container();
+          default:
+            if (snapshot.data == null) {
+              return ErrorScreen();
+            }
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: IconButton(
+                    icon: Icon(Icons.restore),
+                    onPressed: () => {
+                      query = snapshot.data[index],
+                      showResults(context),
+                    },
                   ),
-                  onPressed: () => {
-                    query = snapshot.data[
-                        index], // TODO: shows cursor in the beginning of query, which looks weird
+                  trailing: Transform.rotate(
+                    angle: 270 * pi / 180,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.call_made,
+                      ),
+                      onPressed: () => {
+                        query = snapshot.data[
+                            index], // TODO: shows cursor in the beginning of query, which looks weird
+                      },
+                    ),
+                  ),
+                  title: Text('${snapshot.data[index]}'),
+                  onTap: () => {
+                    query = snapshot.data[index],
+                    showResults(context),
                   },
-                ),
-              ),
-              title: Text('${snapshot.data[index]}'),
-              onTap: () => {
-                query = snapshot.data[index],
-                showResults(context),
+                );
               },
             );
-          },
-        );
+        }
       },
     );
   }
