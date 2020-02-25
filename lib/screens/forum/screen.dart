@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/screens/search.dart';
 import 'package:Solon/widgets/cards/forum_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/screens/forum/create.dart';
-import 'package:Solon/screens/forum/search.dart';
 import 'package:Solon/services/forum_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/forum_util.dart';
@@ -108,7 +108,7 @@ class _ForumScreenState extends State<ForumScreen> {
                           Flexible(
                             flex: 1,
                             child: SearchButton(
-                              delegate: ForumSearch(context),
+                              delegate: Search<ForumPost>(context, "searchForum"),
                             ),
                           ),
                         ],

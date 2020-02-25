@@ -48,7 +48,7 @@ class Search<T> extends SearchDelegate {
       showSuggestions(
           context); // TODO: make keyboard unfocus cleaner when searching with empty query
 
-    // UserUtil.cacheSearchQuery<T>(query);
+    UserUtil.cacheSearchQuery<T>(query);
 
     switch (T) {
       case Proposal:

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/screens/search.dart';
 import 'package:Solon/widgets/cards/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/event.dart';
-import 'package:Solon/screens/event/search.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/event_util.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
@@ -108,7 +108,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           Flexible(
                             flex: 1,
                             child: SearchButton(
-                              delegate: EventsSearch(context),
+                              delegate: Search<Event>(context, "searchEvents"),
                             ),
                           ),
                         ],
