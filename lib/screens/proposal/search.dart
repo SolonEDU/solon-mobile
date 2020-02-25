@@ -83,7 +83,7 @@ class ProposalsSearch extends SearchDelegate {
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: IconButton(
-                    icon: Icon(Icons.restore),
+                    icon: Icon(Icons.search),
                     onPressed: () => {
                       query = snapshot.data[index],
                       showResults(context),
