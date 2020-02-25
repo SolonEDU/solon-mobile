@@ -53,16 +53,16 @@ class UserUtil {
     return languages[sharedPrefs['lang']];
   }
 
-  static dynamic getCachedSearches(Type object) async {
+  static dynamic getCachedSearches<T>() async {
     final cachedSearches = await connectSharedPreferences(
-      key: typeToSharedPrefsKey[object],
+      key: typeToSharedPrefsKey[T],
     ); // TODO: repeated code
     return cachedSearches;
   }
 
-  static void cacheSearchQuery(Type object, String query) async {
+  static void cacheSearchQuery<T>(String query) async {
     if (query == '') return; // exit function if search query is empty
-    final String sharedPrefsKey = typeToSharedPrefsKey[object];
+    final String sharedPrefsKey = typeToSharedPrefsKey[T];
     final List cachedSearches = await connectSharedPreferences(
       key: sharedPrefsKey,
     );

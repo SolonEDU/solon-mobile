@@ -40,7 +40,7 @@ class ForumSearch extends SearchDelegate {
     if (query.isEmpty)
       showSuggestions(
           context); // TODO: make keyboard unfocus cleaner when searching with empty query
-    UserUtil.cacheSearchQuery(ForumPost, query);
+    UserUtil.cacheSearchQuery<ForumPost>(query);
     return StreamBuilder<List<ForumPost>>(
       stream: Function.apply(
         ForumUtil.searchView,
@@ -70,7 +70,7 @@ class ForumSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
       // TODO: can be abstracted
-      future: UserUtil.getCachedSearches(ForumPost),
+      future: UserUtil.getCachedSearches<ForumPost>(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
             snapshot.hasData == null) {

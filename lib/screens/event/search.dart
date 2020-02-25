@@ -40,7 +40,7 @@ class EventsSearch extends SearchDelegate {
     if (query.isEmpty)
       showSuggestions(
           context); // TODO: make keyboard unfocus cleaner when searching with empty query
-    UserUtil.cacheSearchQuery(Event, query);
+    UserUtil.cacheSearchQuery<Event>(query);
     return StreamBuilder<List<Event>>(
       stream: Function.apply(
         EventUtil.searchView,
@@ -72,7 +72,7 @@ class EventsSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
       // TODO: can be abstracted
-      future: UserUtil.getCachedSearches(Event),
+      future: UserUtil.getCachedSearches<Event>(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
             snapshot.hasData == null) {

@@ -39,7 +39,7 @@ class ProposalsSearch extends SearchDelegate {
     if (query.isEmpty)
       showSuggestions(
           context); // TODO: make keyboard unfocus cleaner when searching with empty query
-    UserUtil.cacheSearchQuery(Proposal, query);
+    UserUtil.cacheSearchQuery<Proposal>(query);
     return StreamBuilder<List<Proposal>>(
       stream: Function.apply(
         ProposalUtil.searchView,
@@ -69,7 +69,7 @@ class ProposalsSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
-      future: UserUtil.getCachedSearches(Proposal), // TODO: can be abstracted
+      future: UserUtil.getCachedSearches<Proposal>(), // TODO: can be abstracted
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
             snapshot.hasData == null) {
