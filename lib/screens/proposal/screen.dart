@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/screens/search.dart';
 import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Solon/models/proposal.dart';
-import 'package:Solon/screens/proposal/search.dart';
 import 'package:Solon/screens/proposal/create.dart';
 import 'package:Solon/services/proposal_connect.dart';
 import 'package:Solon/util/app_localizations.dart';
@@ -118,7 +118,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                           Flexible(
                             flex: 1,
                             child: SearchButton(
-                              delegate: ProposalsSearch(context),
+                              // delegate: ProposalsSearch(context),
+                              delegate: Search<Proposal>(context, 'searchProposals'),
                             ),
                           ),
                         ],
