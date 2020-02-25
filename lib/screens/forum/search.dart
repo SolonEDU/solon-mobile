@@ -79,7 +79,6 @@ class ForumSearch extends SearchDelegate {
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (context, index) {
-            print(snapshot.data.toString());
             return ListTile(
               leading: IconButton(
                 icon: Icon(Icons.restore),

@@ -78,7 +78,6 @@ class ProposalsSearch extends SearchDelegate {
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (context, index) {
-            print(snapshot.data.toString());
             return ListTile(
               leading: IconButton(
                 icon: Icon(Icons.restore),
@@ -94,7 +93,8 @@ class ProposalsSearch extends SearchDelegate {
                     Icons.call_made,
                   ),
                   onPressed: () => {
-                    query = snapshot.data[index], // TODO: shows cursor in the beginning of query, which looks weird
+                    query = snapshot.data[
+                        index], // TODO: shows cursor in the beginning of query, which looks weird
                   },
                 ),
               ),

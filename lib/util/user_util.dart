@@ -57,7 +57,6 @@ class UserUtil {
     final cachedSearches = await connectSharedPreferences(
       key: typeToSharedPrefsKey[object],
     ); // TODO: repeated code
-    print(cachedSearches.toString());
     return cachedSearches;
   }
 
@@ -67,11 +66,15 @@ class UserUtil {
     final List cachedSearches = await connectSharedPreferences(
       key: sharedPrefsKey,
     );
+
     if (cachedSearches.contains(query)) {
       cachedSearches.remove(query);
+    } else if (cachedSearches.length == 50) { // stores up to 50 previous search queries
+      cachedSearches.removeLast();
     }
+
     cachedSearches.insert(0, query);
-    print('$query ${cachedSearches.toString()}');
+
     final sharedPrefs = await SharedPreferences.getInstance();
     String cachedSearchesJSON = json.encode(cachedSearches);
     sharedPrefs.setString(sharedPrefsKey, cachedSearchesJSON);
