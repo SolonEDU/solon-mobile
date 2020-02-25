@@ -53,9 +53,9 @@ class UserUtil {
     return languages[sharedPrefs['lang']];
   }
 
-  static dynamic getCachedSearches(Type object) async {
+  static dynamic getCachedSearches<T>() async {
     final cachedSearches = await connectSharedPreferences(
-      key: typeToSharedPrefsKey[object],
+      key: typeToSharedPrefsKey[T],
     ); // TODO: repeated code
     return cachedSearches;
   }

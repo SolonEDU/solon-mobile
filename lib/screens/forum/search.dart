@@ -70,7 +70,7 @@ class ForumSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
       // TODO: can be abstracted
-      future: UserUtil.getCachedSearches(ForumPost),
+      future: UserUtil.getCachedSearches<ForumPost>(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

@@ -72,7 +72,7 @@ class EventsSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
       // TODO: can be abstracted
-      future: UserUtil.getCachedSearches(Event),
+      future: UserUtil.getCachedSearches<Event>(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

@@ -69,7 +69,7 @@ class ProposalsSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
-      future: UserUtil.getCachedSearches(Proposal), // TODO: can be abstracted
+      future: UserUtil.getCachedSearches<Proposal>(), // TODO: can be abstracted
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
