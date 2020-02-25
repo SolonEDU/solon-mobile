@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Solon/screens/error_screen.dart';
 import 'package:Solon/util/user_util.dart';
 import 'package:Solon/widgets/cards/event_card.dart';
@@ -81,6 +83,25 @@ class EventsSearch extends SearchDelegate {
           itemBuilder: (context, index) {
             print(snapshot.data.toString());
             return ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.restore),
+                onPressed: () => {
+                  query = snapshot.data[index],
+                  showResults(context),
+                },
+              ),
+              trailing: Transform.rotate(
+                angle: 270 * pi / 180,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.call_made,
+                  ),
+                  onPressed: () => {
+                    query = snapshot.data[
+                        index], // TODO: shows cursor in the beginning of query, which looks weird
+                  },
+                ),
+              ),
               title: Text('${snapshot.data[index]}'),
               onTap: () => {
                 query = snapshot.data[index],
