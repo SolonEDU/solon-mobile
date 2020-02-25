@@ -1,6 +1,9 @@
-import 'package:Solon/screens/error_screen.dart';
-import 'package:Solon/widgets/cards/proposal_card.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+
+import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/util/user_util.dart';
+import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:Solon/models/proposal.dart';
 import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/util/proposal_util.dart';
@@ -33,7 +36,10 @@ class ProposalsSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query == '') return Container();
+    if (query.isEmpty)
+      showSuggestions(
+          context); // TODO: make keyboard unfocus cleaner when searching with empty query
+    UserUtil.cacheSearchQuery(Proposal, query);
     return StreamBuilder<List<Proposal>>(
       stream: Function.apply(
         ProposalUtil.searchView,
@@ -62,7 +68,28 @@ class ProposalsSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    return FutureBuilder(
+      future: UserUtil.getCachedSearches(Proposal), // TODO: can be abstracted
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.none &&
+            snapshot.hasData == null) {
+          return Container();
+        }
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            print(snapshot.data.toString());
+            return ListTile(
+              title: Text('${snapshot.data[index]}'),
+              onTap: () => {
+                query = snapshot.data[index],
+                showResults(context),
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   @override

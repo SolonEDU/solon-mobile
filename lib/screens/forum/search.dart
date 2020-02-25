@@ -1,4 +1,5 @@
 import 'package:Solon/screens/error_screen.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:Solon/widgets/cards/forum_card.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/models/forum_post.dart';
@@ -34,7 +35,10 @@ class ForumSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query == '') return Container();
+    if (query.isEmpty)
+      showSuggestions(
+          context); // TODO: make keyboard unfocus cleaner when searching with empty query
+    UserUtil.cacheSearchQuery(ForumPost, query);
     return StreamBuilder<List<ForumPost>>(
       stream: Function.apply(
         ForumUtil.searchView,
@@ -62,7 +66,29 @@ class ForumSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    return FutureBuilder(
+      // TODO: can be abstracted
+      future: UserUtil.getCachedSearches(ForumPost),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.none &&
+            snapshot.hasData == null) {
+          return Container();
+        }
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            print(snapshot.data.toString());
+            return ListTile(
+              title: Text('${snapshot.data[index]}'),
+              onTap: () => {
+                query = snapshot.data[index],
+                showResults(context),
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   @override

@@ -61,6 +61,11 @@ class UserConnect {
       sharedPrefs.setString('proposalsSortOption', 'Newly created');
       sharedPrefs.setString('eventsSortOption', 'Upcoming');
       sharedPrefs.setString('forumSortOption', 'Newly created');
+      final List emptyList = [];
+      final String emptyListJSON = json.encode(emptyList);
+      sharedPrefs.setString('cachedProposalSearches', emptyListJSON);
+      sharedPrefs.setString('cachedEventSearches', emptyListJSON);
+      sharedPrefs.setString('cachedForumSearches', emptyListJSON);
       return json.decode(response.body);
     } catch (error) {
       throw error;
