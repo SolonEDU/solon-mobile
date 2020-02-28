@@ -125,7 +125,7 @@ class _ForumScreenState extends State<ForumScreen> {
                         builder: (BuildContext context,
                             AsyncSnapshot<List<ForumPost>> snapshot) {
                           if (snapshot.hasError)
-                            return Text("${snapshot.error}");
+                            return ErrorScreen();
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(

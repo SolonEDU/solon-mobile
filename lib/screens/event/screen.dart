@@ -121,14 +121,14 @@ class _EventsScreenState extends State<EventsScreen> {
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Event>> snapshot) {
                           if (snapshot.hasError)
-                            return Text('Error: ${snapshot.error}');
+                            return ErrorScreen();
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
                             default:
-                              if (snapshot.data == null) {
+                              if (snapshot.data == null) { // TODO: extraneous; change other files
                                 return ErrorScreen();
                               }
                               return SizedBox(

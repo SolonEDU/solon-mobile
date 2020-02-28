@@ -1,3 +1,4 @@
+import 'package:Solon/screens/error_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/models/message.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
               if (snapshot.hasData) {
                 return Text("${snapshot.data.message} Your uid is: $uid");
               } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                return ErrorScreen();
               }
               return CircularProgressIndicator();
             }),

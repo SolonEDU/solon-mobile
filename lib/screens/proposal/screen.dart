@@ -134,7 +134,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                           AsyncSnapshot<List<Proposal>> snapshot,
                         ) {
                           if (snapshot.hasError)
-                            return Text("${snapshot.error}");
+                            return ErrorScreen();
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(
