@@ -1,7 +1,6 @@
 import 'package:Solon/services/status_codes_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:Solon/models/message.dart';
