@@ -24,7 +24,8 @@ class APIConnect {
     if (status == 200) {
       return Message.fromJson(json.decode(response.body)['message']);
     } else if (status == 500) {
-      return Message.fromJson('Internal Server Error -- We had a problem with our server. Try again later.');
+      return Message.fromJson(
+          'Internal Server Error -- We had a problem with our server. Try again later.');
     } else if (status == 504) {
       return Message.fromJson('Gateway Timeout');
     } else {

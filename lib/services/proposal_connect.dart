@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/services/status_codes_handler.dart';
 import 'package:http/http.dart' as http;
 
 class ProposalConnect {
@@ -50,10 +51,11 @@ class ProposalConnect {
       }),
       headers: await APIConnect.headers,
     );
-    int status = response.statusCode;
-    return status == 201
-        ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('Message field in proposal object not found.');
+    // int status = response.statusCode;
+    // return status == 201
+    //     ? Message.fromJson(json.decode(response.body)['message'])
+    //     : throw Exception('Message field in proposal object not found.');
+    return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 
   static Future<Map<String, dynamic>> connectVotes(String httpReqType,
@@ -78,7 +80,8 @@ class ProposalConnect {
         "${APIConnect.url}/votes/$pid/$uidUser",
         headers: await APIConnect.headers,
       );
-    } else if (httpReqType == 'PATCH') { // TODO: this is only valid if we decide that votes can be changed
+    } else if (httpReqType == 'PATCH') {
+      // TODO: this is only valid if we decide that votes can be changed
       // need pid, uid, and voteVal
       response = await http.patch(
         "${APIConnect.url}/votes",

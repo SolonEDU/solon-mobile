@@ -56,21 +56,21 @@ class EventConnect {
         }),
         headers: await APIConnect.headers,
       );
-      int status = response.statusCode;
-      return status == 201
-          ? Message.fromJson(json.decode(response.body)['message'])
-          : throw Exception(
-              'Attendance value of user $uid could not be created for event $eid.');
+      // int status = response.statusCode;
+      // return status == 201
+      //     ? Message.fromJson(json.decode(response.body)['message'])
+      //     : throw Exception(
+      //         'Attendance value of user $uid could not be created for event $eid.');
     } else if (httpReqType == "DELETE") {
       response = await http.delete(
         "${APIConnect.url}/attenders/$eid/$uid",
         headers: await APIConnect.headers,
       );
-      int status = response.statusCode;
-      return status == 201
-          ? Message.fromJson(json.decode(response.body)['message'])
-          : throw Exception(
-              'Attendance value of user $uid could not be deleted for event $eid.');
+      // int status = response.statusCode;
+      // return status == 201
+      //     ? Message.fromJson(json.decode(response.body)['message'])
+      //     : throw Exception(
+      //         'Attendance value of user $uid could not be deleted for event $eid.');
     }
     return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }

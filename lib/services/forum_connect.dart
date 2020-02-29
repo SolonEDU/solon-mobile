@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/services/status_codes_handler.dart';
 import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,10 +51,8 @@ class ForumConnect {
       headers: await APIConnect.headers,
     );
 
-    int status = response.statusCode;
-    return status == 201
-        ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('Message field in forum post object not found.');
+    // int status = response.statusCode;
+    return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 
   static Future<http.Response> connectComments({int fid}) async {
