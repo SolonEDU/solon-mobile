@@ -137,6 +137,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             case ConnectionState.done:
+                              if (snapshot.hasError) return ErrorScreen();
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
