@@ -5,7 +5,7 @@ import 'package:Solon/services/event_connect.dart';
 class EventUtil {
 
   static Stream<List<Event>> screenView(String query) {
-    return Utility.getList(
+    return Utility.getList<Event>(
       function: EventConnect.connectEvents,
       query: query,
       body: 'events',
@@ -13,7 +13,7 @@ class EventUtil {
   }
 
   static Stream<List<Event>> searchView(String query) {
-    return Utility.getList(
+    return Utility.getList<Event>(
       function: EventConnect.searchEvents,
       query: query,
       body: 'events',

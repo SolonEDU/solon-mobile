@@ -72,6 +72,7 @@ class _AccountScreenState extends State<AccountScreen> {
           case ConnectionState.none:
             return ErrorScreen(
               notifyParent: refresh,
+              error: snapshot.error,
             );
           case ConnectionState.waiting:
             return Scaffold(
@@ -83,6 +84,7 @@ class _AccountScreenState extends State<AccountScreen> {
             if (snapshot.hasError)
               return ErrorScreen(
                 notifyParent: refresh,
+                error: snapshot.error,
               );
             _language = snapshot.data['lang'];
             return RefreshIndicator(

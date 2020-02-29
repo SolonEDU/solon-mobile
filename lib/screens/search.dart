@@ -61,7 +61,7 @@ class Search<T> extends SearchDelegate {
               (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return ErrorScreen();
+                return ErrorScreen(error: snapshot.error);
               case ConnectionState.active:
                 return Center(
                   child: CircularProgressIndicator(),
@@ -71,7 +71,8 @@ class Search<T> extends SearchDelegate {
                   child: CircularProgressIndicator(),
                 );
               case ConnectionState.done:
-                if (snapshot.hasError) return ErrorScreen();
+                if (snapshot.hasError)
+                  return ErrorScreen(error: snapshot.error);
                 return ListView(
                   children: snapshot.data
                       .map((json) => ProposalCard(proposal: json))
@@ -89,7 +90,7 @@ class Search<T> extends SearchDelegate {
             ],
           ),
           builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-            if (snapshot.hasError) return ErrorScreen();
+            if (snapshot.hasError) return ErrorScreen(error: snapshot.error);
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return Center(
@@ -97,7 +98,7 @@ class Search<T> extends SearchDelegate {
                 );
               default:
                 if (snapshot.data == null) {
-                  return ErrorScreen();
+                  return ErrorScreen(error: snapshot.error);
                 }
                 return ListView(
                     children: snapshot.data
@@ -114,7 +115,7 @@ class Search<T> extends SearchDelegate {
           ),
           builder:
               (BuildContext context, AsyncSnapshot<List<ForumPost>> snapshot) {
-            if (snapshot.hasError) return ErrorScreen();
+            if (snapshot.hasError) return ErrorScreen(error: snapshot.error);
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return Center(
@@ -122,7 +123,7 @@ class Search<T> extends SearchDelegate {
                 );
               default:
                 if (snapshot.data == null) {
-                  return ErrorScreen();
+                  return ErrorScreen(error: snapshot.error);
                 }
                 return ListView(
                   children: snapshot.data
@@ -147,7 +148,7 @@ class Search<T> extends SearchDelegate {
             return Container();
           default:
             if (snapshot.data == null) {
-              return ErrorScreen();
+              return ErrorScreen(error: snapshot.error);
             }
             return ListView.builder(
               itemCount: snapshot.data.length,

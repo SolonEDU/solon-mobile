@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {
   final Function() notifyParent;
+  final Object error;
 
   ErrorScreen({
     Key key,
     @required this.notifyParent,
+    @required this.error,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center( // TODO: needa center this
+      child: Center(
+        // TODO: needa center this
         child: ListView(
           children: <Widget>[
             Text('An error occurred!'),
+            Text('$error'),
             Button(
               color: Colors.pink[200],
               height: 55,

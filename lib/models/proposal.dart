@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 
-class Proposal extends Model {
+class Proposal extends Model<Proposal> {
   final int pid;
   final String title;
   final String description;
@@ -25,8 +26,8 @@ class Proposal extends Model {
   });
 
   factory Proposal.fromJson({
-    Map<String, dynamic> map,
-    String prefLangCode,
+    @required Map<String, dynamic> map,
+    @required String prefLangCode,
   }) {
     DateTime endTime = DateTime.parse(map['endtime']);
     String endTimeParsed = formatDate(

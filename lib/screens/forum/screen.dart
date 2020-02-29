@@ -133,6 +133,7 @@ class _ForumScreenState extends State<ForumScreen> {
                             case ConnectionState.none:
                               return ErrorScreen(
                                 notifyParent: refresh,
+                                error: snapshot.error,
                               );
                             case ConnectionState.active:
                               return Center(
@@ -146,6 +147,7 @@ class _ForumScreenState extends State<ForumScreen> {
                               if (snapshot.hasError)
                                 return ErrorScreen(
                                   notifyParent: refresh,
+                                  error: snapshot.error,
                                 );
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,

@@ -5,7 +5,7 @@ import 'package:Solon/services/forum_connect.dart';
 
 class ForumUtil {
   static Stream<List<Comment>> getComments({int fid}) {
-    return Utility.getList(
+    return Utility.getList<Comment>(
       function: ForumConnect.connectComments,
       fid: fid,
       body: 'comments',
@@ -13,7 +13,7 @@ class ForumUtil {
   }
 
   static Stream<List<ForumPost>> screenView(String query) {
-    return Utility.getList(
+    return Utility.getList<ForumPost>(
       function: ForumConnect.connectForumPosts,
       query: query,
       body: 'forumposts',

@@ -6,7 +6,6 @@ import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/status_codes_handler.dart';
 
-
 class EventConnect {
   static Map<String, String> queryMap = {
     'Furthest': 'date.desc',

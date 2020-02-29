@@ -13,7 +13,7 @@ class ProposalUtil {
   }
 
   static Stream<List<Proposal>> searchView(String query) {
-    return Utility.getList(
+    return Utility.getList<Proposal>(
       function: ProposalConnect.searchProposals,
       query: query,
       body: 'proposals',

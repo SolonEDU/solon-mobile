@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:Solon/models/message.dart';
 
-
 class StatusCodesHandler {
   static Message handleStatusCode(http.Response response, int statusCode) {
     if (statusCode == 200 || statusCode == 201) {
