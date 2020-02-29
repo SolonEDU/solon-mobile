@@ -52,6 +52,9 @@ class ForumConnect {
     );
 
     // int status = response.statusCode;
+    // return status == 201
+    //     ? Message.fromJson(json.decode(response.body)['message'])
+    //     : throw Exception('Message field in comment object not found.');
     return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 
@@ -81,9 +84,10 @@ class ForumConnect {
       }),
       headers: await APIConnect.headers,
     );
-    int status = response.statusCode;
-    return status == 201
-        ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('Message field in comment object not found.');
+    // int status = response.statusCode;
+    // return status == 201
+    //     ? Message.fromJson(json.decode(response.body)['message'])
+    //     : throw Exception('Message field in comment object not found.');
+    return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 }
