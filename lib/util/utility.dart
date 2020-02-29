@@ -20,7 +20,8 @@ class Utility {
       List temp = json.decode(response.body)[body];
       collection = temp
           .map((json) =>
-              Model<T>.fromJson(json: json, prefLangCode: prefLangCode)).cast<T>()
+              Model<T>.fromJson(json: json, prefLangCode: prefLangCode))
+          .cast<T>()
           .toList();
     }
     yield collection;
