@@ -59,7 +59,7 @@ class Search<T> extends SearchDelegate {
           ),
           builder:
               (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+            if (snapshot.hasError) return ErrorScreen();
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return Center(
@@ -86,7 +86,7 @@ class Search<T> extends SearchDelegate {
             ],
           ),
           builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+            if (snapshot.hasError) return ErrorScreen();
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return Center(
@@ -111,7 +111,7 @@ class Search<T> extends SearchDelegate {
           ),
           builder:
               (BuildContext context, AsyncSnapshot<List<ForumPost>> snapshot) {
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+            if (snapshot.hasError) return ErrorScreen();
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return Center(
