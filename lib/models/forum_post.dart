@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 
-class ForumPost extends Model{
+class ForumPost extends Model {
   final int fid;
   final String title;
   final String description;
@@ -20,7 +21,10 @@ class ForumPost extends Model{
     this.numcomments,
   });
 
-  factory ForumPost.fromJson({Map<String, dynamic> map, String prefLangCode}) {
+  factory ForumPost.fromJson({
+    @required Map<String, dynamic> map,
+    @required String prefLangCode,
+  }) {
     DateTime timestamp = DateTime.parse(map['timestamp']);
     String timestampParsed = formatDate(
         timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);

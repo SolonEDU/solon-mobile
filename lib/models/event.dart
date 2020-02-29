@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 
 class Event extends Model{
   final int eid;
@@ -21,8 +22,8 @@ class Event extends Model{
   });
 
   factory Event.fromJson({
-    Map<String, dynamic> map,
-    String prefLangCode,
+    @required Map<String, dynamic> map,
+    @required String prefLangCode,
   }) {
     DateTime date = DateTime.parse(map['date']);
     String dateParsed =

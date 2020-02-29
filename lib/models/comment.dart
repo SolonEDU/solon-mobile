@@ -2,14 +2,18 @@ import 'dart:convert';
 
 import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 
-class Comment extends Model{
+class Comment extends Model {
   final String date;
   final String comment;
 
   Comment({this.date, this.comment});
 
-  factory Comment.fromJson({Map<String, dynamic> map, String prefLangCode}) {
+  factory Comment.fromJson({
+    @required Map<String, dynamic> map,
+    @required String prefLangCode,
+  }) {
     DateTime timestamp = DateTime.parse(map['timestamp']);
     String timestampParsed = formatDate(
         timestamp, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
