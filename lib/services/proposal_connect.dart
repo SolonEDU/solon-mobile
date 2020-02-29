@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/status_codes_handler.dart';
-import 'package:http/http.dart' as http;
 
 class ProposalConnect {
   static Map<String, String> queryMap = {

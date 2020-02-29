@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
             if (snapshot.hasData) {
               return Text("${snapshot.data.message} Your uid is: $uid");
             } else if (snapshot.hasError) {
-              return ErrorScreen();
+              return ErrorScreen(error: snapshot.error);
             }
             return CircularProgressIndicator();
           },

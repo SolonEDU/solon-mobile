@@ -134,16 +134,20 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                           BuildContext context,
                           AsyncSnapshot<List<Proposal>> snapshot,
                         ) {
-                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return ErrorScreen(error: snapshot.error);
+                            case ConnectionState.active:
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
-                            default:
-                              if (snapshot.data == null) {
+                            case ConnectionState.done:
+                              if (snapshot.hasError)
                                 return ErrorScreen(error: snapshot.error);
-                              }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,

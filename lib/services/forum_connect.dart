@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/status_codes_handler.dart';
 import 'package:Solon/util/user_util.dart';
-import 'package:http/http.dart' as http;
 
 class ForumConnect {
   static Map<String, String> queryMap = {

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/services/status_codes_handler.dart';
 import 'package:Solon/util/user_util.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserConnect {
   static Future<Map<String, dynamic>> registerUser(

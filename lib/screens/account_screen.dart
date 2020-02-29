@@ -36,7 +36,8 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Future<Null> load() async {
-    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    final sharedPrefs =
+        await UserUtil.connectSharedPreferences(key: 'userData');
     streamController.add(sharedPrefs);
     setState(() {
       _userUid = sharedPrefs['uid'];
@@ -63,8 +64,9 @@ class _AccountScreenState extends State<AccountScreen> {
       stream: streamController.stream,
       builder:
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-        if (snapshot.hasError) return ErrorScreen();
         switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return ErrorScreen(error: snapshot.error);
           case ConnectionState.waiting:
             return Scaffold(
               body: Center(
@@ -72,6 +74,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             );
           default:
+            if (snapshot.hasError) return ErrorScreen(error: snapshot.error);
             _language = snapshot.data['lang'];
             return RefreshIndicator(
               key: _refreshIndicatorKey,
@@ -139,8 +142,11 @@ class _AccountScreenState extends State<AccountScreen> {
                               Map<String, dynamic> newMap = snapshot.data;
                               newMap['lang'] = newValue;
                               streamController.sink.add(newMap);
-                              final sharedPrefs = await SharedPreferences.getInstance();
-                              final userDataJson = await UserUtil.connectSharedPreferences(key: 'userData');
+                              final sharedPrefs =
+                                  await SharedPreferences.getInstance();
+                              final userDataJson =
+                                  await UserUtil.connectSharedPreferences(
+                                      key: 'userData');
                               userDataJson['lang'] = newValue;
                               sharedPrefs.setString(
                                 'userData',

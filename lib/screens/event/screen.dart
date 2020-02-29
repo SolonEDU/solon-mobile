@@ -52,6 +52,7 @@ class _EventsScreenState extends State<EventsScreen> {
       stream: dropdownMenuStreamController.stream,
       builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
         switch (optionVal.connectionState) {
+          // TODO: is this switch needed if the dropdownmenu value is from sharedPrefs ?
           case ConnectionState.waiting:
             return Center(
               child: CircularProgressIndicator(),
@@ -120,17 +121,20 @@ class _EventsScreenState extends State<EventsScreen> {
                             EventUtil.screenView, [optionVal.data]),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Event>> snapshot) {
-                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return ErrorScreen(error: snapshot.error);
+                            case ConnectionState.active:
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
-                            default:
-                              if (snapshot.data == null) {
-                                // TODO: extraneous; change other files
-                                return ErrorScreen();
-                              }
+                            case ConnectionState.done:
+                              if (snapshot.hasError)
+                                return ErrorScreen(error: snapshot.error);
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,

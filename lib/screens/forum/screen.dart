@@ -125,16 +125,20 @@ class _ForumScreenState extends State<ForumScreen> {
                         ),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<ForumPost>> snapshot) {
-                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return ErrorScreen(error: snapshot.error);
+                            case ConnectionState.active:
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
-                            default:
-                              if (snapshot.data == null) {
-                                return ErrorScreen();
-                              }
+                            case ConnectionState.done:
+                              if (snapshot.hasError)
+                                return ErrorScreen(error: snapshot.error);
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
