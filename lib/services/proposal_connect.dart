@@ -6,19 +6,19 @@ import 'package:Solon/services/status_codes_handler.dart';
 import 'package:http/http.dart' as http;
 
 class ProposalConnect {
+  static Map<String, String> queryMap = {
+    'Most votes': 'numvotes.desc',
+    'Least votes': 'numvotes.asc',
+    'Newly created': 'starttime.desc',
+    'Oldest created': 'starttime.asc',
+    'Upcoming deadlines': 'endtime.desc',
+    'Oldest deadlines': 'endtime.asc',
+  };
+
   static Future<http.Response> connectProposals({String query}) async {
     if (query == null) {
       query = 'Newly created';
     }
-
-    Map<String, String> queryMap = {
-      'Most votes': 'numvotes.desc',
-      'Least votes': 'numvotes.asc',
-      'Newly created': 'starttime.desc',
-      'Oldest created': 'starttime.asc',
-      'Upcoming deadlines': 'endtime.desc',
-      'Oldest deadlines': 'endtime.asc',
-    };
 
     return await http.get(
       "${APIConnect.url}/proposals?sort_by=${queryMap[query]}",

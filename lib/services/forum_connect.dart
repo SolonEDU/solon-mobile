@@ -7,17 +7,17 @@ import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 
 class ForumConnect {
+  static Map<String, String> queryMap = {
+    'Newly created': 'timestamp.desc',
+    'Oldest created': 'timestamp.asc',
+    'Most comments': 'numcomments.desc',
+    'Least comments': 'numcomments.asc',
+  };
+
   static Future<http.Response> connectForumPosts({String query}) async {
     if (query == null) {
       query = 'Newly created';
     }
-
-    Map<String, String> queryMap = {
-      'Newly created': 'timestamp.desc',
-      'Oldest created': 'timestamp.asc',
-      'Most comments': 'numcomments.desc',
-      'Least comments': 'numcomments.asc',
-    };
 
     return await http.get(
       "${APIConnect.url}/forumposts?sort_by=${queryMap[query]}",
