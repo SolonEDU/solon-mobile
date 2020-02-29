@@ -24,6 +24,7 @@ class _EventPageState extends State<EventPage> {
   int userUid;
 
   void _onChanged(bool value) async {
+    print('from _onChanged: $userUid');
     if (value) {
       EventConnect.changeAttendance('POST',
           eid: widget.event.eid, uid: userUid);
@@ -36,7 +37,7 @@ class _EventPageState extends State<EventPage> {
 
   void load() async {
     final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
-    final userUid = sharedPrefs['uid'];
+    userUid = sharedPrefs['uid'];
     streamController.add(
         await EventConnect.getAttendance(eid: widget.event.eid, uid: userUid));
   }

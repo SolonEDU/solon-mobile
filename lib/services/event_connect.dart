@@ -45,6 +45,7 @@ class EventConnect {
     int eid,
     int uid,
   }) async {
+    print('from changeAttendance: $uid');
     http.Response response;
     if (httpReqType == "POST") {
       response = await http.post(
