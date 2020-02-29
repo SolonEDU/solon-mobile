@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-import 'package:Solon/models/message.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:Solon/models/message.dart';
+
 
 class StatusCodesHandler {
   static Message handleStatusCode(http.Response response, int statusCode) {
