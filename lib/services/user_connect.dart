@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/services/status_codes_handler.dart';
 import 'package:Solon/util/user_util.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -90,10 +91,11 @@ class UserConnect {
       }),
       headers: await APIConnect.headers,
     );
-    int status = response.statusCode;
-    return status == 201
-        ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception(
-            'Language could not be changed to $updatedLang for user with uid $uid');
+    // int status = response.statusCode;
+    // return status == 201
+    //     ? Message.fromJson(json.decode(response.body)['message'])
+    //     : throw Exception(
+    //         'Language could not be changed to $updatedLang for user with uid $uid');
+    return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 }

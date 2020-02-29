@@ -1,3 +1,4 @@
+import 'package:Solon/services/status_codes_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -20,15 +21,6 @@ class APIConnect {
 
   static Future<Message> connectRoot() async {
     final response = await http.get(url);
-    int status = response.statusCode;
-    if (status == 200) {
-      return Message.fromJson(json.decode(response.body)['message']);
-    } else if (status == 500) {
-      throw Exception('Internal Server Error -- We had a problem with our server. Try again later.');
-    } else if (status == 504) {
-      throw Exception('Gateway Timeout');
-    } else {
-      throw Exception('An unknown error occurred. care.');
-    }
+    return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 }
