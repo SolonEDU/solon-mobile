@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:Solon/screens/error_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,7 +63,7 @@ class _AccountScreenState extends State<AccountScreen> {
       stream: streamController.stream,
       builder:
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        if (snapshot.hasError) return ErrorScreen();
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Scaffold(
