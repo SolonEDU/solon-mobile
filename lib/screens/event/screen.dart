@@ -14,10 +14,10 @@ class EventsScreen extends StatefulWidget {
   EventsScreen({Key key}) : super(key: key);
 
   @override
-  _EventsScreenState createState() => _EventsScreenState();
+  EventsScreenState createState() => EventsScreenState();
 }
 
-class _EventsScreenState extends State<EventsScreen> {
+class EventsScreenState extends State<EventsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -44,6 +44,10 @@ class _EventsScreenState extends State<EventsScreen> {
   void dispose() {
     dropdownMenuStreamController.close();
     super.dispose();
+  }
+
+  void refresh() {
+    setState(() {});
   }
 
   @override
@@ -123,7 +127,9 @@ class _EventsScreenState extends State<EventsScreen> {
                             AsyncSnapshot<List<Event>> snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
-                              return ErrorScreen();
+                              return ErrorScreen(
+                                notifyParent: refresh,
+                              );
                             case ConnectionState.active:
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -134,22 +140,10 @@ class _EventsScreenState extends State<EventsScreen> {
                               );
                             case ConnectionState.done:
                               if (snapshot.hasError) {
-                                return Scaffold(
-                                  body: ListView(
-                                    children: <Widget>[
-                                      Text('An error occurred!'),
-                                      RaisedButton(
-                                        onPressed: () {
-                                          setState(() {});
-                                        },
-                                        child: Text('Reload',
-                                            style: TextStyle(fontSize: 20)),
-                                      ),
-                                    ],
-                                  ),
+                                return ErrorScreen(
+                                  notifyParent: refresh,
                                 );
                               }
-                              ;
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
 
-class Comment extends Model{
+class Comment extends Model {
   final String date;
   final String comment;
 

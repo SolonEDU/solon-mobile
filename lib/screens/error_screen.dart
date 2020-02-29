@@ -1,18 +1,30 @@
+import 'package:Solon/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {
+  final Function() notifyParent;
+
+  ErrorScreen({
+    Key key,
+    @required this.notifyParent,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        children: <Widget>[
-          Text('An error occurred!'),
-          RaisedButton(
-            onPressed: () {
-              // setState(() {});
-            },
-          ),
-        ],
+    return Container(
+      child: Center( // TODO: needa center this
+        child: ListView(
+          children: <Widget>[
+            Text('An error occurred!'),
+            Button(
+              color: Colors.pink[200],
+              height: 55,
+              label: 'Reload',
+              margin: EdgeInsets.only(top: 10),
+              function: notifyParent,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -58,6 +58,10 @@ class _AccountScreenState extends State<AccountScreen> {
     super.dispose();
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Map<String, dynamic>>(
@@ -66,7 +70,9 @@ class _AccountScreenState extends State<AccountScreen> {
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return ErrorScreen();
+            return ErrorScreen(
+              notifyParent: refresh,
+            );
           case ConnectionState.waiting:
             return Scaffold(
               body: Center(
@@ -74,7 +80,10 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             );
           default:
-            if (snapshot.hasError) return ErrorScreen();
+            if (snapshot.hasError)
+              return ErrorScreen(
+                notifyParent: refresh,
+              );
             _language = snapshot.data['lang'];
             return RefreshIndicator(
               key: _refreshIndicatorKey,

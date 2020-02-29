@@ -49,6 +49,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     super.dispose();
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
@@ -136,7 +140,9 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                         ) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
-                              return ErrorScreen();
+                              return ErrorScreen(
+                                notifyParent: refresh,
+                              );
                             case ConnectionState.active:
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -146,7 +152,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             case ConnectionState.done:
-                              if (snapshot.hasError) return ErrorScreen();
+                              if (snapshot.hasError)
+                                return ErrorScreen(
+                                  notifyParent: refresh,
+                                );
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
