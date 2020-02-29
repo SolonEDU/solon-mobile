@@ -120,15 +120,15 @@ class _EventsScreenState extends State<EventsScreen> {
                             EventUtil.screenView, [optionVal.data]),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Event>> snapshot) {
-                          if (snapshot.hasError)
-                            return ErrorScreen();
+                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
                             default:
-                              if (snapshot.data == null) { // TODO: extraneous; change other files
+                              if (snapshot.data == null) {
+                                // TODO: extraneous; change other files
                                 return ErrorScreen();
                               }
                               return SizedBox(

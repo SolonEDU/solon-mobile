@@ -119,7 +119,8 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                             flex: 1,
                             child: SearchButton(
                               // delegate: ProposalsSearch(context),
-                              delegate: Search<Proposal>(context, 'searchProposals'),
+                              delegate:
+                                  Search<Proposal>(context, 'searchProposals'),
                             ),
                           ),
                         ],
@@ -133,8 +134,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                           BuildContext context,
                           AsyncSnapshot<List<Proposal>> snapshot,
                         ) {
-                          if (snapshot.hasError)
-                            return ErrorScreen();
+                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(

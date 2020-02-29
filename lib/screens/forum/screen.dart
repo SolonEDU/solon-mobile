@@ -108,7 +108,8 @@ class _ForumScreenState extends State<ForumScreen> {
                           Flexible(
                             flex: 1,
                             child: SearchButton(
-                              delegate: Search<ForumPost>(context, "searchForum"),
+                              delegate:
+                                  Search<ForumPost>(context, "searchForum"),
                             ),
                           ),
                         ],
@@ -124,8 +125,7 @@ class _ForumScreenState extends State<ForumScreen> {
                         ),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<ForumPost>> snapshot) {
-                          if (snapshot.hasError)
-                            return ErrorScreen();
+                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return Center(
