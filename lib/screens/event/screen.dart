@@ -51,7 +51,8 @@ class _EventsScreenState extends State<EventsScreen> {
     return StreamBuilder<String>(
       stream: dropdownMenuStreamController.stream,
       builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
-        switch (optionVal.connectionState) { // TODO: is this switch needed if the dropdownmenu value is from sharedPrefs ?
+        switch (optionVal.connectionState) {
+          // TODO: is this switch needed if the dropdownmenu value is from sharedPrefs ?
           case ConnectionState.waiting:
             return Center(
               child: CircularProgressIndicator(),
@@ -132,7 +133,23 @@ class _EventsScreenState extends State<EventsScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             case ConnectionState.done:
-                              if (snapshot.hasError) return ErrorScreen();
+                              if (snapshot.hasError) {
+                                return Scaffold(
+                                  body: ListView(
+                                    children: <Widget>[
+                                      Text('An error occurred!'),
+                                      RaisedButton(
+                                        onPressed: () {
+                                          setState(() {});
+                                        },
+                                        child: Text('Reload',
+                                            style: TextStyle(fontSize: 20)),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              ;
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
