@@ -4,7 +4,7 @@ import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
-class ForumPost extends Model {
+class ForumPost extends Model<ForumPost> {
   final int fid;
   final String title;
   final String description;

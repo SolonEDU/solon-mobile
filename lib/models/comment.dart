@@ -4,7 +4,7 @@ import 'package:Solon/models/model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
-class Comment extends Model {
+class Comment extends Model<Comment> {
   final String date;
   final String comment;
 

@@ -142,7 +142,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                               );
                             default:
                               if (snapshot.data == null) {
-                                return ErrorScreen();
+                                return ErrorScreen(error: snapshot.error);
                               }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
