@@ -59,16 +59,19 @@ class Search<T> extends SearchDelegate {
           ),
           builder:
               (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
-            if (snapshot.hasError) return ErrorScreen();
             switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return ErrorScreen();
+              case ConnectionState.active:
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               case ConnectionState.waiting:
                 return Center(
                   child: CircularProgressIndicator(),
                 );
-              default:
-                if (snapshot.data == null) {
-                  return ErrorScreen();
-                }
+              case ConnectionState.done:
+                if (snapshot.hasError) return ErrorScreen();
                 return ListView(
                   children: snapshot.data
                       .map((json) => ProposalCard(proposal: json))

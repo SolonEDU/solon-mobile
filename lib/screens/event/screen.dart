@@ -51,7 +51,7 @@ class _EventsScreenState extends State<EventsScreen> {
     return StreamBuilder<String>(
       stream: dropdownMenuStreamController.stream,
       builder: (BuildContext context, AsyncSnapshot<String> optionVal) {
-        switch (optionVal.connectionState) {
+        switch (optionVal.connectionState) { // TODO: is this switch needed if the dropdownmenu value is from sharedPrefs ?
           case ConnectionState.waiting:
             return Center(
               child: CircularProgressIndicator(),
