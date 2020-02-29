@@ -132,9 +132,6 @@ class _ForumScreenState extends State<ForumScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             default:
-                              if (snapshot.data == null) {
-                                return ErrorScreen();
-                              }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
