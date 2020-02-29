@@ -120,13 +120,19 @@ class _EventsScreenState extends State<EventsScreen> {
                             EventUtil.screenView, [optionVal.data]),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Event>> snapshot) {
-                          if (snapshot.hasError) return ErrorScreen();
                           switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return ErrorScreen();
+                            case ConnectionState.active:
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
                             case ConnectionState.waiting:
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
-                            default:
+                            case ConnectionState.done:
+                              if (snapshot.hasError) return ErrorScreen();
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
