@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Solon/models/message.dart';
 import 'package:Solon/services/api_connect.dart';
+import 'package:Solon/services/status_codes_handler.dart';
 import 'package:http/http.dart' as http;
 
 class EventConnect {
@@ -31,7 +32,7 @@ class EventConnect {
   }
 
   static Future<bool> getAttendance({int eid, int uid}) async {
-    final response = await http.get(
+    final http.Response response = await http.get(
       "${APIConnect.url}/attenders/$eid/$uid",
       headers: await APIConnect.headers,
     );
@@ -58,7 +59,7 @@ class EventConnect {
       return status == 201
           ? Message.fromJson(json.decode(response.body)['message'])
           : throw Exception(
-              'Attendance value of user $uid could not be created for proposal $eid.');
+              'Attendance value of user $uid could not be created for event $eid.');
     } else if (httpReqType == "DELETE") {
       response = await http.delete(
         "${APIConnect.url}/attenders/$eid/$uid",
@@ -68,8 +69,8 @@ class EventConnect {
       return status == 201
           ? Message.fromJson(json.decode(response.body)['message'])
           : throw Exception(
-              'Attendance value of user $uid could not be deleted for proposal $eid.');
+              'Attendance value of user $uid could not be deleted for event $eid.');
     }
-    return Message(message: 'Something wrong has happened!');
+    return StatusCodesHandler.handleStatusCode(response, response.statusCode);
   }
 }

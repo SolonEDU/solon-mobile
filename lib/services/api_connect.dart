@@ -21,8 +21,12 @@ class APIConnect {
   static Future<Message> connectRoot() async {
     final response = await http.get(url);
     int status = response.statusCode;
-    return status == 200
-        ? Message.fromJson(json.decode(response.body)['message'])
-        : throw Exception('Message for root not found.');
+    if (status == 200) {
+      Message.fromJson(json.decode(response.body)['message']);
+    } else if (status == 500) {
+      throw Exception('Internal Server Error -- We had a problem with our server. Try again later.');
+    } else if (status == 504) {
+      throw Exception('Gateway Timeout');
+    }
   }
 }
