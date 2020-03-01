@@ -49,6 +49,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
     super.dispose();
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
@@ -118,7 +122,6 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                           Flexible(
                             flex: 1,
                             child: SearchButton(
-                              // delegate: ProposalsSearch(context),
                               delegate:
                                   Search<Proposal>(context, 'searchProposals', ProposalUtil.searchView),
                             ),
@@ -136,7 +139,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                         ) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
-                              return ErrorScreen(error: snapshot.error);
+                              return ErrorScreen(
+                                notifyParent: refresh,
+                                error: snapshot.error,
+                              );
                             case ConnectionState.active:
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -147,7 +153,10 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                               );
                             case ConnectionState.done:
                               if (snapshot.hasError)
-                                return ErrorScreen(error: snapshot.error);
+                                return ErrorScreen(
+                                  notifyParent: refresh,
+                                  error: snapshot.error,
+                                );
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,

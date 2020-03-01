@@ -49,6 +49,10 @@ class _ForumScreenState extends State<ForumScreen> {
     super.dispose();
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
@@ -127,7 +131,10 @@ class _ForumScreenState extends State<ForumScreen> {
                             AsyncSnapshot<List<ForumPost>> snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.none:
-                              return ErrorScreen(error: snapshot.error);
+                              return ErrorScreen(
+                                notifyParent: refresh,
+                                error: snapshot.error,
+                              );
                             case ConnectionState.active:
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -138,7 +145,10 @@ class _ForumScreenState extends State<ForumScreen> {
                               );
                             case ConnectionState.done:
                               if (snapshot.hasError)
-                                return ErrorScreen(error: snapshot.error);
+                                return ErrorScreen(
+                                  notifyParent: refresh,
+                                  error: snapshot.error,
+                                );
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,

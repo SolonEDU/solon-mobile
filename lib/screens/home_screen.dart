@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:Solon/services/api_connect.dart';
 import 'package:Solon/models/message.dart';
 
-class HomeScreen extends StatelessWidget {
-  final int uid;
-  HomeScreen({Key key, this.uid}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final int uid = null;
+
+  void refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +24,28 @@ class HomeScreen extends StatelessWidget {
         child: FutureBuilder<Message>(
           future: APIConnect.connectRoot(),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Text("${snapshot.data.message} Your uid is: $uid");
-            } else if (snapshot.hasError) {
-              return ErrorScreen(error: snapshot.error);
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return ErrorScreen(
+                  notifyParent: refresh,
+                  error: snapshot.error,
+                );
+              case ConnectionState.active:
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.waiting:
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.done:
+                if (snapshot.hasError)
+                  return ErrorScreen(
+                    notifyParent: refresh,
+                    error: snapshot.error,
+                  );
+                return Text("${snapshot.data.message} Your uid is: $uid");
             }
-            return CircularProgressIndicator();
           },
         ),
       ),
