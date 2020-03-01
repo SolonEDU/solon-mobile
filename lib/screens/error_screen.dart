@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {
   final Function() notifyParent;
-  final Object error;
+  final Exception error;
 
   ErrorScreen({
     Key key,

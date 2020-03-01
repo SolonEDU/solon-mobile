@@ -52,84 +52,118 @@ class Search<T> extends SearchDelegate {
 
     switch (T) {
       case Proposal:
-        return StreamBuilder<List<Proposal>>(
-          stream: Function.apply(
-            ProposalUtil.searchView,
-            [query],
-          ),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return Text(snapshot.error);
-              case ConnectionState.active:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              case ConnectionState.done:
-                if (snapshot.hasError) return Text(snapshot.error);
-                return ListView(
-                  children: snapshot.data
-                      .map((json) => ProposalCard(proposal: json))
-                      .toList(),
-                );
-            }
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return StreamBuilder<List<Proposal>>(
+              stream: Function.apply(
+                ProposalUtil.searchView,
+                [query],
+              ),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Proposal>> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return ErrorScreen(
+                      notifyParent: () => setState(() {}),
+                      error: snapshot.error,
+                    );
+                  case ConnectionState.active:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case ConnectionState.done:
+                    if (snapshot.hasError)
+                      return ErrorScreen(
+                        notifyParent: () => setState(() {}),
+                        error: snapshot.error,
+                      );
+                    return ListView(
+                      children: snapshot.data
+                          .map((json) => ProposalCard(proposal: json))
+                          .toList(),
+                    );
+                }
+              },
+            );
           },
         );
       case Event:
-        return StreamBuilder<List<Event>>(
-          stream: Function.apply(
-            EventUtil.searchView,
-            [
-              query,
-            ],
-          ),
-          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-            if (snapshot.hasError) return Text(snapshot.error);
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              default:
-                if (snapshot.data == null) {
-                  return Text(snapshot.error);
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return StreamBuilder<List<Event>>(
+              stream: Function.apply(
+                EventUtil.searchView,
+                [
+                  query,
+                ],
+              ),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+                if (snapshot.hasError)
+                  return ErrorScreen(
+                    notifyParent: () => setState(() {}),
+                    error: snapshot.error,
+                  );
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    if (snapshot.data == null) {
+                      return ErrorScreen(
+                        notifyParent: () => setState(() {}),
+                        error: snapshot.error,
+                      );
+                    }
+                    return ListView(
+                        children: snapshot.data
+                            .map((json) => EventCard(event: json))
+                            .toList());
                 }
-                return ListView(
-                    children: snapshot.data
-                        .map((json) => EventCard(event: json))
-                        .toList());
-            }
+              },
+            );
           },
         );
       case ForumPost:
-        return StreamBuilder<List<ForumPost>>(
-          stream: Function.apply(
-            ForumUtil.searchView,
-            [query],
-          ),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<ForumPost>> snapshot) {
-            if (snapshot.hasError) return Text(snapshot.error);
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              default:
-                if (snapshot.data == null) {
-                  return Text(snapshot.error);
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return StreamBuilder<List<ForumPost>>(
+              stream: Function.apply(
+                ForumUtil.searchView,
+                [query],
+              ),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<ForumPost>> snapshot) {
+                if (snapshot.hasError)
+                  return ErrorScreen(
+                    notifyParent: () => setState(() {}),
+                    error: snapshot.error,
+                  );
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  default:
+                    if (snapshot.data == null) {
+                      return ErrorScreen(
+                        notifyParent: () => setState(() {}),
+                        error: snapshot.error,
+                      );
+                    }
+                    return ListView(
+                      children: snapshot.data
+                          .map((json) => ForumCard(post: json))
+                          .toList(),
+                    );
                 }
-                return ListView(
-                  children: snapshot.data
-                      .map((json) => ForumCard(post: json))
-                      .toList(),
-                );
-            }
+              },
+            );
           },
         );
       default:
@@ -139,48 +173,55 @@ class Search<T> extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder(
-      future: UserUtil.getCachedSearches<T>(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Container();
-          default:
-            if (snapshot.data == null) {
-              return Text(snapshot.error);
-            }
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () => {
-                      query = snapshot.data[index],
-                      showResults(context),
-                    },
-                  ),
-                  trailing: Transform.rotate(
-                    angle: 270 * pi / 180,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.call_made,
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
+        return FutureBuilder(
+          future: UserUtil.getCachedSearches<T>(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Container();
+              default:
+                if (snapshot.hasError) {
+                  return ErrorScreen(
+                    notifyParent: () => setState(() {}),
+                    error: snapshot.error,
+                  );
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () => {
+                          query = snapshot.data[index],
+                          showResults(context),
+                        },
                       ),
-                      onPressed: () => {
-                        query = snapshot.data[
-                            index], // TODO: shows cursor in the beginning of query, which looks weird
+                      trailing: Transform.rotate(
+                        angle: 270 * pi / 180,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.call_made,
+                          ),
+                          onPressed: () => {
+                            query = snapshot.data[
+                                index], // TODO: shows cursor in the beginning of query, which looks weird
+                          },
+                        ),
+                      ),
+                      title: Text('${snapshot.data[index]}'),
+                      onTap: () => {
+                        query = snapshot.data[index],
+                        showResults(context),
                       },
-                    ),
-                  ),
-                  title: Text('${snapshot.data[index]}'),
-                  onTap: () => {
-                    query = snapshot.data[index],
-                    showResults(context),
+                    );
                   },
                 );
-              },
-            );
-        }
+            }
+          },
+        );
       },
     );
   }
