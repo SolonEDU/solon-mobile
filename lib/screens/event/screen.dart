@@ -109,7 +109,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           Flexible(
                             flex: 1,
                             child: SearchButton(
-                              delegate: Search<Event>(context, "searchEvents"),
+                              delegate: Search<Event>(context, "searchEvents", EventUtil.searchView),
                             ),
                           ),
                         ],

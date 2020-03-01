@@ -1,25 +1,17 @@
 import 'dart:math';
 
-import 'package:Solon/models/event.dart';
-import 'package:Solon/models/forum_post.dart';
 import 'package:Solon/models/model.dart';
-import 'package:Solon/models/proposal.dart';
 import 'package:Solon/screens/error_screen.dart';
 import 'package:Solon/util/app_localizations.dart';
-import 'package:Solon/util/event_util.dart';
-import 'package:Solon/util/forum_util.dart';
-import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/util/user_util.dart';
-import 'package:Solon/widgets/cards/event_card.dart';
-import 'package:Solon/widgets/cards/forum_card.dart';
-import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:flutter/material.dart';
 
 class Search<T extends Model<T>> extends SearchDelegate {
   BuildContext context;
   String searchLabel;
+  Function view;
 
-  Search(this.context, this.searchLabel);
+  Search(this.context, this.searchLabel, this.view);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -53,7 +45,7 @@ class Search<T extends Model<T>> extends SearchDelegate {
 
     return StreamBuilder<List<T>>(
       stream: Function.apply(
-        ProposalUtil.searchView,
+        view,
         [query],
       ),
       builder: (BuildContext context, AsyncSnapshot<List<T>> snapshot) {
@@ -71,98 +63,12 @@ class Search<T extends Model<T>> extends SearchDelegate {
           default:
             return ListView(
               children: snapshot.data
-                  .map((proposal) => proposal.toCard())
+                  .map((obj) => obj.toCard())
                   .toList(),
             );
         }
       },
     );
-    // switch (T) {
-    //   case Proposal:
-    //     return StreamBuilder<List<Proposal>>(
-    //       stream: Function.apply(
-    //         ProposalUtil.searchView,
-    //         [query],
-    //       ),
-    //       builder:
-    //           (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
-    //         switch (snapshot.connectionState) {
-    //           case ConnectionState.none:
-    //             return ErrorScreen(error: snapshot.error);
-    //           case ConnectionState.active:
-    //             return Center(
-    //               child: CircularProgressIndicator(),
-    //             );
-    //           case ConnectionState.waiting:
-    //             return Center(
-    //               child: CircularProgressIndicator(),
-    //             );
-    //           case ConnectionState.done:
-    //             if (snapshot.hasError)
-    //               return ErrorScreen(error: snapshot.error);
-    //             return ListView(
-    //               children: snapshot.data
-    //                   .map((json) => ProposalCard(proposal: json))
-    //                   .toList(),
-    //             );
-    //         }
-    //       },
-    //     );
-    //   case Event:
-    //     return StreamBuilder<List<Event>>(
-    //       stream: Function.apply(
-    //         EventUtil.searchView,
-    //         [
-    //           query,
-    //         ],
-    //       ),
-    //       builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-    //         if (snapshot.hasError) return ErrorScreen(error: snapshot.error);
-    //         switch (snapshot.connectionState) {
-    //           case ConnectionState.waiting:
-    //             return Center(
-    //               child: CircularProgressIndicator(),
-    //             );
-    //           default:
-    //             if (snapshot.data == null) {
-    //               return ErrorScreen(error: snapshot.error);
-    //             }
-    //             return ListView(
-    //                 children: snapshot.data
-    //                     .map((json) => EventCard(event: json))
-    //                     .toList());
-    //         }
-    //       },
-    //     );
-    //   case ForumPost:
-    //     return StreamBuilder<List<ForumPost>>(
-    //       stream: Function.apply(
-    //         ForumUtil.searchView,
-    //         [query],
-    //       ),
-    //       builder:
-    //           (BuildContext context, AsyncSnapshot<List<ForumPost>> snapshot) {
-    //         if (snapshot.hasError) return ErrorScreen(error: snapshot.error);
-    //         switch (snapshot.connectionState) {
-    //           case ConnectionState.waiting:
-    //             return Center(
-    //               child: CircularProgressIndicator(),
-    //             );
-    //           default:
-    //             if (snapshot.data == null) {
-    //               return ErrorScreen(error: snapshot.error);
-    //             }
-    //             return ListView(
-    //               children: snapshot.data
-    //                   .map((json) => ForumCard(post: json))
-    //                   .toList(),
-    //             );
-    //         }
-    //       },
-    //     );
-    //   default:
-    //     return ListView();
-    // }
   }
 
   @override

@@ -120,7 +120,7 @@ class _ProposalsScreenState extends State<ProposalsScreen> {
                             child: SearchButton(
                               // delegate: ProposalsSearch(context),
                               delegate:
-                                  Search<Proposal>(context, 'searchProposals'),
+                                  Search<Proposal>(context, 'searchProposals', ProposalUtil.searchView),
                             ),
                           ),
                         ],

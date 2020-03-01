@@ -109,7 +109,7 @@ class _ForumScreenState extends State<ForumScreen> {
                             flex: 1,
                             child: SearchButton(
                               delegate:
-                                  Search<ForumPost>(context, "searchForum"),
+                                  Search<ForumPost>(context, "searchForum", ForumUtil.searchView),
                             ),
                           ),
                         ],
