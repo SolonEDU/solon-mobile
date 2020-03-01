@@ -15,7 +15,6 @@ class Screen<T extends Model<T>> extends StatefulWidget {
   final Function searchView;
   final String searchLabel;
   final Widget creator;
-  final Function creatorFunction;
   final List<DropdownMenuItem<String>> dropdownItems;
 
   Screen({
@@ -25,7 +24,6 @@ class Screen<T extends Model<T>> extends StatefulWidget {
     this.searchView,
     this.searchLabel,
     this.creator,
-    this.creatorFunction,
     this.dropdownItems,
   }) : super(key: key);
 
