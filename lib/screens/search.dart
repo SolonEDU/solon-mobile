@@ -50,17 +50,28 @@ class Search<T extends Model<T>> extends SearchDelegate {
           context); // TODO: make keyboard unfocus cleaner when searching with empty query
 
     UserUtil.cacheSearchQuery<T>(query);
-    return StreamBuilder<List<Proposal>>(
+
+    return StreamBuilder<List<T>>(
       stream: Function.apply(
         ProposalUtil.searchView,
         [query],
       ),
-      builder: (BuildContext context, AsyncSnapshot<List<Proposal>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<T>> snapshot) {
         switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return ErrorScreen(error: snapshot.error);
+          case ConnectionState.active:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          case ConnectionState.waiting:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           default:
             return ListView(
               children: snapshot.data
-                  .map((proposal) => ProposalCard(proposal: proposal))
+                  .map((proposal) => proposal.toCard())
                   .toList(),
             );
         }
