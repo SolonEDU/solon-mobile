@@ -26,6 +26,7 @@
 	"votingOnProposalEnds": "প্রস্তাবে ভোট শেষ",
 	"youHaveVotedYes": "আপনি হ্যাঁ ভোট দিয়েছেন!",
 	"youHaveVotedNo": "আপনি কোন ভোট দিয়েছেন!",
+	"votingIsOver": "ভোট শেষ!",
 	"title": "শিরোনাম",
 	"description": "বিবরণ",
 	"daysUntilProposalEnds": "প্রস্তাব শেষ হওয়ার দিনগুলি",
@@ -62,5 +63,6 @@
 	"searchForum": "ফোরাম অনুসন্ধান করুন",
 	"signOut": "সাইন আউট",
 	"userDoesNotExist": "এই ইমেল সহ ব্যবহারকারী বিদ্যমান নেই",
-	"incorrectPassword": "ভুল গোপন নম্বর"
+	"incorrectPassword": "ভুল গোপন নম্বর",
+	"reload":"রিলোড"
 }

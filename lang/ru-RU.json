@@ -26,6 +26,7 @@
 	"votingOnProposalEnds": "Голосование по предложению заканчивается",
 	"youHaveVotedYes": "Вы проголосовали да!",
 	"youHaveVotedNo": "Вы проголосовали нет!",
+	"votingIsOver": "Голосование окончено!",
 	"title": "заглавие",
 	"description": "Описание",
 	"daysUntilProposalEnds": "Дни до окончания предложения",
@@ -62,5 +63,6 @@
 	"searchForum": "Поиск по форуму",
 	"signOut": "Выход",
 	"userDoesNotExist": "Пользователь с таким адресом электронной почты не существует",
-	"incorrectPassword": "Неправильный пароль"
+	"incorrectPassword": "Неправильный пароль",
+	"reload":"перезарядка"
 }

@@ -26,6 +26,7 @@
     "votingOnProposalEnds": "Votes on proposal ends on",
     "youHaveVotedYes": "You have voted yes!",
     "youHaveVotedNo": "You have voted no!",
+    "votingIsOver": "Voting is over!",
     "title": "Title",
     "description": "Description",
     "daysUntilProposalEnds": "Days Until Proposal Ends",
@@ -62,5 +63,6 @@
     "searchForum": "Search forum",
     "signOut": "Sign Out",
     "userDoesNotExist": "User with that email does not exist",
-    "incorrectPassword": "Wrong password"
+    "incorrectPassword": "Wrong password",
+	"reload":"reload"
 }

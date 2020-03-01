@@ -26,6 +26,7 @@
 	"votingOnProposalEnds": "提案的投票于",
 	"youHaveVotedYes": "您已投票赞成！",
 	"youHaveVotedNo": "您已投票否决！",
+	"votingIsOver": "投票结束了！",
 	"title": "标题",
 	"description": "描述",
 	"daysUntilProposalEnds": "投标截止日",
@@ -52,7 +53,7 @@
 	"mostComments": "大多数评论",
 	"leastComments": "最少的评论",
 	"comments": "注释",
-	"attending": "参加吗?",
+	"attending": "参加吗",
 	"pleaseEnterATitle": "请输入标题",
 	"pleaseEnterADescription": "请输入描述",
 	"newPost": "最新帖子",
@@ -62,5 +63,6 @@
 	"searchForum": "搜索论坛",
 	"signOut": "登出",
 	"userDoesNotExist": "使用该电子邮件的用户不存在",
-	"incorrectPassword": "密码错误"
+	"incorrectPassword": "密码错误",
+	"reload": "重装"
 }
