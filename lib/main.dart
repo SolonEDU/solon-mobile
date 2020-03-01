@@ -1,3 +1,8 @@
+import 'package:Solon/models/proposal.dart';
+import 'package:Solon/screens/proposal/create.dart';
+import 'package:Solon/screens/screen.dart';
+import 'package:Solon/services/proposal_connect.dart';
+import 'package:Solon/util/proposal_util.dart';
 import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -131,7 +136,42 @@ class _MainState extends State<Main> {
       },
       {
         'title': 'proposals',
-        'widget': ProposalsScreen(),
+        'widget': Screen<Proposal>(
+          screenView: ProposalUtil.screenView,
+          sortOption: 'proposalsSortOption',
+          searchView: ProposalUtil.searchView,
+          searchLabel: 'searchProposals',
+          creator: CreateProposal(ProposalConnect.addProposal),
+          dropdownItems: <String>[
+            'Most votes',
+            'Least votes',
+            'Newly created',
+            'Oldest created',
+            'Upcoming deadlines',
+            'Oldest deadlines',
+          ].map<DropdownMenuItem<String>>((String value) {
+            Map<String, String> itemsMap = {
+              'Most votes': AppLocalizations.of(context).translate("mostVotes"),
+              'Least votes':
+                  AppLocalizations.of(context).translate("leastVotes"),
+              'Newly created':
+                  AppLocalizations.of(context).translate("newlyCreated"),
+              'Oldest created':
+                  AppLocalizations.of(context).translate("oldestCreated"),
+              'Upcoming deadlines':
+                  AppLocalizations.of(context).translate("upcomingDeadlines"),
+              'Oldest deadlines':
+                  AppLocalizations.of(context).translate("oldestDeadlines"),
+            };
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                itemsMap[value],
+              ),
+            );
+          }).toList(),
+        )
+        // 'widget': ProposalsScreen(),
       },
       {
         'title': 'events',

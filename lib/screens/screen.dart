@@ -3,24 +3,29 @@ import 'dart:async';
 import 'package:Solon/models/model.dart';
 import 'package:Solon/screens/error_screen.dart';
 import 'package:Solon/screens/search.dart';
+import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Screen<T extends Model<T>> extends StatefulWidget {
-  final Function sortView;
+  final Function screenView;
   final String sortOption;
   final Function searchView;
   final String searchLabel;
+  final Widget creator;
+  final Function creatorFunction;
   final List<DropdownMenuItem<String>> dropdownItems;
 
   Screen({
     Key key,
-    this.sortView,
+    this.screenView,
     this.sortOption,
     this.searchView,
     this.searchLabel,
+    this.creator,
+    this.creatorFunction,
     this.dropdownItems,
   }) : super(key: key);
 
@@ -42,7 +47,7 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
     final sharedPrefs = await SharedPreferences.getInstance();
     final proposalsSortOption = sharedPrefs.getString(widget.sortOption);
     dropdownMenuStreamController.sink.add(proposalsSortOption);
-    stream = widget.sortView(proposalsSortOption);
+    stream = widget.screenView(proposalsSortOption);
   }
 
   @override
@@ -112,8 +117,8 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
                     ),
                     Expanded(
                       child: StreamBuilder<List<T>>(
-                        stream: Function.apply(
-                            widget.searchView, [optionVal.data]),
+                        stream:
+                            Function.apply(widget.screenView, [optionVal.data]),
                         builder: (
                           BuildContext context,
                           AsyncSnapshot<List<T>> snapshot,
@@ -133,11 +138,12 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
                                 child: CircularProgressIndicator(),
                               );
                             case ConnectionState.done:
-                              if (snapshot.hasError)
+                              if (snapshot.hasError) {
                                 return ErrorScreen(
                                   notifyParent: refresh,
                                   error: snapshot.error,
                                 );
+                              }
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
@@ -146,17 +152,14 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
                                   body: ListView(
                                     padding: const EdgeInsets.all(4),
                                     children: snapshot.data
-                                        .map(
-                                          (obj) =>
-                                              obj.toCard(),
-                                        )
+                                        .map((obj) => obj.toCard())
                                         .toList(),
                                   ),
-                                  // floatingActionButton: CreateButton(
-                                  //   creator: CreateProposal(
-                                  //     ProposalConnect.addProposal,
-                                  //   ),
-                                  // ),
+                                  floatingActionButton: (widget.creator == null)
+                                      ? null
+                                      : CreateButton(
+                                          creator: widget.creator,
+                                        ),
                                 ),
                               );
                           }
