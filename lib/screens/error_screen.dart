@@ -1,3 +1,4 @@
+import 'package:Solon/util/app_localizations.dart';
 import 'package:Solon/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class ErrorScreen extends StatelessWidget {
             Button(
               color: Colors.pink[200],
               height: 55,
-              label: 'Reload',
+              label: AppLocalizations.of(context).translate('reload'),
               margin: EdgeInsets.only(top: 10),
               function: notifyParent,
             ),
