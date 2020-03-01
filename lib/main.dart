@@ -118,7 +118,7 @@ class Main extends StatefulWidget {
   State<StatefulWidget> createState() => _MainState();
 }
 
-class _MainState extends State<Main> with DropdownUtil{
+class _MainState extends State<Main> with DropdownUtil {
   var _selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
@@ -146,7 +146,7 @@ class _MainState extends State<Main> with DropdownUtil{
           searchView: ProposalUtil.searchView,
           searchLabel: 'searchProposals',
           creator: CreateProposal(ProposalConnect.addProposal),
-          dropdownItems: DropdownUtil.getProposalDropdownItems(context)
+          dropdownItems: DropdownUtil.getProposalDropdownItems(context),
         )
       },
       {
@@ -156,7 +156,7 @@ class _MainState extends State<Main> with DropdownUtil{
           sortOption: 'eventsSortOption',
           searchView: EventUtil.searchView,
           searchLabel: 'searchEvents',
-          dropdownItems: DropdownUtil.getEventDropdownItems(context)
+          dropdownItems: DropdownUtil.getEventDropdownItems(context),
         )
       },
       {
@@ -167,7 +167,7 @@ class _MainState extends State<Main> with DropdownUtil{
           searchView: ForumUtil.searchView,
           searchLabel: 'searchForum',
           creator: CreatePost(ForumConnect.addForumPost),
-          dropdownItems: DropdownUtil.getForumDropdownItems(context)
+          dropdownItems: DropdownUtil.getForumDropdownItems(context),
         ),
       },
     ];

@@ -81,7 +81,7 @@ class _EventCardState extends State<EventCard> {
               if (snapshot.data == null) {
                 return Center();
               } else {
-                return Center(); //TODO: fill this in lata; for showing numvotes on cards on events screen
+                return Center(); //TODO: fill this in later; for showing attendance value on cards on events screen
               }
             },
           ),

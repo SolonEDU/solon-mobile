@@ -42,8 +42,6 @@ class TextLayout {
           textDirection: TextDirection.ltr,
         ); // TODO: watch out for locale text direction
         tp.layout(maxWidth: constraints.maxWidth);
-        // final tpLineMetrics = tp.computeLineMetrics();
-        // print(tpLineMetrics[tpLineMetrics.length - 1].lineNumber);
 
         // TODO: This doesn't handle right-to-left text yet.; maybe textAffinity can fix.
         // select everything
@@ -78,12 +76,10 @@ class TextLayout {
         // get the last substring
         final extra = text.substring(start);
         lineTexts.add(extra);
-        // print('line texts: $lineTexts');
         final int lineTextsLength = lineTexts.length;
 
         // avoid RangeError where actual number of lines is less than default lines argument
         lines = lines >= lineTextsLength ? lineTextsLength : lines;
-        // print('lines: $lines');
 
         if (lineTextsLength == 1) {
           // The text only has 1 line.
