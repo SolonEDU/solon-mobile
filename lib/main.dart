@@ -143,7 +143,7 @@ class _MainState extends State<Main> {
       },
     ];
 
-    return Scaffold(
+    return Scaffold( // TODO: add Directionality widget for right to left languages
       key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
