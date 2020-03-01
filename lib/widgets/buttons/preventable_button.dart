@@ -50,7 +50,7 @@ class PreventableButtonState extends State<PreventableButton> {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonBar(
+    return ButtonBar( // TODO: depending on how the dynamic width is rendered, it affects how the preventablebuttons in proposal page are stacked
       alignment: MainAxisAlignment.center,
       children: getBody(),
     );
