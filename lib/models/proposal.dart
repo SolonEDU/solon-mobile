@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:Solon/models/model.dart';
-import 'package:Solon/widgets/cards/proposal_card.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 

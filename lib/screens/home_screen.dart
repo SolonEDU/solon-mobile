@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     notifyParent: refresh,
                     error: snapshot.error,
                   );
-                return Text("${snapshot.data.message} Your uid is: $uid");
+                return Text("${snapshot.data.message}");
             }
           },
         ),

@@ -1,15 +1,24 @@
-import 'package:Solon/util/user_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:Solon/screens/screen.dart';
 import 'package:Solon/screens/welcome.dart';
 import 'package:Solon/screens/home_screen.dart';
-import 'package:Solon/screens/proposal/screen.dart';
-import 'package:Solon/screens/event/screen.dart';
-import 'package:Solon/screens/forum/screen.dart';
 import 'package:Solon/screens/account_screen.dart';
+import 'package:Solon/screens/forum/create.dart';
+import 'package:Solon/screens/proposal/create.dart';
 import 'package:Solon/widgets/bars/nav_bar.dart';
+import 'package:Solon/models/event.dart';
+import 'package:Solon/models/forum_post.dart';
+import 'package:Solon/models/proposal.dart';
+import 'package:Solon/services/forum_connect.dart';
+import 'package:Solon/services/proposal_connect.dart';
+import 'package:Solon/util/dropdown_util.dart';
+import 'package:Solon/util/event_util.dart';
+import 'package:Solon/util/forum_util.dart';
+import 'package:Solon/util/proposal_util.dart';
+import 'package:Solon/util/user_util.dart';
 import 'package:Solon/util/app_localizations.dart';
 
 void main() => runApp(Solon());
@@ -109,7 +118,7 @@ class Main extends StatefulWidget {
   State<StatefulWidget> createState() => _MainState();
 }
 
-class _MainState extends State<Main> {
+class _MainState extends State<Main> with DropdownUtil {
   var _selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: '_scaffoldKey');
@@ -131,15 +140,35 @@ class _MainState extends State<Main> {
       },
       {
         'title': 'proposals',
-        'widget': ProposalsScreen(),
+        'widget': Screen<Proposal>(
+          screenView: ProposalUtil.screenView,
+          sortOption: 'proposalsSortOption',
+          searchView: ProposalUtil.searchView,
+          searchLabel: 'searchProposals',
+          creator: CreateProposal(ProposalConnect.addProposal),
+          dropdownItems: DropdownUtil.getProposalDropdownItems(context),
+        )
       },
       {
         'title': 'events',
-        'widget': EventsScreen(),
+        'widget': Screen<Event>(
+          screenView: EventUtil.screenView,
+          sortOption: 'eventsSortOption',
+          searchView: EventUtil.searchView,
+          searchLabel: 'searchEvents',
+          dropdownItems: DropdownUtil.getEventDropdownItems(context),
+        )
       },
       {
         'title': 'forum',
-        'widget': ForumScreen(),
+        'widget': Screen<ForumPost>(
+          screenView: ForumUtil.screenView,
+          sortOption: 'forumSortOption',
+          searchView: ForumUtil.searchView,
+          searchLabel: 'searchForum',
+          creator: CreatePost(ForumConnect.addForumPost),
+          dropdownItems: DropdownUtil.getForumDropdownItems(context),
+        ),
       },
     ];
 

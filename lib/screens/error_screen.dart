@@ -15,7 +15,7 @@ class ErrorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        // TODO: needa center this
+        // TODO: need to center this
         child: ListView(
           children: <Widget>[
             Text('An error occurred!'),
