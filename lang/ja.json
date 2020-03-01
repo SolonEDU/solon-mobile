@@ -63,5 +63,6 @@
 	"searchForum": "検索フォーラム",
 	"signOut": "サインアウト",
 	"userDoesNotExist": "そのメールを持つユーザーは存在しません",
-	"incorrectPassword": "間違ったパスワード"
+	"incorrectPassword": "間違ったパスワード",
+	"reload":"リロード"
 }

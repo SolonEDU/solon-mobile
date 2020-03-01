@@ -63,5 +63,6 @@
 	"searchForum": "ফোরাম অনুসন্ধান করুন",
 	"signOut": "সাইন আউট",
 	"userDoesNotExist": "এই ইমেল সহ ব্যবহারকারী বিদ্যমান নেই",
-	"incorrectPassword": "ভুল গোপন নম্বর"
+	"incorrectPassword": "ভুল গোপন নম্বর",
+	"reload":"রিলোড"
 }

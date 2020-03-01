@@ -63,5 +63,6 @@
 	"searchForum": "Пошук на форумі",
 	"signOut": "Вийти з аккаунта",
 	"userDoesNotExist": "Користувача з цим електронним листом не існує",
-	"incorrectPassword": "Неправильний пароль"
+	"incorrectPassword": "Неправильний пароль",
+	"reload":"перезавантажити"
 }

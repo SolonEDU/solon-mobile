@@ -63,5 +63,6 @@
     "searchForum": "Search forum",
     "signOut": "Sign Out",
     "userDoesNotExist": "User with that email does not exist",
-    "incorrectPassword": "Wrong password"
+    "incorrectPassword": "Wrong password",
+	"reload":"reload"
 }

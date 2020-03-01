@@ -63,5 +63,6 @@
 	"searchForum": "搜索論壇",
 	"signOut": "登出",
 	"userDoesNotExist": "使用該電子郵件的用戶不存在",
-	"incorrectPassword": "密碼錯誤"
+	"incorrectPassword": "密碼錯誤",
+	"reload": "重装"
 }
