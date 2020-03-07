@@ -146,9 +146,15 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height,
                                 child: Scaffold(
+                                  backgroundColor: Colors.grey[100],
                                   key: _scaffoldKey,
                                   body: ListView(
-                                    padding: const EdgeInsets.all(4),
+                                    padding: const EdgeInsets.only(
+                                      top: 10.0,
+                                      left: 10.0,
+                                      right: 10.0,
+                                      // bottom: 8.0,
+                                    ),
                                     children: snapshot.data
                                         .map((obj) => obj.toCard())
                                         .toList(),
