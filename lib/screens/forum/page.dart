@@ -54,7 +54,11 @@ class _PostPageState extends State<PostPage> {
                   fontSize: 30,
                 ),
               ),
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              margin: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+                bottom: 10.0,
+              ),
             ),
             Container(
               child: Text(
@@ -70,7 +74,10 @@ class _PostPageState extends State<PostPage> {
                 widget.post.timestamp,
                 style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
-              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
             ),
             Container(
               child: Text(
