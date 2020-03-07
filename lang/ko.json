@@ -19,9 +19,10 @@
 	"parentHomeScreen": "부모 홈 화면",
 	"account": "계정",
 	"proposals": "제안서",
-	"numDaysUntilVotingEnds": "투표가 끝날 때까지의 일수 :",
+	"numDaysUntilVotingEnds": "투표가 끝나기까지의 일수 :",
 	"yes": "예",
 	"no": "아니",
+	"vote": "투표",
 	"votes": "투표",
 	"votingOnProposalEnds": "제안에 대한 투표는에 끝납니다",
 	"youHaveVotedYes": "당신은 찬성 투표했습니다!",
@@ -47,11 +48,13 @@
 	"upcoming": "다가오는",
 	"mostAttendees": "대부분의 참석자",
 	"leastAttendees": "최소 참석자",
-	"attenders": "참석자",
+	"attendee": "참석자",
+	"attendees": "참석자",
 	"searchEvents": "이벤트 검색",
 	"forum": "법정",
 	"mostComments": "대부분의 의견",
 	"leastComments": "최소 의견",
+	"comment": "코멘트",
 	"comments": "코멘트",
 	"attending": "참석?",
 	"pleaseEnterATitle": "제목을 입력하십시오",
@@ -64,5 +67,5 @@
 	"signOut": "로그 아웃",
 	"userDoesNotExist": "해당 이메일을 가진 사용자가 존재하지 않습니다",
 	"incorrectPassword": "잘못된 비밀번호",
-	"reload":"새로 고침"
+	"reload": "새로 고침"
 }

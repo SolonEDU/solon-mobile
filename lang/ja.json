@@ -22,6 +22,7 @@
 	"numDaysUntilVotingEnds": "投票が終了するまでの日数：",
 	"yes": "はい",
 	"no": "番号",
+	"vote": "投票",
 	"votes": "票",
 	"votingOnProposalEnds": "提案に対する投票の終了日",
 	"youHaveVotedYes": "はい、投票しました！",
@@ -47,11 +48,13 @@
 	"upcoming": "今後の",
 	"mostAttendees": "ほとんどの参加者",
 	"leastAttendees": "最小参加者",
-	"attenders": "出席者",
+	"attendee": "出席者",
+	"attendees": "出席者",
 	"searchEvents": "イベントを検索",
 	"forum": "フォーラム",
 	"mostComments": "ほとんどのコメント",
 	"leastComments": "最小限のコメント",
+	"comment": "コメント",
 	"comments": "コメント",
 	"attending": "参加しますか？",
 	"pleaseEnterATitle": "タイトルを入力してください",
@@ -64,5 +67,5 @@
 	"signOut": "サインアウト",
 	"userDoesNotExist": "そのメールを持つユーザーは存在しません",
 	"incorrectPassword": "間違ったパスワード",
-	"reload":"リロード"
+	"reload": "リロード"
 }

@@ -22,6 +22,7 @@
 	"numDaysUntilVotingEnds": "ভোটগ্রহণ শেষ হওয়া অবধি দিন:",
 	"yes": "হ্যাঁ",
 	"no": "না",
+	"vote": "ভোট",
 	"votes": "ভোট",
 	"votingOnProposalEnds": "প্রস্তাবে ভোট শেষ",
 	"youHaveVotedYes": "আপনি হ্যাঁ ভোট দিয়েছেন!",
@@ -47,11 +48,13 @@
 	"upcoming": "আসন্ন",
 	"mostAttendees": "সর্বাধিক উপস্থিতি",
 	"leastAttendees": "স্বল্প উপস্থিতি",
-	"attenders": "attenders",
+	"attendee": "অংশগ্রহণকারীদের",
+	"attendees": "অংশগ্রহণকারীদের",
 	"searchEvents": "ইভেন্ট অনুসন্ধান করুন",
 	"forum": "ফোরাম",
 	"mostComments": "সর্বাধিক মন্তব্য",
 	"leastComments": "কম মন্তব্য",
+	"comment": "মন্তব্য",
 	"comments": "মন্তব্য",
 	"attending": "অংশগ্রহণ করছেন?",
 	"pleaseEnterATitle": "একটি শিরোনাম লিখুন দয়া করে",
@@ -64,5 +67,5 @@
 	"signOut": "সাইন আউট",
 	"userDoesNotExist": "এই ইমেল সহ ব্যবহারকারী বিদ্যমান নেই",
 	"incorrectPassword": "ভুল গোপন নম্বর",
-	"reload":"রিলোড"
+	"reload": "রিলোড"
 }
