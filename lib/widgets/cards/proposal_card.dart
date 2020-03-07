@@ -95,8 +95,10 @@ class _ProposalCardState extends State<ProposalCard> {
                     ),
                   ),
           ),
-          Text(
-            "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
+          Center(
+            child: Text(
+              "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
+            ),
           ),
           FutureBuilder<Map<String, dynamic>>(
             future: _listFutureProposal,
