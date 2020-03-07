@@ -10,10 +10,11 @@ class VoteBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           margin: const EdgeInsets.only(top: 10),
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width * 0.60,
           child: Text(''),
           decoration: ShapeDecoration(
             gradient: LinearGradient(
@@ -35,21 +36,28 @@ class VoteBar extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                "$numYes ${AppLocalizations.of(context).translate("yes")}",
-                textAlign: TextAlign.start,
+        Container(
+          margin: EdgeInsets.only(
+            top: 4,
+            left: MediaQuery.of(context).size.width * 0.218,
+            right: MediaQuery.of(context).size.width * 0.218,
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  "$numYes ${AppLocalizations.of(context).translate("yes")}",
+                  textAlign: TextAlign.start,
+                ),
               ),
-            ),
-            Expanded(
-              child: Text(
-                "$numNo ${AppLocalizations.of(context).translate("no")}",
-                textAlign: TextAlign.end,
+              Expanded(
+                child: Text(
+                  "$numNo ${AppLocalizations.of(context).translate("no")}",
+                  textAlign: TextAlign.end,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
