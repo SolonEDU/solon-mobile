@@ -40,6 +40,7 @@ class _PostPageState extends State<PostPage> {
   }
 
   Widget build(BuildContext context) {
+    int _numComments = widget.post.numcomments;
     return Scaffold(
       appBar: PageAppBar(),
       body: Center(
@@ -73,7 +74,7 @@ class _PostPageState extends State<PostPage> {
             ),
             Container(
               child: Text(
-                AppLocalizations.of(context).translate("commentSection"),
+                "$_numComments ${_numComments == 1 ? AppLocalizations.of(context).translate("comment") : AppLocalizations.of(context).translate("comments")}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

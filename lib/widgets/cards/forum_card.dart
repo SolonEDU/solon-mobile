@@ -26,6 +26,7 @@ class _ForumCardState extends State<ForumCard> {
         ),
       );
     };
+    int _numComments = widget.post.numcomments;
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
         top: 10,
@@ -61,7 +62,7 @@ class _ForumCardState extends State<ForumCard> {
           ),
           Text(widget.post.timestamp),
           Text(
-              "${widget.post.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
+              "${_numComments} ${_numComments == 1 ? AppLocalizations.of(context).translate("comment") : AppLocalizations.of(context).translate("comments")}"),
         ],
       ),
     );
