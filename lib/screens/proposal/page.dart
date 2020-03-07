@@ -148,7 +148,9 @@ class _ProposalPageState extends State<ProposalPage> {
                             }
                           ],
                         )
-                      : Text(_voteOutput),
+                      : Center(
+                          child: Text(_voteOutput),
+                        ),
                   snapshot.data['message'] ==
                               'Error' && // TODO: check if logic can be cleaner
                           widget.proposal.date
