@@ -11,8 +11,9 @@ class EventPage extends StatefulWidget {
   final Event event;
 
   EventPage({
+    Key key,
     this.event,
-  });
+  }) : super(key: key);
 
   @override
   _EventPageState createState() => _EventPageState();
@@ -22,7 +23,7 @@ class _EventPageState extends State<EventPage> {
   bool attendanceVal;
   StreamController<bool> streamController = StreamController();
   int userUid;
-
+  
   void _onChanged(bool value) async {
     print('from _onChanged: $userUid');
     if (value) {
@@ -36,7 +37,8 @@ class _EventPageState extends State<EventPage> {
   }
 
   void load() async {
-    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    final sharedPrefs =
+        await UserUtil.connectSharedPreferences(key: 'userData');
     userUid = sharedPrefs['uid'];
     streamController.add(
         await EventConnect.getAttendance(eid: widget.event.eid, uid: userUid));
@@ -56,6 +58,7 @@ class _EventPageState extends State<EventPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _numAttendees = widget.event.numattenders;
     return Scaffold(
       appBar: PageAppBar(),
       body: Container(
@@ -106,12 +109,16 @@ class _EventPageState extends State<EventPage> {
                   padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
                   child: Text(widget.event.date),
                 ),
+                Center(
+                  child: Text(
+                    "${_numAttendees} ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
+                  ),
+                ),
                 ButtonBar(
-                  alignment: MainAxisAlignment.start,
+                  alignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                      padding: const EdgeInsets.only(left: 16, bottom: 8),
                       child: Text(
                           AppLocalizations.of(context).translate("attending")),
                     ),
