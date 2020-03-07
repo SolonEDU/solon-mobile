@@ -111,7 +111,7 @@ class _EventPageState extends State<EventPage> {
                 ),
                 Center(
                   child: Text(
-                    "${_numAttendees} ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
+                    "$_numAttendees ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
                   ),
                 ),
                 ButtonBar(

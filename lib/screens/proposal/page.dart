@@ -137,7 +137,7 @@ class _ProposalPageState extends State<ProposalPage> {
                   ),
                   Center(
                     child: Text(
-                      "${_totalVotes} ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
+                      "$_totalVotes ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
                       style: TextStyle(
                         fontSize: 18,
                       ),

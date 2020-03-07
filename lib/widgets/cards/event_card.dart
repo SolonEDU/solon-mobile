@@ -69,15 +69,14 @@ class _EventCardState extends State<EventCard> {
             child: Text(
               '${widget.event.date}',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 17,
                 color: Colors.black,
               ),
             ),
           ),
-          Center(
-            child: Text(
-              "${_numAttendees} ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
-            ),
+          Text(
+            "$_numAttendees ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
+            style: TextStyle(fontSize: 17),
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),
