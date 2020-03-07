@@ -55,6 +55,7 @@ class _ProposalCardState extends State<ProposalCard> {
         ),
       );
     };
+    int _totalVotes = widget.proposal.yesVotes + widget.proposal.noVotes;
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
         top: 10,
@@ -79,7 +80,10 @@ class _ProposalCardState extends State<ProposalCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: widget.proposal.date.difference(DateTime.now()).inMilliseconds >= 0
+            child: widget.proposal.date
+                        .difference(DateTime.now())
+                        .inMilliseconds >=
+                    0
                 ? Text(
                     "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
                     style: TextStyle(
@@ -97,7 +101,7 @@ class _ProposalCardState extends State<ProposalCard> {
           ),
           Center(
             child: Text(
-              "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
+              "${_totalVotes} ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
             ),
           ),
           FutureBuilder<Map<String, dynamic>>(

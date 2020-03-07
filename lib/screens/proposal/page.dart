@@ -74,6 +74,7 @@ class _ProposalPageState extends State<ProposalPage> {
                     ? AppLocalizations.of(context).translate("youHaveVotedYes")
                     : AppLocalizations.of(context).translate("youHaveVotedNo");
               }
+              int _totalVotes = widget.proposal.yesVotes + widget.proposal.noVotes;
               return ListView(
                 children: <Widget>[
                   Padding(
@@ -125,7 +126,7 @@ class _ProposalPageState extends State<ProposalPage> {
                   ),
                   Center(
                     child: Text(
-                      "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
+                      "${_totalVotes} ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
                     ),
                   ),
                   snapshot.data['message'] ==
