@@ -62,6 +62,13 @@ class _ProposalPageState extends State<ProposalPage> {
               }
               if (snapshot.data['message'] == 'Error') {
                 _voteOutput = "You have not voted yet!";
+                if ( // TODO: check if logic can be cleaner
+                    widget.proposal.date
+                            .difference(DateTime.now())
+                            .inMilliseconds <
+                        0) {
+                  _voteOutput = "You did not vote!";
+                }
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
                     ? AppLocalizations.of(context).translate("youHaveVotedYes")
@@ -103,7 +110,7 @@ class _ProposalPageState extends State<ProposalPage> {
                     padding: const EdgeInsets.all(8),
                     child: widget.proposal.date
                                 .difference(DateTime.now())
-                                .inDays >
+                                .inMilliseconds >=
                             0
                         ? Text(
                             "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
@@ -116,11 +123,16 @@ class _ProposalPageState extends State<ProposalPage> {
                             ),
                           ),
                   ),
+                  Center(
+                    child: Text(
+                      "${widget.proposal.yesVotes + widget.proposal.noVotes} ${AppLocalizations.of(context).translate("votes")}",
+                    ),
+                  ),
                   snapshot.data['message'] ==
                               'Error' && // TODO: check if logic can be cleaner
                           widget.proposal.date
                                   .difference(DateTime.now())
-                                  .inDays >
+                                  .inMilliseconds >=
                               0
                       ? PreventableButton(
                           body: <Map>[
@@ -148,14 +160,17 @@ class _ProposalPageState extends State<ProposalPage> {
                             }
                           ],
                         )
-                      : Center(
-                          child: Text(_voteOutput),
+                      : Container(
+                          margin: EdgeInsets.only(top: 8.0),
+                          child: Center(
+                            child: Text(_voteOutput),
+                          ),
                         ),
                   snapshot.data['message'] ==
                               'Error' && // TODO: check if logic can be cleaner
                           widget.proposal.date
                                   .difference(DateTime.now())
-                                  .inDays >=
+                                  .inMilliseconds >=
                               0
                       ? Text('')
                       : VoteBar(

@@ -14,7 +14,7 @@ class VoteBar extends StatelessWidget {
       children: <Widget>[
         Container(
           margin: const EdgeInsets.only(top: 10),
-          width: MediaQuery.of(context).size.width * 0.60,
+          width: MediaQuery.of(context).size.width * 0.70,
           child: Text(''),
           decoration: ShapeDecoration(
             gradient: LinearGradient(

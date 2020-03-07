@@ -79,7 +79,7 @@ class _ProposalCardState extends State<ProposalCard> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: widget.proposal.date.difference(DateTime.now()).inDays > 0
+            child: widget.proposal.date.difference(DateTime.now()).inMilliseconds >= 0
                 ? Text(
                     "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
                     style: TextStyle(
