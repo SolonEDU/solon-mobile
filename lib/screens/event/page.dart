@@ -23,7 +23,7 @@ class _EventPageState extends State<EventPage> {
   bool attendanceVal;
   StreamController<bool> streamController = StreamController();
   int userUid;
-  
+
   void _onChanged(bool value) async {
     print('from _onChanged: $userUid');
     if (value) {
@@ -106,12 +106,23 @@ class _EventPageState extends State<EventPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-                  child: Text(widget.event.date),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    widget.event.date,
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
                 Center(
                   child: Text(
                     "$_numAttendees ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
                   ),
                 ),
                 ButtonBar(
@@ -120,7 +131,11 @@ class _EventPageState extends State<EventPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, bottom: 8),
                       child: Text(
-                          AppLocalizations.of(context).translate("attending")),
+                        AppLocalizations.of(context).translate("attending"),
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
                     ),
                     Switch.adaptive(
                       value: attendanceVal,

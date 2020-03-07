@@ -12,7 +12,7 @@ class ProposalConnect {
     'Least votes': 'numvotes.asc',
     'Newly created': 'starttime.desc',
     'Oldest created': 'starttime.asc',
-    'Upcoming deadlines': 'endtime.desc',
+    'Upcoming deadlines': 'endtime.asc',
     'Oldest deadlines': 'endtime.asc',
   };
 
