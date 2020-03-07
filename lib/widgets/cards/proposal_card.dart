@@ -85,16 +85,16 @@ class _ProposalCardState extends State<ProposalCard> {
                         .inMilliseconds >=
                     0
                 ? Text(
-                    "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
+                    "${AppLocalizations.of(context).translate("timeUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 17,
                       color: Colors.black,
                     ),
                   )
                 : Text(
                     AppLocalizations.of(context).translate("votingIsOver"),
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 17,
                       color: Colors.black,
                     ),
                   ),
@@ -102,6 +102,9 @@ class _ProposalCardState extends State<ProposalCard> {
           Center(
             child: Text(
               "${_totalVotes} ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
+              style: TextStyle(
+                fontSize: 17,
+              ),
             ),
           ),
           FutureBuilder<Map<String, dynamic>>(

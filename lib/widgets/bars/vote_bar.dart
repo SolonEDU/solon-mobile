@@ -47,13 +47,19 @@ class VoteBar extends StatelessWidget {
               Expanded(
                 child: Text(
                   "$numYes ${AppLocalizations.of(context).translate("yes")}",
-                  textAlign: TextAlign.start,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
                 ),
               ),
               Expanded(
                 child: Text(
                   "$numNo ${AppLocalizations.of(context).translate("no")}",
-                  textAlign: TextAlign.end,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
                 ),
               ),
             ],

@@ -74,7 +74,8 @@ class _ProposalPageState extends State<ProposalPage> {
                     ? AppLocalizations.of(context).translate("youHaveVotedYes")
                     : AppLocalizations.of(context).translate("youHaveVotedNo");
               }
-              int _totalVotes = widget.proposal.yesVotes + widget.proposal.noVotes;
+              int _totalVotes =
+                  widget.proposal.yesVotes + widget.proposal.noVotes;
               return ListView(
                 children: <Widget>[
                   Padding(
@@ -99,7 +100,7 @@ class _ProposalPageState extends State<ProposalPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 24.0),
                     child: Text(
                       widget.proposal.description,
                       style: TextStyle(
@@ -108,18 +109,28 @@ class _ProposalPageState extends State<ProposalPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                      bottom: 24.0,
+                      left: 8.0,
+                      right: 8.0,
+                    ),
                     child: widget.proposal.date
                                 .difference(DateTime.now())
                                 .inMilliseconds >=
                             0
                         ? Text(
-                            "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
+                            "${AppLocalizations.of(context).translate("timeUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          )
                         : Text(
                             AppLocalizations.of(context)
                                 .translate("votingIsOver"),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                               color: Colors.black,
                             ),
                           ),
@@ -127,6 +138,9 @@ class _ProposalPageState extends State<ProposalPage> {
                   Center(
                     child: Text(
                       "${_totalVotes} ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   snapshot.data['message'] ==
@@ -164,7 +178,12 @@ class _ProposalPageState extends State<ProposalPage> {
                       : Container(
                           margin: EdgeInsets.only(top: 8.0),
                           child: Center(
-                            child: Text(_voteOutput),
+                            child: Text(
+                              _voteOutput,
+                              style: TextStyle(
+                                fontSize: 17,
+                              ),
+                            ),
                           ),
                         ),
                   snapshot.data['message'] ==
@@ -176,7 +195,8 @@ class _ProposalPageState extends State<ProposalPage> {
                       ? Text('')
                       : VoteBar(
                           numYes: widget.proposal.yesVotes,
-                          numNo: widget.proposal.noVotes)
+                          numNo: widget.proposal.noVotes,
+                        )
                 ],
               );
             },
