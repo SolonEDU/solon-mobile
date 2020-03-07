@@ -149,10 +149,11 @@ class _ProposalPageState extends State<ProposalPage> {
                           ],
                         )
                       : Text(_voteOutput),
-                  snapshot.data['message'] == 'Error' || // TODO: check if logic can be cleaner
+                  snapshot.data['message'] ==
+                              'Error' && // TODO: check if logic can be cleaner
                           widget.proposal.date
                                   .difference(DateTime.now())
-                                  .inDays <
+                                  .inDays >=
                               0
                       ? Text('')
                       : VoteBar(
