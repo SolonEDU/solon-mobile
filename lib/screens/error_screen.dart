@@ -17,14 +17,24 @@ class ErrorScreen extends StatelessWidget {
     return Container(
       child: Center(
         // TODO: need to center this
-        child: ListView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('An error occurred!'),
-            Text('$error'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'An error occurred! Please try again.',
+                style: TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 17,
+                ),
+              ),
+            ),
+            // Text('$error'),
             Button(
               color: Colors.pink[200],
               height: 55,
-              label: AppLocalizations.of(context).translate('reload'),
+              label: AppLocalizations.of(context).translate('tryAgain'),
               margin: EdgeInsets.only(top: 10),
               function: notifyParent,
             ),
