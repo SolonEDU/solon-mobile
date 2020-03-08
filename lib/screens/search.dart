@@ -37,9 +37,9 @@ class Search<T extends Model<T>> extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.isEmpty)
-      showSuggestions(
-          context); // TODO: make keyboard unfocus cleaner when searching with empty query
+    if (query.isEmpty) {
+      return Container(); // TODO: make keyboard unfocus cleaner when searching with empty query
+    }
 
     UserUtil.cacheSearchQuery<T>(query);
 
