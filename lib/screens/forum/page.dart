@@ -111,7 +111,6 @@ class _PostPageState extends State<PostPage> {
                         top: 10.0,
                         left: 10.0,
                         right: 10.0,
-                        // bottom: 8.0,
                       ),
                       child: Column(
                         children: snapshot.data
@@ -127,6 +126,7 @@ class _PostPageState extends State<PostPage> {
         ),
       ),
       bottomSheet: Container(
+        color: Colors.grey[100],
         child: TextField(
           controller: commentController,
           decoration: InputDecoration(
@@ -159,8 +159,7 @@ class _PostPageState extends State<PostPage> {
             ),
           ),
         ),
-        margin: EdgeInsets.all(12.0),
-        color: Colors.white,
+        padding: EdgeInsets.all(12.0),
       ),
     );
   }
