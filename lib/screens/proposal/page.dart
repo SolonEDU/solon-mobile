@@ -45,6 +45,35 @@ class _ProposalPageState extends State<ProposalPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _totalVotes = widget.proposal.yesVotes + widget.proposal.noVotes;
+    int _differenceDays =
+        widget.proposal.date.difference(DateTime.now()).inDays;
+    int _differenceHours =
+        widget.proposal.date.difference(DateTime.now()).inHours;
+    int _differenceMinutes =
+        widget.proposal.date.difference(DateTime.now()).inMinutes;
+    String _timeOutput;
+    if (_differenceDays > 1) {
+      _timeOutput =
+          "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("days")}";
+    } else if (_differenceDays == 1) {
+      _timeOutput =
+          "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("day")}";
+    } else if (_differenceHours > 1) {
+      _timeOutput =
+          "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hours")}";
+    } else if (_differenceHours == 1) {
+      _timeOutput =
+          "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hour")}";
+    } else if (_differenceMinutes > 1) {
+      _timeOutput =
+          "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minutes")}";
+    } else if (_differenceMinutes == 1) {
+      _timeOutput =
+          "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minute")}";
+    } else {
+      _timeOutput = AppLocalizations.of(context).translate("lessThanOneMinute");
+    }
     return Scaffold(
       appBar: PageAppBar(),
       body: Container(
@@ -74,8 +103,6 @@ class _ProposalPageState extends State<ProposalPage> {
                     ? AppLocalizations.of(context).translate("youHaveVotedYes")
                     : AppLocalizations.of(context).translate("youHaveVotedNo");
               }
-              int _totalVotes =
-                  widget.proposal.yesVotes + widget.proposal.noVotes;
               return ListView(
                 children: <Widget>[
                   Padding(
@@ -120,7 +147,7 @@ class _ProposalPageState extends State<ProposalPage> {
                                 .inMilliseconds >=
                             0
                         ? Text(
-                            "${AppLocalizations.of(context).translate("timeUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}",
+                            "${AppLocalizations.of(context).translate("timeUntilVotingEnds")} $_timeOutput",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 22,
@@ -140,6 +167,17 @@ class _ProposalPageState extends State<ProposalPage> {
                       "$_totalVotes ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
                       style: TextStyle(
                         fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 8.0),
+                    child: Center(
+                      child: Text(
+                        _voteOutput,
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ),
@@ -175,17 +213,7 @@ class _ProposalPageState extends State<ProposalPage> {
                             }
                           ],
                         )
-                      : Container(
-                          margin: EdgeInsets.only(top: 8.0),
-                          child: Center(
-                            child: Text(
-                              _voteOutput,
-                              style: TextStyle(
-                                fontSize: 17,
-                              ),
-                            ),
-                          ),
-                        ),
+                      : Container(),
                   snapshot.data['message'] ==
                               'Error' && // TODO: check if logic can be cleaner
                           widget.proposal.date
