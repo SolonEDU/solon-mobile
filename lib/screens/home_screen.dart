@@ -44,7 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     notifyParent: refresh,
                     error: snapshot.error,
                   );
-                return Text("${snapshot.data.message}");
+                return Text(
+                  "${snapshot.data.message}",
+                  style: TextStyle(
+                    fontFamily: 'Raleway',
+                    fontSize: 17,
+                  ),
+                );
             }
           },
         ),

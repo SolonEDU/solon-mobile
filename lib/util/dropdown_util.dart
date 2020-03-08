@@ -2,6 +2,11 @@ import 'package:Solon/util/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 mixin DropdownUtil {
+  static TextStyle dropdownMenuTextStyle = TextStyle(
+    fontFamily: 'Raleway',
+    fontSize: 17,
+  );
+
   static List<DropdownMenuItem<String>> getProposalDropdownItems(
     BuildContext context,
   ) {
@@ -28,6 +33,7 @@ mixin DropdownUtil {
         value: value,
         child: Text(
           itemsMap[value],
+          style: dropdownMenuTextStyle,
         ),
       );
     }).toList();
@@ -54,6 +60,7 @@ mixin DropdownUtil {
         value: value,
         child: Text(
           itemsMap[value],
+          style: dropdownMenuTextStyle,
         ),
       );
     }).toList();
@@ -78,7 +85,10 @@ mixin DropdownUtil {
       };
       return DropdownMenuItem<String>(
         value: value,
-        child: Text(itemsMap[value]),
+        child: Text(
+          itemsMap[value],
+          style: dropdownMenuTextStyle,
+        ),
       );
     }).toList();
   }
