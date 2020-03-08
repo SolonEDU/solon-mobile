@@ -13,7 +13,7 @@ class ProposalConnect {
     'Newly created': 'starttime.desc',
     'Oldest created': 'starttime.asc',
     'Upcoming deadlines': 'endtime.asc',
-    'Oldest deadlines': 'endtime.asc',
+    'Furthest deadlines': 'endtime.desc',
   };
 
   static Future<http.Response> connectProposals({String query}) async {

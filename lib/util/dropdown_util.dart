@@ -16,7 +16,7 @@ mixin DropdownUtil {
       'Newly created',
       'Oldest created',
       'Upcoming deadlines',
-      'Oldest deadlines',
+      'Furthest deadlines',
     ].map<DropdownMenuItem<String>>((String value) {
       Map<String, String> itemsMap = {
         'Most votes': AppLocalizations.of(context).translate("mostVotes"),
@@ -26,8 +26,8 @@ mixin DropdownUtil {
             AppLocalizations.of(context).translate("oldestCreated"),
         'Upcoming deadlines':
             AppLocalizations.of(context).translate("upcomingDeadlines"),
-        'Oldest deadlines':
-            AppLocalizations.of(context).translate("oldestDeadlines"),
+        'Furthest deadlines':
+            AppLocalizations.of(context).translate("furthestDeadlines"),
       };
       return DropdownMenuItem<String>(
         value: value,
