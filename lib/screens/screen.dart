@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:Solon/models/model.dart';
 import 'package:Solon/screens/error_screen.dart';
 import 'package:Solon/screens/search.dart';
+import 'package:Solon/services/network_info.dart';
 import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,6 +77,12 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
               child: CircularProgressIndicator(),
             );
           default:
+            DataConnectionChecker dataConnectionChecker =
+                DataConnectionChecker();
+            NetworkInfoImpl hasInternetConnection =
+                NetworkInfoImpl(dataConnectionChecker);
+            hasInternetConnection.isConnected.then((val) => {print(val)});
+            // print(hasInternetConnection.isConnected);
             return GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
               child: RefreshIndicator(
