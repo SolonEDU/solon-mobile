@@ -79,108 +79,142 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
           default:
             DataConnectionChecker dataConnectionChecker =
                 DataConnectionChecker();
-            NetworkInfoImpl hasInternetConnection =
+            NetworkInfoImpl networkInfoImpl =
                 NetworkInfoImpl(dataConnectionChecker);
-            hasInternetConnection.isConnected.then((val) => {print(val)});
-            // print(hasInternetConnection.isConnected);
-            return GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-              child: RefreshIndicator(
-                key: _refreshIndicatorKey,
-                onRefresh: load,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 17.0,
-                        bottom: 10.0,
-                        right: 10.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Flexible(
-                            flex: 9,
-                            child: SortDropdownMenu(
-                              streamController: dropdownMenuStreamController,
-                              value: optionVal.data,
-                              preferences: widget.sortOption,
-                              items: widget.dropdownItems,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: SearchButton(
-                              delegate: Search<T>(
-                                context,
-                                widget.searchLabel,
-                                widget.searchView,
+            return FutureBuilder<bool>(
+              future: networkInfoImpl.isConnected,
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                print(snapshot.data);
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return ErrorScreen(
+                      notifyParent: refresh,
+                      error: snapshot.error,
+                    );
+                  case ConnectionState.active:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case ConnectionState.done:
+                    if (snapshot.hasError)
+                      return ErrorScreen(
+                        notifyParent: refresh,
+                        error: snapshot.error,
+                      );
+                    return GestureDetector(
+                      onTap: () =>
+                          FocusScope.of(context).requestFocus(FocusNode()),
+                      child: RefreshIndicator(
+                        key: _refreshIndicatorKey,
+                        onRefresh: load,
+                        child: Column(
+                          children: <Widget>[
+                            Visibility(
+                              visible: snapshot.data,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 17.0,
+                                  bottom: 10.0,
+                                  right: 10.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 9,
+                                      child: SortDropdownMenu(
+                                        streamController:
+                                            dropdownMenuStreamController,
+                                        value: optionVal.data,
+                                        preferences: widget.sortOption,
+                                        items: widget.dropdownItems,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: SearchButton(
+                                        delegate: Search<T>(
+                                          context,
+                                          widget.searchLabel,
+                                          widget.searchView,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: StreamBuilder<List<T>>(
-                        stream:
-                            Function.apply(widget.screenView, [optionVal.data]),
-                        builder: (
-                          BuildContext context,
-                          AsyncSnapshot<List<T>> snapshot,
-                        ) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return ErrorScreen(
-                                notifyParent: refresh,
-                                error: snapshot.error,
-                              );
-                            case ConnectionState.active:
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            case ConnectionState.waiting:
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            case ConnectionState.done:
-                              if (snapshot.hasError) {
-                                return ErrorScreen(
-                                  notifyParent: refresh,
-                                  error: snapshot.error,
-                                );
-                              }
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
-                                child: Scaffold(
-                                  backgroundColor: Colors.grey[100],
-                                  key: _scaffoldKey,
-                                  body: ListView(
-                                    padding: const EdgeInsets.only(
-                                      top: 10.0,
-                                      left: 10.0,
-                                      right: 10.0,
-                                      // bottom: 8.0,
-                                    ),
-                                    children: snapshot.data
-                                        .map((obj) => obj.toCard())
-                                        .toList(),
-                                  ),
-                                  floatingActionButton: (widget.creator == null)
-                                      ? null
-                                      : CreateButton(
-                                          creator: widget.creator,
+                            Expanded(
+                              child: StreamBuilder<List<T>>(
+                                stream: Function.apply(
+                                    widget.screenView, [optionVal.data]),
+                                builder: (
+                                  BuildContext context,
+                                  AsyncSnapshot<List<T>> snapshot,
+                                ) {
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.none:
+                                      return ErrorScreen(
+                                        notifyParent: refresh,
+                                        error: snapshot.error,
+                                      );
+                                    case ConnectionState.active:
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    case ConnectionState.waiting:
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    case ConnectionState.done:
+                                      if (snapshot.hasError) {
+                                        return ErrorScreen(
+                                          notifyParent: refresh,
+                                          error: snapshot.error,
+                                        );
+                                      }
+                                      return SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        child: Scaffold(
+                                          backgroundColor: Colors.grey[100],
+                                          key: _scaffoldKey,
+                                          body: ListView(
+                                            padding: const EdgeInsets.only(
+                                              top: 10.0,
+                                              left: 10.0,
+                                              right: 10.0,
+                                              // bottom: 8.0,
+                                            ),
+                                            children: snapshot.data
+                                                .map((obj) => obj.toCard())
+                                                .toList(),
+                                          ),
+                                          floatingActionButton:
+                                              (widget.creator == null)
+                                                  ? null
+                                                  : CreateButton(
+                                                      creator: widget.creator,
+                                                    ),
                                         ),
-                                ),
-                              );
-                          }
-                        },
+                                      );
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    );
+                }
+              },
             );
         }
       },
