@@ -72,7 +72,10 @@ class _PostPageState extends State<PostPage> {
             Container(
               child: Text(
                 widget.post.timestamp,
-                style: TextStyle(fontSize: 15, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.grey,
+                ),
               ),
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,
