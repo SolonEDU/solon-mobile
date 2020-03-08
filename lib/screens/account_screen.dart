@@ -197,7 +197,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                 };
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Text(nativeLangNames[value]),
+                                  child: Text(
+                                    nativeLangNames[value],
+                                    style: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                 );
                               },
                             ).toList(),
