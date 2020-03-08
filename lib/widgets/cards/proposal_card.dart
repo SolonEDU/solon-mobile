@@ -57,22 +57,31 @@ class _ProposalCardState extends State<ProposalCard> {
     };
 
     int _totalVotes = widget.proposal.yesVotes + widget.proposal.noVotes;
-    int _differenceDays = widget.proposal.date.difference(DateTime.now()).inDays;
-    int _differenceHours = widget.proposal.date.difference(DateTime.now()).inHours;
-    int _differenceMinutes = widget.proposal.date.difference(DateTime.now()).inMinutes;
+    int _differenceDays =
+        widget.proposal.date.difference(DateTime.now()).inDays;
+    int _differenceHours =
+        widget.proposal.date.difference(DateTime.now()).inHours;
+    int _differenceMinutes =
+        widget.proposal.date.difference(DateTime.now()).inMinutes;
     String _timeOutput;
     if (_differenceDays > 1) {
-      _timeOutput = "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("days")}";
+      _timeOutput =
+          "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("days")}";
     } else if (_differenceDays == 1) {
-      _timeOutput = "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("day")}";
+      _timeOutput =
+          "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("day")}";
     } else if (_differenceHours > 1) {
-      _timeOutput = "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hours")}";
+      _timeOutput =
+          "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hours")}";
     } else if (_differenceHours == 1) {
-      _timeOutput = "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hour")}";
+      _timeOutput =
+          "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hour")}";
     } else if (_differenceMinutes > 1) {
-      _timeOutput = "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minutes")}";
+      _timeOutput =
+          "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minutes")}";
     } else if (_differenceMinutes == 1) {
-      _timeOutput = "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minute")}";
+      _timeOutput =
+          "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minute")}";
     } else {
       _timeOutput = AppLocalizations.of(context).translate("lessThanOneMinute");
     }
@@ -135,14 +144,17 @@ class _ProposalCardState extends State<ProposalCard> {
               if (snapshot.data == null) {
                 return Center();
               } else {
-                _voted = (snapshot.data['message'] == 'Error') ? false : true;
-                if (_voted) {
+                if (snapshot.data['message'] == 'Error' &&
+                    widget.proposal.date
+                            .difference(DateTime.now())
+                            .inMilliseconds >=
+                        0) {
+                  return Center();
+                } else {
                   return VoteBar(
                     numYes: widget.proposal.yesVotes,
                     numNo: widget.proposal.noVotes,
                   );
-                } else {
-                  return Center();
                 }
               }
             },
