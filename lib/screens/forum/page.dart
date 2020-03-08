@@ -43,59 +43,58 @@ class _PostPageState extends State<PostPage> {
     int _numComments = widget.post.numcomments;
     return Scaffold(
       appBar: PageAppBar(),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              child: Text(
-                widget.post.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Center(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                child: Text(
+                  widget.post.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+                margin: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+                  bottom: 10.0,
                 ),
               ),
-              margin: const EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-                bottom: 10.0,
+              Container(
+                child: Text(
+                  widget.post.description,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               ),
-            ),
-            Container(
-              child: Text(
-                widget.post.description,
-                style: TextStyle(
-                  fontSize: 20.0,
+              Container(
+                child: Text(
+                  widget.post.timestamp,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.grey,
+                  ),
+                ),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
                 ),
               ),
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            ),
-            Container(
-              child: Text(
-                widget.post.timestamp,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.grey,
+              Container(
+                child: Text(
+                  "$_numComments ${_numComments == 1 ? AppLocalizations.of(context).translate("comment") : AppLocalizations.of(context).translate("comments")}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               ),
-              margin: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-            ),
-            Container(
-              child: Text(
-                "$_numComments ${_numComments == 1 ? AppLocalizations.of(context).translate("comment") : AppLocalizations.of(context).translate("comments")}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              color: Colors.grey[100],
-              child: StreamBuilder<List<Comment>>(
+              StreamBuilder<List<Comment>>(
                 stream: stream,
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Comment>> snapshot) {
@@ -104,25 +103,28 @@ class _PostPageState extends State<PostPage> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 100.0),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.only(
-                        top: 10.0,
-                        left: 10.0,
-                        right: 10.0,
-                      ),
-                      child: Column(
-                        children: snapshot.data
-                            .map((json) => CommentCard(comment: json))
-                            .toList(),
+                  return Container(
+                    color: Colors.grey[100],
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 100.0),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.only(
+                          top: 10.0,
+                          left: 10.0,
+                          right: 10.0,
+                        ),
+                        child: Column(
+                          children: snapshot.data
+                              .map((json) => CommentCard(comment: json))
+                              .toList(),
+                        ),
                       ),
                     ),
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomSheet: Container(
