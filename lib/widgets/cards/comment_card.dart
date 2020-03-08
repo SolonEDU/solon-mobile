@@ -11,8 +11,8 @@ class CommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
-        top: 5,
-        bottom: 5,
+        top: 10,
+        bottom: 10,
         right: 15,
         left: 15,
       ),

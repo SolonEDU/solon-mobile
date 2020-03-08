@@ -90,28 +90,38 @@ class _PostPageState extends State<PostPage> {
                   fontSize: 20,
                 ),
               ),
-              margin: const EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
             ),
-            StreamBuilder<List<Comment>>(
-              stream: stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Comment>> snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 100.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: snapshot.data
-                          .map((json) => CommentCard(comment: json))
-                          .toList(),
+            Container(
+              height: MediaQuery.of(context).size.height,
+              color: Colors.grey[100],
+              child: StreamBuilder<List<Comment>>(
+                stream: stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Comment>> snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 100.0),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                        left: 10.0,
+                        right: 10.0,
+                        // bottom: 8.0,
+                      ),
+                      child: Column(
+                        children: snapshot.data
+                            .map((json) => CommentCard(comment: json))
+                            .toList(),
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -84,7 +84,11 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
             return FutureBuilder<bool>(
               future: networkInfoImpl.isConnected,
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                print(snapshot.data);
+                if (snapshot.hasError)
+                  return ErrorScreen(
+                    notifyParent: refresh,
+                    error: snapshot.error,
+                  );
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     return ErrorScreen(
@@ -100,11 +104,6 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
                       child: CircularProgressIndicator(),
                     );
                   case ConnectionState.done:
-                    if (snapshot.hasError)
-                      return ErrorScreen(
-                        notifyParent: refresh,
-                        error: snapshot.error,
-                      );
                     return GestureDetector(
                       onTap: () =>
                           FocusScope.of(context).requestFocus(FocusNode()),

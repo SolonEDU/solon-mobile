@@ -21,7 +21,7 @@ class ScreenCard extends StatelessWidget {
         child: SizedBox(
           child: RaisedButton(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(18.0),
             ),
             color: Colors.white,
             child: tile,
