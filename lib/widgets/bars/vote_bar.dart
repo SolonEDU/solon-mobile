@@ -25,10 +25,10 @@ class VoteBar extends StatelessWidget {
             gradient: LinearGradient(
               colors: noVotesCasted
                   ? [
-                      Colors.grey[300],
-                      Colors.grey[300],
-                      Colors.grey[300],
-                      Colors.grey[300],
+                      Colors.grey,
+                      Colors.grey,
+                      Colors.grey,
+                      Colors.grey,
                     ]
                   : [
                       Colors.green,
