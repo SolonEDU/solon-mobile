@@ -46,7 +46,8 @@ class _PostPageState extends State<PostPage> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Center(
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 child: Text(
@@ -103,20 +104,22 @@ class _PostPageState extends State<PostPage> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  return Container(
-                    color: Colors.grey[100],
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 100.0),
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.only(
-                          top: 10.0,
-                          left: 10.0,
-                          right: 10.0,
-                        ),
-                        child: Column(
-                          children: snapshot.data
-                              .map((json) => CommentCard(comment: json))
-                              .toList(),
+                  return Expanded(
+                    child: Container(
+                      color: Colors.grey[100],
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 100.0),
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.only(
+                            top: 10.0,
+                            left: 10.0,
+                            right: 10.0,
+                          ),
+                          child: Column(
+                            children: snapshot.data
+                                .map((json) => CommentCard(comment: json))
+                                .toList(),
+                          ),
                         ),
                       ),
                     ),
