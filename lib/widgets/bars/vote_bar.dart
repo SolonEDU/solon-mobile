@@ -4,8 +4,13 @@ import 'package:Solon/util/app_localizations.dart';
 class VoteBar extends StatelessWidget {
   final int numYes;
   final int numNo;
+  final bool noVotesCasted;
 
-  VoteBar({this.numYes, this.numNo});
+  VoteBar({
+    this.numYes,
+    this.numNo,
+    this.noVotesCasted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +23,19 @@ class VoteBar extends StatelessWidget {
           child: Text(''),
           decoration: ShapeDecoration(
             gradient: LinearGradient(
-              colors: [
-                Colors.green,
-                Colors.green,
-                Colors.red,
-                Colors.red,
-              ],
+              colors: noVotesCasted
+                  ? [
+                      Colors.grey[300],
+                      Colors.grey[300],
+                      Colors.grey[300],
+                      Colors.grey[300],
+                    ]
+                  : [
+                      Colors.green,
+                      Colors.green,
+                      Colors.red,
+                      Colors.red,
+                    ],
               stops: [
                 0,
                 numYes / (numYes + numNo),
