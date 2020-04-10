@@ -20,6 +20,9 @@ Currently continuing development under the guidance of mentors from the Google M
 
 ## Special Thanks
 
-- Emerick Patterson for allowing us access to the Bushwick Generator.
+- [Emerick Patterson](https://www.emerickpatterson.com/) for allowing us access to the Bushwick Generator.
 - Scott Thomas for allowing us access to the Irwin Zahn Innovation Lab.
-- Raunak Chowdhury for bringing together an awesome team.
+- [Raunak Chowdhury](https://github.com/raunakchowdhury) for bringing together an awesome team.
+- Nancy Xu and Justin Prunell for offering advice on app infrastructure and design.
+- Dina Ingram for entertaining school integration possibilities.
+- [Yaru Luo](https://github.com/yaruluo) for coordinating school integration meetings.
