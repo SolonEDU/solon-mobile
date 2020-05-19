@@ -42,7 +42,7 @@ class Solon extends StatelessWidget {
           brightness:
               Brightness.light, // TODO: have yet to find a nonjanky method
           textTheme: TextTheme(
-            title: TextStyle(
+            headline6: TextStyle(
               color: Colors.black,
               fontFamily: 'Raleway',
               fontWeight: FontWeight.bold,

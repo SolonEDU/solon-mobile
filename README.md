@@ -1,5 +1,7 @@
 # solon-mobile
 
+![Flutter CI](https://github.com/SolonEDU/solon-mobile/workflows/Flutter%20CI/badge.svg)
+
 ## About
 
 A mobile app with the purpose of faciliating school activities and interaction between parents and administration.
