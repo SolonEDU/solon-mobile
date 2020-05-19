@@ -85,6 +85,7 @@ class _ProposalCardState extends State<ProposalCard> {
     } else {
       _timeOutput = AppLocalizations.of(context).translate("lessThanOneMinute");
     }
+    bool noVotesCasted = false;
 
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
@@ -143,20 +144,22 @@ class _ProposalCardState extends State<ProposalCard> {
                 AsyncSnapshot<Map<String, dynamic>> snapshot) {
               if (snapshot.data == null) {
                 return Center();
-              } else {
-                if (snapshot.data['message'] == 'Error' &&
-                    widget.proposal.date
-                            .difference(DateTime.now())
-                            .inMilliseconds >=
-                        0) {
+              }
+              if (snapshot.data['message'] == 'Error') {
+                if (widget.proposal.date
+                        .difference(DateTime.now())
+                        .inMilliseconds >=
+                    0) {
                   return Center();
                 } else {
-                  return VoteBar(
-                    numYes: widget.proposal.yesVotes,
-                    numNo: widget.proposal.noVotes,
-                  );
+                  noVotesCasted = true;
                 }
               }
+              return VoteBar(
+                noVotesCasted: noVotesCasted,
+                numYes: widget.proposal.yesVotes,
+                numNo: widget.proposal.noVotes,
+              );
             },
           ),
         ],

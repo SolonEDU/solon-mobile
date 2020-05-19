@@ -74,6 +74,7 @@ class _ProposalPageState extends State<ProposalPage> {
     } else {
       _timeOutput = AppLocalizations.of(context).translate("lessThanOneMinute");
     }
+    bool noVotesCasted = false;
     return Scaffold(
       appBar: PageAppBar(),
       body: Container(
@@ -97,6 +98,7 @@ class _ProposalPageState extends State<ProposalPage> {
                             .inMilliseconds <
                         0) {
                   _voteOutput = "You did not vote!";
+                  noVotesCasted = true;
                 }
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
@@ -222,6 +224,7 @@ class _ProposalPageState extends State<ProposalPage> {
                               0
                       ? Text('')
                       : VoteBar(
+                          noVotesCasted: noVotesCasted,
                           numYes: widget.proposal.yesVotes,
                           numNo: widget.proposal.noVotes,
                         )
