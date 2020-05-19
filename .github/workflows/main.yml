@@ -11,18 +11,17 @@ jobs:
     steps:
 
     - uses: actions/checkout@v1
-    - name: decrypt secret
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+
+    - uses: actions/checkout@v1
       run: ./.github/scripts/decrypt_secret.sh
       env:
         PASSPHRASE: ${{ secrets.PASSPHRASE }}
 
-    - name: install dependencies and build apk
-      uses: actions/checkout@v1
-      uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-      uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v1
       with:
         channel: 'stable'
-      run: flutter pub get
-      run: flutter build apk
+    - run: flutter pub get
+    - run: flutter build apk --release
