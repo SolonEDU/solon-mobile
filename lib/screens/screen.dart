@@ -4,7 +4,6 @@ import 'package:Solon/models/model.dart';
 import 'package:Solon/screens/error_screen.dart';
 import 'package:Solon/screens/search.dart';
 import 'package:Solon/services/network_info.dart';
-import 'package:Solon/widgets/buttons/create_button.dart';
 import 'package:Solon/widgets/buttons/search_button.dart';
 import 'package:Solon/widgets/sort_dropdown_menu.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
@@ -64,6 +63,20 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
 
   void refresh() {
     setState(() {});
+  }
+
+  Widget getCreateButton() {
+    return FloatingActionButton(
+      heroTag: 'unq1',
+      backgroundColor: Colors.pinkAccent[400],
+      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => widget.creator),
+        ).then((value) => {refresh()});
+      },
+    );
   }
 
   @override
@@ -199,9 +212,7 @@ class _ScreenState<T extends Model<T>> extends State<Screen> {
                                           floatingActionButton:
                                               (widget.creator == null)
                                                   ? null
-                                                  : CreateButton(
-                                                      creator: widget.creator,
-                                                    ),
+                                                  : getCreateButton(),
                                         ),
                                       );
                                   }
