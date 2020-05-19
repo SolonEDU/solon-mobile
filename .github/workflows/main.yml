@@ -6,23 +6,21 @@ on:
 name: Flutter CI ## this is the name of the workflow
 jobs:
   build: ## this workflow has one job which is labelled build (i don't think this name matters but don't quote me)
-    name: install dependencies
+    name: install dependencies and build apk
     runs-on: ubuntu-latest ## this workflow is run on a ubuntu machine located at some github office
     steps:
-
+    
     - uses: actions/checkout@v1
-    - name: decrypt secret
+    - name: decrypt key
       run: ./.github/scripts/decrypt_secret.sh
       env:
         PASSPHRASE: ${{ secrets.PASSPHRASE }}
 
-    - uses: actions/checkout@v1 ## this is a github action used to have access to, and traverse our repo's directories
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
-    - name: install dependencies and build apk
     - uses: subosito/flutter-action@v1
       with:
         channel: 'stable'
     - run: flutter pub get
-    - run: flutter build apk
+    - run: flutter build apk --release
