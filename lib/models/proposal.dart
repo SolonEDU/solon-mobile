@@ -29,7 +29,14 @@ class Proposal extends Model<Proposal> {
     @required Map<String, dynamic> map,
     @required String prefLangCode,
   }) {
+    print("get proposal endtime string: ${map['endtime']}");
     DateTime endTime = DateTime.parse(map['endtime']);
+    print(
+        "get proposal utc endtime string: ${endTime.toLocal().difference(DateTime.now()).inHours}");
+    print("${endTime.timeZoneOffset}");
+    print("${endTime.toLocal().toIso8601String()}");
+    // print("endtime: ${endTime.isUtc}");
+    print("now: ${DateTime.now()}");
     String endTimeParsed = formatDate(
         endTime, [mm, '/', dd, '/', yyyy, ' ', hh, ':', nn, ' ', am]);
     String translatedTitle = json.decode(map['title'])[prefLangCode];

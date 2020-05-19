@@ -40,72 +40,98 @@ class _PostPageState extends State<PostPage> {
   }
 
   Widget build(BuildContext context) {
+    int _numComments = widget.post.numcomments;
     return Scaffold(
       appBar: PageAppBar(),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              child: Text(
-                widget.post.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
-              ),
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            ),
-            Container(
-              child: Text(
-                widget.post.description,
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-              ),
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            ),
-            Container(
-              child: Text(
-                widget.post.timestamp,
-                style: TextStyle(fontSize: 15, color: Colors.grey),
-              ),
-              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-            ),
-            Container(
-              child: Text(
-                AppLocalizations.of(context).translate("commentSection"),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              margin: const EdgeInsets.only(left: 20, right: 20),
-            ),
-            StreamBuilder<List<Comment>>(
-              stream: stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Comment>> snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 100.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: snapshot.data
-                          .map((json) => CommentCard(comment: json))
-                          .toList(),
-                    ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  widget.post.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
                   ),
-                );
-              },
-            ),
-          ],
+                ),
+                margin: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+                  bottom: 10.0,
+                ),
+              ),
+              Container(
+                child: Text(
+                  widget.post.description,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              ),
+              Container(
+                child: Text(
+                  widget.post.timestamp,
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.grey,
+                  ),
+                ),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+              ),
+              Container(
+                child: Text(
+                  "$_numComments ${_numComments == 1 ? AppLocalizations.of(context).translate("comment") : AppLocalizations.of(context).translate("comments")}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              ),
+              StreamBuilder<List<Comment>>(
+                stream: stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Comment>> snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Expanded(
+                    child: Container(
+                      color: Colors.grey[100],
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 100.0),
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.only(
+                            top: 10.0,
+                            left: 10.0,
+                            right: 10.0,
+                          ),
+                          child: Column(
+                            children: snapshot.data
+                                .map((json) => CommentCard(comment: json))
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
       bottomSheet: Container(
+        color: Colors.grey[100],
         child: TextField(
           controller: commentController,
           decoration: InputDecoration(
@@ -138,8 +164,7 @@ class _PostPageState extends State<PostPage> {
             ),
           ),
         ),
-        margin: EdgeInsets.all(12.0),
-        color: Colors.white,
+        padding: EdgeInsets.all(12.0),
       ),
     );
   }

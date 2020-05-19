@@ -2,6 +2,11 @@ import 'package:Solon/util/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 mixin DropdownUtil {
+  static TextStyle dropdownMenuTextStyle = TextStyle(
+    fontFamily: 'Raleway',
+    fontSize: 17,
+  );
+
   static List<DropdownMenuItem<String>> getProposalDropdownItems(
     BuildContext context,
   ) {
@@ -11,7 +16,7 @@ mixin DropdownUtil {
       'Newly created',
       'Oldest created',
       'Upcoming deadlines',
-      'Oldest deadlines',
+      'Furthest deadlines',
     ].map<DropdownMenuItem<String>>((String value) {
       Map<String, String> itemsMap = {
         'Most votes': AppLocalizations.of(context).translate("mostVotes"),
@@ -21,13 +26,14 @@ mixin DropdownUtil {
             AppLocalizations.of(context).translate("oldestCreated"),
         'Upcoming deadlines':
             AppLocalizations.of(context).translate("upcomingDeadlines"),
-        'Oldest deadlines':
-            AppLocalizations.of(context).translate("oldestDeadlines"),
+        'Furthest deadlines':
+            AppLocalizations.of(context).translate("furthestDeadlines"),
       };
       return DropdownMenuItem<String>(
         value: value,
         child: Text(
           itemsMap[value],
+          style: dropdownMenuTextStyle,
         ),
       );
     }).toList();
@@ -54,6 +60,7 @@ mixin DropdownUtil {
         value: value,
         child: Text(
           itemsMap[value],
+          style: dropdownMenuTextStyle,
         ),
       );
     }).toList();
@@ -78,7 +85,10 @@ mixin DropdownUtil {
       };
       return DropdownMenuItem<String>(
         value: value,
-        child: Text(itemsMap[value]),
+        child: Text(
+          itemsMap[value],
+          style: dropdownMenuTextStyle,
+        ),
       );
     }).toList();
   }

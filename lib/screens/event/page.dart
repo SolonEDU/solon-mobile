@@ -11,8 +11,9 @@ class EventPage extends StatefulWidget {
   final Event event;
 
   EventPage({
+    Key key,
     this.event,
-  });
+  }) : super(key: key);
 
   @override
   _EventPageState createState() => _EventPageState();
@@ -36,7 +37,8 @@ class _EventPageState extends State<EventPage> {
   }
 
   void load() async {
-    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    final sharedPrefs =
+        await UserUtil.connectSharedPreferences(key: 'userData');
     userUid = sharedPrefs['uid'];
     streamController.add(
         await EventConnect.getAttendance(eid: widget.event.eid, uid: userUid));
@@ -56,6 +58,7 @@ class _EventPageState extends State<EventPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _numAttendees = widget.event.numattenders;
     return Scaffold(
       appBar: PageAppBar(),
       body: Container(
@@ -103,17 +106,36 @@ class _EventPageState extends State<EventPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-                  child: Text(widget.event.date),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    widget.event.date,
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    "$_numAttendees ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
                 ButtonBar(
-                  alignment: MainAxisAlignment.start,
+                  alignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                      padding: const EdgeInsets.only(left: 16, bottom: 8),
                       child: Text(
-                          AppLocalizations.of(context).translate("attending")),
+                        AppLocalizations.of(context).translate("attending"),
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
                     ),
                     Switch.adaptive(
                       value: attendanceVal,

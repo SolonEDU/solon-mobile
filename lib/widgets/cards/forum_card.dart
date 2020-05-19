@@ -26,6 +26,7 @@ class _ForumCardState extends State<ForumCard> {
         ),
       );
     };
+    int _numComments = widget.post.numcomments;
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
         top: 10,
@@ -54,14 +55,23 @@ class _ForumCardState extends State<ForumCard> {
               rawText: widget.post.description,
               trail: '...',
               textStyle: TextStyle(
-                fontSize: 15,
+                fontSize: 17,
                 color: Colors.black,
               ),
             ),
           ),
-          Text(widget.post.timestamp),
           Text(
-              "${widget.post.numcomments} ${AppLocalizations.of(context).translate("comments")}"),
+            widget.post.timestamp,
+            style: TextStyle(
+              fontSize: 17,
+            ),
+          ),
+          Text(
+            "$_numComments ${_numComments == 1 ? AppLocalizations.of(context).translate("comment") : AppLocalizations.of(context).translate("comments")}",
+            style: TextStyle(
+              fontSize: 17,
+            ),
+          ),
         ],
       ),
     );

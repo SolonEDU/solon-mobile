@@ -20,7 +20,13 @@ class SortDropdownMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Text(AppLocalizations.of(context).translate("sortBy")),
+        Text(
+          AppLocalizations.of(context).translate("sortBy"),
+          style: TextStyle(
+            fontFamily: 'Raleway',
+            fontSize: 18,
+          ),
+        ),
         DropdownButtonHideUnderline(
           child: ButtonTheme(
             alignedDropdown: true,

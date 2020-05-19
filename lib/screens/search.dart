@@ -37,9 +37,11 @@ class Search<T extends Model<T>> extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.isEmpty)
-      showSuggestions(
-          context); // TODO: make keyboard unfocus cleaner when searching with empty query
+    if (query.isEmpty) {
+      return Container(
+          color: Colors.grey[
+              100]); // TODO: make keyboard unfocus cleaner when searching with empty query
+    }
 
     UserUtil.cacheSearchQuery<T>(query);
 
@@ -74,8 +76,16 @@ class Search<T extends Model<T>> extends SearchDelegate {
                   error: snapshot.error,
                 );
               }
-              return ListView(
-                children: snapshot.data.map((obj) => obj.toCard()).toList(),
+              return Container(
+                color: Colors.grey[100],
+                child: ListView(
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                    left: 10.0,
+                    right: 10.0,
+                  ),
+                  children: snapshot.data.map((obj) => obj.toCard()).toList(),
+                ),
               );
           }
         },

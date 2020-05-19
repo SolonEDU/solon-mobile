@@ -19,7 +19,8 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   Future<bool> getAttendanceVal() async {
-    final sharedPrefs = await UserUtil.connectSharedPreferences(key: 'userData');
+    final sharedPrefs =
+        await UserUtil.connectSharedPreferences(key: 'userData');
     final userUid = sharedPrefs['uid'];
     final responseMessage = await EventConnect.getAttendance(
       eid: widget.event.eid,
@@ -40,6 +41,7 @@ class _EventCardState extends State<EventCard> {
         ),
       );
     };
+    int _numAttendees = widget.event.numattenders;
     ListTile tile = ListTile(
       contentPadding: EdgeInsets.only(
         top: 10,
@@ -67,13 +69,14 @@ class _EventCardState extends State<EventCard> {
             child: Text(
               '${widget.event.date}',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 17,
                 color: Colors.black,
               ),
             ),
           ),
           Text(
-            "${widget.event.numattenders} ${AppLocalizations.of(context).translate("attenders")}",
+            "$_numAttendees ${_numAttendees == 1 ? AppLocalizations.of(context).translate("attendee") : AppLocalizations.of(context).translate("attendees")}",
+            style: TextStyle(fontSize: 17),
           ),
           FutureBuilder<bool>(
             future: getAttendanceVal(),

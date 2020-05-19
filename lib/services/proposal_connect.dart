@@ -12,8 +12,8 @@ class ProposalConnect {
     'Least votes': 'numvotes.asc',
     'Newly created': 'starttime.desc',
     'Oldest created': 'starttime.asc',
-    'Upcoming deadlines': 'endtime.desc',
-    'Oldest deadlines': 'endtime.asc',
+    'Upcoming deadlines': 'endtime.asc',
+    'Furthest deadlines': 'endtime.desc',
   };
 
   static Future<http.Response> connectProposals({String query}) async {
@@ -41,13 +41,15 @@ class ProposalConnect {
     DateTime endTime,
     int uid,
   ) async {
+    print(
+        "proposal creation: \n start time: ${startTime.toIso8601String() + '-0400'} \n end time: ${endTime.toIso8601String() + '-0400'}");
     final response = await http.post(
       "${APIConnect.url}/proposals",
       body: json.encode({
         'title': title,
         'description': description,
-        'starttime': startTime.toIso8601String(),
-        'endtime': endTime.toIso8601String(),
+        'starttime': startTime.toIso8601String() + '-0400',
+        'endtime': endTime.toIso8601String() + '-0400',
         'uid': uid,
       }),
       headers: await APIConnect.headers,

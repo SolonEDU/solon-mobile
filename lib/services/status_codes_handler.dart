@@ -14,7 +14,7 @@ class StatusCodesHandler {
     } else if (statusCode == 504) {
       return Message.fromJson('Gateway Timeout');
     } else {
-      return Message.fromJson('Unknown Error; care.');
+      return Message.fromJson('Unknown Error');
     }
   }
 }

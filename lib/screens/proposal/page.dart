@@ -45,6 +45,36 @@ class _ProposalPageState extends State<ProposalPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _totalVotes = widget.proposal.yesVotes + widget.proposal.noVotes;
+    int _differenceDays =
+        widget.proposal.date.difference(DateTime.now()).inDays;
+    int _differenceHours =
+        widget.proposal.date.difference(DateTime.now()).inHours;
+    int _differenceMinutes =
+        widget.proposal.date.difference(DateTime.now()).inMinutes;
+    String _timeOutput;
+    if (_differenceDays > 1) {
+      _timeOutput =
+          "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("days")}";
+    } else if (_differenceDays == 1) {
+      _timeOutput =
+          "${_differenceDays.toString()} ${AppLocalizations.of(context).translate("day")}";
+    } else if (_differenceHours > 1) {
+      _timeOutput =
+          "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hours")}";
+    } else if (_differenceHours == 1) {
+      _timeOutput =
+          "${_differenceHours.toString()} ${AppLocalizations.of(context).translate("hour")}";
+    } else if (_differenceMinutes > 1) {
+      _timeOutput =
+          "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minutes")}";
+    } else if (_differenceMinutes == 1) {
+      _timeOutput =
+          "${_differenceMinutes.toString()} ${AppLocalizations.of(context).translate("minute")}";
+    } else {
+      _timeOutput = AppLocalizations.of(context).translate("lessThanOneMinute");
+    }
+    bool noVotesCasted = false;
     return Scaffold(
       appBar: PageAppBar(),
       body: Container(
@@ -62,6 +92,14 @@ class _ProposalPageState extends State<ProposalPage> {
               }
               if (snapshot.data['message'] == 'Error') {
                 _voteOutput = "You have not voted yet!";
+                if ( // TODO: check if logic can be cleaner
+                    widget.proposal.date
+                            .difference(DateTime.now())
+                            .inMilliseconds <
+                        0) {
+                  _voteOutput = "You did not vote!";
+                  noVotesCasted = true;
+                }
               } else {
                 _voteOutput = snapshot.data['vote']['value'] == 1
                     ? AppLocalizations.of(context).translate("youHaveVotedYes")
@@ -91,7 +129,7 @@ class _ProposalPageState extends State<ProposalPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 24.0),
                     child: Text(
                       widget.proposal.description,
                       style: TextStyle(
@@ -100,23 +138,57 @@ class _ProposalPageState extends State<ProposalPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                      bottom: 24.0,
+                      left: 8.0,
+                      right: 8.0,
+                    ),
                     child: widget.proposal.date
                                 .difference(DateTime.now())
-                                .inDays >
+                                .inMilliseconds >=
                             0
                         ? Text(
-                            "${AppLocalizations.of(context).translate("numDaysUntilVotingEnds")} ${widget.proposal.date.difference(DateTime.now()).inDays.toString()}")
+                            "${AppLocalizations.of(context).translate("timeUntilVotingEnds")} $_timeOutput",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          )
                         : Text(
                             AppLocalizations.of(context)
                                 .translate("votingIsOver"),
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                               color: Colors.black,
                             ),
                           ),
                   ),
-                  snapshot.data['message'] == 'Error'
+                  Center(
+                    child: Text(
+                      "$_totalVotes ${_totalVotes == 1 ? AppLocalizations.of(context).translate("vote") : AppLocalizations.of(context).translate("votes")}",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 8.0),
+                    child: Center(
+                      child: Text(
+                        _voteOutput,
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                  ),
+                  snapshot.data['message'] ==
+                              'Error' && // TODO: check if logic can be cleaner
+                          widget.proposal.date
+                                  .difference(DateTime.now())
+                                  .inMilliseconds >=
+                              0
                       ? PreventableButton(
                           body: <Map>[
                             {
@@ -143,12 +215,19 @@ class _ProposalPageState extends State<ProposalPage> {
                             }
                           ],
                         )
-                      : Text(_voteOutput),
-                  snapshot.data['message'] == 'Error'
+                      : Container(),
+                  snapshot.data['message'] ==
+                              'Error' && // TODO: check if logic can be cleaner
+                          widget.proposal.date
+                                  .difference(DateTime.now())
+                                  .inMilliseconds >=
+                              0
                       ? Text('')
                       : VoteBar(
+                          noVotesCasted: noVotesCasted,
                           numYes: widget.proposal.yesVotes,
-                          numNo: widget.proposal.noVotes)
+                          numNo: widget.proposal.noVotes,
+                        )
                 ],
               );
             },
