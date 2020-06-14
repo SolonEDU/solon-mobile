@@ -28,17 +28,8 @@ dependencies:
   translator:
   intl:
   http:
-  rxdart:
   date_format:
   shared_preferences:
-  # Service locator
-  get_it:
-  # Bloc for state management
-  flutter_bloc:
-  # Value equality
-  equatable:
-  # Functional programming thingies
-  dartz:
   # Remote API
   connectivity:
   data_connection_checker:
@@ -52,7 +43,6 @@ dev_dependencies:
     sdk: flutter
   flutter_native_splash: ^0.1.4
   flutter_launcher_icons: "^0.7.2"
-  mockito:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
