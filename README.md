@@ -18,7 +18,6 @@ Here's a quick [video demo](https://www.youtube.com/watch?v=BqlMdw6bGE0).
 
 - [Raymond Lee](https://github.com/raymondlee00)
 - [Eric Lau](https://github.com/erxclau)
-
 - [Kazi Jamal](https://github.com/kazijamal)
 - [Michael Robertson](https://github.com/MichaelRobertson479)
 - [Matthew Chan](https://github.com/MattChann)
